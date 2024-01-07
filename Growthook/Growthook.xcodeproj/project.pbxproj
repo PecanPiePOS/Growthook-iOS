@@ -117,6 +117,9 @@
 		259E7F792B42A68B00F3DC8F /* OnboardingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F782B42A68B00F3DC8F /* OnboardingButtonView.swift */; };
 		259E7F7B2B42ABA600F3DC8F /* OnboardingSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F7A2B42ABA600F3DC8F /* OnboardingSelectViewController.swift */; };
 		259E7F852B47B9A300F3DC8F /* grothooksplash.json in Resources */ = {isa = PBXBuildFile; fileRef = 259E7F842B47B9A300F3DC8F /* grothooksplash.json */; };
+		259E7F8D2B4A768200F3DC8F /* ActionListPercentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F8C2B4A768200F3DC8F /* ActionListPercentResponse.swift */; };
+		259E7F8F2B4A79FB00F3DC8F /* ActionListPersentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F8E2B4A79FB00F3DC8F /* ActionListPersentModel.swift */; };
+		259E7F912B4A7BCA00F3DC8F /* ActionListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */; };
 		25BD95182B0894A200E72ADC /* ActionListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD95172B0894A200E72ADC /* ActionListTableViewCell.swift */; };
 		25BD951B2B089B9900E72ADC /* ActionListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951A2B089B9900E72ADC /* ActionListModel.swift */; };
 		25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951C2B08F6F600E72ADC /* InprogressViewController.swift */; };
@@ -252,6 +255,9 @@
 		259E7F782B42A68B00F3DC8F /* OnboardingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButtonView.swift; sourceTree = "<group>"; };
 		259E7F7A2B42ABA600F3DC8F /* OnboardingSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSelectViewController.swift; sourceTree = "<group>"; };
 		259E7F842B47B9A300F3DC8F /* grothooksplash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = grothooksplash.json; sourceTree = "<group>"; };
+		259E7F8C2B4A768200F3DC8F /* ActionListPercentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListPercentResponse.swift; sourceTree = "<group>"; };
+		259E7F8E2B4A79FB00F3DC8F /* ActionListPersentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListPersentModel.swift; sourceTree = "<group>"; };
+		259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListService.swift; sourceTree = "<group>"; };
 		25BD95172B0894A200E72ADC /* ActionListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListTableViewCell.swift; sourceTree = "<group>"; };
 		25BD951A2B089B9900E72ADC /* ActionListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListModel.swift; sourceTree = "<group>"; };
 		25BD951C2B08F6F600E72ADC /* InprogressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InprogressViewController.swift; sourceTree = "<group>"; };
@@ -444,6 +450,8 @@
 			isa = PBXGroup;
 			children = (
 				03B9AC612AF5624D00A5751C /* DTO.swift */,
+				259E7F882B4A755E00F3DC8F /* DTO */,
+				259E7F892B4A756500F3DC8F /* Model */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -574,6 +582,8 @@
 		03B9AC5E2AF561A200A5751C /* API */ = {
 			isa = PBXGroup;
 			children = (
+				259E7F872B4A6FAA00F3DC8F /* Auth */,
+				259E7F862B4A6FA100F3DC8F /* ActionList */,
 				03B9AC5F2AF561AD00A5751C /* API.swift */,
 			);
 			path = API;
@@ -827,6 +837,53 @@
 				259E7F6F2B3E95E600F3DC8F /* OnboardingViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		259E7F862B4A6FA100F3DC8F /* ActionList */ = {
+			isa = PBXGroup;
+			children = (
+				259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */,
+			);
+			path = ActionList;
+			sourceTree = "<group>";
+		};
+		259E7F872B4A6FAA00F3DC8F /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		259E7F882B4A755E00F3DC8F /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				259E7F8A2B4A757100F3DC8F /* ActionListDTO */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		259E7F892B4A756500F3DC8F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				259E7F8B2B4A757900F3DC8F /* ActionListModel */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		259E7F8A2B4A757100F3DC8F /* ActionListDTO */ = {
+			isa = PBXGroup;
+			children = (
+				259E7F8C2B4A768200F3DC8F /* ActionListPercentResponse.swift */,
+			);
+			path = ActionListDTO;
+			sourceTree = "<group>";
+		};
+		259E7F8B2B4A757900F3DC8F /* ActionListModel */ = {
+			isa = PBXGroup;
+			children = (
+				259E7F8E2B4A79FB00F3DC8F /* ActionListPersentModel.swift */,
+			);
+			path = ActionListModel;
 			sourceTree = "<group>";
 		};
 		25BD95162B08946D00E72ADC /* Cell */ = {
@@ -1108,6 +1165,7 @@
 				03115F8C2B27072A009D1517 /* LoginViewController.swift in Sources */,
 				03B9AC7E2AF5652E00A5751C /* UIButton+.swift in Sources */,
 				09DE08002B04FAEE00D7DF3D /* EmptySeedView.swift in Sources */,
+				259E7F8F2B4A79FB00F3DC8F /* ActionListPersentModel.swift in Sources */,
 				03B9AC742AF5648900A5751C /* UITextView+.swift in Sources */,
 				58E75FAC2B00C16900512FE2 /* InsightsViewModel.swift in Sources */,
 				58AB70AE2B2C88570061C072 /* MyPageThookBoxView.swift in Sources */,
@@ -1165,11 +1223,13 @@
 				03C356652B106AC800750758 /* CaveListViewModel.swift in Sources */,
 				03B9AC782AF564C400A5751C /* UILabel+.swift in Sources */,
 				250F7D732B145F4C00D9726F /* ActionListCompleteTableViewCell.swift in Sources */,
+				259E7F912B4A7BCA00F3DC8F /* ActionListService.swift in Sources */,
 				03B9AC6A2AF5638700A5751C /* UIResponder+.swift in Sources */,
 				03B9AC802AF5657500A5751C /* ColorLiterals.swift in Sources */,
 				259E7F7B2B42ABA600F3DC8F /* OnboardingSelectViewController.swift in Sources */,
 				5880F46D2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift in Sources */,
 				09CE00ED2B0DB1EA00CB42C4 /* CreateActionView.swift in Sources */,
+				259E7F8D2B4A768200F3DC8F /* ActionListPercentResponse.swift in Sources */,
 				034580972B36E343002DDEBA /* UICollectionView+.swift in Sources */,
 				033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */,
 				0322137E2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift in Sources */,
