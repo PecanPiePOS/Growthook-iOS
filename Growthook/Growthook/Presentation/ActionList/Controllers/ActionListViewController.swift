@@ -35,6 +35,8 @@ final class ActionListViewController: BaseViewController {
     // MARK: - Properties
     
     private var actionListReviewViewController: ActionListReviewViewController?
+    let actionListPersentProvider = MoyaProvider<ActionListService>(plugins: [NetworkLoggerPlugin()])
+    private var actionListPersent: ActionListPersentModel?
     
     // MARK: - Initializer
     
@@ -43,6 +45,7 @@ final class ActionListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setPage()
+        getActionListPersent()
     }
     
     override func bindViewModel() {
@@ -199,4 +202,29 @@ extension ActionListViewController: ActionListSegmentDelegate , PushToActionList
         }
     }
     
+}
+
+extension ActionListViewController {
+    private func getActionListPersent() {
+        actionListPersentProvider.request(.getActionListPercent(memberID: "1")) { result in
+            switch result {
+             case .success(let response):
+                 let statusCode = response.statusCode
+
+                 if statusCode >= 200 && statusCode < 300 {
+                     do {
+                         let data = try response.map(ActionListPercentResponse.self)
+                         self.actionListPersent = data.convertToActionListPersentModel()
+                         print(self.actionListPersent?.actionListPercent ?? "ActionListPersent is nil")
+                     } catch {
+                         print("Error parsing response data: \(error.localizedDescription)")
+                     }
+                 } else {
+                     print("Unexpected status code: \(statusCode)")
+                 }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
