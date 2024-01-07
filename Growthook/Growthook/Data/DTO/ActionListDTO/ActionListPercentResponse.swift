@@ -11,7 +11,7 @@ struct ActionListPercentResponse: Codable {
     let data: Int
     
     func convertToActionListPersentModel() -> ActionListPersentModel {
-        return ActionListPersentModel(actionListPersent: data)
+        return ActionListPersentModel(actionListPercent: data)
     }
 }
 
