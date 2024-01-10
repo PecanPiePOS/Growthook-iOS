@@ -18,6 +18,7 @@ class CaveListHalfModal: BaseViewController {
     // MARK: - UI Components
     
     private lazy var caveListTableView = UITableView(frame: .zero, style: .grouped)
+    private lazy var caveEmptyView = UIView()
     private let selectButton = UIButton()
     
     // MARK: - Properties
