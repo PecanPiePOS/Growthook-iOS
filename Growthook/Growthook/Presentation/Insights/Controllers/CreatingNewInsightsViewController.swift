@@ -35,13 +35,16 @@ final class CreatingNewInsightsViewController: BaseViewController {
                     break
                 case .networkLost:
                     self.showLoadingView(false)
-                    self.showAlertWithError(alertText: "네트워크 환경이 좋지 않아요!", alertMessage: "네트워크 연결 상태를 확인하고 다시 시도해주세요.")
+                    self.showAlertWithError(alertText: "네트워크 환경이 좋지 않아요!", alertMessage: "네트워크 연결 상태를 확인하고 다시 시도해주세요.") { _ in
+                        self.viewModel.inputs.cancelErrorAlert()
+                    }
                 case .loading:
                     self.showLoadingView(true)
                 case .error(let error):
-                    print(error.localizedDescription, "--------")
                     self.showLoadingView(false)
-                    self.showAlertWithError(alertText: "에러가 발생했어요!", alertMessage: "작성하신 글을 검토하고 다시 시도해주세요.", error: error)
+                    self.showAlertWithError(alertText: "에러가 발생했어요!", alertMessage: "작성하신 글을 검토하고 다시 시도해주세요.", error: error) { _ in
+                        self.viewModel.inputs.cancelErrorAlert()
+                    }
                 case .done:
                     self.showLoadingView(false)
                     // 넘어가기
@@ -348,7 +351,7 @@ extension CreatingNewInsightsViewController {
     func showAlertWithError(alertText: String, alertMessage: String, error: Error? = nil, handler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(
             title: alertText,
-            message: alertMessage + "\n\(error?.localizedDescription ?? "")",
+            message: alertMessage,
             preferredStyle: UIAlertController.Style.alert
         )
         alert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: handler))
