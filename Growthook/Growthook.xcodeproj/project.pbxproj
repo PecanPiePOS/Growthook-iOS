@@ -37,10 +37,12 @@
 		035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */; };
 		035701E72B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */; };
 		035701EA2B4EBA9600A9E47A /* GetCaveListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E92B4EBA9600A9E47A /* GetCaveListResponseDto.swift */; };
-		035701ED2B4EBF4800A9E47A /* GetSeedListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EC2B4EBF4800A9E47A /* GetSeedListResponseDto.swift */; };
+		035701ED2B4EBF4800A9E47A /* SeedListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EC2B4EBF4800A9E47A /* SeedListResponseDto.swift */; };
 		035701F02B4EF3B200A9E47A /* SeedListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EF2B4EF3B200A9E47A /* SeedListService.swift */; };
 		035701F32B4EFBB200A9E47A /* SeedListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F22B4EFBB200A9E47A /* SeedListAPI.swift */; };
 		035701F52B4F14BC00A9E47A /* InsightList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F42B4F14BC00A9E47A /* InsightList.swift */; };
+		035701F72B4F17E100A9E47A /* SeedAlarmResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */; };
+		035701F92B4F184800A9E47A /* CaveSeedListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F82B4F184800A9E47A /* CaveSeedListResponseDto.swift */; };
 		035DB2A72B00E6F200161872 /* InsightListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2A62B00E6F200161872 /* InsightListView.swift */; };
 		035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */; };
 		03B9AC542AF55FF900A5751C /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC532AF55FF900A5751C /* GeneralResponse.swift */; };
@@ -187,10 +189,12 @@
 		035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveMenuButton.swift; sourceTree = "<group>"; };
 		035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveCaveAlertViewController.swift; sourceTree = "<group>"; };
 		035701E92B4EBA9600A9E47A /* GetCaveListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCaveListResponseDto.swift; sourceTree = "<group>"; };
-		035701EC2B4EBF4800A9E47A /* GetSeedListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSeedListResponseDto.swift; sourceTree = "<group>"; };
+		035701EC2B4EBF4800A9E47A /* SeedListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListResponseDto.swift; sourceTree = "<group>"; };
 		035701EF2B4EF3B200A9E47A /* SeedListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListService.swift; sourceTree = "<group>"; };
 		035701F22B4EFBB200A9E47A /* SeedListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListAPI.swift; sourceTree = "<group>"; };
 		035701F42B4F14BC00A9E47A /* InsightList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightList.swift; sourceTree = "<group>"; };
+		035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedAlarmResponseDto.swift; sourceTree = "<group>"; };
+		035701F82B4F184800A9E47A /* CaveSeedListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveSeedListResponseDto.swift; sourceTree = "<group>"; };
 		035DB2A62B00E6F200161872 /* InsightListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListView.swift; sourceTree = "<group>"; };
 		035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListCollectionViewCell.swift; sourceTree = "<group>"; };
 		03B9AC532AF55FF900A5751C /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
@@ -444,7 +448,9 @@
 		035701EB2B4EBED500A9E47A /* Insight */ = {
 			isa = PBXGroup;
 			children = (
-				035701EC2B4EBF4800A9E47A /* GetSeedListResponseDto.swift */,
+				035701EC2B4EBF4800A9E47A /* SeedListResponseDto.swift */,
+				035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */,
+				035701F82B4F184800A9E47A /* CaveSeedListResponseDto.swift */,
 			);
 			path = Insight;
 			sourceTree = "<group>";
@@ -1128,7 +1134,7 @@
 				58EFF5DE2B445AE2003C3838 /* ServiceError.swift in Sources */,
 				034580872B2D6B98002DDEBA /* CaveDescriptionView.swift in Sources */,
 				03B9AC822AF5658F00A5751C /* FontLiterals.swift in Sources */,
-				035701ED2B4EBF4800A9E47A /* GetSeedListResponseDto.swift in Sources */,
+				035701ED2B4EBF4800A9E47A /* SeedListResponseDto.swift in Sources */,
 				035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */,
 				58AB70B12B2C90560061C072 /* MyPageListTableViewCell.swift in Sources */,
 				0322137A2B17642E00FF5CF1 /* RemoveAlertView.swift in Sources */,
@@ -1137,6 +1143,7 @@
 				03B9AC9D2AF7A9EB00A5751C /* TabBarItem.swift in Sources */,
 				032213802B177F8E00FF5CF1 /* RemoveInsightViewModel.swift in Sources */,
 				259E7F772B4060EB00F3DC8F /* PageContentsViewController.swift in Sources */,
+				035701F92B4F184800A9E47A /* CaveSeedListResponseDto.swift in Sources */,
 				033E9C1E2AFE63D40051A9E8 /* HomeViewModel.swift in Sources */,
 				58E75FAE2B00C1F000512FE2 /* CreatingNewInsightsView.swift in Sources */,
 				58EFF5D92B445A95003C3838 /* Networkable.swift in Sources */,
@@ -1257,6 +1264,7 @@
 				58E75F9A2B00B33F00512FE2 /* BaseView.swift in Sources */,
 				25EAFA5D2B02597800283CD8 /* ActionListSegmentedView.swift in Sources */,
 				09A7D7022B00DFC6005F8821 /* BottomCTAButton.swift in Sources */,
+				035701F72B4F17E100A9E47A /* SeedAlarmResponseDto.swift in Sources */,
 				03B9AC8B2AF5660D00A5751C /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -155,7 +155,7 @@ extension InsightListCollectionViewCell {
         isScrapButtonTapped = false
     }
     
-    func configureCell(_ model: GetSeedListResponseDto) {
+    func configureCell(_ model: SeedListResponseDto) {
         titleLabel.text = model.insight
         dueTimeLabel.text = "\(model.remainingDays)일 후 잠금"
         isLock = model.isLocked

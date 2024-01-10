@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct GetSeedAlarmResponseDto: Codable {
+struct SeedAlarmResponseDto: Codable {
     let seedCount: Int
 }

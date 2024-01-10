@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetSeedListResponseDto: Codable {
+struct SeedListResponseDto: Codable {
     let seedId: Int
     let insight: String
     let remainingDays: Int

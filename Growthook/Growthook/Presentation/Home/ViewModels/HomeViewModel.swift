@@ -23,7 +23,7 @@ protocol HomeViewModelInputs {
 
 protocol HomeViewModelOutputs {
     var caveProfile: BehaviorRelay<[CaveProfile]> { get }
-    var insightList: BehaviorRelay<[GetSeedListResponseDto]> { get }
+    var insightList: BehaviorRelay<[SeedListResponseDto]> { get }
     var insightLongTap: PublishSubject<IndexPath> { get }
     var insightBackground: PublishSubject<IndexPath> { get }
     var pushToInsightDetail: PublishSubject<IndexPath> { get }
@@ -40,7 +40,7 @@ protocol HomeViewModelType {
 final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewModelType {
     
     var caveProfile: BehaviorRelay<[CaveProfile]> = BehaviorRelay(value: [])
-    var insightList: BehaviorRelay<[GetSeedListResponseDto]> = BehaviorRelay<[GetSeedListResponseDto]>(value: [])
+    var insightList: BehaviorRelay<[SeedListResponseDto]> = BehaviorRelay<[SeedListResponseDto]>(value: [])
     var insightLongTap: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightBackground: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     let reloadInsightSubject: PublishSubject<Void> = PublishSubject<Void>()

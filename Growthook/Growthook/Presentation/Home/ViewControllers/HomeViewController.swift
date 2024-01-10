@@ -37,7 +37,7 @@ final class HomeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = HomeViewModel()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-    private var insightList: [GetSeedListResponseDto] = []
+    private var insightList: [SeedListResponseDto] = []
     
     // MARK: - View Life Cycle
     
