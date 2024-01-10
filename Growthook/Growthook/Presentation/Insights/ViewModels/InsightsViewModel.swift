@@ -10,23 +10,15 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-/// Still Working... 🚧
-///
-///
-struct InsightCaveModel {
-    var caveId: Int
-    var caveTitle: String
-}
-
-struct InsightPeriodModel {
-    var periodMonthAsInteger: Int
-    var periodTitle: String
-}
-
 protocol InsightsViewModelInput {
+    func addInsight(content: String)
+    func addMemo(content: String)
     func selectCaveToAdd(of cave: InsightCaveModel)
+    func addReference(content: String)
+    func addReferenceUrl(content: String)
     func selectGoalPeriodToAdd(of period: InsightPeriodModel)
     func resetSelectedCave()
+    func setPeriodSet()
 }
 
 protocol InsightsViewModelOutput {
@@ -34,6 +26,7 @@ protocol InsightsViewModelOutput {
     var selectedCave: BehaviorRelay<InsightCaveModel?> { get }
     var availablePeriodList: [InsightPeriodModel] { get }
     var selectedPeriod: BehaviorRelay<InsightPeriodModel?> { get }
+    var isRequirementsFilled: BehaviorRelay<Bool> { get }
 }
 
 protocol InsightsViewModelType {
@@ -43,10 +36,11 @@ protocol InsightsViewModelType {
 
 final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, InsightsViewModelType {
     
-    var availablePeriodList: [InsightPeriodModel]
+    var availablePeriodList: [InsightPeriodModel] = []
     var myOwnCaves: Observable<[InsightCaveModel]>
     var selectedCave = BehaviorRelay<InsightCaveModel?>(value: nil)
     var selectedPeriod = BehaviorRelay<InsightPeriodModel?>(value: nil)
+    var isRequirementsFilled = BehaviorRelay<Bool>(value: false)
     
     var inputs: InsightsViewModelInput { return self }
     var outputs: InsightsViewModelOutput { return self }
@@ -61,26 +55,27 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
             .init(caveId: 5, caveTitle: "Cave16"),
             .init(caveId: 6, caveTitle: "Cave17")
         ])
+    }
+    
+    func addInsight(content: String) {
         
-        availablePeriodList = [
-            .init(periodMonthAsInteger: 0, periodTitle: "선택"),
-            .init(periodMonthAsInteger: 1, periodTitle: "1개월"),
-            .init(periodMonthAsInteger: 2, periodTitle: "2개월"),
-            .init(periodMonthAsInteger: 3, periodTitle: "3개월"),
-            .init(periodMonthAsInteger: 4, periodTitle: "4개월"),
-            .init(periodMonthAsInteger: 5, periodTitle: "5개월"),
-            .init(periodMonthAsInteger: 6, periodTitle: "6개월"),
-            .init(periodMonthAsInteger: 7, periodTitle: "7개월"),
-            .init(periodMonthAsInteger: 8, periodTitle: "8개월"),
-            .init(periodMonthAsInteger: 9, periodTitle: "9개월"),
-            .init(periodMonthAsInteger: 10, periodTitle: "10개월"),
-            .init(periodMonthAsInteger: 11, periodTitle: "11개월"),
-            .init(periodMonthAsInteger: 12, periodTitle: "12개월"),
-        ]
+    }
+    
+    func addMemo(content: String) {
+        
     }
     
     func selectCaveToAdd(of cave: InsightCaveModel) {
         selectedCave.accept(cave)
+    }
+    
+    
+    func addReference(content: String) {
+        
+    }
+    
+    func addReferenceUrl(content: String) {
+        
     }
     
     func selectGoalPeriodToAdd(of period: InsightPeriodModel) {
@@ -89,5 +84,9 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     
     func resetSelectedCave() {
         selectedCave.accept(nil)
+    }
+    
+    func setPeriodSet() {
+        availablePeriodList = PeriodModel.periodSetToSelect
     }
 }
