@@ -133,6 +133,12 @@
 		582F9C482B304B5E0000D161 /* TextFieldBlockWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582F9C472B304B5E0000D161 /* TextFieldBlockWithTitle.swift */; };
 		582F9C4A2B304B720000D161 /* TextViewBlockWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582F9C492B304B720000D161 /* TextViewBlockWithTitle.swift */; };
 		584EDAD72B4A57E60094872A /* Observable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584EDAD62B4A57E60094872A /* Observable+.swift */; };
+		5866260E2B4E654E0084468C /* MyPageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866260D2B4E654E0084468C /* MyPageDTO.swift */; };
+		586626102B4E65550084468C /* MyPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866260F2B4E65550084468C /* MyPageModel.swift */; };
+		586626132B4E656A0084468C /* InsightsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586626122B4E656A0084468C /* InsightsDTO.swift */; };
+		586626152B4E65720084468C /* InsightsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586626142B4E65720084468C /* InsightsModel.swift */; };
+		586626192B4E658F0084468C /* InsightsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586626182B4E658F0084468C /* InsightsService.swift */; };
+		5866261B2B4E65970084468C /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866261A2B4E65970084468C /* MyPageService.swift */; };
 		5880F4672B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */; };
 		5880F46B2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F46A2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift */; };
 		5880F46D2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F46C2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift */; };
@@ -272,6 +278,12 @@
 		582F9C472B304B5E0000D161 /* TextFieldBlockWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldBlockWithTitle.swift; sourceTree = "<group>"; };
 		582F9C492B304B720000D161 /* TextViewBlockWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewBlockWithTitle.swift; sourceTree = "<group>"; };
 		584EDAD62B4A57E60094872A /* Observable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+.swift"; sourceTree = "<group>"; };
+		5866260D2B4E654E0084468C /* MyPageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDTO.swift; sourceTree = "<group>"; };
+		5866260F2B4E65550084468C /* MyPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageModel.swift; sourceTree = "<group>"; };
+		586626122B4E656A0084468C /* InsightsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDTO.swift; sourceTree = "<group>"; };
+		586626142B4E65720084468C /* InsightsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsModel.swift; sourceTree = "<group>"; };
+		586626182B4E658F0084468C /* InsightsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsService.swift; sourceTree = "<group>"; };
+		5866261A2B4E65970084468C /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
 		5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveTableViewCell.swift; sourceTree = "<group>"; };
 		5880F46A2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveSheetViewController.swift; sourceTree = "<group>"; };
 		5880F46C2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectPeriodSheetViewController.swift; sourceTree = "<group>"; };
@@ -452,6 +464,8 @@
 		03B9AC492AF55E3300A5751C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				586626112B4E65590084468C /* Insights */,
+				5866260C2B4E65410084468C /* MyPage */,
 				03B9AC612AF5624D00A5751C /* DTO.swift */,
 			);
 			path = Data;
@@ -586,6 +600,8 @@
 		03B9AC5E2AF561A200A5751C /* API */ = {
 			isa = PBXGroup;
 			children = (
+				586626172B4E65810084468C /* Insights */,
+				586626162B4E65780084468C /* MyPage */,
 				03B9AC5F2AF561AD00A5751C /* API.swift */,
 			);
 			path = API;
@@ -869,6 +885,40 @@
 			path = NewUITextComponent;
 			sourceTree = "<group>";
 		};
+		5866260C2B4E65410084468C /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				5866260D2B4E654E0084468C /* MyPageDTO.swift */,
+				5866260F2B4E65550084468C /* MyPageModel.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		586626112B4E65590084468C /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				586626122B4E656A0084468C /* InsightsDTO.swift */,
+				586626142B4E65720084468C /* InsightsModel.swift */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
+		586626162B4E65780084468C /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				5866261A2B4E65970084468C /* MyPageService.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		586626172B4E65810084468C /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				586626182B4E658F0084468C /* InsightsService.swift */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
 		5880F4652B342329004C1494 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -1095,6 +1145,7 @@
 				03B9AC662AF5630200A5751C /* NSObject+.swift in Sources */,
 				034580852B2D6354002DDEBA /* CaveDetailView.swift in Sources */,
 				033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */,
+				5866260E2B4E654E0084468C /* MyPageDTO.swift in Sources */,
 				03431ACF2B3D51220017EA52 /* Encodable+.swift in Sources */,
 				09A7D7052B00EC03005F8821 /* CreateCaveView.swift in Sources */,
 				5880F46B2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift in Sources */,
@@ -1103,6 +1154,7 @@
 				03C356612B0F533E00750758 /* CaveListHalfModal.swift in Sources */,
 				582F9C482B304B5E0000D161 /* TextFieldBlockWithTitle.swift in Sources */,
 				09A7D7002B00DED0005F8821 /* CreateCaveViewModel.swift in Sources */,
+				586626152B4E65720084468C /* InsightsModel.swift in Sources */,
 				581D22982B3356150068E58D /* SelectBlockWithTitle.swift in Sources */,
 				03B9AC842AF565A300A5751C /* ImageLiterals.swift in Sources */,
 				581D22902B32A9240068E58D /* Reactive+UITextField.swift in Sources */,
@@ -1175,7 +1227,9 @@
 				03B9AC7A2AF564FC00A5751C /* UITableView+.swift in Sources */,
 				032213A52B1C54EB00FF5CF1 /* ScrapOnlyButton.swift in Sources */,
 				03C3565F2B0B702900750758 /* InsightTapBottomSheet.swift in Sources */,
+				586626192B4E658F0084468C /* InsightsService.swift in Sources */,
 				03B9AC762AF564AE00A5751C /* UIStackView+.swift in Sources */,
+				586626132B4E656A0084468C /* InsightsDTO.swift in Sources */,
 				03B9AC8F2AF5667300A5751C /* MakeVibrate.swift in Sources */,
 				58E75FB22B00CF2100512FE2 /* UITextFieldWithTintedWhenEdited.swift in Sources */,
 				259E7F792B42A68B00F3DC8F /* OnboardingButtonView.swift in Sources */,
@@ -1196,8 +1250,10 @@
 				09CE00ED2B0DB1EA00CB42C4 /* CreateActionView.swift in Sources */,
 				034580972B36E343002DDEBA /* UICollectionView+.swift in Sources */,
 				033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */,
+				586626102B4E65550084468C /* MyPageModel.swift in Sources */,
 				0322137E2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift in Sources */,
 				58E75F9A2B00B33F00512FE2 /* BaseView.swift in Sources */,
+				5866261B2B4E65970084468C /* MyPageService.swift in Sources */,
 				25EAFA5D2B02597800283CD8 /* ActionListSegmentedView.swift in Sources */,
 				09A7D7022B00DFC6005F8821 /* BottomCTAButton.swift in Sources */,
 				03B9AC622AF5624D00A5751C /* DTO.swift in Sources */,
