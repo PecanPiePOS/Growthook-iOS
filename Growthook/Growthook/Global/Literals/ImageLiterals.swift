@@ -97,4 +97,9 @@ enum ImageLiterals {
     enum MyPage {
         static var ic_mypage_profileImage: UIImage { .load(name: "ic_mypage").withRenderingMode(.alwaysTemplate).withTintColor(.gray100) }
     }
+    
+    enum Menu {
+        static var ic_change: UIImage { .load(name: "ic_change") }
+        static var ic_delete: UIImage { .load(name: "ic_delete") }
+    }
 }
