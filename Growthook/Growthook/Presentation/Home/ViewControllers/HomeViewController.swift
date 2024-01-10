@@ -37,7 +37,7 @@ final class HomeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = HomeViewModel()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-    private var insightDummyData = InsightList.insightListDummyData()
+    private var insightList: [Seed] = []
     
     // MARK: - View Life Cycle
     
@@ -72,6 +72,7 @@ final class HomeViewController: BaseViewController {
             .bind(to: insightListView.insightCollectionView.rx
                 .items(cellIdentifier: InsightListCollectionViewCell.className,
                        cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
+                self.insightList.append(model)
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
@@ -298,7 +299,7 @@ extension HomeViewController {
     
     private func pushToInsightDetail(at indexPath: IndexPath) {
         insightListView.insightCollectionView.deselectItem(at: indexPath, animated: false)
-        if insightDummyData[indexPath.item].InsightStatus == .lock {
+        if insightList[indexPath.item].isLocked {
             view.addSubview(unLockAlertView)
             unLockAlertView.snp.makeConstraints {
                 $0.edges.equalToSuperview()
@@ -343,7 +344,7 @@ extension HomeViewController {
         if gesture.state == .began {
             // 꾹 눌림이 시작될 때 실행할 코드
             if let indexPath = insightListView.insightCollectionView.indexPathForItem(at: location) {
-                if insightDummyData[indexPath.item].InsightStatus == .lock {
+                if insightList[indexPath.item].isLocked {
                     return
                 } else {
                     viewModel.inputs.handleLongPress(at: indexPath)

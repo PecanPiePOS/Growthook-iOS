@@ -33,7 +33,8 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
             scrapButtonTapped()
         }
     }
-    var cellType: InsightStatus?
+    var isLock: Bool = false
+    var hasActionPlan: Bool = false
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -154,28 +155,26 @@ extension InsightListCollectionViewCell {
         isScrapButtonTapped = false
     }
     
-    func configureCell(_ model: InsightList) {
-        titleLabel.text = model.title
-        dueTimeLabel.text = model.dueTime
-        cellType = model.InsightStatus
-        isScrapButtonTapped = model.scrapStatus
+    func configureCell(_ model: Seed) {
+        titleLabel.text = model.insight
+        dueTimeLabel.text = "\(model.remainingDays)일 후 잠금"
+        isLock = model.isLocked
+        isScrapButtonTapped = model.isScraped
+        hasActionPlan = model.hasActionPlan
         setCellStyle()
     }
     
     func setCellStyle() {
         scrapButtonTapped()
-        switch cellType {
-        case .lock:
+        if isLock {
             lockCellStyle()
-            cellType = .lock
-        case .dark:
+            isLock = true
+        }
+        
+        if hasActionPlan {
             darkCellStyle()
-            cellType = .dark
-        case .light:
+        } else {
             lightCellStyle()
-            cellType = .light
-        case .none:
-            return
         }
     }
     
@@ -214,13 +213,10 @@ extension InsightListCollectionViewCell {
     
     func scrapButtonTapped() {
         let buttonImage: UIImage
-        switch cellType {
-        case .light:
-            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
-        case .dark:
+        if hasActionPlan {
             buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_dark_on : ImageLiterals.Home.btn_scrap_dark_off
-        case .none, .lock:
-            return
+        } else {
+            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
         }
         scrapButton.setImage(buttonImage, for: .normal)
     }

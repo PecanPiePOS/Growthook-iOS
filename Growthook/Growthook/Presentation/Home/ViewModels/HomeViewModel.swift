@@ -23,7 +23,7 @@ protocol HomeViewModelInputs {
 
 protocol HomeViewModelOutputs {
     var caveProfile: BehaviorRelay<[CaveProfile]> { get }
-    var insightList: BehaviorRelay<[InsightList]> { get }
+    var insightList: BehaviorRelay<[Seed]> { get }
     var insightLongTap: PublishSubject<IndexPath> { get }
     var insightBackground: PublishSubject<IndexPath> { get }
     var pushToInsightDetail: PublishSubject<IndexPath> { get }
@@ -40,7 +40,7 @@ protocol HomeViewModelType {
 final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewModelType {
     
     var caveProfile: BehaviorRelay<[CaveProfile]> = BehaviorRelay(value: [])
-    var insightList: BehaviorRelay<[InsightList]> = BehaviorRelay(value: [])
+    var insightList: BehaviorRelay<[Seed]> = BehaviorRelay(value: [])
     var insightLongTap: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightBackground: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     let reloadInsightSubject: PublishSubject<Void> = PublishSubject<Void>()
@@ -55,7 +55,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     init() {
         self.caveProfile.accept(CaveProfile.caveprofileDummyData())
-        self.insightList.accept(InsightList.insightListDummyData())
+        self.insightList.accept(GetSeedListDto.seedListDummy())
     }
     
     func handleLongPress(at indexPath: IndexPath) {
