@@ -17,6 +17,8 @@ import RxSwift
 enum ClearInsightType {
     case move
     case delete
+    case none
+    case deleteCave
 }
 
 final class HomeViewController: BaseViewController {
@@ -352,11 +354,16 @@ extension HomeViewController {
     @objc func clearNotification(_ notification: Notification) {
         updateInsightList()
         if let info = notification.userInfo?["type"] as? ClearInsightType {
+            print(info)
             switch info {
             case .move:
                 view.showToast(message: "씨앗을 옮겨 심었어요")
             case .delete:
                 view.showToast(message: "씨앗이 삭제되었어요")
+            case .none:
+                return
+            case .deleteCave:
+                view.showToast(message: "동굴이 삭제되었어요")
             }
         }
     }

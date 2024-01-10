@@ -26,9 +26,10 @@ enum I18N {
             static let use = "사용하기"
         }
         
-        enum RemoveInsight {
+        enum RemoveAlert {
             static let title = "정말로 삭제할까요?"
-            static let description = "삭제한 인사이트는 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
+            static let removeInsight = "삭제한 인사이트는 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
+            static let removeCave = "삭제한 보관함은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
             static let keep = "유지하기"
             static let remove = "삭제하기"
         }
@@ -47,6 +48,7 @@ enum I18N {
         static let notiDescription2 = "일 이하로\n남은 씨앗이 "
         static let notiDescription3 = "개 있어요!"
         static let caveName = "동굴 이름"
+        static let emptyCaveList = "아직 만들어진 동굴이 없어요"
     }
     
     enum CaveDetail {

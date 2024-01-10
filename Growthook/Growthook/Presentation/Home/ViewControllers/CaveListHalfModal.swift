@@ -18,6 +18,7 @@ class CaveListHalfModal: BaseViewController {
     // MARK: - UI Components
     
     private lazy var caveListTableView = UITableView(frame: .zero, style: .grouped)
+    private lazy var caveEmptyView = CaveListEmptyView()
     private let selectButton = UIButton()
     
     // MARK: - Properties
@@ -42,6 +43,7 @@ class CaveListHalfModal: BaseViewController {
                     }
                 }
                 .disposed(by: disposeBag)
+        
         viewModel.outputs.selectedCellIndex
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
@@ -50,12 +52,21 @@ class CaveListHalfModal: BaseViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
         selectButton.rx.tap
             .bind { [weak self] in
                 self?.viewModel.inputs.selectButtonTap()
             }
             .disposed(by: disposeBag)
+        
         viewModel.outputs.moveToCave
+            .subscribe(onNext: { [weak self] in
+                self?.clearInsightMove()
+                self?.dismissToHomeVC()
+            })
+            .disposed(by: disposeBag)
+        
+        caveEmptyView.checkButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.clearInsight()
                 self?.dismissToHomeVC()
@@ -75,6 +86,7 @@ class CaveListHalfModal: BaseViewController {
             $0.backgroundColor = .clear
             $0.separatorStyle = .singleLine
             $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            $0.isHidden = true
         }
         
         selectButton.do {
@@ -82,6 +94,7 @@ class CaveListHalfModal: BaseViewController {
             $0.backgroundColor = .green400
             $0.titleLabel?.font = .fontGuide(.body1_bold)
             $0.makeCornerRound(radius: 10)
+            $0.isHidden = true
         }
     }
     
@@ -89,12 +102,16 @@ class CaveListHalfModal: BaseViewController {
     
     override func setLayout() {
         
-        self.view.addSubviews(caveListTableView, selectButton)
+        self.view.addSubviews(caveListTableView, selectButton, caveEmptyView)
         
         caveListTableView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(60)
+        }
+        
+        caveEmptyView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         selectButton.snp.makeConstraints {
@@ -125,11 +142,19 @@ class CaveListHalfModal: BaseViewController {
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-    private func clearInsight() {
+    private func clearInsightMove() {
         NotificationCenter.default.post(
             name: deSelectInsightNotification,
             object: nil,
             userInfo: ["type": ClearInsightType.move]
+        )
+    }
+    
+    private func clearInsight() {
+        NotificationCenter.default.post(
+            name: deSelectInsightNotification,
+            object: nil,
+            userInfo: ["type": ClearInsightType.none]
         )
     }
 }
