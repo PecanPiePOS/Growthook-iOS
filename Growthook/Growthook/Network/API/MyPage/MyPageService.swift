@@ -64,6 +64,10 @@ struct MyPageService: Networkable {
     typealias Target = MyPageTarget
     private static let provider = makeProvider()
     
+    /**
+     유저의 이름과 메일 정보를 호출합니다.
+     - parameter memberId: Int
+     */
     static func getUserInfo(with memberId: Int) -> Observable<MyPageUserInfoResponse> {
         return provider.rx.request(.getUserProfile(memberId: memberId))
             .asObservable()
@@ -71,6 +75,10 @@ struct MyPageService: Networkable {
             .decode(decodeType: MyPageUserInfoResponse.self)
     }
     
+    /**
+     번 쑥 정보를 호출합니다.
+     - parameter memberId: Int
+     */
     static func getEarnedSsuck(with memberId: Int) -> Observable<MyPageEarnedSsukResponse> {
         return provider.rx.request(.getEarnedSsuk(memberId: memberId))
             .asObservable()
@@ -78,10 +86,14 @@ struct MyPageService: Networkable {
             .decode(decodeType: MyPageEarnedSsukResponse.self)
     }
     
-    static func getSpentSsuk(with memberId: Int) -> Observable<MyPageEarnedSsukResponse> {
+    /**
+     사용한 쑥 정보를 호출합니다.
+     - parameter memberId: Int
+     */
+    static func getSpentSsuk(with memberId: Int) -> Observable<MyPageSpentSsukResponse> {
         return provider.rx.request(.getSpentSsuk(memberId: memberId))
             .asObservable()
             .mapError()
-            .decode(decodeType: MyPageEarnedSsukResponse.self)
+            .decode(decodeType: MyPageSpentSsukResponse.self)
     }
 }
