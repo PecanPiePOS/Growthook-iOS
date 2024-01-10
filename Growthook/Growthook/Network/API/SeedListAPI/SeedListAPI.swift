@@ -20,9 +20,7 @@ final class SeedListAPI {
     public private(set) var caveSeedListData: GeneralResponse<[CaveSeedListResponseDto]>?
     public private(set) var seedAlarmData: GeneralResponse<SeedAlarmResponseDto>?
     public private(set) var seedMoveData: GeneralResponse<SeedMoveRequestDto>?
-    
     public private(set) var patchSeedData: GeneralResponse<PatchSeedRequestDto>?
-    
     
     // MARK: - GET
     /// 인사이트 전체 조회
