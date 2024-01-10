@@ -59,6 +59,7 @@ final class HomeViewController: BaseViewController {
     }
     
     override func bindViewModel() {
+        
         viewModel.outputs.caveProfile
             .bind(to: homeCaveView.caveCollectionView.rx
                 .items(cellIdentifier: CaveCollectionViewCell.className,
