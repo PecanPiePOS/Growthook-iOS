@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+struct InsightPostRequest: Codable {
+    let insight, memo, source: String
+    let url: String?
+    let goalMonth: Int
+}
+
+struct InsightPostResponse: Codable {
+    let seedId: Int
+}
