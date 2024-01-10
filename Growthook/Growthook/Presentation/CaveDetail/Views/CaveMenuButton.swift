@@ -16,7 +16,7 @@ final class CaveMenuButton: UIButton {
     
     private lazy var image = UIImage()
     private lazy var title = AttributedString()
-    
+    private lazy var color = UIColor()
     
     // MARK: - Initializer
 
