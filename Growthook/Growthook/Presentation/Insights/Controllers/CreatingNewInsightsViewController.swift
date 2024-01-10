@@ -26,16 +26,20 @@ final class CreatingNewInsightsViewController: BaseViewController {
     
     // MARK: - Edit Status Actions - Scroll
     override func bindViewModel() {
-        creatingContentView.insightTextView.textViewBlock
-            .rxEditingAction
+        Observable.combineLatest(
+            creatingContentView.insightTextView.textViewBlock
+            .rxEditingAction,
+            creatingContentView.insightTextView.textViewBlock.rx.text.distinctUntilChanged()
+        )
             .observe(on: MainScheduler.asyncInstance)
-            .bind { [weak self] event in
-                guard let self else { return }
+            .bind { [weak self] event, text in
+                guard let self, let text else { return }
                 switch event {
                 case .editingDidBegin:
                     let point = self.creatingContentView.insightTextView.frame.origin
                     scrollToNewPoint(currentPoint: point)
                 case .editingDidEnd:
+                    self.viewModel.inputs.addInsight(content: text)
                     scrollToTop()
                 default:
                     break
@@ -51,15 +55,20 @@ final class CreatingNewInsightsViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        creatingContentView.memoTextView.textViewBlock
-            .rxEditingAction
+        Observable.combineLatest(
+            creatingContentView.memoTextView.textViewBlock
+            .rxEditingAction,
+            creatingContentView.memoTextView.textViewBlock.rx.text.distinctUntilChanged()
+        )
             .observe(on: MainScheduler.asyncInstance)
-            .bind { [weak self] event in
-                guard let self else { return }
+            .bind { [weak self] event, text in
+                guard let self, let text else { return }
                 switch event {
                 case .editingDidBegin:
                     let point = self.creatingContentView.memoTextView.frame.origin
                     scrollToNewPoint(currentPoint: point)
+                case .editingDidEnd:
+                    self.viewModel.inputs.addMemo(content: text)
                 default:
                     break
                 }
@@ -78,11 +87,14 @@ final class CreatingNewInsightsViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-        creatingContentView.referenceTextField.textFieldBlock
-            .rxEditingAction
+        Observable.combineLatest(
+            creatingContentView.referenceTextField.textFieldBlock
+            .rxEditingAction,
+            creatingContentView.referenceTextField.textFieldBlock.rx.text.distinctUntilChanged()
+        )
             .observe(on: MainScheduler.asyncInstance)
-            .bind { [weak self] event in
-                guard let self else { return }
+            .bind { [weak self] event, text in
+                guard let self, let text else { return }
                 let textField = self.creatingContentView.referenceTextField
                 switch event {
                 case .editingDidBegin:
@@ -92,19 +104,24 @@ final class CreatingNewInsightsViewController: BaseViewController {
                     scrollToNewPoint(currentPoint: point, height: height)
                 case .editingDidEnd:
                     textField.textFieldBlock.unfocusWhenDidEndEditing()
+                    self.viewModel.inputs.addReference(content: text)
                     scrollToBottom()
                 case .editingDidEndOnExit:
-                    self.creatingContentView.referencURLTextField.textFieldBlock.becomeFirstResponder()
+                    self.viewModel.inputs.addReference(content: text)
+                    self.resignFirstResponder()
                 default:
                     break
                 }
             }
             .disposed(by: disposeBag)
         
-        creatingContentView.referencURLTextField.textFieldBlock.rxEditingAction
+        Observable.combineLatest(
+            creatingContentView.referencURLTextField.textFieldBlock.rxEditingAction,
+            creatingContentView.referencURLTextField.textFieldBlock.rx.text.distinctUntilChanged()
+        )
             .observe(on: MainScheduler.asyncInstance)
-            .bind { [weak self] event in
-                guard let self else { return }
+            .bind { [weak self] event, text in
+                guard let self, let text else { return }
                 let textField = self.creatingContentView.referencURLTextField
                 switch event {
                 case .editingDidBegin:
@@ -114,14 +131,23 @@ final class CreatingNewInsightsViewController: BaseViewController {
                     scrollToNewPoint(currentPoint: point, height: height)
                 case .editingDidEnd:
                     textField.textFieldBlock.unfocusWhenDidEndEditing()
+                    self.viewModel.inputs.addReferenceUrl(content: text)
                     scrollToBottom()
+                case .editingDidEndOnExit:
+                    self.resignFirstResponder()
                 default:
                     break
                 }
             }
             .disposed(by: disposeBag)
         
-        // MARK: - Button Actions - Present
+        // MARK: - Button Actions - Present/Navigation
+        customNavigationView.rxBackButtonTapControl
+            .bind { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         creatingContentView.selectCaveView.rxButtonTapControl
             .bind { [weak self] in
                 guard let self else { return }
@@ -136,7 +162,22 @@ final class CreatingNewInsightsViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        // MARK: - Button Actions - Post
+        customNavigationView.rxDoneButtonTapControl
+            .bind { [weak self] in
+                guard let self else { return }
+                self.viewModel.inputs.postNewInsight()
+            }
+            .disposed(by: disposeBag)
+        
         // MARK: - Bind UI With Data
+        viewModel.outputs.isPostingValid
+            .bind { [weak self] isValid in
+                guard let self else { return }
+                self.customNavigationView.isButtonEnabled(isValid)
+            }
+            .disposed(by: disposeBag)
+        
         viewModel.outputs.selectedCave
             .bind { [weak self] cave in
                 guard let self else { return }
@@ -216,6 +257,8 @@ extension CreatingNewInsightsViewController {
     
     private func presentPeriodViewController() {
         let goalPeriodBottomSheetViewController = InsightSelectPeriodSheetViewController(viewModel: self.viewModel)
+        viewModel.inputs.setPeriodDataWhenSheetIsPresented()
+        
         goalPeriodBottomSheetViewController.modalPresentationStyle = .pageSheet
         if let sheet = goalPeriodBottomSheetViewController.sheetPresentationController {
             sheet.detents = [
@@ -232,7 +275,6 @@ extension CreatingNewInsightsViewController {
 extension CreatingNewInsightsViewController: UIScrollViewDelegate {
  
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print(targetContentOffset.pointee)
         currentScrollCoordinates = targetContentOffset.pointee
     }
     
