@@ -303,6 +303,8 @@ extension CaveDetailViewController {
                 view.showToast(message: "씨앗이 삭제되었어요")
             case .none:
                 return
+            case .deleteCave:
+                view.showToast(message: "동굴이 삭제되었어요")
             }
         }
     }

@@ -20,6 +20,18 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
     private lazy var changeCaveButton = CaveMenuButton(buttonTitle: "수정하기", buttonImage: ImageLiterals.Menu.ic_change, textColor: .white000)
     private lazy var deleteCaveButton = CaveMenuButton(buttonTitle: "삭제하기", buttonImage: ImageLiterals.Menu.ic_delete, textColor: .red200)
     
+    // MARK: - Properties
+    
+    private let disposeBag = DisposeBag()
+    
+    override func bindViewModel() {
+        deleteCaveButton.rx.tap
+            .bind { [weak self] in
+                self?.addRemoveCaveAlert()
+            }
+            .disposed(by: disposeBag)
+    }
+    
     // MARK: - UI Components Property
     
     override func setStyles() {
@@ -54,5 +66,16 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
             $0.horizontalEdges.equalToSuperview().inset(16)
             $0.height.equalTo(SizeLiterals.Screen.screenHeight * 50 / 812)
         }
+    }
+}
+
+extension CaveDetailMenuBottomSheet {
+    
+    // MARK: - Methods
+    
+    private func addRemoveCaveAlert() {
+        let removeCaveAlertVC = RemoveCaveAlertViewController()
+        removeCaveAlertVC.modalPresentationStyle = .overFullScreen
+        self.present(removeCaveAlertVC, animated: false, completion: nil)
     }
 }

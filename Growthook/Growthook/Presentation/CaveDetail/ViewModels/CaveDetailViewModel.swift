@@ -11,11 +11,11 @@ import RxSwift
 import RxCocoa
 
 protocol CaveDetailViewModelInputs {
-
+    func deleteButtonTapped()
 }
 
 protocol CaveDetailViewModelOutputs {
-
+    var popToHome: PublishSubject<Void> { get }
 }
 
 protocol CaveDetailViewModelType {
@@ -25,9 +25,14 @@ protocol CaveDetailViewModelType {
 
 final class CaveDetailViewModel: CaveDetailViewModelInputs, CaveDetailViewModelOutputs, CaveDetailViewModelType {
     
+    var popToHome: PublishSubject<Void> = PublishSubject<Void>()
     
     var inputs: CaveDetailViewModelInputs { return self }
     var outputs: CaveDetailViewModelOutputs { return self }
     
     init() {}
+    
+    func deleteButtonTapped() {
+        self.popToHome.onNext(())
+    }
 }

@@ -35,6 +35,7 @@
 		035701E12B4E6DA700A9E47A /* CaveListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E02B4E6DA700A9E47A /* CaveListEmptyView.swift */; };
 		035701E32B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E22B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift */; };
 		035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */; };
+		035701E72B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */; };
 		035DB2A72B00E6F200161872 /* InsightListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2A62B00E6F200161872 /* InsightListView.swift */; };
 		035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */; };
 		035DB2AD2B01041B00161872 /* InsightList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AC2B01041B00161872 /* InsightList.swift */; };
@@ -169,6 +170,7 @@
 		035701E02B4E6DA700A9E47A /* CaveListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cave\U0010ListEmptyView.swift"; sourceTree = "<group>"; };
 		035701E22B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailMenuBottomSheet.swift; sourceTree = "<group>"; };
 		035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveMenuButton.swift; sourceTree = "<group>"; };
+		035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveCaveAlertViewController.swift; sourceTree = "<group>"; };
 		035DB2A62B00E6F200161872 /* InsightListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListView.swift; sourceTree = "<group>"; };
 		035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListCollectionViewCell.swift; sourceTree = "<group>"; };
 		035DB2AC2B01041B00161872 /* InsightList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightList.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 			children = (
 				034580812B2D628F002DDEBA /* CaveDetailViewController.swift */,
 				035701E22B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift */,
+				035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1119,6 +1122,7 @@
 				03B9AC782AF564C400A5751C /* UILabel+.swift in Sources */,
 				250F7D732B145F4C00D9726F /* ActionListCompleteTableViewCell.swift in Sources */,
 				03B9AC6A2AF5638700A5751C /* UIResponder+.swift in Sources */,
+				035701E72B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift in Sources */,
 				03B9AC802AF5657500A5751C /* ColorLiterals.swift in Sources */,
 				5880F46D2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift in Sources */,
 				09CE00ED2B0DB1EA00CB42C4 /* CreateActionView.swift in Sources */,

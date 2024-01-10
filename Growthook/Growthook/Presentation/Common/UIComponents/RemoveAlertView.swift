@@ -16,7 +16,7 @@ final class RemoveAlertView: BaseView {
     
     private let contentView = UIView()
     private let titleLabel = UILabel()
-    private let descriptionLabel = UILabel()
+    var descriptionLabel = UILabel()
     private let underLineView = UIView()
     let keepButton = UIButton()
     let removeButton = UIButton()
@@ -39,7 +39,6 @@ final class RemoveAlertView: BaseView {
         }
         
         descriptionLabel.do {
-            $0.text = I18N.Component.RemoveAlert.removeInsight
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .gray100
             $0.textAlignment = .center
