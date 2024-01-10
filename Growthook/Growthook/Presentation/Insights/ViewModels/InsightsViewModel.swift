@@ -10,7 +10,8 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-enum InsightsViewNetworkStatus {
+// TODO: Renaming 이 필요함
+enum SomeNetworkStatus {
     case normal
     case networkLost
     case loading
@@ -35,7 +36,7 @@ protocol InsightsViewModelInput {
 }
 
 protocol InsightsViewModelOutput {
-    var networkStatus: BehaviorRelay<InsightsViewNetworkStatus> { get }
+    var networkState: BehaviorRelay<SomeNetworkStatus> { get }
     var myOwnCaves: Observable<[InsightCaveModel]> { get }
     var selectedCave: BehaviorRelay<InsightCaveModel?> { get }
     var availablePeriodList: [InsightPeriodModel] { get }
@@ -57,7 +58,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     typealias ReferenceUrlContent = String?
     
     // MARK: - Outputs
-    var networkStatus = BehaviorRelay<InsightsViewNetworkStatus>(value: .normal)
+    var networkState = BehaviorRelay<SomeNetworkStatus>(value: .normal)
     var availablePeriodList: [InsightPeriodModel] = []
     var myOwnCaves: Observable<[InsightCaveModel]>
     var selectedCave = BehaviorRelay<InsightCaveModel?>(value: nil)
@@ -84,13 +85,11 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     init() {
         // TODO: 내 동굴의 값을 API 를 통해 받아와야 하는지, 내부에 저장한 값을 가저올지 정해야 합니다. + 시점도 정해야 합니다.
         myOwnCaves = Observable.just([
-            .init(caveId: 0, caveTitle: "Cave11"),
-            .init(caveId: 1, caveTitle: "Cave12"),
-            .init(caveId: 2, caveTitle: "Cave13"),
-            .init(caveId: 3, caveTitle: "Cave14"),
-            .init(caveId: 4, caveTitle: "Cave15"),
-            .init(caveId: 5, caveTitle: "Cave16"),
-            .init(caveId: 6, caveTitle: "Cave17")
+            .init(caveId: 48, caveTitle: "Cave11"),
+            .init(caveId: 49, caveTitle: "Cave12"),
+            .init(caveId: 50, caveTitle: "Cave13"),
+            .init(caveId: 51, caveTitle: "Cave14"),
+            .init(caveId: 52, caveTitle: "Cave15")
         ])
         
         bindValidation()
@@ -100,7 +99,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     func postNewInsight() {
         /// Network 가 끊어졌을 때
         if NetworkManager.isNetworkConnected() == false {
-            networkStatus.accept(.networkLost)
+            networkState.accept(.networkLost)
             return
         }
         
@@ -109,15 +108,15 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
            let source = newReferenceContent.value,
            let period = selectedPeriod.value?.periodMonthAsInteger
         {
-            networkStatus.accept(.loading)
+            networkState.accept(.loading)
             let newInsight = InsightPostRequest(insight: insight, source: source, memo: newMemoContent.value, url: newReferenceUrlContent.value, goalMonth: period)
             InsightsService.postNewInsight(caveId: selectedCaveId, of: newInsight)
                 .subscribe(onNext: { [weak self] _ in
                     guard let self else { return }
-                    self.networkStatus.accept(.done)
+                    self.networkState.accept(.done)
                 }, onError: { [weak self] error in
                     guard let self else { return }
-                    self.networkStatus.accept(.error(error))
+                    self.networkState.accept(.error(error))
                 })
                 .disposed(by: disposeBag)
         } else {
@@ -190,7 +189,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     }
     
     func cancelErrorAlert() {
-        networkStatus.accept(.normal)
+        networkState.accept(.normal)
     }
 }
 

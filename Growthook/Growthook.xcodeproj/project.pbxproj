@@ -140,6 +140,9 @@
 		586626192B4E658F0084468C /* InsightsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586626182B4E658F0084468C /* InsightsService.swift */; };
 		5866261B2B4E65970084468C /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866261A2B4E65970084468C /* MyPageService.swift */; };
 		586626222B4E7CC00084468C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586626212B4E7CC00084468C /* NetworkManager.swift */; };
+		586626242B4E996C0084468C /* FullCoverLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586626232B4E996C0084468C /* FullCoverLoadingView.swift */; };
+		586626262B4EB06F0084468C /* MyPageUserInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586626252B4EB06F0084468C /* MyPageUserInformationViewController.swift */; };
+		586626282B4EB10C0084468C /* MyPageUserInfoBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586626272B4EB10C0084468C /* MyPageUserInfoBlockView.swift */; };
 		5880F4672B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */; };
 		5880F46B2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F46A2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift */; };
 		5880F46D2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F46C2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift */; };
@@ -286,6 +289,9 @@
 		586626182B4E658F0084468C /* InsightsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsService.swift; sourceTree = "<group>"; };
 		5866261A2B4E65970084468C /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
 		586626212B4E7CC00084468C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		586626232B4E996C0084468C /* FullCoverLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCoverLoadingView.swift; sourceTree = "<group>"; };
+		586626252B4EB06F0084468C /* MyPageUserInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserInformationViewController.swift; sourceTree = "<group>"; };
+		586626272B4EB10C0084468C /* MyPageUserInfoBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserInfoBlockView.swift; sourceTree = "<group>"; };
 		5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveTableViewCell.swift; sourceTree = "<group>"; };
 		5880F46A2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveSheetViewController.swift; sourceTree = "<group>"; };
 		5880F46C2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectPeriodSheetViewController.swift; sourceTree = "<group>"; };
@@ -942,6 +948,7 @@
 			isa = PBXGroup;
 			children = (
 				03B9ACA82AF7B2B000A5751C /* MypageViewController.swift */,
+				586626252B4EB06F0084468C /* MyPageUserInformationViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -950,6 +957,7 @@
 			isa = PBXGroup;
 			children = (
 				58AB70AD2B2C88570061C072 /* MyPageThookBoxView.swift */,
+				586626272B4EB10C0084468C /* MyPageUserInfoBlockView.swift */,
 				58AB70AF2B2C903D0061C072 /* Components */,
 			);
 			path = Views;
@@ -1018,6 +1026,7 @@
 				582F9C472B304B5E0000D161 /* TextFieldBlockWithTitle.swift */,
 				582F9C492B304B720000D161 /* TextViewBlockWithTitle.swift */,
 				581D22972B3356150068E58D /* SelectBlockWithTitle.swift */,
+				586626232B4E996C0084468C /* FullCoverLoadingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1136,6 +1145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				586626282B4EB10C0084468C /* MyPageUserInfoBlockView.swift in Sources */,
 				58EFF5DE2B445AE2003C3838 /* ServiceError.swift in Sources */,
 				034580872B2D6B98002DDEBA /* CaveDescriptionView.swift in Sources */,
 				03B9AC822AF5658F00A5751C /* FontLiterals.swift in Sources */,
@@ -1183,6 +1193,7 @@
 				09CE00F02B0DB1FB00CB42C4 /* CreateActionViewControlller.swift in Sources */,
 				03B9AC932AF566B300A5751C /* ButtonPress.swift in Sources */,
 				092C816D2B334E13006B0F65 /* CreateSpecificPlanView .swift in Sources */,
+				586626242B4E996C0084468C /* FullCoverLoadingView.swift in Sources */,
 				034580822B2D628F002DDEBA /* CaveDetailViewController.swift in Sources */,
 				03B9AC6C2AF563C200A5751C /* UIColor+.swift in Sources */,
 				259E7F722B3E95F600F3DC8F /* LoginView.swift in Sources */,
@@ -1234,6 +1245,7 @@
 				03B9AC642AF562D000A5751C /* UIView+.swift in Sources */,
 				032213322B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift in Sources */,
 				259E7F752B405D3800F3DC8F /* OnboardingViewController.swift in Sources */,
+				586626262B4EB06F0084468C /* MyPageUserInformationViewController.swift in Sources */,
 				03B9AC682AF5635800A5751C /* String+.swift in Sources */,
 				033E9C202AFE725D0051A9E8 /* CaveProfile.swift in Sources */,
 				03B9AC7A2AF564FC00A5751C /* UITableView+.swift in Sources */,
@@ -1414,7 +1426,7 @@
 				BASE_URL = "http://3.35.58.218:8080";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 98TYR8WM82;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Growthook/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Growthook;
@@ -1448,7 +1460,7 @@
 				BASE_URL = "http://3.35.58.218:8080";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 98TYR8WM82;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Growthook/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Growthook;
