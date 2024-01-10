@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetCaveListDto: Codable {
+struct GetCaveListResponseDto: Codable {
     let caveList: [Cave]
 }
 
@@ -16,7 +16,7 @@ struct Cave: Codable {
     let caveName: String
 }
 
-extension GetCaveListDto {
+extension GetCaveListResponseDto {
     
     static func caveListDummy() -> [Cave] {
         return [

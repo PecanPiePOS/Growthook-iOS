@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetSeedListDto: Codable {
+struct GetSeedListResponseDto: Codable {
     let seedList: [Seed]
 }
 
@@ -20,7 +20,7 @@ struct Seed: Codable {
     let hasActionPlan: Bool
 }
 
-extension GetSeedListDto {
+extension GetSeedListResponseDto {
     
     static func seedListDummy() -> [Seed] {
         return [

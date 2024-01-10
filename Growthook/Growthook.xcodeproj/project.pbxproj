@@ -36,8 +36,10 @@
 		035701E32B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E22B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift */; };
 		035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */; };
 		035701E72B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */; };
-		035701EA2B4EBA9600A9E47A /* GetCaveListDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E92B4EBA9600A9E47A /* GetCaveListDto.swift */; };
-		035701ED2B4EBF4800A9E47A /* GetSeedListDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EC2B4EBF4800A9E47A /* GetSeedListDto.swift */; };
+		035701EA2B4EBA9600A9E47A /* GetCaveListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E92B4EBA9600A9E47A /* GetCaveListResponseDto.swift */; };
+		035701ED2B4EBF4800A9E47A /* GetSeedListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EC2B4EBF4800A9E47A /* GetSeedListResponseDto.swift */; };
+		035701F02B4EF3B200A9E47A /* SeedListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EF2B4EF3B200A9E47A /* SeedListType.swift */; };
+		035701F32B4EFBB200A9E47A /* SeedListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F22B4EFBB200A9E47A /* SeedListAPI.swift */; };
 		035DB2A72B00E6F200161872 /* InsightListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2A62B00E6F200161872 /* InsightListView.swift */; };
 		035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */; };
 		035DB2AD2B01041B00161872 /* InsightList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AC2B01041B00161872 /* InsightList.swift */; };
@@ -46,7 +48,6 @@
 		03B9AC592AF560D800A5751C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC582AF560D800A5751C /* Config.swift */; };
 		03B9AC5B2AF5610D00A5751C /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC5A2AF5610D00A5751C /* APIConstant.swift */; };
 		03B9AC5D2AF5614A00A5751C /* URLConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC5C2AF5614A00A5751C /* URLConstant.swift */; };
-		03B9AC602AF561AD00A5751C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC5F2AF561AD00A5751C /* API.swift */; };
 		03B9AC642AF562D000A5751C /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC632AF562D000A5751C /* UIView+.swift */; };
 		03B9AC662AF5630200A5751C /* NSObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC652AF5630200A5751C /* NSObject+.swift */; };
 		03B9AC682AF5635800A5751C /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC672AF5635800A5751C /* String+.swift */; };
@@ -185,8 +186,10 @@
 		035701E22B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailMenuBottomSheet.swift; sourceTree = "<group>"; };
 		035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveMenuButton.swift; sourceTree = "<group>"; };
 		035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveCaveAlertViewController.swift; sourceTree = "<group>"; };
-		035701E92B4EBA9600A9E47A /* GetCaveListDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCaveListDto.swift; sourceTree = "<group>"; };
-		035701EC2B4EBF4800A9E47A /* GetSeedListDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSeedListDto.swift; sourceTree = "<group>"; };
+		035701E92B4EBA9600A9E47A /* GetCaveListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCaveListResponseDto.swift; sourceTree = "<group>"; };
+		035701EC2B4EBF4800A9E47A /* GetSeedListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSeedListResponseDto.swift; sourceTree = "<group>"; };
+		035701EF2B4EF3B200A9E47A /* SeedListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListType.swift; sourceTree = "<group>"; };
+		035701F22B4EFBB200A9E47A /* SeedListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListAPI.swift; sourceTree = "<group>"; };
 		035DB2A62B00E6F200161872 /* InsightListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListView.swift; sourceTree = "<group>"; };
 		035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListCollectionViewCell.swift; sourceTree = "<group>"; };
 		035DB2AC2B01041B00161872 /* InsightList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightList.swift; sourceTree = "<group>"; };
@@ -195,7 +198,6 @@
 		03B9AC582AF560D800A5751C /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		03B9AC5A2AF5610D00A5751C /* APIConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstant.swift; sourceTree = "<group>"; };
 		03B9AC5C2AF5614A00A5751C /* URLConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstant.swift; sourceTree = "<group>"; };
-		03B9AC5F2AF561AD00A5751C /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		03B9AC632AF562D000A5751C /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		03B9AC652AF5630200A5751C /* NSObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+.swift"; sourceTree = "<group>"; };
 		03B9AC672AF5635800A5751C /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -434,7 +436,7 @@
 		035701E82B4EBA7100A9E47A /* Cave */ = {
 			isa = PBXGroup;
 			children = (
-				035701E92B4EBA9600A9E47A /* GetCaveListDto.swift */,
+				035701E92B4EBA9600A9E47A /* GetCaveListResponseDto.swift */,
 			);
 			path = Cave;
 			sourceTree = "<group>";
@@ -442,9 +444,25 @@
 		035701EB2B4EBED500A9E47A /* Insight */ = {
 			isa = PBXGroup;
 			children = (
-				035701EC2B4EBF4800A9E47A /* GetSeedListDto.swift */,
+				035701EC2B4EBF4800A9E47A /* GetSeedListResponseDto.swift */,
 			);
 			path = Insight;
+			sourceTree = "<group>";
+		};
+		035701EE2B4EF35000A9E47A /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				035701EF2B4EF3B200A9E47A /* SeedListType.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
+		035701F12B4EFBA200A9E47A /* SeedListAPI */ = {
+			isa = PBXGroup;
+			children = (
+				035701F22B4EFBB200A9E47A /* SeedListAPI.swift */,
+			);
+			path = SeedListAPI;
 			sourceTree = "<group>";
 		};
 		035DB2AE2B076F4B00161872 /* ViewModels */ = {
@@ -471,6 +489,7 @@
 		03B9AC482AF55E1E00A5751C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				035701EE2B4EF35000A9E47A /* APIService */,
 				58EFF5DC2B445AD2003C3838 /* ServiceError */,
 				03B9AC5E2AF561A200A5751C /* API */,
 				03B9AC522AF55FBB00A5751C /* Base */,
@@ -617,7 +636,7 @@
 		03B9AC5E2AF561A200A5751C /* API */ = {
 			isa = PBXGroup;
 			children = (
-				03B9AC5F2AF561AD00A5751C /* API.swift */,
+				035701F12B4EFBA200A9E47A /* SeedListAPI */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1109,7 +1128,7 @@
 				58EFF5DE2B445AE2003C3838 /* ServiceError.swift in Sources */,
 				034580872B2D6B98002DDEBA /* CaveDescriptionView.swift in Sources */,
 				03B9AC822AF5658F00A5751C /* FontLiterals.swift in Sources */,
-				035701ED2B4EBF4800A9E47A /* GetSeedListDto.swift in Sources */,
+				035701ED2B4EBF4800A9E47A /* GetSeedListResponseDto.swift in Sources */,
 				035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */,
 				58AB70B12B2C90560061C072 /* MyPageListTableViewCell.swift in Sources */,
 				0322137A2B17642E00FF5CF1 /* RemoveAlertView.swift in Sources */,
@@ -1188,7 +1207,7 @@
 				03B9AC862AF565BA00A5751C /* SizeLiterals.swift in Sources */,
 				0345808A2B2D717D002DDEBA /* CaveDetailViewModel.swift in Sources */,
 				035701E12B4E6DA700A9E47A /* CaveListEmptyView.swift in Sources */,
-				035701EA2B4EBA9600A9E47A /* GetCaveListDto.swift in Sources */,
+				035701EA2B4EBA9600A9E47A /* GetCaveListResponseDto.swift in Sources */,
 				03B9ACA12AF7B25B00A5751C /* HomeViewController.swift in Sources */,
 				252DD8842B063A7900DBB1D1 /* ActionListViewModel.swift in Sources */,
 				03B9AC912AF5669600A5751C /* MakeAlert.swift in Sources */,
@@ -1196,7 +1215,6 @@
 				032213822B17960700FF5CF1 /* NotificationAlertView.swift in Sources */,
 				584EDAD72B4A57E60094872A /* Observable+.swift in Sources */,
 				58EFF5DB2B445AB6003C3838 /* BaseTargetType.swift in Sources */,
-				03B9AC602AF561AD00A5751C /* API.swift in Sources */,
 				582F9C4A2B304B720000D161 /* TextViewBlockWithTitle.swift in Sources */,
 				2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */,
 				25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */,
@@ -1217,7 +1235,9 @@
 				09A7D70A2B01E6A9005F8821 /* CreateCaveModel.swift in Sources */,
 				03B9AC592AF560D800A5751C /* Config.swift in Sources */,
 				03B9AC8D2AF5663C00A5751C /* Font.swift in Sources */,
+				035701F02B4EF3B200A9E47A /* SeedListType.swift in Sources */,
 				09CE00EA2B0DB13700CB42C4 /* CreateActionViewModel.swift in Sources */,
+				035701F32B4EFBB200A9E47A /* SeedListAPI.swift in Sources */,
 				035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */,
 				09DE08022B04FDF800D7DF3D /* EmptyViewController.swift in Sources */,
 				03B9AC722AF5646000A5751C /* UITextField+.swift in Sources */,
