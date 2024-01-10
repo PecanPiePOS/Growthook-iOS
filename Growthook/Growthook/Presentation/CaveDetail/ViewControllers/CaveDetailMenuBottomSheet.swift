@@ -17,8 +17,8 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
 
     // MARK: - UI Components
     
-    private lazy var changeCaveButton = CaveMenuButton(buttonTitle: "수정하기", buttonImage: ImageLiterals.Menu.ic_change)
-    private lazy var deleteCaveButton = CaveMenuButton(buttonTitle: "삭제하기", buttonImage: ImageLiterals.Menu.ic_delete)
+    private lazy var changeCaveButton = CaveMenuButton(buttonTitle: "수정하기", buttonImage: ImageLiterals.Menu.ic_change, textColor: .white000)
+    private lazy var deleteCaveButton = CaveMenuButton(buttonTitle: "삭제하기", buttonImage: ImageLiterals.Menu.ic_delete, textColor: .red200)
     
     // MARK: - UI Components Property
     

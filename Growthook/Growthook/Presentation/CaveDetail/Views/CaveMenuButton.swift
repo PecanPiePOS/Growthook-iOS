@@ -20,10 +20,11 @@ final class CaveMenuButton: UIButton {
     
     // MARK: - Initializer
 
-    init(buttonTitle: AttributedString, buttonImage: UIImage) {
+    init(buttonTitle: AttributedString, buttonImage: UIImage, textColor: UIColor) {
         super.init(frame: .zero)
         self.title = buttonTitle
         self.image = buttonImage
+        self.color = textColor
         setStyle()
     }
     
@@ -36,6 +37,7 @@ final class CaveMenuButton: UIButton {
     func setStyle() {
         
         title.font = .fontGuide(.body1_reg)
+        title.foregroundColor = color
         
         var config = UIButton.Configuration.filled()
         config.attributedTitle = title
