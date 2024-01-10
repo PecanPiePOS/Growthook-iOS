@@ -13,6 +13,8 @@ import RxSwift
 class CommonCustomNavigationBar: BaseView {
 
     private let disposeBag = DisposeBag()
+    private var disabledColor: UIColor = .gray300
+    private var enabledColor: UIColor = .green400
     
     // MARK: - Extended .rx Properties for Button Event
     lazy var rxBackButtonTapControl: ControlEvent<Void> = backButton.rx.tap
@@ -76,5 +78,16 @@ extension CommonCustomNavigationBar {
     
     func isButtonEnabled(_ isEnabled: Bool) {
         doneButton.isEnabled = isEnabled
+        if isEnabled != false {
+            doneButton.setTitleColor(enabledColor, for: .normal)
+        } else {
+            doneButton.setTitleColor(disabledColor, for: .normal)
+        }
+    }
+    
+    /// Disabled, Enabled 일 때의 색을 지정할 수 있다.
+    func setButtonColorForWhen(enabled: UIColor, disabled: UIColor) {
+        enabledColor = enabled
+        disabledColor = disabled
     }
 }
