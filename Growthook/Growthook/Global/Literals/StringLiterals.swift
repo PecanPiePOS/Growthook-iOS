@@ -60,4 +60,12 @@ enum I18N {
     enum ActionList {
         static let reviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
     }
+    
+    enum CreateInsight {
+        static let insightTextViewPlaceholder = "찾아낸 새로운 가치를 한 줄로 표현해주세요"
+        static let memoTextViewPlaceholder = "찾아낸 가치에 대한 생각을 적어보세요 (선택)"
+        static let caveTitle = "어떤 동굴에 저장할까요?"
+        static let referencePlaceholder = "출처의 정보를 입력해주세요"
+        static let referenceUrlPlaceholder = "참고한 url을 적어주세요 (선택)"
+    }
 }
