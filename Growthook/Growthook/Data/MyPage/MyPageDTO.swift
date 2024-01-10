@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+struct MyPageUserInfoResponse: Codable {
+    let nickname: String
+    let email: String
+}
+
+struct MyPageEarnedSsukResponse: Codable {
+    let gatheredSsuk: Int
+}
+
+struct MyPageSpentSsukResponse: Codable {
+    let usedSsuk: Int
+}
