@@ -37,7 +37,7 @@ final class HomeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = HomeViewModel()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-    private var insightList: [Seed] = []
+    private var insightList: [GetSeedListResponseDto] = []
     
     // MARK: - View Life Cycle
     
@@ -75,6 +75,7 @@ final class HomeViewController: BaseViewController {
                 self.insightList.append(model)
                 cell.configureCell(model)
                 cell.setCellStyle()
+//                self.insightListView.insightCollectionView.reloadData()
                 cell.scrapButtonTapHandler = { [weak self] in
                     guard let self else { return }
                     if !cell.isScrapButtonTapped {

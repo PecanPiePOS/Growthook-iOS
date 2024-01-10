@@ -23,7 +23,7 @@ protocol HomeViewModelInputs {
 
 protocol HomeViewModelOutputs {
     var caveProfile: BehaviorRelay<[CaveProfile]> { get }
-    var insightList: BehaviorRelay<[Seed]> { get }
+    var insightList: BehaviorRelay<[GetSeedListResponseDto]> { get }
     var insightLongTap: PublishSubject<IndexPath> { get }
     var insightBackground: PublishSubject<IndexPath> { get }
     var pushToInsightDetail: PublishSubject<IndexPath> { get }
@@ -40,7 +40,7 @@ protocol HomeViewModelType {
 final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewModelType {
     
     var caveProfile: BehaviorRelay<[CaveProfile]> = BehaviorRelay(value: [])
-    var insightList: BehaviorRelay<[Seed]> = BehaviorRelay(value: [])
+    var insightList: BehaviorRelay<[GetSeedListResponseDto]> = BehaviorRelay<[GetSeedListResponseDto]>(value: [])
     var insightLongTap: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightBackground: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     let reloadInsightSubject: PublishSubject<Void> = PublishSubject<Void>()
@@ -54,14 +54,15 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var outputs: HomeViewModelOutputs { return self }
     
     init() {
+        self.requestGetSeedList(memberId: 3)
+//        self.insightList.accept(InsightList.insightDummy())
         self.caveProfile.accept(CaveProfile.caveprofileDummyData())
-        self.insightList.accept(GetSeedListDto.seedListDummy())
     }
     
     func handleLongPress(at indexPath: IndexPath) {
-        let items = InsightList.insightListDummyData()
+        let items = insightList.value
         let selectedItem = items[indexPath.item]
-        print("\(indexPath.row) / 제목 :  \(selectedItem.title)")
+        print("\(indexPath.row) / 제목 :  \(selectedItem.insight)")
         self.insightLongTap.onNext(indexPath)
     }
     
@@ -91,5 +92,16 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     func selectButtonTap() {
         return moveToCave.onNext(())
+    }
+}
+
+extension HomeViewModel {
+    
+    func requestGetSeedList(memberId: Int) {
+        SeedListAPI.shared.getSeedList(memberId: memberId) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            self?.insightList.accept(data)
+        }
     }
 }

@@ -34,7 +34,7 @@ final class CaveDetailViewController: BaseViewController {
     private let viewModel = HomeViewModel()
     private let caveDetailViewModel = CaveDetailViewModel()
     private let disposeBag = DisposeBag()
-    private var insightDummyData = InsightList.insightListDummyData()
+//    private var insightDummyData = InsightList.insightListDummyData()
     
     override func bindViewModel() {
         
@@ -192,15 +192,15 @@ extension CaveDetailViewController {
     }
     
     private func pushToInsightDetail(at indexPath: IndexPath) {
-        caveDetailView.insightListView.insightCollectionView.deselectItem(at: indexPath, animated: false)
-        if insightDummyData[indexPath.item].InsightStatus == .lock {
-            view.addSubview(unLockInsightAlertView)
-            unLockInsightAlertView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-        } else {
-            print("pushToInsightDetail")
-        }
+//        caveDetailView.insightListView.insightCollectionView.deselectItem(at: indexPath, animated: false)
+//        if insightDummyData[indexPath.item].InsightStatus == .lock {
+//            view.addSubview(unLockInsightAlertView)
+//            unLockInsightAlertView.snp.makeConstraints {
+//                $0.edges.equalToSuperview()
+//            }
+//        } else {
+//            print("pushToInsightDetail")
+//        }
     }
     
     private func scrapTypeSetting(_ type: Bool) {
@@ -279,17 +279,17 @@ extension CaveDetailViewController {
     // MARK: - @objc Methods
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-        let location = gesture.location(in: gesture.view)
-        if gesture.state == .began {
-            // 꾹 눌림이 시작될 때 실행할 코드
-            if let indexPath = caveDetailView.insightListView.insightCollectionView.indexPathForItem(at: location) {
-                if insightDummyData[indexPath.item].InsightStatus == .lock {
-                    return
-                } else {
-                    viewModel.inputs.handleLongPress(at: indexPath)
-                }
-            }
-        }
+//        let location = gesture.location(in: gesture.view)
+//        if gesture.state == .began {
+//            // 꾹 눌림이 시작될 때 실행할 코드
+//            if let indexPath = caveDetailView.insightListView.insightCollectionView.indexPathForItem(at: location) {
+//                if insightDummyData[indexPath.item].InsightStatus == .lock {
+//                    return
+//                } else {
+//                    viewModel.inputs.handleLongPress(at: indexPath)
+//                }
+//            }
+//        }
     }
     
     @objc func clearNotification(_ notification: Notification) {

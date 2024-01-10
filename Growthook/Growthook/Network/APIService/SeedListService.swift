@@ -12,7 +12,7 @@ import RxCocoa
 import RxMoya
 import RxSwift
 
-enum SeedListType {
+enum SeedListService {
     case getSeedList(memberId: Int)
     case getSeedListByCave(caveId: Int)
     case getSeedAlarm(memberId: Int)
@@ -23,7 +23,11 @@ enum SeedListType {
     case patchSeedScrap(seedId: Int)
 }
 
-extension SeedListType: BaseTargetType {
+extension SeedListService: TargetType {
+    
+    var baseURL: URL {
+        return URL(string: URLConstant.baseURL)!
+    }
     
     var path: String {
         switch self {
@@ -87,14 +91,4 @@ extension SeedListType: BaseTargetType {
     }
 }
 
-struct SeedListService: Networkable {
-    typealias Target = SeedListType
-    private static let provider = makeProvider()
-    
-    static func getSeedList(with memberId: Int) -> Observable<GetSeedListResponseDto> {
-        return provider.rx.request(.getSeedList(memberId: memberId))
-            .asObservable()
-            .mapError()
-            .decode(decodeType: GetSeedListResponseDto.self)
-    }
-}
+
