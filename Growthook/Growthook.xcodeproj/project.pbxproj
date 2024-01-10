@@ -44,6 +44,7 @@
 		035701F72B4F17E100A9E47A /* SeedAlarmResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */; };
 		035701F92B4F184800A9E47A /* CaveSeedListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F82B4F184800A9E47A /* CaveSeedListResponseDto.swift */; };
 		035701FB2B4F18E600A9E47A /* SeedMoveRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701FA2B4F18E600A9E47A /* SeedMoveRequestDto.swift */; };
+		035701FD2B4F1AF700A9E47A /* PatchSeedRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701FC2B4F1AF700A9E47A /* PatchSeedRequestDto.swift */; };
 		035DB2A72B00E6F200161872 /* InsightListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2A62B00E6F200161872 /* InsightListView.swift */; };
 		035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */; };
 		03B9AC542AF55FF900A5751C /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC532AF55FF900A5751C /* GeneralResponse.swift */; };
@@ -197,6 +198,7 @@
 		035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedAlarmResponseDto.swift; sourceTree = "<group>"; };
 		035701F82B4F184800A9E47A /* CaveSeedListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveSeedListResponseDto.swift; sourceTree = "<group>"; };
 		035701FA2B4F18E600A9E47A /* SeedMoveRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedMoveRequestDto.swift; sourceTree = "<group>"; };
+		035701FC2B4F1AF700A9E47A /* PatchSeedRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSeedRequestDto.swift; sourceTree = "<group>"; };
 		035DB2A62B00E6F200161872 /* InsightListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListView.swift; sourceTree = "<group>"; };
 		035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListCollectionViewCell.swift; sourceTree = "<group>"; };
 		03B9AC532AF55FF900A5751C /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 				035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */,
 				035701F82B4F184800A9E47A /* CaveSeedListResponseDto.swift */,
 				035701FA2B4F18E600A9E47A /* SeedMoveRequestDto.swift */,
+				035701FC2B4F1AF700A9E47A /* PatchSeedRequestDto.swift */,
 			);
 			path = Insight;
 			sourceTree = "<group>";
@@ -1269,6 +1272,7 @@
 				25EAFA5D2B02597800283CD8 /* ActionListSegmentedView.swift in Sources */,
 				09A7D7022B00DFC6005F8821 /* BottomCTAButton.swift in Sources */,
 				035701F72B4F17E100A9E47A /* SeedAlarmResponseDto.swift in Sources */,
+				035701FD2B4F1AF700A9E47A /* PatchSeedRequestDto.swift in Sources */,
 				03B9AC8B2AF5660D00A5751C /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
