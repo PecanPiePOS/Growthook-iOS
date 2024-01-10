@@ -25,6 +25,8 @@ final class MyPageUserInformationViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    // TODO: 로그아웃 및 회원탈퇴 로직 구현해야함 API 도! -
+    
     override func bindViewModel() {
         customNavigationView.rxBackButtonTapControl
             .bind { [weak self] in
