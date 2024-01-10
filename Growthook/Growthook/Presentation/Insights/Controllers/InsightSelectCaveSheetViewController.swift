@@ -29,7 +29,7 @@ final class InsightSelectCaveSheetViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resetSelectedCaveWhenInitialized()
+//        resetSelectedCaveWhenInitialized()
     }
     
     override func bindViewModel() {
