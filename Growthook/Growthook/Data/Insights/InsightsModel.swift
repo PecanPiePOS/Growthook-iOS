@@ -11,21 +11,14 @@ protocol TextLimits {
     var textLimit: Int { get }
 }
 
-enum InsightTextLimits: TextLimits {
-    case insight
-    case memo
-    case reference
-    
-    var textLimit: Int {
-        switch self {
-        case .insight:
-            return 30
-        case .memo:
-            return 300
-        case .reference:
-            return 20
-        }
-    }
+struct InsightCaveModel {
+    var caveId: Int
+    var caveTitle: String
+}
+
+struct InsightPeriodModel {
+    var periodMonthAsInteger: Int?
+    var periodTitle: String
 }
 
 struct PeriodModel {
@@ -45,12 +38,19 @@ struct PeriodModel {
     }
 }
 
-struct InsightCaveModel {
-    var caveId: Int
-    var caveTitle: String
-}
-
-struct InsightPeriodModel {
-    var periodMonthAsInteger: Int?
-    var periodTitle: String
+enum InsightTextLimits: TextLimits {
+    case insight
+    case memo
+    case reference
+    
+    var textLimit: Int {
+        switch self {
+        case .insight:
+            return 30
+        case .memo:
+            return 300
+        case .reference:
+            return 20
+        }
+    }
 }

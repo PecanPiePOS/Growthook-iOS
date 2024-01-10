@@ -8,8 +8,8 @@
 import Foundation
 
 struct InsightPostRequest: Codable {
-    let insight, memo, source: String
-    let url: String?
+    let insight, source: String
+    let memo, url: String?
     let goalMonth: Int
 }
 
