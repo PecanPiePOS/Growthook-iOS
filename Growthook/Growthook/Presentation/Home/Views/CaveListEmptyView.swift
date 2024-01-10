@@ -10,7 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-final class Cave_ListEmptyView: BaseView {
+final class CaveListEmptyView: BaseView {
 
     // MARK: - UI Components
     
@@ -24,7 +24,7 @@ final class Cave_ListEmptyView: BaseView {
         self.backgroundColor = .clear
         
         emptyImage.do {
-            $0.image = ImageLiterals.Home.img_cave_empty
+            $0.image = ImageLiterals.Home.img_emtpy_cave
         }
         
         emptyCaveLabel.do {

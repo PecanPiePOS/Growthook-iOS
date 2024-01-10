@@ -18,7 +18,7 @@ class CaveListHalfModal: BaseViewController {
     // MARK: - UI Components
     
     private lazy var caveListTableView = UITableView(frame: .zero, style: .grouped)
-    private lazy var caveEmptyView = UIView()
+    private lazy var caveEmptyView = CaveListEmptyView()
     private let selectButton = UIButton()
     
     // MARK: - Properties
@@ -76,6 +76,7 @@ class CaveListHalfModal: BaseViewController {
             $0.backgroundColor = .clear
             $0.separatorStyle = .singleLine
             $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            $0.isHidden = true
         }
         
         selectButton.do {
@@ -90,12 +91,16 @@ class CaveListHalfModal: BaseViewController {
     
     override func setLayout() {
         
-        self.view.addSubviews(caveListTableView, selectButton)
+        self.view.addSubviews(caveListTableView, selectButton, caveEmptyView)
         
         caveListTableView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(60)
+        }
+        
+        caveEmptyView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
         selectButton.snp.makeConstraints {

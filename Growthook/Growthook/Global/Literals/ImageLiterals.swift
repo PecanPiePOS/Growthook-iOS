@@ -57,7 +57,7 @@ enum ImageLiterals {
         static var img_cave_pink: UIImage { .load(name: "img_cave_pink") }
         static var img_cave_sunrise: UIImage { .load(name: "img_cave_sunrise") }
         static var img_cave_sunset: UIImage { .load(name: "img_cave_sunset") }
-        static var img_cave_empty: UIImage { .load(name: "img_cave_empty") }
+        static var img_emtpy_cave: UIImage { .load(name: "img_emtpy_cave") }
     }
     
     enum Insight {
