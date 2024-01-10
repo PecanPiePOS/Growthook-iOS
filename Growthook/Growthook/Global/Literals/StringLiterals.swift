@@ -21,9 +21,9 @@ enum I18N {
             static let use = "사용하기"
         }
         
-        enum RemoveInsight {
+        enum RemoveAlert {
             static let title = "정말로 삭제할까요?"
-            static let description = "삭제한 인사이트는 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
+            static let removeInsight = "삭제한 인사이트는 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
             static let keep = "유지하기"
             static let remove = "삭제하기"
         }

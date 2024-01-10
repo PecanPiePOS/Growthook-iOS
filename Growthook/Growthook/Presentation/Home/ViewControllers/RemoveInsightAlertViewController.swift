@@ -16,7 +16,7 @@ final class RemoveInsightAlertViewController: BaseViewController {
     
     // MARK: - UI Components
 
-    private let removeInsightView = RemoveInsightAlertView()
+    private let removeInsightView = RemoveAlertView()
     
     // MARK: - Properties
     
