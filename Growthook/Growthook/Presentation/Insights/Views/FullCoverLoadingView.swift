@@ -7,14 +7,23 @@
 
 import UIKit
 
-class FullCoverLoadingView: UIView {
+class FullCoverLoadingView: BaseView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    private let indicatorView = UIActivityIndicatorView()
+
+    override func setStyles() {
+        backgroundColor = .black.withAlphaComponent(0.2)
+        
+        indicatorView.color = .green400
+        indicatorView.style = .large
+        indicatorView.startAnimating()
     }
-    */
-
+    
+    override func setLayout() {
+        addSubview(indicatorView)
+        
+        indicatorView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+    }
 }

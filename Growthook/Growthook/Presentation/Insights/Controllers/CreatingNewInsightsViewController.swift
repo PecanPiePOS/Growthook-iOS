@@ -23,9 +23,33 @@ final class CreatingNewInsightsViewController: BaseViewController {
     private let scrollView = UIScrollView()
     private let scrollContentView = UIView()
     private let creatingContentView = CreatingNewInsightsView()
+    private let loadingView = FullCoverLoadingView()
     
-    // MARK: - Edit Status Actions - Scroll
     override func bindViewModel() {
+        // MARK: - Bind UI to State
+        viewModel.outputs.networkState
+            .bind { [weak self] status in
+                guard let self else { return }
+                switch status {
+                case .normal:
+                    break
+                case .networkLost:
+                    self.showLoadingView(false)
+                    self.showAlertWithError(alertText: "네트워크 환경이 좋지 않아요!", alertMessage: "네트워크 연결 상태를 확인하고 다시 시도해주세요.")
+                case .loading:
+                    self.showLoadingView(true)
+                case .error(let error):
+                    print(error.localizedDescription, "--------")
+                    self.showLoadingView(false)
+                    self.showAlertWithError(alertText: "에러가 발생했어요!", alertMessage: "작성하신 글을 검토하고 다시 시도해주세요.", error: error)
+                case .done:
+                    self.showLoadingView(false)
+                    // 넘어가기
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // MARK: - Edit Status Actions - Scroll
         Observable.combineLatest(
             creatingContentView.insightTextView.textViewBlock
             .rxEditingAction,
@@ -208,11 +232,15 @@ final class CreatingNewInsightsViewController: BaseViewController {
             $0.showsVerticalScrollIndicator = false
             $0.delegate = self
         }
+        
+        loadingView.do {
+            $0.isHidden = true
+        }
     }
     
     // MARK: - Layout
     override func setLayout() {
-        view.addSubviews(customNavigationView, scrollView)
+        view.addSubviews(customNavigationView, scrollView, loadingView)
         scrollView.addSubview(scrollContentView)
         scrollContentView.addSubview(creatingContentView)
         
@@ -236,6 +264,10 @@ final class CreatingNewInsightsViewController: BaseViewController {
         creatingContentView.snp.makeConstraints {
             $0.horizontalEdges.verticalEdges.equalToSuperview()
             $0.height.equalTo(NewInsightItems.totalHeight)
+        }
+        
+        loadingView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
 }
@@ -306,5 +338,24 @@ extension CreatingNewInsightsViewController: UIScrollViewDelegate {
             scrollView.setContentOffset(bottomOffset, animated: true)
             currentScrollCoordinates = bottomOffset
         }
+    }
+}
+
+    // MARK: - Alert Helper
+    // TODO: 이건 무조건 한번에 컴포넌트로 처리해야함
+extension CreatingNewInsightsViewController {
+    
+    func showAlertWithError(alertText: String, alertMessage: String, error: Error? = nil, handler: ((UIAlertAction) -> Void)? = nil) {
+        let alert = UIAlertController(
+            title: alertText,
+            message: alertMessage + "\n\(error?.localizedDescription ?? "")",
+            preferredStyle: UIAlertController.Style.alert
+        )
+        alert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: handler))
+        self.present(alert, animated: true)
+    }
+    
+    func showLoadingView(_ isHidden: Bool) {
+        loadingView.isHidden = !isHidden
     }
 }
