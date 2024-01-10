@@ -15,7 +15,7 @@ final class NotificationAlertView: BaseView {
     // MARK: - UI Components
     
     private let lockImage = UIImageView()
-    private let notificationLabel = UILabel()
+    let notificationLabel = UILabel()
     
     // MARK: - UI Components Property
     
@@ -34,7 +34,7 @@ final class NotificationAlertView: BaseView {
         }
         
         notificationLabel.do {
-            $0.text = "\(I18N.Home.notiDescription1)3\(I18N.Home.notiDescription2)3\(I18N.Home.notiDescription3)"
+            $0.text = I18N.Home.notNotiDescription
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .white000
             $0.numberOfLines = 2

@@ -10,3 +10,9 @@ import Foundation
 struct SeedAlarmResponseDto: Codable {
     let seedCount: Int
 }
+
+extension SeedAlarmResponseDto {
+    static func alarmDummy() -> SeedAlarmResponseDto {
+        return SeedAlarmResponseDto(seedCount: 0)
+    }
+}

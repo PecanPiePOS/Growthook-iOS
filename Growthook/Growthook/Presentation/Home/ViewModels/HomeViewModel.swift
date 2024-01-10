@@ -19,6 +19,7 @@ protocol HomeViewModelInputs {
     func caveListCellTap(at indexPath: IndexPath)
     func selectButtonTap()
     func caveCellTap(at indexPath: IndexPath)
+    func alarmButtonTap(memberId: Int)
 }
 
 protocol HomeViewModelOutputs {
@@ -30,6 +31,7 @@ protocol HomeViewModelOutputs {
     var selectedCellIndex: BehaviorRelay<IndexPath?> { get }
     var moveToCave: PublishSubject<Void> { get }
     var pushToCaveDetail: PublishSubject<IndexPath> { get }
+    var insightAlarm: BehaviorRelay<Int> { get }
 }
 
 protocol HomeViewModelType {
@@ -49,6 +51,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var selectedCellIndex: BehaviorRelay<IndexPath?> = BehaviorRelay<IndexPath?>(value: nil)
     var moveToCave: PublishSubject<Void> = PublishSubject<Void>()
     var pushToCaveDetail: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
+    var insightAlarm: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     
     var inputs: HomeViewModelInputs { return self }
     var outputs: HomeViewModelOutputs { return self }
@@ -92,6 +95,14 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     func selectButtonTap() {
         return moveToCave.onNext(())
+    }
+    
+    func alarmButtonTap(memberId: Int) {
+        SeedListAPI.shared.getSeedAlarm(memberId: memberId) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            self?.insightAlarm.accept(data.seedCount)
+        }
     }
 }
 

@@ -65,7 +65,7 @@ final class SeedListAPI {
     }
     
     /// 인사이트 알림 조회
-    func getCaveSeedList(memberId: Int,
+    func getSeedAlarm(memberId: Int,
                          completion: @escaping (GeneralResponse<SeedAlarmResponseDto>?) -> Void) {
         seedListProvider.request(.getSeedAlarm(memberId: memberId)) { result in
             switch result {

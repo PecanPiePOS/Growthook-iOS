@@ -44,9 +44,10 @@ enum I18N {
     enum Home {
         static let select = "선택"
         static let seedsCollected = "개의 씨앗을 모았어요!"
-        static let notiDescription1 = "잠금이 "
-        static let notiDescription2 = "일 이하로\n남은 씨앗이 "
-        static let notiDescription3 = "개 있어요!"
+        static let notiDescription1 = "잠금이 3일 이하로\n남은 씨앗이 "
+        static let notiDescription2 = "개 있어요!"
+        static let day3 = "3일 이하"
+        static let notNotiDescription = "씨앗의 잠금이 3일\n남았을 때 알려드릴게요!"
         static let caveName = "동굴 이름"
         static let emptyCaveList = "아직 만들어진 동굴이 없어요"
     }

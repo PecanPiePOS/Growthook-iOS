@@ -166,6 +166,7 @@ final class HomeViewController: BaseViewController {
         
         homeCaveView.notificationButton.rx.tap
             .subscribe(onNext: { [weak self] in
+                self?.viewModel.inputs.alarmButtonTap(memberId: 3)
                 self?.notificationButtonTap()
             })
             .disposed(by: disposeBag)
@@ -178,6 +179,17 @@ final class HomeViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        viewModel.outputs.insightAlarm
+            .bind(onNext: { [weak self] count in
+                if count > 0  {
+                    self?.notificationView.notificationLabel.text = "\(I18N.Home.notiDescription1)\(count)\(I18N.Home.notiDescription2)"
+                    self?.notificationView.notificationLabel.partColorChange(targetString: I18N.Home.day3, textColor: .red200)
+                    self?.notificationView.notificationLabel.partFontChange(targetString: "\(count)개", font: .fontGuide(.body1_bold))
+                    self?.notificationView.notificationLabel.partFontChange(targetString: I18N.Home.day3, font: .fontGuide(.body1_bold))
+                }
+                self?.notificationButtonTap()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
