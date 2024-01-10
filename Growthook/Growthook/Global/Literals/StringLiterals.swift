@@ -42,6 +42,7 @@ enum I18N {
         static let notiDescription2 = "일 이하로\n남은 씨앗이 "
         static let notiDescription3 = "개 있어요!"
         static let caveName = "동굴 이름"
+        static let emptyCaveList = "아직 만들어진 동굴이 없어요"
     }
     
     enum CaveDetail {

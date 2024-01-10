@@ -28,7 +28,7 @@ final class Cave_ListEmptyView: BaseView {
         }
         
         emptyCaveLabel.do {
-            $0.text = "아직 만들어진 동굴이 없어요"
+            $0.text = I18N.Home.emptyCaveList
             $0.font = .fontGuide(.body2_reg)
             $0.textColor = .gray200
         }
