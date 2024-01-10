@@ -26,9 +26,8 @@ protocol InsightsViewModelInput {
     func addReference(content: String)
     func addReferenceUrl(content: String)
     func selectGoalPeriodToAdd(of period: InsightPeriodModel)
-    func resetSelectedCave()
     // MARK: 네트워크 호출
-    func postNewInsight(with newInsight: InsightPostRequest)
+    func postNewInsight()
     // MARK: Lazy 값 주입
     func setPeriodDataWhenSheetIsPresented()
     // MARK: 네트워크 Error 처리
@@ -98,7 +97,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     }
     
     // MARK: - Inputs
-    func postNewInsight(with newInsight: InsightPostRequest) {
+    func postNewInsight() {
         /// Network 가 끊어졌을 때
         if NetworkManager.isNetworkConnected() == false {
             networkStatus.accept(.networkLost)
@@ -128,14 +127,33 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     }
     
     func addInsight(content: String) {
-        if !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            newInsightContent.accept(content)
+        let isEditCancelledWithNoneInput: Bool = content == I18N.CreateInsight.insightTextViewPlaceholder
+        /// TextView 에 Input 이 없을 때, placeholder 가 text 로 들어온다.
+        /// 해당 상황에서는 nil 이어야 한다.
+        if isEditCancelledWithNoneInput != false {
+            newInsightContent.accept(nil)
+            return
+        }
+        let modifiedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !modifiedContent.isEmpty {
+            newInsightContent.accept(modifiedContent)
+        } else {
+            newInsightContent.accept(nil)
         }
     }
     
     func addMemo(content: String) {
-        if !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            newMemoContent.accept(content)
+        let isEditCancelledWithNoneInput: Bool = content == I18N.CreateInsight.memoTextViewPlaceholder
+
+        if isEditCancelledWithNoneInput != false {
+            newMemoContent.accept(nil)
+            return
+        }
+        let modifiedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !modifiedContent.isEmpty {
+            newMemoContent.accept(modifiedContent)
+        } else {
+            newMemoContent.accept(nil)
         }
     }
     
@@ -144,14 +162,20 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     }
     
     func addReference(content: String) {
-        if !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            newReferenceContent.accept(content)
+        let modifiedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !modifiedContent.isEmpty {
+            newReferenceContent.accept(modifiedContent)
+        } else {
+            newReferenceContent.accept(nil)
         }
     }
     
     func addReferenceUrl(content: String) {
-        if !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            newReferenceUrlContent.accept(content)
+        let modifiedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !modifiedContent.isEmpty {
+            newReferenceUrlContent.accept(modifiedContent)
+        } else {
+            newReferenceUrlContent.accept(nil)
         }
     }
     
@@ -159,12 +183,10 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
         selectedPeriod.accept(period)
     }
     
-    func resetSelectedCave() {
-        selectedCave.accept(nil)
-    }
-    
     func setPeriodDataWhenSheetIsPresented() {
-        availablePeriodList = PeriodModel.periodSetToSelect
+        if availablePeriodList.isEmpty {
+            availablePeriodList = PeriodModel.periodSetToSelect
+        }
     }
     
     func cancelErrorAlert() {
@@ -192,7 +214,7 @@ extension InsightsViewModel {
             .disposed(by: disposeBag)
         
         selectedPeriod
-            .map { $0 != nil }
+            .map { $0?.periodMonthAsInteger != nil }
             .bind(to: isPeriodValid)
             .disposed(by: disposeBag)
         
