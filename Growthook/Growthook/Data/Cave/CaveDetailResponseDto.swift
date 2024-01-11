@@ -13,3 +13,9 @@ struct CaveDetailResponseDto: Codable {
     let nickname: String
     let isShared: Bool
 }
+
+extension CaveDetailResponseDto {
+    static func caveDetailDummy() -> CaveDetailResponseDto {
+        return CaveDetailResponseDto(caveName: "", introduction: "", nickname: "", isShared: false)
+    }
+}

@@ -119,13 +119,11 @@ final class HomeViewController: BaseViewController {
         homeCaveView.caveCollectionView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
-                self.viewModel.inputs.caveCellTap(at: indexPath)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.outputs.pushToCaveDetail
-            .subscribe(onNext: { [weak self] indexPath in
-                self?.pushToCaveDetailVC()
+                if let cell = homeCaveView.caveCollectionView.cellForItem(at: indexPath) as? CaveCollectionViewCell {
+                    guard let caveId = cell.caveId else { return }
+                    self.viewModel.inputs.caveDetail(caveId: caveId)
+                    self.pushToCaveDetailVC(caveId: caveId)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -352,8 +350,8 @@ extension HomeViewController {
         tapGesture.cancelsTouchesInView = false
     }
     
-    private func pushToCaveDetailVC() {
-        let caveDetailVC = CaveDetailViewController()
+    private func pushToCaveDetailVC(caveId: Int) {
+        let caveDetailVC = CaveDetailViewController(viewModel: viewModel)
         caveDetailVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(caveDetailVC, animated: true)
     }

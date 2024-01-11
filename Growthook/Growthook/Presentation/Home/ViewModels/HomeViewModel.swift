@@ -19,7 +19,7 @@ protocol HomeViewModelInputs {
     func giveUpButtonTap()
     func caveListCellTap(at indexPath: IndexPath)
     func selectButtonTap()
-    func caveCellTap(at indexPath: IndexPath)
+    func caveDetail(caveId: Int)
     func alarmButtonTap(memberId: Int)
     func moveMenuTap()
     func removeMenuTap()
@@ -37,7 +37,6 @@ protocol HomeViewModelOutputs {
     var pushToInsightDetail: PublishSubject<IndexPath> { get }
     var selectedCellIndex: BehaviorRelay<IndexPath?> { get }
     var moveToCave: PublishSubject<Void> { get }
-    var pushToCaveDetail: PublishSubject<IndexPath> { get }
     var insightAlarm: BehaviorRelay<Int> { get }
     var presentToCaveList: PublishSubject<Void> { get }
     var removeInsightAlertView: PublishSubject<Void> { get }
@@ -46,6 +45,7 @@ protocol HomeViewModelOutputs {
     var reloadInsights: PublishSubject<Void> { get }
     var insightScrapToggle: PublishSubject<Void> { get }
     var unLockSeed: PublishSubject<Void> { get }
+    var caveDetail: BehaviorRelay<CaveDetailResponseDto> { get }
 }
 
 protocol HomeViewModelType {
@@ -63,10 +63,10 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var pushToInsightDetail: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var dismissToHomeVC: PublishSubject<Void> = PublishSubject<Void>()
     var moveToCave: PublishSubject<Void> = PublishSubject<Void>()
-    var pushToCaveDetail: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightAlarm: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var insightScrapToggle: PublishSubject<Void> = PublishSubject<Void>()
     var unLockSeed: PublishSubject<Void> = PublishSubject<Void>()
+    var caveDetail: BehaviorRelay<CaveDetailResponseDto> = BehaviorRelay<CaveDetailResponseDto>(value: CaveDetailResponseDto.caveDetailDummy())
     
     private let disposeBag = DisposeBag()
     
@@ -109,8 +109,8 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         self.getSeedList(memberId: 3)
     }
     
-    func caveCellTap(at indexPath: IndexPath) {
-        self.pushToCaveDetail.onNext(indexPath)
+    func caveDetail(caveId: Int) {
+        self.getCaveDetail(memberId: 3, caveId: caveId) // 서버통신
     }
     
     func insightCellTap(at indexPath: IndexPath) {
@@ -206,6 +206,14 @@ extension HomeViewModel {
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveProfile.accept(data)
+        }
+    }
+    
+    func getCaveDetail(memberId: Int, caveId: Int) {
+        CaveAPI.shared.getCaveDetail(memberId: memberId, caveId: caveId) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            self?.caveDetail.accept(data)
         }
     }
 }
