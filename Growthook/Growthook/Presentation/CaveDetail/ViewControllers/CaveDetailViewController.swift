@@ -52,7 +52,7 @@ final class CaveDetailViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.outputs.insightList
+        viewModel.outputs.caveInsightList
             .bind(to: caveDetailView.insightListView.insightCollectionView.rx.items(cellIdentifier: InsightListCollectionViewCell.className, cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
                 cell.configureCell(model)
                 cell.setCellStyle()

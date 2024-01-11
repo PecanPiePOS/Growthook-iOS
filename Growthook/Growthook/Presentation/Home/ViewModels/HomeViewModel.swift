@@ -27,6 +27,7 @@ protocol HomeViewModelInputs {
     func removeButtonTap()
     func insightScrap(seedId: Int)
     func unLockSeedAlert(seedId: Int)
+    func caveInsightList(caveId: Int)
 }
 
 protocol HomeViewModelOutputs {
@@ -46,6 +47,7 @@ protocol HomeViewModelOutputs {
     var insightScrapToggle: PublishSubject<Void> { get }
     var unLockSeed: PublishSubject<Void> { get }
     var caveDetail: BehaviorRelay<CaveDetailResponseDto> { get }
+    var caveInsightList: BehaviorRelay<[SeedListResponseDto]> { get }
 }
 
 protocol HomeViewModelType {
@@ -67,6 +69,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var insightScrapToggle: PublishSubject<Void> = PublishSubject<Void>()
     var unLockSeed: PublishSubject<Void> = PublishSubject<Void>()
     var caveDetail: BehaviorRelay<CaveDetailResponseDto> = BehaviorRelay<CaveDetailResponseDto>(value: CaveDetailResponseDto.caveDetailDummy())
+    var caveInsightList: BehaviorRelay<[SeedListResponseDto]> = BehaviorRelay<[SeedListResponseDto]>(value: [])
     
     private let disposeBag = DisposeBag()
     
@@ -110,7 +113,11 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     }
     
     func caveDetail(caveId: Int) {
-        self.getCaveDetail(memberId: 3, caveId: caveId) // 서버통신
+        self.getCaveDetail(memberId: 3, caveId: caveId)
+    }
+    
+    func caveInsightList(caveId: Int) {
+        self.getCaveSeedList(caveId: caveId)
     }
     
     func insightCellTap(at indexPath: IndexPath) {
@@ -214,6 +221,14 @@ extension HomeViewModel {
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveDetail.accept(data)
+        }
+    }
+    
+    func getCaveSeedList(caveId: Int) {
+        SeedListAPI.shared.getCaveSeedList(caveId: caveId) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            self?.caveInsightList.accept(data)
         }
     }
 }

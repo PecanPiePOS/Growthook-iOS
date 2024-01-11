@@ -122,6 +122,7 @@ final class HomeViewController: BaseViewController {
                 if let cell = homeCaveView.caveCollectionView.cellForItem(at: indexPath) as? CaveCollectionViewCell {
                     guard let caveId = cell.caveId else { return }
                     self.viewModel.inputs.caveDetail(caveId: caveId)
+                    self.viewModel.inputs.caveInsightList(caveId: caveId)
                     self.pushToCaveDetailVC(caveId: caveId)
                 }
             })

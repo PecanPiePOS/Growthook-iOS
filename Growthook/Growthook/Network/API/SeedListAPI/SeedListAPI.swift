@@ -19,7 +19,7 @@ final class SeedListAPI {
     private init() {}
     
     public private(set) var seedListData: GeneralResponse<[SeedListResponseDto]>?
-    public private(set) var caveSeedListData: GeneralResponse<[CaveSeedListResponseDto]>?
+    public private(set) var caveSeedListData: GeneralResponse<[SeedListResponseDto]>?
     public private(set) var seedAlarmData: GeneralResponse<SeedAlarmResponseDto>?
     public private(set) var seedMoveData: GeneralResponse<SeedMoveRequestDto>?
     public private(set) var patchSeedData: GeneralResponse<PatchSeedRequestDto>?
@@ -48,12 +48,12 @@ final class SeedListAPI {
     
     /// 동굴 별 인사이트 조회
     func getCaveSeedList(caveId: Int,
-                         completion: @escaping (GeneralResponse<[CaveSeedListResponseDto]>?) -> Void) {
+                         completion: @escaping (GeneralResponse<[SeedListResponseDto]>?) -> Void) {
         seedListProvider.request(.getSeedListByCave(caveId: caveId)) { result in
             switch result {
             case .success(let response):
                 do {
-                    self.caveSeedListData = try response.map(GeneralResponse<[CaveSeedListResponseDto]>?.self)
+                    self.caveSeedListData = try response.map(GeneralResponse<[SeedListResponseDto]>?.self)
                     guard let caveSeedListData = self.caveSeedListData else { return }
                     completion(caveSeedListData)
                 } catch let err {
