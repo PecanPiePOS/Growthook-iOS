@@ -21,6 +21,7 @@
 		0332A3892B501CD400720CD3 /* CaveTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3882B501CD400720CD3 /* CaveTarget.swift */; };
 		0332A38B2B501D7000720CD3 /* CaveDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38A2B501D7000720CD3 /* CaveDetailResponseDto.swift */; };
 		0332A38D2B501E0700720CD3 /* CavePatchRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */; };
+		0332A3902B5020CC00720CD3 /* CaveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38F2B5020CC00720CD3 /* CaveAPI.swift */; };
 		033E9C102AFCE0860051A9E8 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033E9C0F2AFCE0860051A9E8 /* Image.xcassets */; };
 		033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */; };
 		033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */; };
@@ -175,6 +176,7 @@
 		0332A3882B501CD400720CD3 /* CaveTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveTarget.swift; sourceTree = "<group>"; };
 		0332A38A2B501D7000720CD3 /* CaveDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailResponseDto.swift; sourceTree = "<group>"; };
 		0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavePatchRequestDto.swift; sourceTree = "<group>"; };
+		0332A38F2B5020CC00720CD3 /* CaveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAPI.swift; sourceTree = "<group>"; };
 		033E9C0F2AFCE0860051A9E8 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCaveView.swift; sourceTree = "<group>"; };
@@ -356,6 +358,14 @@
 				259E7F7A2B42ABA600F3DC8F /* OnboardingSelectViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		0332A38E2B5020BD00720CD3 /* CaveAPI */ = {
+			isa = PBXGroup;
+			children = (
+				0332A38F2B5020CC00720CD3 /* CaveAPI.swift */,
+			);
+			path = CaveAPI;
 			sourceTree = "<group>";
 		};
 		033E9C112AFD2F230051A9E8 /* UIComponents */ = {
@@ -648,6 +658,7 @@
 		03B9AC5E2AF561A200A5751C /* API */ = {
 			isa = PBXGroup;
 			children = (
+				0332A38E2B5020BD00720CD3 /* CaveAPI */,
 				035701F12B4EFBA200A9E47A /* SeedListAPI */,
 			);
 			path = API;
@@ -1238,6 +1249,7 @@
 				032213322B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift in Sources */,
 				259E7F752B405D3800F3DC8F /* OnboardingViewController.swift in Sources */,
 				03B9AC682AF5635800A5751C /* String+.swift in Sources */,
+				0332A3902B5020CC00720CD3 /* CaveAPI.swift in Sources */,
 				033E9C202AFE725D0051A9E8 /* CaveProfile.swift in Sources */,
 				03B9AC7A2AF564FC00A5751C /* UITableView+.swift in Sources */,
 				032213A52B1C54EB00FF5CF1 /* ScrapOnlyButton.swift in Sources */,
