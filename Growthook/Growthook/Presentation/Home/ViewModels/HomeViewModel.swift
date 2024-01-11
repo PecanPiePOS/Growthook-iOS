@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import Moya
 
 protocol HomeViewModelInputs {
     func handleLongPress(at indexPath: IndexPath)
@@ -23,7 +24,7 @@ protocol HomeViewModelInputs {
     func moveMenuTap()
     func removeMenuTap()
     func keepButtonTap()
-    func removeButtonTap(at indexPath: IndexPath)
+    func removeButtonTap()
 }
 
 protocol HomeViewModelOutputs {
@@ -36,9 +37,11 @@ protocol HomeViewModelOutputs {
     var moveToCave: PublishSubject<Void> { get }
     var pushToCaveDetail: PublishSubject<IndexPath> { get }
     var insightAlarm: BehaviorRelay<Int> { get }
-    var seedId: BehaviorRelay<Int> { get }
     var presentToCaveList: PublishSubject<Void> { get }
     var removeInsightAlertView: PublishSubject<Void> { get }
+    var dismissToHome: PublishSubject<Void> { get }
+    var removeInsight: PublishSubject<Void> { get }
+    var reloadInsights: PublishSubject<Void> { get }
 }
 
 protocol HomeViewModelType {
@@ -52,15 +55,19 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var insightList: BehaviorRelay<[SeedListResponseDto]> = BehaviorRelay<[SeedListResponseDto]>(value: [])
     var insightLongTap: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightBackground: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
-    let reloadInsightSubject: PublishSubject<Void> = PublishSubject<Void>()
+    var reloadInsights: PublishSubject<Void> = PublishSubject<Void>()
     var pushToInsightDetail: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var dismissToHomeVC: PublishSubject<Void> = PublishSubject<Void>()
     var moveToCave: PublishSubject<Void> = PublishSubject<Void>()
     var pushToCaveDetail: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightAlarm: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     
+    private let disposeBag = DisposeBag()
+    
+    // state
+    private var selectedSeedId: Int?
+    
     // 인사이트 선택
-    var seedId: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var presentToCaveList: PublishSubject<Void> = PublishSubject<Void>()
     var removeInsightAlertView: PublishSubject<Void> = PublishSubject<Void>()
     
@@ -69,13 +76,13 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     // 인사이트 삭제
     var dismissToHome: PublishSubject<Void> = PublishSubject<Void>()
-    var removeButtonTap: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
+    var removeInsight: PublishSubject<Void> = PublishSubject<Void>()
     
     var inputs: HomeViewModelInputs { return self }
     var outputs: HomeViewModelOutputs { return self }
     
     init() {
-        self.requestGetSeedList(memberId: 3)
+        self.getSeedList(memberId: 3)
         self.caveProfile.accept(CaveProfile.caveprofileDummyData())
     }
     
@@ -83,7 +90,8 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         let items = insightList.value
         let selectedItem = items[indexPath.item]
         print("\(selectedItem.seedId) / 제목 :  \(selectedItem.insight)")
-        self.seedId.accept(selectedItem.seedId)
+        self.selectedSeedId = selectedItem.seedId
+        print(selectedSeedId)
         self.insightLongTap.onNext(indexPath)
     }
     
@@ -92,7 +100,8 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     }
     
     func reloadInsight() {
-        self.reloadInsightSubject.onNext(())
+//        requestGetSeedList(memberId: 3)
+        self.reloadInsights.onNext(())
     }
     
     func caveCellTap(at indexPath: IndexPath) {
@@ -138,18 +147,35 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         self.dismissToHome.onNext(())
     }
     
-    func removeButtonTap(at indexPath: IndexPath) {
-        // 인사이트 삭제
+    func removeButtonTap() {
+        guard let seedId = selectedSeedId else { return }
+        SeedListAPI.shared.deleteSeed(seedId: seedId) { [weak self] response in
+            guard self != nil else { return }
+            self?.removeInsight.onNext(())
+            self?.getSeedList(memberId: 3)
+        }
     }
 }
 
 extension HomeViewModel {
     
-    func requestGetSeedList(memberId: Int) {
-        SeedListAPI.shared.getSeedList(memberId: memberId) { [weak self] response in
-            guard self != nil else { return }
-            guard let data = response?.data else { return }
-            self?.insightList.accept(data)
-        }
+//    func requestGetSeedList(memberId: Int) {
+//        SeedListAPI.shared.getSeedList(memberId: memberId) { [weak self] response in
+//            guard self != nil else { return }
+//            guard let data = response?.data else { return }
+//            self?.insightList.accept(data)
+//            print("😰😰😰😰😰😰😰😰😰😰😰😰😰")
+//        }
+//    }
+    
+    func getSeedList(memberId: Int) {
+        SeedListService.getAllSeedList(memberId: memberId)
+            .subscribe(onNext: { [weak self] list in
+                guard let self else { return }
+                self.insightList.accept(list)
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
     }
 }

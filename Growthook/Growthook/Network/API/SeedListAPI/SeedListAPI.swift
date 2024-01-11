@@ -8,11 +8,13 @@
 import Foundation
 
 import Moya
+import RxMoya
+import RxSwift
 
 final class SeedListAPI {
     static let shared: SeedListAPI = SeedListAPI()
     
-    private let seedListProvider = MoyaProvider<SeedListService>(plugins: [NetworkLoggerPlugin()])
+    private let seedListProvider = MoyaProvider<SeedListTarget>(plugins: [NetworkLoggerPlugin()])
     
     private init() {}
     
@@ -114,6 +116,7 @@ final class SeedListAPI {
             case .success(let response):
                 do {
                     let data = try response.map(GeneralResponse<VoidType>?.self)
+                    print("😰😰😰😰😰😰😰")
                     completion(data)
                 } catch let err {
                     print(err.localizedDescription, 500)

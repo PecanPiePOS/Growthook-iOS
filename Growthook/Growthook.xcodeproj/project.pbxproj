@@ -37,7 +37,7 @@
 		035701E72B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */; };
 		035701EA2B4EBA9600A9E47A /* GetCaveListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E92B4EBA9600A9E47A /* GetCaveListResponseDto.swift */; };
 		035701ED2B4EBF4800A9E47A /* SeedListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EC2B4EBF4800A9E47A /* SeedListResponseDto.swift */; };
-		035701F02B4EF3B200A9E47A /* SeedListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EF2B4EF3B200A9E47A /* SeedListService.swift */; };
+		035701F02B4EF3B200A9E47A /* SeedListTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EF2B4EF3B200A9E47A /* SeedListTarget.swift */; };
 		035701F32B4EFBB200A9E47A /* SeedListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F22B4EFBB200A9E47A /* SeedListAPI.swift */; };
 		035701F52B4F14BC00A9E47A /* InsightList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F42B4F14BC00A9E47A /* InsightList.swift */; };
 		035701F72B4F17E100A9E47A /* SeedAlarmResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */; };
@@ -188,7 +188,7 @@
 		035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveCaveAlertViewController.swift; sourceTree = "<group>"; };
 		035701E92B4EBA9600A9E47A /* GetCaveListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCaveListResponseDto.swift; sourceTree = "<group>"; };
 		035701EC2B4EBF4800A9E47A /* SeedListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListResponseDto.swift; sourceTree = "<group>"; };
-		035701EF2B4EF3B200A9E47A /* SeedListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListService.swift; sourceTree = "<group>"; };
+		035701EF2B4EF3B200A9E47A /* SeedListTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListTarget.swift; sourceTree = "<group>"; };
 		035701F22B4EFBB200A9E47A /* SeedListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListAPI.swift; sourceTree = "<group>"; };
 		035701F42B4F14BC00A9E47A /* InsightList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightList.swift; sourceTree = "<group>"; };
 		035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedAlarmResponseDto.swift; sourceTree = "<group>"; };
@@ -458,7 +458,7 @@
 		035701EE2B4EF35000A9E47A /* APIService */ = {
 			isa = PBXGroup;
 			children = (
-				035701EF2B4EF3B200A9E47A /* SeedListService.swift */,
+				035701EF2B4EF3B200A9E47A /* SeedListTarget.swift */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -1237,7 +1237,7 @@
 				09A7D70A2B01E6A9005F8821 /* CreateCaveModel.swift in Sources */,
 				03B9AC592AF560D800A5751C /* Config.swift in Sources */,
 				03B9AC8D2AF5663C00A5751C /* Font.swift in Sources */,
-				035701F02B4EF3B200A9E47A /* SeedListService.swift in Sources */,
+				035701F02B4EF3B200A9E47A /* SeedListTarget.swift in Sources */,
 				09CE00EA2B0DB13700CB42C4 /* CreateActionViewModel.swift in Sources */,
 				035701F32B4EFBB200A9E47A /* SeedListAPI.swift in Sources */,
 				035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */,

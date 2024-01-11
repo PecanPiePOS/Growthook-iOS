@@ -57,17 +57,17 @@ final class CaveDetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.outputs.insightLongTap
-            .subscribe(onNext: { [weak self] indexPath in
-                guard let self = self else { return }
-                self.caveDetailView.addSeedButton.isHidden = true
-                self.makeVibrate()
-                self.presentToHalfModalViewController(indexPath)
-                if let cell = caveDetailView.insightListView.insightCollectionView.cellForItem(at: indexPath) as? InsightListCollectionViewCell {
-                    cell.selectedCell()
-                }
-            })
-            .disposed(by: disposeBag)
+//        viewModel.outputs.insightLongTap
+//            .subscribe(onNext: { [weak self] indexPath in
+//                guard let self = self else { return }
+//                self.caveDetailView.addSeedButton.isHidden = true
+//                self.makeVibrate()
+//                self.presentToHalfModalViewController(indexPath)
+//                if let cell = caveDetailView.insightListView.insightCollectionView.cellForItem(at: indexPath) as? InsightListCollectionViewCell {
+//                    cell.selectedCell()
+//                }
+//            })
+//            .disposed(by: disposeBag)
         
         viewModel.outputs.insightBackground
             .subscribe(onNext: { [weak self] indexPath in
@@ -222,29 +222,29 @@ extension CaveDetailViewController {
         caveDetailView.insightListView.insightCollectionView.reloadData()
     }
     
-    func presentToHalfModalViewController(_ indexPath: IndexPath) {
-        let insightTapVC = InsightTapBottomSheet()
-        insightTapVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
-        let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
-            return SizeLiterals.Screen.screenHeight * 84 / 812
-        }
-        
-        if let sheet = insightTapVC.sheetPresentationController {
-            sheet.detents = [customDetent]
-            sheet.preferredCornerRadius = 0
-            sheet.delegate = self
-            sheet.delegate = insightTapVC as? any UISheetPresentationControllerDelegate
-        }
-        
-        insightTapVC.onDismiss = { [weak self] in
-            print("Dismissed")
-            self?.viewModel.inputs.dismissInsightTap(at: indexPath)
-        }
-        
-        insightTapVC.indexPath = indexPath
-        present(insightTapVC, animated: true)
-    }
+//    func presentToHalfModalViewController(_ indexPath: IndexPath) {
+//        let insightTapVC = InsightTapBottomSheet()
+//        insightTapVC.modalPresentationStyle = .pageSheet
+//        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+//        let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
+//            return SizeLiterals.Screen.screenHeight * 84 / 812
+//        }
+//        
+//        if let sheet = insightTapVC.sheetPresentationController {
+//            sheet.detents = [customDetent]
+//            sheet.preferredCornerRadius = 0
+//            sheet.delegate = self
+//            sheet.delegate = insightTapVC as? any UISheetPresentationControllerDelegate
+//        }
+//        
+//        insightTapVC.onDismiss = { [weak self] in
+//            print("Dismissed")
+//            self?.viewModel.inputs.dismissInsightTap(at: indexPath)
+//        }
+//        
+//        insightTapVC.indexPath = indexPath
+//        present(insightTapVC, animated: true)
+//    }
     
     private func addUnLockCaveAlert() {
         view.addSubview(unLockCaveAlertView)

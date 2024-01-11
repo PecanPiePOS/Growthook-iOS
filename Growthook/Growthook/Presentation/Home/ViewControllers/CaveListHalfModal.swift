@@ -23,10 +23,17 @@ class CaveListHalfModal: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel = HomeViewModel()
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
     var indexPath: IndexPath? = nil
     private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
+    
+    // MARK: - Initializer
+    
+    init(viewModel: HomeViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func bindViewModel() {
         viewModel.outputs.caveProfile
@@ -156,6 +163,10 @@ class CaveListHalfModal: BaseViewController {
             object: nil,
             userInfo: ["type": ClearInsightType.none]
         )
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

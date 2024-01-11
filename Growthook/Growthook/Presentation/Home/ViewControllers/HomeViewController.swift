@@ -72,10 +72,10 @@ final class HomeViewController: BaseViewController {
             .bind(to: insightListView.insightCollectionView.rx
                 .items(cellIdentifier: InsightListCollectionViewCell.className,
                        cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
+                print("♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️")
                 self.insightList.append(model)
                 cell.configureCell(model)
                 cell.setCellStyle()
-//                self.insightListView.insightCollectionView.reloadData()
                 cell.scrapButtonTapHandler = { [weak self] in
                     guard let self else { return }
                     if !cell.isScrapButtonTapped {
@@ -89,7 +89,7 @@ final class HomeViewController: BaseViewController {
                     cell.isScrapButtonTapped.toggle()
                 }
             }
-            .disposed(by: disposeBag)
+                       .disposed(by: disposeBag)
         
         // 인사이트 셀 스타일 재설정
         insightListView.insightCollectionView.rx.willDisplayCell
@@ -185,6 +185,12 @@ final class HomeViewController: BaseViewController {
                 self?.notificationButtonTap()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.reloadInsights
+            .bind(onNext: { [weak self] in
+                self?.insightListView.insightCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
@@ -264,7 +270,7 @@ extension HomeViewController {
     }
     
     func presentToHalfModalViewController(_ indexPath: IndexPath) {
-        let insightTapVC = InsightTapBottomSheet()
+        let insightTapVC = InsightTapBottomSheet(viewModel: viewModel)
         insightTapVC.modalPresentationStyle = .pageSheet
         let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
@@ -294,7 +300,7 @@ extension HomeViewController {
                 insightListView.insightCollectionView.deselectItem(at: indexPath, animated: false)
             }
         }
-        insightListView.insightCollectionView.reloadData()
+        self.insightListView.insightCollectionView.reloadData()
     }
     
     private func setNotification() {
