@@ -110,5 +110,6 @@ enum ImageLiterals {
         static var ic_notfound: UIImage { .load(name: "ic_notfound")}
         static var ic_dont: UIImage { .load(name: "ic_dont")}
         static var ic_sad: UIImage { .load(name: "ic_sad")}
+        static var growthook_Splash: UIImage { .load(name: "growthook_Splash")}
     }
 }
