@@ -34,6 +34,7 @@ final class CaveListHalfModalCell: UITableViewCell {
             }
         }
     }
+    var caveId: Int?
     
     // MARK: - View Life Cycle
 
@@ -92,5 +93,6 @@ extension CaveListHalfModalCell {
     
     func configureCell(_ model: CaveListResponseDto) {
         titleLabel.text = model.caveName
+        caveId = model.caveId
     }
 }

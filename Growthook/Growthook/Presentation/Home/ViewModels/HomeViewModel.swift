@@ -28,6 +28,7 @@ protocol HomeViewModelInputs {
     func insightScrap(seedId: Int)
     func unLockSeedAlert(seedId: Int)
     func caveInsightList(caveId: Int)
+    func caveListMove(caveId: Int)
 }
 
 protocol HomeViewModelOutputs {
@@ -132,6 +133,11 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         selectedCellIndex.accept(indexPath)
     }
     
+    func caveListMove(caveId: Int) {
+        self.postSeedMove(caveId: caveId)
+        return moveToCave.onNext(())
+    }
+    
     func alarmButtonTap(memberId: Int) {
         SeedListAPI.shared.getSeedAlarm(memberId: memberId) { [weak self] response in
             guard self != nil else { return }
@@ -167,7 +173,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     // 인사이트 이동
     func selectButtonTap() {
-        return moveToCave.onNext(())
+        
     }
     
     // 인사이트 삭제
@@ -229,6 +235,15 @@ extension HomeViewModel {
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveInsightList.accept(data)
+        }
+    }
+    
+    func postSeedMove(caveId: Int) {
+        var model: SeedMoveRequestDto = SeedMoveRequestDto(caveId: caveId)
+        guard let seedId = selectedSeedId else { return }
+        SeedListAPI.shared.postSeedMove(seedId: seedId, param: model) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
         }
     }
 }

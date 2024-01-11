@@ -21,7 +21,7 @@ final class SeedListAPI {
     public private(set) var seedListData: GeneralResponse<[SeedListResponseDto]>?
     public private(set) var caveSeedListData: GeneralResponse<[SeedListResponseDto]>?
     public private(set) var seedAlarmData: GeneralResponse<SeedAlarmResponseDto>?
-    public private(set) var seedMoveData: GeneralResponse<SeedMoveRequestDto>?
+    public private(set) var seedMoveData: GeneralResponse<SeedMoveResponsetDto>?
     public private(set) var patchSeedData: GeneralResponse<PatchSeedRequestDto>?
     
     // MARK: - GET
@@ -88,13 +88,14 @@ final class SeedListAPI {
     
     // MARK: - POST
     /// 인사이트 동굴 이동
-    func postSeedMove(seedId: Int,
-                      completion: @escaping (GeneralResponse<SeedMoveRequestDto>?) -> Void) {
-        seedListProvider.request(.postSeedMove(seedId: seedId)) { result in
+    func postSeedMove(seedId: Int, param: SeedMoveRequestDto,
+                      completion: @escaping (GeneralResponse<SeedMoveResponsetDto>?) -> Void) {
+        seedListProvider.request(.postSeedMove(seedId: seedId, param: param)) { result in
+            print("😊😊😊😊😊😊😊😊")
             switch result {
             case .success(let response):
                 do {
-                    self.seedMoveData = try response.map(GeneralResponse<SeedMoveRequestDto>?.self)
+                    self.seedMoveData = try response.map(GeneralResponse<SeedMoveResponsetDto>?.self)
                     guard let seedMoveData = self.seedMoveData else { return }
                     completion(seedMoveData)
                 } catch let err {

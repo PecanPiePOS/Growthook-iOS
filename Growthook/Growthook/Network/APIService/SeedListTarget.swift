@@ -19,7 +19,7 @@ enum SeedListTarget {
     case deleteSeed(seedId: Int)
     case patchSeed(seedId: Int)
     case patchUnlockSeed(seedId: Int)
-    case postSeedMove(seedId: Int)
+    case postSeedMove(seedId: Int, param: SeedMoveRequestDto)
     case patchSeedScrap(seedId: Int)
 }
 
@@ -51,7 +51,7 @@ extension SeedListTarget: BaseTargetType {
             let path = URLConstant.unLockSeed
                 .replacingOccurrences(of: "{seedId}", with: String(seedId))
             return path
-        case .postSeedMove(seedId: let seedId):
+        case .postSeedMove(seedId: let seedId, param: _):
             let path = URLConstant.seedMove
                 .replacingOccurrences(of: "{seedId}", with: String(seedId))
             return path
@@ -77,6 +77,8 @@ extension SeedListTarget: BaseTargetType {
     
     var task: Moya.Task {
         switch self {
+        case .postSeedMove(_, let param):
+            return .requestParameters(parameters: try! param.asParameter(), encoding: JSONEncoding.default)
         default:
             return .requestPlain
         }

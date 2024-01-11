@@ -27,6 +27,7 @@ class CaveListHalfModal: BaseViewController {
     private let disposeBag = DisposeBag()
     var indexPath: IndexPath? = nil
     private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
+    private var selectedCaveId: Int?
     
     // MARK: - Initializer
     
@@ -41,6 +42,7 @@ class CaveListHalfModal: BaseViewController {
                 .items(cellIdentifier: CaveListHalfModalCell.className,
                        cellType: CaveListHalfModalCell.self)) { [weak self] (index, model, cell) in
                     guard let self = self else { return }
+                
                     cell.configureCell(model)
                     cell.selectionStyle = UITableViewCell.SelectionStyle.none
                     if let selectedIndexPath = self.viewModel.outputs.selectedCellIndex.value {
@@ -55,14 +57,19 @@ class CaveListHalfModal: BaseViewController {
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
                 if let indexPath = indexPath {
-                    self.updateSelectedCell(at: indexPath)
+                    if let cell = caveListTableView.cellForRow(at: indexPath) as? CaveListHalfModalCell {
+                        guard let caveId = cell.caveId else { return }
+                        self.updateSelectedCell(indexPath: indexPath, caveId: caveId)
+                        self.selectedCaveId = caveId
+                    }
                 }
             })
             .disposed(by: disposeBag)
         
         selectButton.rx.tap
             .bind { [weak self] in
-                self?.viewModel.inputs.selectButtonTap()
+                guard let caveId = self?.selectedCaveId else { return }
+                self?.viewModel.inputs.caveListMove(caveId: caveId)
             }
             .disposed(by: disposeBag)
         
@@ -93,7 +100,7 @@ class CaveListHalfModal: BaseViewController {
             $0.backgroundColor = .clear
             $0.separatorStyle = .singleLine
             $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            $0.isHidden = true
+            $0.isHidden = false
         }
         
         selectButton.do {
@@ -101,6 +108,10 @@ class CaveListHalfModal: BaseViewController {
             $0.backgroundColor = .green400
             $0.titleLabel?.font = .fontGuide(.body1_bold)
             $0.makeCornerRound(radius: 10)
+            $0.isHidden = false
+        }
+        
+        caveEmptyView.do {
             $0.isHidden = true
         }
     }
@@ -138,7 +149,7 @@ class CaveListHalfModal: BaseViewController {
         caveListTableView.register(CaveListHalfModalCell.self, forCellReuseIdentifier: CaveListHalfModalCell.className)
     }
     
-    private func updateSelectedCell(at indexPath: IndexPath?) {
+    private func updateSelectedCell(indexPath: IndexPath?, caveId: Int) {
         caveListTableView.reloadData()
         if let indexPath = self.viewModel.outputs.selectedCellIndex.value {
             caveListTableView.reloadRows(at: [indexPath], with: .none)
