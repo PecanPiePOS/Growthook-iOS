@@ -14,8 +14,9 @@ final class NotificationAlertView: BaseView {
 
     // MARK: - UI Components
     
-    private let lockImage = UIImageView()
-    let notificationLabel = UILabel()
+    let lockImage = UIImageView()
+    let notiLabel1 = UILabel()
+    let notiLabel2 = UILabel()
     
     // MARK: - UI Components Property
     
@@ -30,14 +31,19 @@ final class NotificationAlertView: BaseView {
         self.layer.masksToBounds = false
         
         lockImage.do {
-            $0.image = ImageLiterals.Home.notification_new
+            $0.image = ImageLiterals.Home.notification_empty
         }
         
-        notificationLabel.do {
-            $0.text = I18N.Home.notNotiDescription
+        notiLabel1.do {
+            $0.text = I18N.Home.notNotiDescription1
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .white000
-            $0.numberOfLines = 2
+        }
+        
+        notiLabel2.do {
+            $0.text = I18N.Home.notNotiDescription2
+            $0.font = .fontGuide(.body3_reg)
+            $0.textColor = .white000
         }
     }
     
@@ -45,16 +51,21 @@ final class NotificationAlertView: BaseView {
     
     override func setLayout() {
         
-        self.addSubviews(lockImage, notificationLabel)
+        self.addSubviews(lockImage, notiLabel1, notiLabel2)
         
         lockImage.snp.makeConstraints {
             $0.top.equalToSuperview().inset(24)
             $0.leading.equalToSuperview().inset(18)
         }
         
-        notificationLabel.snp.makeConstraints {
+        notiLabel1.snp.makeConstraints {
             $0.top.equalTo(lockImage.snp.bottom).offset(8)
-            $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().inset(18)
+        }
+        
+        notiLabel2.snp.makeConstraints {
+            $0.top.equalTo(notiLabel1.snp.bottom).offset(8)
+            $0.leading.equalTo(notiLabel1)
         }
     }
 }

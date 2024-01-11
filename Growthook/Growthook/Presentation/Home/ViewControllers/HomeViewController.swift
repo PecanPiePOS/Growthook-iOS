@@ -181,12 +181,7 @@ final class HomeViewController: BaseViewController {
         
         viewModel.outputs.insightAlarm
             .bind(onNext: { [weak self] count in
-                if count > 0  {
-                    self?.notificationView.notificationLabel.text = "\(I18N.Home.notiDescription1)\(count)\(I18N.Home.notiDescription2)"
-                    self?.notificationView.notificationLabel.partColorChange(targetString: I18N.Home.day3, textColor: .red200)
-                    self?.notificationView.notificationLabel.partFontChange(targetString: "\(count)개", font: .fontGuide(.body1_bold))
-                    self?.notificationView.notificationLabel.partFontChange(targetString: I18N.Home.day3, font: .fontGuide(.body1_bold))
-                }
+                self?.setNotiStyle(count)
                 self?.notificationButtonTap()
             })
             .disposed(by: disposeBag)
@@ -348,6 +343,16 @@ extension HomeViewController {
         let caveDetailVC = CaveDetailViewController()
         caveDetailVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(caveDetailVC, animated: true)
+    }
+    
+    private func setNotiStyle(_ count: Int) {
+        if count > 0  {
+            self.notificationView.lockImage.image = ImageLiterals.Home.notification_new
+            self.notificationView.notiLabel1.text = I18N.Home.notiDescription1
+            self.notificationView.notiLabel2.text = "\(I18N.Home.notiDescription2)\(count)\(I18N.Home.notiDescription3)"
+            self.notificationView.notiLabel1.partChange(targetString: I18N.Home.day3, textColor: .red200, font: .fontGuide(.body1_bold))
+            self.notificationView.notiLabel2.partFontChange(targetString: "\(count)개", font: .fontGuide(.body1_bold))
+        }
     }
     
     // MARK: - @objc Methods
