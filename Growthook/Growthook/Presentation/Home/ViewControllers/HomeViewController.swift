@@ -37,7 +37,6 @@ final class HomeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = HomeViewModel()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-    private var insightList: [SeedListResponseDto] = []
     
     // MARK: - View Life Cycle
     
@@ -73,7 +72,6 @@ final class HomeViewController: BaseViewController {
                 .items(cellIdentifier: InsightListCollectionViewCell.className,
                        cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
                 print("♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️")
-                self.insightList.append(model)
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
@@ -313,13 +311,15 @@ extension HomeViewController {
     
     private func pushToInsightDetail(at indexPath: IndexPath) {
         insightListView.insightCollectionView.deselectItem(at: indexPath, animated: false)
-        if insightList[indexPath.item].isLocked {
-            view.addSubview(unLockAlertView)
-            unLockAlertView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
+        if let cell = insightListView.insightCollectionView.cellForItem(at: indexPath) as? InsightListCollectionViewCell {
+            if cell.isLock {
+                view.addSubview(unLockAlertView)
+                unLockAlertView.snp.makeConstraints {
+                    $0.edges.equalToSuperview()
+                }
+            } else {
+                print("pushToInsightDetail")
             }
-        } else {
-            print("pushToInsightDetail")
         }
     }
     
@@ -368,10 +368,12 @@ extension HomeViewController {
         if gesture.state == .began {
             // 꾹 눌림이 시작될 때 실행할 코드
             if let indexPath = insightListView.insightCollectionView.indexPathForItem(at: location) {
-                if insightList[indexPath.item].isLocked {
-                    return
-                } else {
-                    viewModel.inputs.handleLongPress(at: indexPath)
+                if let cell = insightListView.insightCollectionView.cellForItem(at: indexPath) as? InsightListCollectionViewCell {
+                    if cell.isLock {
+                        return
+                    } else {
+                        viewModel.inputs.handleLongPress(at: indexPath)
+                    }
                 }
             }
         }
