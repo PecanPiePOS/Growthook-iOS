@@ -20,7 +20,7 @@ final class RemoveInsightAlertViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel = RemoveInsightViewModel()
+    private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
     

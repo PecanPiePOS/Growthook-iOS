@@ -24,7 +24,7 @@ final class InsightTapBottomSheet: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel = InsightTapViewModel()
+    private let viewModel = HomeViewModel()
     private let disposeBag = DisposeBag()
     var onDismiss: (() -> Void)?
     var indexPath: IndexPath? = nil
@@ -32,7 +32,7 @@ final class InsightTapBottomSheet: BaseViewController {
     override func bindViewModel() {
         moveButton.rx.tap
             .bind { [weak self] in
-                self?.viewModel.inputs.moveButtonTap()
+                self?.viewModel.inputs.moveMenuTap()
             }
             .disposed(by: disposeBag)
         
@@ -44,7 +44,7 @@ final class InsightTapBottomSheet: BaseViewController {
         
         deleteButton.rx.tap
             .bind { [weak self] in
-                self?.viewModel.inputs.deleteButtonTap()
+                self?.viewModel.inputs.removeMenuTap()
             }
             .disposed(by: disposeBag)
         

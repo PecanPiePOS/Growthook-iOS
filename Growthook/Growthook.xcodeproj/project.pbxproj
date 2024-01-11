@@ -16,7 +16,6 @@
 		032213322B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032213312B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift */; };
 		0322137A2B17642E00FF5CF1 /* RemoveAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032213792B17642E00FF5CF1 /* RemoveAlertView.swift */; };
 		0322137E2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322137D2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift */; };
-		032213802B177F8E00FF5CF1 /* RemoveInsightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322137F2B177F8E00FF5CF1 /* RemoveInsightViewModel.swift */; };
 		032213822B17960700FF5CF1 /* NotificationAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032213812B17960700FF5CF1 /* NotificationAlertView.swift */; };
 		032213A52B1C54EB00FF5CF1 /* ScrapOnlyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032213A42B1C54EB00FF5CF1 /* ScrapOnlyButton.swift */; };
 		033E9C102AFCE0860051A9E8 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033E9C0F2AFCE0860051A9E8 /* Image.xcassets */; };
@@ -85,8 +84,6 @@
 		03C3565F2B0B702900750758 /* InsightTapBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C3565E2B0B702900750758 /* InsightTapBottomSheet.swift */; };
 		03C356612B0F533E00750758 /* CaveListHalfModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C356602B0F533E00750758 /* CaveListHalfModal.swift */; };
 		03C356632B1069AC00750758 /* CaveListHalfModalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C356622B1069AC00750758 /* CaveListHalfModalCell.swift */; };
-		03C356652B106AC800750758 /* CaveListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C356642B106AC800750758 /* CaveListViewModel.swift */; };
-		03C356672B108EB800750758 /* InsightTapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C356662B108EB800750758 /* InsightTapViewModel.swift */; };
 		03E481002AF2AFDC002F4CBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E480FF2AF2AFDC002F4CBC /* AppDelegate.swift */; };
 		03E481022AF2AFDC002F4CBC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E481012AF2AFDC002F4CBC /* SceneDelegate.swift */; };
 		03E481092AF2AFDD002F4CBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E481082AF2AFDD002F4CBC /* Assets.xcassets */; };
@@ -170,7 +167,6 @@
 		032213312B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnLockInsightAlertView.swift; sourceTree = "<group>"; };
 		032213792B17642E00FF5CF1 /* RemoveAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAlertView.swift; sourceTree = "<group>"; };
 		0322137D2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveInsightAlertViewController.swift; sourceTree = "<group>"; };
-		0322137F2B177F8E00FF5CF1 /* RemoveInsightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveInsightViewModel.swift; sourceTree = "<group>"; };
 		032213812B17960700FF5CF1 /* NotificationAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertView.swift; sourceTree = "<group>"; };
 		032213A42B1C54EB00FF5CF1 /* ScrapOnlyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapOnlyButton.swift; sourceTree = "<group>"; };
 		033E9C0F2AFCE0860051A9E8 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
@@ -239,8 +235,6 @@
 		03C3565E2B0B702900750758 /* InsightTapBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightTapBottomSheet.swift; sourceTree = "<group>"; };
 		03C356602B0F533E00750758 /* CaveListHalfModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveListHalfModal.swift; sourceTree = "<group>"; };
 		03C356622B1069AC00750758 /* CaveListHalfModalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveListHalfModalCell.swift; sourceTree = "<group>"; };
-		03C356642B106AC800750758 /* CaveListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveListViewModel.swift; sourceTree = "<group>"; };
-		03C356662B108EB800750758 /* InsightTapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightTapViewModel.swift; sourceTree = "<group>"; };
 		03E480FC2AF2AFDC002F4CBC /* Growthook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Growthook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E480FF2AF2AFDC002F4CBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03E481012AF2AFDC002F4CBC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -481,9 +475,6 @@
 			isa = PBXGroup;
 			children = (
 				033E9C1D2AFE63D40051A9E8 /* HomeViewModel.swift */,
-				03C356662B108EB800750758 /* InsightTapViewModel.swift */,
-				03C356642B106AC800750758 /* CaveListViewModel.swift */,
-				0322137F2B177F8E00FF5CF1 /* RemoveInsightViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1147,7 +1138,6 @@
 				03C356632B1069AC00750758 /* CaveListHalfModalCell.swift in Sources */,
 				03B9AC952AF566C800A5751C /* BlurredLabel.swift in Sources */,
 				03B9AC9D2AF7A9EB00A5751C /* TabBarItem.swift in Sources */,
-				032213802B177F8E00FF5CF1 /* RemoveInsightViewModel.swift in Sources */,
 				259E7F772B4060EB00F3DC8F /* PageContentsViewController.swift in Sources */,
 				035701F92B4F184800A9E47A /* CaveSeedListResponseDto.swift in Sources */,
 				033E9C1E2AFE63D40051A9E8 /* HomeViewModel.swift in Sources */,
@@ -1189,7 +1179,6 @@
 				259E7F722B3E95F600F3DC8F /* LoginView.swift in Sources */,
 				03B9AC6E2AF563E200A5751C /* UIImage+.swift in Sources */,
 				03B9AC702AF563F300A5751C /* UIViewController+.swift in Sources */,
-				03C356672B108EB800750758 /* InsightTapViewModel.swift in Sources */,
 				58AB70AC2B2C7CC50061C072 /* MyPageViewModel.swift in Sources */,
 				581D228E2B320C630068E58D /* CommonTextFieldWithBorder.swift in Sources */,
 				03115F8C2B27072A009D1517 /* LoginViewController.swift in Sources */,
@@ -1255,7 +1244,6 @@
 				09DE08022B04FDF800D7DF3D /* EmptyViewController.swift in Sources */,
 				03B9AC722AF5646000A5751C /* UITextField+.swift in Sources */,
 				033E9C1B2AFE606E0051A9E8 /* CaveCollectionViewCell.swift in Sources */,
-				03C356652B106AC800750758 /* CaveListViewModel.swift in Sources */,
 				03B9AC782AF564C400A5751C /* UILabel+.swift in Sources */,
 				250F7D732B145F4C00D9726F /* ActionListCompleteTableViewCell.swift in Sources */,
 				03B9AC6A2AF5638700A5751C /* UIResponder+.swift in Sources */,
