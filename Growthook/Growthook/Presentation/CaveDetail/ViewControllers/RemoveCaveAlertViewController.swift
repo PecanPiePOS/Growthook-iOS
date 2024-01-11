@@ -27,7 +27,6 @@ final class RemoveCaveAlertViewController: BaseViewController {
         removeInsightView.keepButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-//                self?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -35,9 +34,6 @@ final class RemoveCaveAlertViewController: BaseViewController {
             .subscribe(onNext: { [weak self] in
                 self?.clearInsight()
                 self?.rootViewChange()
-                
-//                self?.viewModel.inputs.deleteButtonTapped()
-//                self?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
             })
             .disposed(by: disposeBag)
     }
