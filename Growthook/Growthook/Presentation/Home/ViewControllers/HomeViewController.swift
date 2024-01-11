@@ -352,7 +352,7 @@ extension HomeViewController {
     }
     
     private func pushToCaveDetailVC(caveId: Int) {
-        let caveDetailVC = CaveDetailViewController(viewModel: viewModel)
+        let caveDetailVC = CaveDetailViewController(viewModel: viewModel, caveId: caveId)
         caveDetailVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(caveDetailVC, animated: true)
     }

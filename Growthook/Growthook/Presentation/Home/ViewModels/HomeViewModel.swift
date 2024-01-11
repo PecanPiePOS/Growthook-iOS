@@ -77,6 +77,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     // state
     private var selectedSeedId: Int?
     var insightModel: [SeedListResponseDto] = []
+    private var caveId: Int?
     
     // 인사이트 선택
     var presentToCaveList: PublishSubject<Void> = PublishSubject<Void>()
@@ -119,6 +120,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     func caveInsightList(caveId: Int) {
         self.getCaveSeedList(caveId: caveId)
+        self.caveId = caveId
     }
     
     func insightCellTap(at indexPath: IndexPath) {
@@ -187,6 +189,9 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
             guard self != nil else { return }
             self?.removeInsight.onNext(())
             self?.getSeedList(memberId: 3)
+            if let caveId = self?.caveId {
+                self?.getCaveSeedList(caveId: caveId)
+            }
         }
     }
 }
@@ -243,6 +248,10 @@ extension HomeViewModel {
         guard let seedId = selectedSeedId else { return }
         SeedListAPI.shared.postSeedMove(seedId: seedId, param: model) { [weak self] response in
             guard self != nil else { return }
+            if let caveId = self?.caveId {
+                self?.getCaveSeedList(caveId: caveId)
+                self?.getSeedList(memberId: 3)
+            }
             guard let data = response?.data else { return }
         }
     }

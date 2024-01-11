@@ -22,7 +22,7 @@ final class CaveDetailViewController: BaseViewController {
     private lazy var unLockCaveAlertView = UnLockCaveAlertView()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     private var lockSeedId: Int?
-    private var caveId: Int?
+    private var caveId: Int
     
     // MARK: - View Life Cycle
     
@@ -38,12 +38,15 @@ final class CaveDetailViewController: BaseViewController {
     
     // MARK: - Initializer
 
-    init(viewModel: HomeViewModel){
+    init(viewModel: HomeViewModel, caveId: Int){
         self.viewModel = viewModel
+        self.caveId = caveId
         super.init(nibName: nil, bundle: nil)
     }
     
     override func bindViewModel() {
+        
+        viewModel.inputs.caveDetail(caveId: caveId)
         
         viewModel.outputs.caveDetail
             .bind(onNext: { [weak self] model in
