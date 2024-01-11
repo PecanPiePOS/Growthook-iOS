@@ -26,7 +26,7 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
 
-    private var disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var scrapButtonTapHandler: (() -> Void)?
     var isScrapButtonTapped: Bool = false {
         didSet {
@@ -178,8 +178,6 @@ extension InsightListCollectionViewCell {
         } else {
             lightCellStyle()
         }
-        
-
     }
     
     private func lockCellStyle() {

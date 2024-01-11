@@ -75,27 +75,16 @@ final class HomeViewController: BaseViewController {
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
-                    guard let self else { return }
+                    guard let self = self else { return }
                     if !cell.isScrapButtonTapped {
                         // 스크랩
                         print("scrap")
                         self.view.showScrapToast(message: "스크랩 완료!")
-                    } else {
-                        // 스크랩 해제
-                        print("unScrap")
                     }
                     cell.isScrapButtonTapped.toggle()
-                    viewModel.inputs.insightScrap(seedId: cell.seedId)
-                    viewModel.inputs.reloadInsight()
-                    var isScrap = viewModel.insightModel {
-                        didSet {
-                            self.insightListView.insightCollectionView.reloadData()
-                            print("????????????????")
-                        }
-                    }
                 }
             }
-                       .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
         
         // 인사이트 셀 스타일 재설정
         insightListView.insightCollectionView.rx.willDisplayCell
