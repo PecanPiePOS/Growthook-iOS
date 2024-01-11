@@ -153,6 +153,7 @@ extension InsightListCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         lockView.isHidden = true
+        scrapButtonTapped(isScrapButtonTapped)
     }
     
     func configureCell(_ model: SeedListResponseDto) {

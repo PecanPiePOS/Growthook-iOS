@@ -69,6 +69,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     // state
     private var selectedSeedId: Int?
+    var insightModel: [SeedListResponseDto] = []
     
     // 인사이트 선택
     var presentToCaveList: PublishSubject<Void> = PublishSubject<Void>()
@@ -182,6 +183,7 @@ extension HomeViewModel {
             .subscribe(onNext: { [weak self] list in
                 guard let self else { return }
                 self.insightList.accept(list)
+                self.insightModel = list
             }, onError: { error in
                 print(error)
             })

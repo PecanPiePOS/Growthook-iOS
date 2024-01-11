@@ -86,6 +86,13 @@ final class HomeViewController: BaseViewController {
                     }
                     cell.isScrapButtonTapped.toggle()
                     viewModel.inputs.insightScrap(seedId: cell.seedId)
+                    viewModel.inputs.reloadInsight()
+                    var isScrap = viewModel.insightModel {
+                        didSet {
+                            self.insightListView.insightCollectionView.reloadData()
+                            print("????????????????")
+                        }
+                    }
                 }
             }
                        .disposed(by: disposeBag)
