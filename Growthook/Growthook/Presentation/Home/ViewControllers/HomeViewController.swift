@@ -85,6 +85,7 @@ final class HomeViewController: BaseViewController {
                         print("unScrap")
                     }
                     cell.isScrapButtonTapped.toggle()
+                    viewModel.inputs.insightScrap(seedId: cell.seedId)
                 }
             }
                        .disposed(by: disposeBag)

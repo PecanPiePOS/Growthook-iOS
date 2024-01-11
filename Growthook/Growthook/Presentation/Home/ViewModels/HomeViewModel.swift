@@ -25,6 +25,7 @@ protocol HomeViewModelInputs {
     func removeMenuTap()
     func keepButtonTap()
     func removeButtonTap()
+    func insightScrap(seedId: Int)
 }
 
 protocol HomeViewModelOutputs {
@@ -42,6 +43,7 @@ protocol HomeViewModelOutputs {
     var dismissToHome: PublishSubject<Void> { get }
     var removeInsight: PublishSubject<Void> { get }
     var reloadInsights: PublishSubject<Void> { get }
+    var insightScrapToggle: PublishSubject<Void> { get }
 }
 
 protocol HomeViewModelType {
@@ -61,6 +63,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var moveToCave: PublishSubject<Void> = PublishSubject<Void>()
     var pushToCaveDetail: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightAlarm: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+    var insightScrapToggle: PublishSubject<Void> = PublishSubject<Void>()
     
     private let disposeBag = DisposeBag()
     
@@ -91,7 +94,6 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         let selectedItem = items[indexPath.item]
         print("\(selectedItem.seedId) / 제목 :  \(selectedItem.insight)")
         self.selectedSeedId = selectedItem.seedId
-        print(selectedSeedId)
         self.insightLongTap.onNext(indexPath)
     }
     
@@ -100,8 +102,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     }
     
     func reloadInsight() {
-//        requestGetSeedList(memberId: 3)
-        self.reloadInsights.onNext(())
+        self.getSeedList(memberId: 3)
     }
     
     func caveCellTap(at indexPath: IndexPath) {
@@ -125,6 +126,14 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.insightAlarm.accept(data.seedCount)
+        }
+    }
+    
+    func insightScrap(seedId: Int) {
+        SeedListAPI.shared.patchSeedScrap(seedId: seedId) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            self?.insightScrapToggle.onNext(())
         }
     }
     
