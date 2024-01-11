@@ -30,7 +30,7 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
     var scrapButtonTapHandler: (() -> Void)?
     var isScrapButtonTapped: Bool = false {
         didSet {
-            scrapButtonTapped()
+            scrapButtonTapped(isScrapButtonTapped)
         }
     }
     var isLock: Bool = false
@@ -44,6 +44,7 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    var seedId: Int = 0
     
     // MARK: - View Life Cycle
     
@@ -152,7 +153,6 @@ extension InsightListCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         lockView.isHidden = true
-        isScrapButtonTapped = false
     }
     
     func configureCell(_ model: SeedListResponseDto) {
@@ -161,11 +161,12 @@ extension InsightListCollectionViewCell {
         isLock = model.isLocked
         isScrapButtonTapped = model.isScraped
         hasActionPlan = model.hasActionPlan
+        seedId = model.seedId
         setCellStyle()
     }
     
     func setCellStyle() {
-        scrapButtonTapped()
+        scrapButtonTapped(isScrapButtonTapped)
         if isLock {
             lockCellStyle()
             isLock = true
@@ -176,6 +177,8 @@ extension InsightListCollectionViewCell {
         } else {
             lightCellStyle()
         }
+        
+
     }
     
     private func lockCellStyle() {
@@ -211,12 +214,12 @@ extension InsightListCollectionViewCell {
         scrapButton.addTarget(self, action: #selector(scrapButtonTap), for: .touchUpInside)
     }
     
-    func scrapButtonTapped() {
+    func scrapButtonTapped(_ isScrap: Bool) {
         let buttonImage: UIImage
         if hasActionPlan {
-            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_dark_on : ImageLiterals.Home.btn_scrap_dark_off
+            buttonImage = isScrap ? ImageLiterals.Home.btn_scrap_dark_on : ImageLiterals.Home.btn_scrap_dark_off
         } else {
-            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
+            buttonImage = isScrap ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
         }
         scrapButton.setImage(buttonImage, for: .normal)
     }
