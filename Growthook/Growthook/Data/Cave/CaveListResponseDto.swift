@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetCaveListResponseDto: Codable {
+struct CaveListResponseDto: Codable {
     let caveId: Int
     let caveName: String
 }
