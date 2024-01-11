@@ -87,7 +87,7 @@ final class CaveDetailViewController: BaseViewController {
         
         unLockInsightAlertView.useButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.unLockInsightAlertView.useButtonTapped()
+//                self?.unLockInsightAlertView.useButtonTapped()
             })
             .disposed(by: disposeBag)
         

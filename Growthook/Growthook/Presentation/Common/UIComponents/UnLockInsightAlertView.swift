@@ -185,10 +185,3 @@ final class UnLockInsightAlertView: BaseView {
         }
     }
 }
-
-extension UnLockInsightAlertView {
-    
-    func useButtonTapped() {
-        print("useButtonTapped")
-    }
-}

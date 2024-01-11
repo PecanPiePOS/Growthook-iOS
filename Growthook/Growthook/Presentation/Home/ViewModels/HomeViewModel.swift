@@ -26,6 +26,7 @@ protocol HomeViewModelInputs {
     func keepButtonTap()
     func removeButtonTap()
     func insightScrap(seedId: Int)
+    func unLockSeedAlert(seedId: Int)
 }
 
 protocol HomeViewModelOutputs {
@@ -44,6 +45,7 @@ protocol HomeViewModelOutputs {
     var removeInsight: PublishSubject<Void> { get }
     var reloadInsights: PublishSubject<Void> { get }
     var insightScrapToggle: PublishSubject<Void> { get }
+    var unLockSeed: PublishSubject<Void> { get }
 }
 
 protocol HomeViewModelType {
@@ -64,6 +66,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var pushToCaveDetail: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightAlarm: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var insightScrapToggle: PublishSubject<Void> = PublishSubject<Void>()
+    var unLockSeed: PublishSubject<Void> = PublishSubject<Void>()
     
     private let disposeBag = DisposeBag()
     
@@ -135,6 +138,14 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.insightScrapToggle.onNext(())
+        }
+    }
+    
+    func unLockSeedAlert(seedId: Int) {
+        SeedListAPI.shared.patchSeedUnlock(seedId: seedId) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            self?.unLockSeed.onNext(())
         }
     }
     

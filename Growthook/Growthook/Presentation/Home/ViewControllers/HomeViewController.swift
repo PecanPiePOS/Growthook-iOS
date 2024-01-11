@@ -37,6 +37,7 @@ final class HomeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = HomeViewModel()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+    private var lockSeedId: Int?
     
     // MARK: - View Life Cycle
     
@@ -149,7 +150,15 @@ final class HomeViewController: BaseViewController {
         
         unLockAlertView.useButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.unLockAlertView.useButtonTapped()
+                guard let seedId = self?.lockSeedId else { return }
+                self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.unLockSeed
+            .subscribe(onNext: { [weak self] in
+                self?.unLockAlertView.removeFromSuperview()
+                print("인사이트 잠금 해제 뷰 이동")
             })
             .disposed(by: disposeBag)
         
@@ -314,6 +323,7 @@ extension HomeViewController {
                 unLockAlertView.snp.makeConstraints {
                     $0.edges.equalToSuperview()
                 }
+                self.lockSeedId = cell.seedId
             } else {
                 print("pushToInsightDetail")
             }
