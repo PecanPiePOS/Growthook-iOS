@@ -19,6 +19,10 @@ final class CaveCollectionViewCell: UICollectionViewCell {
     private let caveImageView = UIImageView()
     private let caveTitle = UILabel()
     
+    // MARK: - Properties
+    
+    var caveId: Int?
+    
     // MARK: - View Life Cycle
     
     override init(frame: CGRect) {
@@ -72,8 +76,8 @@ extension CaveCollectionViewCell {
     
     // MARK: - Methods
     
-    func configureCell(_ model: CaveProfile) {
-        caveImageView.image = model.image
-        caveTitle.text = model.title
+    func configureCell(_ model: CaveListResponseDto) {
+        caveTitle.text = model.caveName
+        caveId = model.caveId
     }
 }

@@ -30,7 +30,7 @@ protocol HomeViewModelInputs {
 }
 
 protocol HomeViewModelOutputs {
-    var caveProfile: BehaviorRelay<[CaveProfile]> { get }
+    var caveProfile: BehaviorRelay<[CaveListResponseDto]> { get }
     var insightList: BehaviorRelay<[SeedListResponseDto]> { get }
     var insightLongTap: PublishSubject<IndexPath> { get }
     var insightBackground: PublishSubject<IndexPath> { get }
@@ -55,7 +55,7 @@ protocol HomeViewModelType {
 
 final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewModelType {
     
-    var caveProfile: BehaviorRelay<[CaveProfile]> = BehaviorRelay(value: [])
+    var caveProfile: BehaviorRelay<[CaveListResponseDto]> = BehaviorRelay(value: [])
     var insightList: BehaviorRelay<[SeedListResponseDto]> = BehaviorRelay<[SeedListResponseDto]>(value: [])
     var insightLongTap: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightBackground: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
@@ -90,7 +90,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     init() {
         self.getSeedList(memberId: 3)
-        self.caveProfile.accept(CaveProfile.caveprofileDummyData())
+        self.getCaveList(memberId: 3)
     }
     
     func handleLongPress(at indexPath: IndexPath) {
@@ -199,5 +199,13 @@ extension HomeViewModel {
                 print(error)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func getCaveList(memberId: Int) {
+        CaveAPI.shared.getCaveAll(memberId: memberId) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            self?.caveProfile.accept(data)
+        }
     }
 }

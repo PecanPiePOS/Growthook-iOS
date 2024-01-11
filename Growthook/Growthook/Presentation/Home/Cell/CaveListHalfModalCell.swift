@@ -90,7 +90,7 @@ extension CaveListHalfModalCell {
     
     // MARK: - Methods
     
-    func configureCell(_ model: CaveProfile) {
-        titleLabel.text = model.title
+    func configureCell(_ model: CaveListResponseDto) {
+        titleLabel.text = model.caveName
     }
 }
