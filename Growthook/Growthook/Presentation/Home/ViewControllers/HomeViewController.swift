@@ -404,13 +404,13 @@ extension HomeViewController {
             print(info)
             switch info {
             case .move:
-                view.showToast(message: "씨앗을 옮겨 심었어요")
+                view.showToast(message: I18N.Component.ToastMessage.moveInsight)
             case .delete:
-                view.showToast(message: "씨앗이 삭제되었어요")
+                view.showToast(message: I18N.Component.ToastMessage.removeInsight)
             case .none:
                 return
             case .deleteCave:
-                view.showToast(message: "동굴이 삭제되었어요")
+                view.showToast(message: I18N.Component.ToastMessage.removeCave)
             }
         }
     }

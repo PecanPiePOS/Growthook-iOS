@@ -101,7 +101,7 @@ extension RemoveCaveAlertViewController {
            let window = sceneDelegate.window {
             let vc = TabBarController()
             let rootVC = UINavigationController(rootViewController: vc)
-            rootVC.view.showToast(message: "동굴이 삭제되었어요")
+            rootVC.view.showToast(message: I18N.Component.ToastMessage.removeCave)
             rootVC.navigationController?.isNavigationBarHidden = true
             window.rootViewController = rootVC
             window.makeKeyAndVisible()

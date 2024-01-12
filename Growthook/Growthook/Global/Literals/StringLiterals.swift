@@ -39,6 +39,12 @@ enum I18N {
             static let description = "해당 기능은 추후 업데이트 예정이에요:)"
             static let check = "확인"
         }
+        
+        enum ToastMessage {
+            static let moveInsight = "씨앗을 옮겨 심었어요"
+            static let removeInsight = "씨앗이 삭제되었어요"
+            static let removeCave = "동굴이 삭제되었어요"
+        }
     }
     
     enum Home {
