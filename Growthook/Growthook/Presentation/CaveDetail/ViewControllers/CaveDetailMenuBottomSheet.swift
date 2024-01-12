@@ -26,20 +26,20 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
     private let disposeBag = DisposeBag()
     private var caveId: Int?
     
-    override func bindViewModel() {
-        deleteCaveButton.rx.tap
-            .bind { [weak self] in
-                self?.addRemoveCaveAlert()
-            }
-            .disposed(by: disposeBag)
-    }
-    
     // MARK: - Initializer
     
     init(viewModel: HomeViewModel, caveId: Int){
         self.viewModel = viewModel
         self.caveId = caveId
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    override func bindViewModel() {
+        deleteCaveButton.rx.tap
+            .bind { [weak self] in
+                self?.addRemoveCaveAlert()
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property

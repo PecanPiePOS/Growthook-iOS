@@ -20,8 +20,18 @@ final class RemoveCaveAlertViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
+    private var caveId: Int?
     private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
+    
+    // MARK: - Initializer
+
+    init(viewModel: HomeViewModel, caveId: Int){
+        self.viewModel = viewModel
+        self.caveId = caveId
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func bindViewModel() {
         removeInsightView.keepButton.rx.tap
@@ -30,7 +40,15 @@ final class RemoveCaveAlertViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        // 동굴 삭제
         removeInsightView.removeButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let caveId = self?.caveId else { return }
+                self?.viewModel.removeCaveButtonTap(caveId: caveId)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.removeCave
             .subscribe(onNext: { [weak self] in
                 self?.clearInsight()
                 self?.rootViewChange()
@@ -58,6 +76,10 @@ final class RemoveCaveAlertViewController: BaseViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(173)
             $0.bottom.horizontalEdges.equalToSuperview()
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

@@ -29,6 +29,7 @@ protocol HomeViewModelInputs {
     func unLockSeedAlert(seedId: Int)
     func caveInsightList(caveId: Int)
     func caveListMove(caveId: Int)
+    func removeCaveButtonTap(caveId: Int)
 }
 
 protocol HomeViewModelOutputs {
@@ -49,6 +50,7 @@ protocol HomeViewModelOutputs {
     var unLockSeed: PublishSubject<Void> { get }
     var caveDetail: BehaviorRelay<CaveDetailResponseDto> { get }
     var caveInsightList: BehaviorRelay<[SeedListResponseDto]> { get }
+    var removeCave: PublishSubject<Void> { get }
 }
 
 protocol HomeViewModelType {
@@ -89,6 +91,9 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     // 인사이트 삭제
     var dismissToHome: PublishSubject<Void> = PublishSubject<Void>()
     var removeInsight: PublishSubject<Void> = PublishSubject<Void>()
+    
+    // 동굴 삭제
+    var removeCave: PublishSubject<Void> = PublishSubject<Void>()
     
     var inputs: HomeViewModelInputs { return self }
     var outputs: HomeViewModelOutputs { return self }
@@ -192,6 +197,14 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
             if let caveId = self?.caveId {
                 self?.getCaveSeedList(caveId: caveId)
             }
+        }
+    }
+    
+    func removeCaveButtonTap(caveId: Int) {
+        CaveAPI.shared.deleteCave(caveId: caveId) { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            self?.removeCave.onNext(())
         }
     }
 }
