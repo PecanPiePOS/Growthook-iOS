@@ -88,7 +88,8 @@ extension CaveDetailMenuBottomSheet {
     // MARK: - Methods
     
     private func addRemoveCaveAlert() {
-        let removeCaveAlertVC = RemoveCaveAlertViewController()
+        guard let caveId = self.caveId else { return }
+        let removeCaveAlertVC = RemoveCaveAlertViewController(viewModel: viewModel, caveId: caveId)
         removeCaveAlertVC.modalPresentationStyle = .overFullScreen
         self.present(removeCaveAlertVC, animated: false, completion: nil)
     }

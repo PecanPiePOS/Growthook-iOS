@@ -80,6 +80,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     private var selectedSeedId: Int?
     var insightModel: [SeedListResponseDto] = []
     private var caveId: Int?
+    var memberId: Int = 4
     
     // 인사이트 선택
     var presentToCaveList: PublishSubject<Void> = PublishSubject<Void>()
@@ -99,8 +100,8 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var outputs: HomeViewModelOutputs { return self }
     
     init() {
-        self.getSeedList(memberId: 3)
-        self.getCaveList(memberId: 3)
+        self.getSeedList(memberId: memberId)
+        self.getCaveList(memberId: memberId)
     }
     
     func handleLongPress(at indexPath: IndexPath) {
@@ -116,11 +117,11 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     }
     
     func reloadInsight() {
-        self.getSeedList(memberId: 3)
+        self.getSeedList(memberId: memberId)
     }
     
     func caveDetail(caveId: Int) {
-        self.getCaveDetail(memberId: 3, caveId: caveId)
+        self.getCaveDetail(memberId: memberId, caveId: caveId)
     }
     
     func caveInsightList(caveId: Int) {
@@ -192,8 +193,9 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         guard let seedId = selectedSeedId else { return }
         SeedListAPI.shared.deleteSeed(seedId: seedId) { [weak self] response in
             guard self != nil else { return }
+            guard let memberId = self?.memberId else { return }
             self?.removeInsight.onNext(())
-            self?.getSeedList(memberId: 3)
+            self?.getSeedList(memberId: memberId)
             if let caveId = self?.caveId {
                 self?.getCaveSeedList(caveId: caveId)
             }
@@ -261,9 +263,10 @@ extension HomeViewModel {
         guard let seedId = selectedSeedId else { return }
         SeedListAPI.shared.postSeedMove(seedId: seedId, param: model) { [weak self] response in
             guard self != nil else { return }
+            guard let memberId = self?.memberId else { return }
             if let caveId = self?.caveId {
                 self?.getCaveSeedList(caveId: caveId)
-                self?.getSeedList(memberId: 3)
+                self?.getSeedList(memberId: memberId)
             }
             guard let data = response?.data else { return }
         }

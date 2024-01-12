@@ -181,7 +181,8 @@ final class HomeViewController: BaseViewController {
         
         homeCaveView.notificationButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.viewModel.inputs.alarmButtonTap(memberId: 3)
+                guard let memberId = self?.viewModel.memberId else { return }
+                self?.viewModel.inputs.alarmButtonTap(memberId: memberId)
                 self?.notificationButtonTap()
             })
             .disposed(by: disposeBag)
