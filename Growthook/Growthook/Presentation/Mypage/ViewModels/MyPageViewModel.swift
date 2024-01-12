@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol MyPageViewModelInputs {
-    func editMyInformationDidTap()
+    func checkMyInformationDidTap()
     func growthookManualDidTap()
     func announcementDidTap()
     func frequentQuestionsDidTap()
@@ -22,10 +22,12 @@ protocol MyPageViewModelInputs {
 protocol MyPageViewModelOutputs {
     var userProfileImage: BehaviorRelay<String> { get }
     var userProfileName: BehaviorRelay<String> { get }
+    var userEmail: BehaviorRelay<String> { get }
     var userEarnedThookCount: BehaviorRelay<Int> { get }
     var userSpentThookCount: BehaviorRelay<Int> { get }
     var myPageComponentsList: BehaviorRelay<[String]> { get }
     var versionNumber: BehaviorRelay<String> { get }
+    var networkState: BehaviorRelay<SomeNetworkStatus> { get }
 }
 
 protocol MyPageViewModelType {
@@ -35,40 +37,49 @@ protocol MyPageViewModelType {
 
 final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPageViewModelType {
     
-    private let myPageList: [String] = [
-        "growthook 사용법", "공지사항", "자주 묻는 질문",
-        "약관 및 정책", "버전 정보", "로그아웃"
-    ]
     var userProfileImage: BehaviorRelay<String> = BehaviorRelay(value: "")
     var userProfileName: BehaviorRelay<String> = BehaviorRelay(value: "")
+    var userEmail: BehaviorRelay<String> = BehaviorRelay(value: "")
     var userEarnedThookCount: BehaviorRelay<Int> = BehaviorRelay(value: 0)
     var userSpentThookCount: BehaviorRelay<Int> = BehaviorRelay(value: 0)
     var myPageComponentsList: BehaviorRelay<[String]> = BehaviorRelay(value: [])
     var versionNumber = BehaviorRelay(value: "0.0.0")
+    var networkState = BehaviorRelay<SomeNetworkStatus>(value: .normal)
+    
+    private let myPageList: [String] = [
+        "growthook 사용법", "공지사항", "자주 묻는 질문",
+        "약관 및 정책", "버전 정보", "로그아웃"
+    ]
+    private let disposeBag = DisposeBag()
     
     var inputs: MyPageViewModelInputs { return self }
     var outputs: MyPageViewModelOutputs { return self }
     
+    // TODO: memberId 를 어디서 어떻게 Get 할까요?
     init() {
         myPageComponentsList.accept(myPageList)
         setVersionOfTheApp()
         setDummyData()
+        getUserInformation()
     }
     
-    func editMyInformationDidTap() {
+    func checkMyInformationDidTap() {
         print("EditMyInformation Tapped")
     }
     
     func growthookManualDidTap() {
-        print("Growthook Manual Tapped")
-    }
-    
-    func announcementDidTap() {
-        if let url = URL(string: "SOME URL") {
+        if let url = URL(string: "https://www.notion.so/a6ac706599224bbbb9f7a6b449c1a02f") {
             UIApplication.shared.open(url)
         }
     }
     
+    func announcementDidTap() {
+        if let url = URL(string: "https://www.notion.so/9bba9068c49e42d98e0d9b5bd59674c9") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    // TODO: 자주하는 질문의 URL 추가 되어야 함!
     func frequentQuestionsDidTap() {
         if let url = URL(string: "SOME URL") {
             UIApplication.shared.open(url)
@@ -76,7 +87,7 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
     }
     
     func termsAndPoliciesDidTap() {
-        if let url = URL(string: "SOME URL") {
+        if let url = URL(string: "https://www.notion.so/9edc8ab432d34da682b9320f9bc6fd31") {
             UIApplication.shared.open(url)
         }
     }
@@ -89,10 +100,7 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
 extension MyPageViewModel {
     
     private func setDummyData() {
-        userProfileName.accept("GrowthookMan")
-        userEarnedThookCount.accept(60)
-        userSpentThookCount.accept(32)
-        userProfileImage.accept("https://scontent-gmp1-1.xx.fbcdn.net/v/t39.30808-6/302492881_1018016299029456_116960852711349429_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=m8FQanKBjigAX9xHgcr&_nc_ht=scontent-gmp1-1.xx&oh=00_AfA97sLh96dO9yRUJmOtBLqnkmV53olEj2OWDNR9DqhhPA&oe=658226F5")
+        userProfileImage.accept("https://i.pravatar.cc/300")
     }
     
     private func setVersionOfTheApp() {
@@ -100,5 +108,41 @@ extension MyPageViewModel {
             return
         }
         versionNumber.accept(version)
+    }
+}
+
+extension MyPageViewModel {
+    
+    private func getUserInformation() {
+        MyPageService.getUserInfo(with: 3)
+            .subscribe(onNext: { [weak self] profile in
+                guard let self else { return }
+                self.userProfileName.accept(profile.nickname)
+                self.userEmail.accept(profile.email)
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                self.networkState.accept(.error(error))
+            })
+            .disposed(by: disposeBag)
+        
+        MyPageService.getEarnedSsuck(with: 3)
+            .subscribe(onNext: { [weak self] ssuk in
+                guard let self else { return }
+                self.userEarnedThookCount.accept(ssuk.gatheredSsuk)
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                self.networkState.accept(.error(error))
+            })
+            .disposed(by: disposeBag)
+        
+        MyPageService.getSpentSsuk(with: 3)
+            .subscribe(onNext: { [weak self] ssuk in
+                guard let self else { return }
+                self.userSpentThookCount.accept(ssuk.usedSsuk)
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                self.networkState.accept(.error(error))
+            })
+            .disposed(by: disposeBag)
     }
 }
