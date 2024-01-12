@@ -51,7 +51,6 @@ final class HomeCaveView: BaseView {
         }
         
         seedCountLabel.do {
-            $0.text = "00"
             $0.font = .fontGuide(.detail2_bold)
             $0.textColor = .white000
         }
@@ -133,7 +132,7 @@ final class HomeCaveView: BaseView {
         
         seedCountLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(11)
+            $0.leading.equalTo(seedImage.snp.trailing).offset(4)
         }
         
         addCaveButton.snp.makeConstraints {
