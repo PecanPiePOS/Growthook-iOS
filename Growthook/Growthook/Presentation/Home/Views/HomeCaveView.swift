@@ -91,7 +91,7 @@ final class HomeCaveView: BaseView {
         }
         
         caveEmptyTextLabel.do {
-            $0.text = "오른쪽의 +를 눌러 동굴을 추가해보세요!"
+            $0.text = I18N.Home.emptyCave
             $0.font = .fontGuide(.detail1_reg)
             $0.textColor = .gray200
         }

@@ -212,15 +212,6 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
 
 extension HomeViewModel {
     
-//    func requestGetSeedList(memberId: Int) {
-//        SeedListAPI.shared.getSeedList(memberId: memberId) { [weak self] response in
-//            guard self != nil else { return }
-//            guard let data = response?.data else { return }
-//            self?.insightList.accept(data)
-//            print("😰😰😰😰😰😰😰😰😰😰😰😰😰")
-//        }
-//    }
-    
     func getSeedList(memberId: Int) {
         SeedListService.getAllSeedList(memberId: memberId)
             .subscribe(onNext: { [weak self] list in

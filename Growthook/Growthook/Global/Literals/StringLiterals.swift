@@ -58,6 +58,7 @@ enum I18N {
         static let notNotiDescription2 = "남았을 때 알려드릴게요!"
         static let caveName = "동굴 이름"
         static let emptyCaveList = "아직 만들어진 동굴이 없어요"
+        static let emptyCave = "오른쪽의 +를 눌러 동굴을 추가해보세요!"
     }
     
     enum CaveDetail {
