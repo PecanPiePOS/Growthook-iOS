@@ -182,7 +182,6 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     func unLockSeedAlert(seedId: Int) {
         SeedListAPI.shared.patchSeedUnlock(seedId: seedId) { [weak self] response in
             guard self != nil else { return }
-            guard let data = response?.data else { return }
             self?.unLockSeed.onNext(())
         }
     }
