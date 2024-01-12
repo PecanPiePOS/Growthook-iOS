@@ -22,7 +22,9 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
     
     // MARK: - Properties
     
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
+    private var caveId: Int?
     
     override func bindViewModel() {
         deleteCaveButton.rx.tap
@@ -30,6 +32,14 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
                 self?.addRemoveCaveAlert()
             }
             .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Initializer
+    
+    init(viewModel: HomeViewModel, caveId: Int){
+        self.viewModel = viewModel
+        self.caveId = caveId
+        super.init(nibName: nil, bundle: nil)
     }
     
     // MARK: - UI Components Property
@@ -66,6 +76,10 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
             $0.horizontalEdges.equalToSuperview().inset(16)
             $0.height.equalTo(SizeLiterals.Screen.screenHeight * 50 / 812)
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

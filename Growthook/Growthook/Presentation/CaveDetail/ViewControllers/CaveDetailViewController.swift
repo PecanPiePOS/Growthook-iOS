@@ -21,8 +21,6 @@ final class CaveDetailViewController: BaseViewController {
     private lazy var unLockInsightAlertView = UnLockInsightAlertView()
     private lazy var unLockCaveAlertView = UnLockCaveAlertView()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-    private var lockSeedId: Int?
-    private var caveId: Int
     
     // MARK: - View Life Cycle
     
@@ -35,6 +33,8 @@ final class CaveDetailViewController: BaseViewController {
     
     private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
+    private var lockSeedId: Int?
+    private var caveId: Int
     
     // MARK: - Initializer
 
@@ -56,7 +56,14 @@ final class CaveDetailViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         viewModel.outputs.caveInsightList
+            .do(onNext: { [weak self] list in
+                guard list.isEmpty else { return }
+                self?.caveDetailView.emptyInsightView.isHidden = false
+                self?.caveDetailView.insightListView.isHidden = true
+            })
             .bind(to: caveDetailView.insightListView.insightCollectionView.rx.items(cellIdentifier: InsightListCollectionViewCell.className, cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
+                self.caveDetailView.emptyInsightView.isHidden = true
+                self.caveDetailView.insightListView.isHidden = false
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
@@ -280,7 +287,7 @@ extension CaveDetailViewController {
     }
     
     private func presentToMenuVC() {
-        let menuVC = CaveDetailMenuBottomSheet()
+        let menuVC = CaveDetailMenuBottomSheet(viewModel: viewModel, caveId: caveId)
         menuVC.modalPresentationStyle = .pageSheet
         let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
