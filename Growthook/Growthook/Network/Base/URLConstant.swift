@@ -48,4 +48,10 @@ enum URLConstant {
     
     static let gatheredSsuk = "/api/v1/member/{memberId}/gathered-ssuk"
     static let usedSsuk = "/api/v1/member/{memberId}/used-ssuk"
+    
+    // MARK: - MyPage
+    
+    static let myPageUserInfo = "/api/v1/member/{memberId}/profile"
+    static let myPageGetEarnedSsuk = "/api/v1/member/{memberId}/gathered-ssuk"
+    static let myPageGetSpentSsuk = "/api/v1/member/{memberId}/used-ssuk"
 }

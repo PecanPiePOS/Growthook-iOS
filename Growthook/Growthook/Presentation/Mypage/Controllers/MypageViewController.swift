@@ -17,20 +17,28 @@ final class MypageViewController: BaseViewController {
     
     private let profileImageView = UIImageView()
     private let profileNameLabel = UILabel()
-    private let editMyInfoButton = UIButton()
+    private let checkMyInfoButton = UIButton()
     private let earnedThookView = MyPageThookBoxView(type: .earned)
     private let spentThookView = MyPageThookBoxView(type: .spent)
     private let myPageListTableView = UITableView()
 
     override func bindViewModel() {
-        viewModel.outputs.userProfileImage
-            .bind { [weak self] imageUrl in
-                guard let self = self, let url = URL(string: imageUrl) else { return }
-                
-                self.profileImageView.kf.setImage(with: url, options: [
-                    .cacheOriginalImage,
-                    .transition(.fade(0.4))
-                ], completionHandler: nil)
+        // TODO: 유저 프로필 이미지를 받을 때까지 주석 처리합니다.
+//        viewModel.outputs.userProfileImage
+//            .bind { [weak self] imageUrl in
+//                guard let self = self, let url = URL(string: imageUrl) else { return }
+//                
+//                self.profileImageView.kf.setImage(with: url, options: [
+//                    .cacheOriginalImage,
+//                    .transition(.fade(0.4))
+//                ], completionHandler: nil)
+//            }
+//            .disposed(by: disposeBag)
+        
+        checkMyInfoButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.pushToMyInfoView()
             }
             .disposed(by: disposeBag)
         
@@ -110,6 +118,7 @@ final class MypageViewController: BaseViewController {
             $0.contentMode = .scaleAspectFill
             $0.backgroundColor = .gray900
             $0.makeCornerRound(radius: 41)
+            $0.image = UIImage(named: "DefaultUserImage")
         }
         
         profileNameLabel.do {
@@ -118,7 +127,7 @@ final class MypageViewController: BaseViewController {
             $0.textAlignment = .center
         }
         
-        editMyInfoButton.do {
+        checkMyInfoButton.do {
             $0.makeCornerRound(radius: 7)
             $0.setTitle("내 정보 보기", for: .normal)
             $0.titleLabel?.font = .fontGuide(.detail2_reg)
@@ -141,7 +150,7 @@ final class MypageViewController: BaseViewController {
 
     override func setLayout() {
         view.addSubviews(
-            profileImageView, profileNameLabel, editMyInfoButton,
+            profileImageView, profileNameLabel, checkMyInfoButton,
             earnedThookView, spentThookView, myPageListTableView
         )
         
@@ -156,7 +165,7 @@ final class MypageViewController: BaseViewController {
             $0.top.equalTo(profileImageView.snp.bottom).offset(12)
         }
         
-        editMyInfoButton.snp.makeConstraints {
+        checkMyInfoButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(98)
             $0.height.equalTo(30)
@@ -164,7 +173,7 @@ final class MypageViewController: BaseViewController {
         }
         
         earnedThookView.snp.makeConstraints {
-            $0.top.equalTo(editMyInfoButton.snp.bottom).offset(30)
+            $0.top.equalTo(checkMyInfoButton.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(18)
             $0.trailing.equalTo(view.snp.centerX).offset(-5)
             $0.height.equalTo(100)
@@ -182,5 +191,14 @@ final class MypageViewController: BaseViewController {
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+}
+
+extension MypageViewController {
+    
+    private func pushToMyInfoView() {
+        let myInfoViewController = MyPageUserInformationViewController(viewModel: self.viewModel)
+        myInfoViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(myInfoViewController, animated: true)
     }
 }
