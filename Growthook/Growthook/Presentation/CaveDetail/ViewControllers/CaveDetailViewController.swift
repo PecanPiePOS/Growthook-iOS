@@ -61,6 +61,10 @@ final class CaveDetailViewController: BaseViewController {
                 self?.caveDetailView.emptyInsightView.isHidden = false
                 self?.caveDetailView.insightListView.isHidden = true
             })
+            .map { [weak self] list in
+                guard let type = self?.caveDetailView.insightListView.scrapType else { return list }
+                return type ? list.filter { $0.isScraped } : list
+            }
             .bind(to: caveDetailView.insightListView.insightCollectionView.rx.items(cellIdentifier: InsightListCollectionViewCell.className, cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
                 self.caveDetailView.emptyInsightView.isHidden = true
                 self.caveDetailView.insightListView.isHidden = false
@@ -128,6 +132,8 @@ final class CaveDetailViewController: BaseViewController {
         caveDetailView.insightListView.scrapButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 if let type = self?.caveDetailView.insightListView.scrapType {
+                    guard let caveId = self?.caveId else { return }
+                    self?.viewModel.inputs.caveOnlyScrapInsight(caveId: caveId)
                     self?.scrapTypeSetting(type)
                 }
             })

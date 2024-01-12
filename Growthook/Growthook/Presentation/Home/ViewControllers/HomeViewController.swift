@@ -79,6 +79,10 @@ final class HomeViewController: BaseViewController {
                 self?.insightEmptyView.isHidden = false
                 self?.insightListView.isHidden = true
             })
+            .map { [weak self] list in
+                guard let type = self?.insightListView.scrapType else { return list }
+                return type ? list.filter { $0.isScraped } : list
+            }
             .bind(to: insightListView.insightCollectionView.rx
                 .items(cellIdentifier: InsightListCollectionViewCell.className,
                        cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
@@ -201,6 +205,7 @@ final class HomeViewController: BaseViewController {
         insightListView.scrapButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 if let type = self?.insightListView.scrapType {
+                    self?.viewModel.inputs.onlyScrapInsight()
                     self?.scrapTypeSetting(type)
                 }
             })

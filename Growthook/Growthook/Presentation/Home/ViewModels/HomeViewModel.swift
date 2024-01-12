@@ -30,6 +30,8 @@ protocol HomeViewModelInputs {
     func caveInsightList(caveId: Int)
     func caveListMove(caveId: Int)
     func removeCaveButtonTap(caveId: Int)
+    func onlyScrapInsight()
+    func caveOnlyScrapInsight(caveId: Int)
 }
 
 protocol HomeViewModelOutputs {
@@ -202,6 +204,15 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     // 인사이트 삭제
     func keepButtonTap() {
         self.dismissToHome.onNext(())
+    }
+    
+    // 스크랩만 보기 버튼 탭
+    func onlyScrapInsight() {
+        getSeedList(memberId: memberId)
+    }
+    
+    func caveOnlyScrapInsight(caveId: Int) {
+        getCaveSeedList(caveId: caveId)
     }
     
     func removeButtonTap() {
