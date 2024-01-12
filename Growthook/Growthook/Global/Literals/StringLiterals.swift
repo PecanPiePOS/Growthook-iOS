@@ -44,6 +44,7 @@ enum I18N {
             static let moveInsight = "씨앗을 옮겨 심었어요"
             static let removeInsight = "씨앗이 삭제되었어요"
             static let removeCave = "동굴이 삭제되었어요"
+            static let scrap = "스크랩 완료!"
         }
     }
     
