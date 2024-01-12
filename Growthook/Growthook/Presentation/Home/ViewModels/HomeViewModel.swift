@@ -80,7 +80,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     private var selectedSeedId: Int?
     var insightModel: [SeedListResponseDto] = []
     private var caveId: Int?
-    var memberId: Int = 4
+    var memberId: Int = APIConstants.memberId
     
     // 인사이트 선택
     var presentToCaveList: PublishSubject<Void> = PublishSubject<Void>()
