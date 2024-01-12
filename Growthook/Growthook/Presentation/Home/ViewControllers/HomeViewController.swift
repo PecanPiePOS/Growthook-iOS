@@ -59,9 +59,16 @@ final class HomeViewController: BaseViewController {
     override func bindViewModel() {
         
         viewModel.outputs.caveProfile
+            .do(onNext: { [weak self] cave in
+                guard cave.isEmpty else { return }
+                self?.homeCaveView.caveEmptyView.isHidden = false
+                self?.homeCaveView.caveCollectionView.isHidden = true
+            })
             .bind(to: homeCaveView.caveCollectionView.rx
                 .items(cellIdentifier: CaveCollectionViewCell.className,
                        cellType: CaveCollectionViewCell.self)) { (index, model, cell) in
+                self.homeCaveView.caveEmptyView.isHidden = true
+                self.homeCaveView.caveCollectionView.isHidden = false
                 cell.configureCell(model)
             }
                        .disposed(by: disposeBag)

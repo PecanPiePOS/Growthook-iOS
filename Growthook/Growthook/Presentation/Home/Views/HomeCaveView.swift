@@ -22,7 +22,7 @@ final class HomeCaveView: BaseView {
     private let seedCountLabel = UILabel()
     let notificationButton = UIButton()
     lazy var caveCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-    private lazy var caveEmptyView = UIView()
+    lazy var caveEmptyView = UIView()
     private lazy var caveEmptyTextLabel = UILabel()
     private let caveLineView = UIView()
     let addCaveButton = UIButton()
@@ -88,7 +88,6 @@ final class HomeCaveView: BaseView {
         
         caveEmptyView.do {
             $0.backgroundColor = .clear
-            $0.isHidden = true
         }
         
         caveEmptyTextLabel.do {
