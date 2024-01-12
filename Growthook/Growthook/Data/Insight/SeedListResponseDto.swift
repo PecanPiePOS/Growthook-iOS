@@ -10,8 +10,8 @@ import Foundation
 struct SeedListResponseDto: Codable {
     let seedId: Int
     let insight: String
-    let remainingDays: Int
-    let isLocked: Bool
-    let isScraped: Bool
-    let hasActionPlan: Bool
+    var remainingDays: Int
+    var isLocked: Bool
+    var isScraped: Bool
+    var hasActionPlan: Bool
 }

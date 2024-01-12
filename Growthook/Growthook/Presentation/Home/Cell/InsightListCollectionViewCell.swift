@@ -30,7 +30,7 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
     var scrapButtonTapHandler: (() -> Void)?
     var isScrapButtonTapped: Bool = false {
         didSet {
-            scrapButtonTapped(isScrapButtonTapped)
+            scrapButtonTapped()
         }
     }
     var isLock: Bool = false
@@ -75,13 +75,11 @@ extension InsightListCollectionViewCell {
         }
         
         titleLabel.do {
-            $0.text = "쑥쑥이들은 최고다."
             $0.font = .fontGuide(.body2_bold)
             $0.textColor = .white000
         }
         
         dueTimeLabel.do {
-            $0.text = "00\(I18N.InsightList.lockInsight)"
             $0.font = .fontGuide(.detail3_reg)
             $0.textColor = .white000
         }
@@ -153,7 +151,7 @@ extension InsightListCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         lockView.isHidden = true
-        scrapButtonTapped(isScrapButtonTapped)
+//        scrapButtonTapped()
     }
     
     func configureCell(_ model: SeedListResponseDto) {
@@ -167,7 +165,7 @@ extension InsightListCollectionViewCell {
     }
     
     func setCellStyle() {
-        scrapButtonTapped(isScrapButtonTapped)
+        scrapButtonTapped()
         if isLock {
             lockCellStyle()
             isLock = true
@@ -178,6 +176,16 @@ extension InsightListCollectionViewCell {
         } else {
             lightCellStyle()
         }
+    }
+    
+    func scrapButtonTapped() {
+        let buttonImage: UIImage
+        if hasActionPlan {
+            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_dark_on : ImageLiterals.Home.btn_scrap_dark_off
+        } else {
+            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
+        }
+        scrapButton.setImage(buttonImage, for: .normal)
     }
     
     private func lockCellStyle() {
@@ -211,16 +219,6 @@ extension InsightListCollectionViewCell {
     
     private func setAddTarget() {
         scrapButton.addTarget(self, action: #selector(scrapButtonTap), for: .touchUpInside)
-    }
-    
-    func scrapButtonTapped(_ isScrap: Bool) {
-        let buttonImage: UIImage
-        if hasActionPlan {
-            buttonImage = isScrap ? ImageLiterals.Home.btn_scrap_dark_on : ImageLiterals.Home.btn_scrap_dark_off
-        } else {
-            buttonImage = isScrap ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
-        }
-        scrapButton.setImage(buttonImage, for: .normal)
     }
     
     @objc

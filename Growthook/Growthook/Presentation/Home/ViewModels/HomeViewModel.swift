@@ -25,7 +25,7 @@ protocol HomeViewModelInputs {
     func removeMenuTap()
     func keepButtonTap()
     func removeButtonTap()
-    func insightScrap(seedId: Int)
+    func insightScrap(seedId: Int, index: Int)
     func unLockSeedAlert(seedId: Int)
     func caveInsightList(caveId: Int)
     func caveListMove(caveId: Int)
@@ -165,10 +165,14 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         }
     }
     
-    func insightScrap(seedId: Int) {
+    func insightScrap(seedId: Int, index: Int) {
         SeedListAPI.shared.patchSeedScrap(seedId: seedId) { [weak self] response in
             guard self != nil else { return }
-            guard let data = response?.data else { return }
+            guard let previousData = self?.insightList.value else { return }
+            var newData:[SeedListResponseDto] = []
+            newData = previousData
+            newData[index].isScraped.toggle()
+            self?.insightList.accept(newData)
             self?.insightScrapToggle.onNext(())
         }
     }
