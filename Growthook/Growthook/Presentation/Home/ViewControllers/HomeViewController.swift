@@ -84,7 +84,6 @@ final class HomeViewController: BaseViewController {
                        cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
                 self.insightEmptyView.isHidden = true
                 self.insightListView.isHidden = false
-                print("♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️")
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in

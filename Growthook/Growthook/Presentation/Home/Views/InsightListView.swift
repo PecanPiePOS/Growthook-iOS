@@ -24,8 +24,7 @@ final class InsightListView: BaseView {
     // MARK: - Properties
     
     var scrapType: Bool = false
-//    private let dummyModel: [InsightList] = InsightList.insightListDummyData()
-    
+
     // MARK: - UI Components Property
     
     override func setStyles() {
