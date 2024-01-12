@@ -205,7 +205,6 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     func removeCaveButtonTap(caveId: Int) {
         CaveAPI.shared.deleteCave(caveId: caveId) { [weak self] response in
             guard self != nil else { return }
-            guard let data = response?.data else { return }
             self?.removeCave.onNext(())
         }
     }
