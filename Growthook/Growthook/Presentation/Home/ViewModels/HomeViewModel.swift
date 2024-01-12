@@ -51,6 +51,8 @@ protocol HomeViewModelOutputs {
     var caveDetail: BehaviorRelay<CaveDetailResponseDto> { get }
     var caveInsightList: BehaviorRelay<[SeedListResponseDto]> { get }
     var removeCave: PublishSubject<Void> { get }
+    var insightAllCount: BehaviorRelay<Int> { get }
+    var caveInsightAllCount: BehaviorRelay<Int> { get }
 }
 
 protocol HomeViewModelType {
@@ -95,6 +97,10 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     // 동굴 삭제
     var removeCave: PublishSubject<Void> = PublishSubject<Void>()
+    
+    // 인사이트 개수
+    var insightAllCount: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
+    var caveInsightAllCount: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     
     var inputs: HomeViewModelInputs { return self }
     var outputs: HomeViewModelOutputs { return self }
@@ -218,6 +224,7 @@ extension HomeViewModel {
                 guard let self else { return }
                 self.insightList.accept(list)
                 self.insightModel = list
+                self.insightAllCount.accept(list.count)
             }, onError: { error in
                 print(error)
             })
@@ -245,6 +252,7 @@ extension HomeViewModel {
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveInsightList.accept(data)
+            self?.caveInsightAllCount.accept(data.count)
         }
     }
     

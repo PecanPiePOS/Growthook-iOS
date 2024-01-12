@@ -78,6 +78,12 @@ final class CaveDetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.outputs.caveInsightAllCount
+            .subscribe(onNext: { [weak self] count in
+                self?.caveDetailView.insightListView.seedTitleLabel.text = "\(count)\(I18N.Home.seedsCollected)"
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.outputs.insightLongTap
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }

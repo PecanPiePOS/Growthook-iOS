@@ -99,6 +99,12 @@ final class HomeViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.outputs.insightAllCount
+            .subscribe(onNext: { [weak self] count in
+                self?.insightListView.seedTitleLabel.text = "\(count)\(I18N.Home.seedsCollected)"
+            })
+            .disposed(by: disposeBag)
+        
         // 인사이트 셀 스타일 재설정
         insightListView.insightCollectionView.rx.willDisplayCell
             .subscribe(onNext: { event in

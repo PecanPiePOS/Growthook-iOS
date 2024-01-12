@@ -16,7 +16,7 @@ final class InsightListView: BaseView {
     
     // MARK: - UI Components
     
-    private let seedTitleLabel = UILabel()
+    let seedTitleLabel = UILabel()
     let scrapButton = UIButton()
     lazy var insightCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     private let flowLayout = UICollectionViewFlowLayout()
