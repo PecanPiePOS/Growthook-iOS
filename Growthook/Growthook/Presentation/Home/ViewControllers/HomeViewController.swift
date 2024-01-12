@@ -54,8 +54,6 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         addGesture()
         setNotification()
-        // empty 뷰 hidden
-        insightEmptyView.isHidden = true
     }
     
     override func bindViewModel() {
@@ -69,9 +67,16 @@ final class HomeViewController: BaseViewController {
                        .disposed(by: disposeBag)
         
         viewModel.outputs.insightList
+            .do(onNext: { [weak self] list in
+                guard list.isEmpty else { return }
+                self?.insightEmptyView.isHidden = false
+                self?.insightListView.isHidden = true
+            })
             .bind(to: insightListView.insightCollectionView.rx
                 .items(cellIdentifier: InsightListCollectionViewCell.className,
                        cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
+                self.insightEmptyView.isHidden = true
+                self.insightListView.isHidden = false
                 print("♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️")
                 cell.configureCell(model)
                 cell.setCellStyle()
