@@ -105,6 +105,12 @@ final class HomeViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        viewModel.outputs.ssukCount
+            .subscribe(onNext: { [weak self] model in
+                self?.homeCaveView.seedCountLabel.text = "\(model.gatheredSsuk)"
+            })
+            .disposed(by: disposeBag)
+        
         // 인사이트 셀 스타일 재설정
         insightListView.insightCollectionView.rx.willDisplayCell
             .subscribe(onNext: { event in

@@ -53,6 +53,7 @@ protocol HomeViewModelOutputs {
     var removeCave: PublishSubject<Void> { get }
     var insightAllCount: BehaviorRelay<Int> { get }
     var caveInsightAllCount: BehaviorRelay<Int> { get }
+    var ssukCount: BehaviorRelay<SsukResponseGto> { get }
 }
 
 protocol HomeViewModelType {
@@ -102,12 +103,16 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var insightAllCount: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var caveInsightAllCount: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     
+    // 현재 쑥 개수
+    var ssukCount: BehaviorRelay<SsukResponseGto> = BehaviorRelay<SsukResponseGto>(value: SsukResponseGto.ssukDummy())
+    
     var inputs: HomeViewModelInputs { return self }
     var outputs: HomeViewModelOutputs { return self }
     
     init() {
         self.getSeedList(memberId: memberId)
         self.getCaveList(memberId: memberId)
+        self.getSsukCount(memberId: memberId)
     }
     
     func handleLongPress(at indexPath: IndexPath) {
@@ -257,7 +262,7 @@ extension HomeViewModel {
     }
     
     func postSeedMove(caveId: Int) {
-        var model: SeedMoveRequestDto = SeedMoveRequestDto(caveId: caveId)
+        let model: SeedMoveRequestDto = SeedMoveRequestDto(caveId: caveId)
         guard let seedId = selectedSeedId else { return }
         SeedListAPI.shared.postSeedMove(seedId: seedId, param: model) { [weak self] response in
             guard self != nil else { return }
@@ -266,7 +271,14 @@ extension HomeViewModel {
                 self?.getCaveSeedList(caveId: caveId)
                 self?.getSeedList(memberId: memberId)
             }
+        }
+    }
+    
+    func getSsukCount(memberId: Int) {
+        SsukAPI.shared.getGatheredSsuk(memberId: memberId) { [weak self] response in
+            guard self != nil else { return }
             guard let data = response?.data else { return }
+            self?.ssukCount.accept(data)
         }
     }
 }
