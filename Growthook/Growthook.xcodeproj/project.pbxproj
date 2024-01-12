@@ -23,6 +23,9 @@
 		0332A38D2B501E0700720CD3 /* CavePatchRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */; };
 		0332A3902B5020CC00720CD3 /* CaveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38F2B5020CC00720CD3 /* CaveAPI.swift */; };
 		0332A3922B50433200720CD3 /* SeedMoveRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3912B50433200720CD3 /* SeedMoveRequestDto.swift */; };
+		0332A3952B5135A900720CD3 /* SsukResponseGto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3942B5135A900720CD3 /* SsukResponseGto.swift */; };
+		0332A39A2B5135F900720CD3 /* SsukTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3992B5135F900720CD3 /* SsukTarget.swift */; };
+		0332A39D2B51370000720CD3 /* SsukAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A39C2B51370000720CD3 /* SsukAPI.swift */; };
 		033E9C102AFCE0860051A9E8 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033E9C0F2AFCE0860051A9E8 /* Image.xcassets */; };
 		033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */; };
 		033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */; };
@@ -177,6 +180,9 @@
 		0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavePatchRequestDto.swift; sourceTree = "<group>"; };
 		0332A38F2B5020CC00720CD3 /* CaveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAPI.swift; sourceTree = "<group>"; };
 		0332A3912B50433200720CD3 /* SeedMoveRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedMoveRequestDto.swift; sourceTree = "<group>"; };
+		0332A3942B5135A900720CD3 /* SsukResponseGto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukResponseGto.swift; sourceTree = "<group>"; };
+		0332A3992B5135F900720CD3 /* SsukTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukTarget.swift; sourceTree = "<group>"; };
+		0332A39C2B51370000720CD3 /* SsukAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukAPI.swift; sourceTree = "<group>"; };
 		033E9C0F2AFCE0860051A9E8 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCaveView.swift; sourceTree = "<group>"; };
@@ -366,6 +372,46 @@
 			path = CaveAPI;
 			sourceTree = "<group>";
 		};
+		0332A3932B51357E00720CD3 /* Ssuk */ = {
+			isa = PBXGroup;
+			children = (
+				0332A3942B5135A900720CD3 /* SsukResponseGto.swift */,
+			);
+			path = Ssuk;
+			sourceTree = "<group>";
+		};
+		0332A3962B5135D200720CD3 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				035701EF2B4EF3B200A9E47A /* SeedListTarget.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		0332A3972B5135DC00720CD3 /* Cave */ = {
+			isa = PBXGroup;
+			children = (
+				0332A3882B501CD400720CD3 /* CaveTarget.swift */,
+			);
+			path = Cave;
+			sourceTree = "<group>";
+		};
+		0332A3982B5135E400720CD3 /* Ssuk */ = {
+			isa = PBXGroup;
+			children = (
+				0332A3992B5135F900720CD3 /* SsukTarget.swift */,
+			);
+			path = Ssuk;
+			sourceTree = "<group>";
+		};
+		0332A39B2B5136F400720CD3 /* SsukAPI */ = {
+			isa = PBXGroup;
+			children = (
+				0332A39C2B51370000720CD3 /* SsukAPI.swift */,
+			);
+			path = SsukAPI;
+			sourceTree = "<group>";
+		};
 		033E9C112AFD2F230051A9E8 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -473,8 +519,9 @@
 		035701EE2B4EF35000A9E47A /* APIService */ = {
 			isa = PBXGroup;
 			children = (
-				035701EF2B4EF3B200A9E47A /* SeedListTarget.swift */,
-				0332A3882B501CD400720CD3 /* CaveTarget.swift */,
+				0332A3962B5135D200720CD3 /* Home */,
+				0332A3972B5135DC00720CD3 /* Cave */,
+				0332A3982B5135E400720CD3 /* Ssuk */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -520,6 +567,7 @@
 		03B9AC492AF55E3300A5751C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0332A3932B51357E00720CD3 /* Ssuk */,
 				035701EB2B4EBED500A9E47A /* Insight */,
 				035701E82B4EBA7100A9E47A /* Cave */,
 			);
@@ -655,6 +703,7 @@
 		03B9AC5E2AF561A200A5751C /* API */ = {
 			isa = PBXGroup;
 			children = (
+				0332A39B2B5136F400720CD3 /* SsukAPI */,
 				0332A38E2B5020BD00720CD3 /* CaveAPI */,
 				035701F12B4EFBA200A9E47A /* SeedListAPI */,
 			);
@@ -1201,6 +1250,7 @@
 				03B9AC702AF563F300A5751C /* UIViewController+.swift in Sources */,
 				58AB70AC2B2C7CC50061C072 /* MyPageViewModel.swift in Sources */,
 				581D228E2B320C630068E58D /* CommonTextFieldWithBorder.swift in Sources */,
+				0332A39D2B51370000720CD3 /* SsukAPI.swift in Sources */,
 				03115F8C2B27072A009D1517 /* LoginViewController.swift in Sources */,
 				03B9AC7E2AF5652E00A5751C /* UIButton+.swift in Sources */,
 				09DE08002B04FAEE00D7DF3D /* EmptySeedView.swift in Sources */,
@@ -1240,6 +1290,7 @@
 				2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */,
 				25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */,
 				581D22942B32EC950068E58D /* CommonTextViewWithBorder.swift in Sources */,
+				0332A3952B5135A900720CD3 /* SsukResponseGto.swift in Sources */,
 				09A7D6FD2B00DE9C005F8821 /* CreateCaveViewController.swift in Sources */,
 				03B9AC642AF562D000A5751C /* UIView+.swift in Sources */,
 				032213322B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift in Sources */,
@@ -1261,6 +1312,7 @@
 				09CE00EA2B0DB13700CB42C4 /* CreateActionViewModel.swift in Sources */,
 				035701F32B4EFBB200A9E47A /* SeedListAPI.swift in Sources */,
 				035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */,
+				0332A39A2B5135F900720CD3 /* SsukTarget.swift in Sources */,
 				09DE08022B04FDF800D7DF3D /* EmptyViewController.swift in Sources */,
 				03B9AC722AF5646000A5751C /* UITextField+.swift in Sources */,
 				033E9C1B2AFE606E0051A9E8 /* CaveCollectionViewCell.swift in Sources */,

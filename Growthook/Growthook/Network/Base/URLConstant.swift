@@ -43,4 +43,9 @@ enum URLConstant {
     static let seedListGet = "/api/v1/member/{memberId}/seed/list"
     static let unLockSeed = "/api/v1/seed/{seedId}/lock/status"
     static let toggleSeedScrapStatus = "/api/v1/seed/{seedId}/scrap/status"
+    
+    // MARK: - Ssuk
+    
+    static let gatheredSsuk = "/api/v1/member/{memberId}/gathered-ssuk"
+    static let usedSsuk = "/api/v1/member/{memberId}/used-ssuk"
 }
