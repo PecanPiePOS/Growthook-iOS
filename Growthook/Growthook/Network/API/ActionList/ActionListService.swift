@@ -15,6 +15,7 @@ import RxSwift
 enum ActionListTarget {
     case getActionListPercent(memberId: Int)
     case getActionListDoing(memberId: Int)
+    case getActionListFinished(memberId: Int)
 }
 
 extension ActionListTarget: BaseTargetType {
@@ -37,19 +38,23 @@ extension ActionListTarget: BaseTargetType {
             let newPath = URLConstant.doingActionPlan
                 .replacingOccurrences(of: "{memberId}", with: String(memberId))
             return newPath
+        case .getActionListFinished(let memberId):
+            let newPath = URLConstant.finishedActionPlan
+                .replacingOccurrences(of: "{memberId}", with: String(memberId))
+            return newPath
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getActionListPercent, .getActionListDoing:
+        case .getActionListPercent, .getActionListDoing, .getActionListFinished:
             return .get
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getActionListPercent, .getActionListDoing:
+        case .getActionListPercent, .getActionListDoing, .getActionListFinished:
             return .requestPlain
         }
     }
@@ -82,4 +87,18 @@ struct ActionListService: Networkable {
             .mapError()
             .decode(decodeType: [ActionListDoingResponse].self)
     }
+    
+    /**
+     완료한 액션리스트 정보를 호출합니다
+     - parameter memberId: Int
+     */
+    
+    static func getFinishedActionList(with memberId: Int) -> Observable<[ActionListFinishedResponse]> {
+        return provider.rx.request(.getActionListFinished(memberId: memberId))
+            .asObservable()
+            .mapError()
+            .decode(decodeType: [ActionListFinishedResponse].self)
+    }
+    
+    
 }
