@@ -6,43 +6,80 @@
 //
 
 import Foundation
-import Moya
 
-enum ActionListService {
-    case getActionListPercent(memberID: String)
+import Moya
+import RxCocoa
+import RxMoya
+import RxSwift
+
+enum ActionListTarget {
+    case getActionListPercent(memberId: Int)
+    case getActionListDoing(memberId: Int)
 }
 
-extension ActionListService: TargetType {
+extension ActionListTarget: BaseTargetType {
     
-    var baseURL: URL {
-        return URL(string: URLConstant.baseURL)!
+    var headers: [String : String]? {
+        APIConstants.headerWithAuthorization
+    }
+    
+    var authorizationType: AuthorizationType? {
+        return .bearer
     }
     
     var path: String {
         switch self {
-        case .getActionListPercent(let memberID):
-            return URLConstant.actionPlanPercent.replacingOccurrences(of: "{memberId}", with: "\(memberID)")
+        case .getActionListPercent(let memberId):
+            let newPath = URLConstant.actionPlanPercent
+                .replacingOccurrences(of: "{memberId}", with: String(memberId))
+            return newPath
+        case .getActionListDoing(let memberId):
+            let newPath = URLConstant.doingActionPlan
+                .replacingOccurrences(of: "{memberId}", with: String(memberId))
+            return newPath
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .getActionListPercent:
+        case .getActionListPercent, .getActionListDoing:
             return .get
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .getActionListPercent:
+        case .getActionListPercent, .getActionListDoing:
             return .requestPlain
         }
     }
+}
+
+struct ActionListService: Networkable {
+    typealias Target = ActionListTarget
+    private static let provider = makeProvider()
     
-    var headers: [String : String]? {
-        switch self {
-        case .getActionListPercent:
-            return APIConstants.headerWithAuthorization
-        }
+    /**
+     액션리스트 진행도를 호출합니다
+     - parameter memberId: Int
+     */
+    
+    static func getActionListPercent(with memberId: Int) -> Observable<Int> {
+        return provider.rx.request(.getActionListPercent(memberId: memberId))
+            .asObservable()
+            .mapError()
+            .decode(decodeType: Int.self)
+    }
+    
+    /**
+     진행중인 액션리스트 정보를 호출합니다
+     - parameter memberId: Int
+     */
+    
+    static func getDoingActionList(with memberId: Int) -> Observable<[ActionListDoingResponse]> {
+        return provider.rx.request(.getActionListDoing(memberId: memberId))
+            .asObservable()
+            .mapError()
+            .decode(decodeType: [ActionListDoingResponse].self)
     }
 }
