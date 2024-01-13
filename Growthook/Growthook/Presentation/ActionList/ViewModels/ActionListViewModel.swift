@@ -20,15 +20,15 @@ protocol ActionListViewModelInput {
     func setReviewText(with value: String)
     func didTapCancelButtonInBottomSheet()
     func didTapSaveButtonInBottomSheet()
+    func didTapCheckButtonInAcertView()
 }
 
 protocol ActionListViewModelOutput {
     var titleText: Driver<String> { get }
     var titlePersent: BehaviorRelay<String> { get }
     var selectedIndex: BehaviorRelay<Int> { get }
-//    var actionList: BehaviorRelay<[ActionListModel]> { get }
-    var actionList: BehaviorRelay<[ActionListDoingResponse]> { get }
-    var completeActionList: BehaviorRelay<[CompleteActionListModel]> { get }
+    var doingActionList: BehaviorRelay<[ActionListDoingResponse]> { get }
+    var finishedActionList: BehaviorRelay<[ActionListFinishedResponse]> { get }
     var isReviewEntered: Driver<Bool> { get }
     var reviewTextCount: Driver<String> { get }
 }
@@ -41,9 +41,8 @@ protocol ActionListViewModelType {
 final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOutput, ActionListViewModelType {
     
     var selectedIndex: BehaviorRelay<Int> = BehaviorRelay(value: 1)
-//    var actionList: BehaviorRelay<[ActionListModel]> = BehaviorRelay(value: [])
-    var actionList: BehaviorRelay<[ActionListDoingResponse]> = BehaviorRelay<[ActionListDoingResponse]>(value: [])
-    var completeActionList: BehaviorRelay<[CompleteActionListModel]> = BehaviorRelay(value: [])
+    var doingActionList: BehaviorRelay<[ActionListDoingResponse]> = BehaviorRelay<[ActionListDoingResponse]>(value: [])
+    var finishedActionList: BehaviorRelay<[ActionListFinishedResponse]> = BehaviorRelay<[ActionListFinishedResponse]>(value: [])
     var reviewText = BehaviorRelay<String>(value: "")
     var titlePersent: BehaviorRelay<String> = BehaviorRelay(value: "")
     private let disposeBag = DisposeBag()
@@ -71,9 +70,8 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     
     init() {
-//        self.actionList.accept(ActionListModel.actionListModelDummyData())
-        self.completeActionList.accept(CompleteActionListModel.completeActionListModelDummyData())
-//        getActionListPercent()
+        self.getActionListPercent()
+        self.getFinishedActionList()
         self.getDoingActionList()
     }
     
@@ -84,6 +82,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     func didTapCompletedButton() {
         selectedIndex.accept(0)
+        getFinishedActionList()
     }
     
     func didTapInprogressScrapButton() {
@@ -118,19 +117,24 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         selectedIndex.accept(2)
     }
     
+    func didTapCheckButtonInAcertView() {
+        self.getFinishedActionList()
+        self.getActionListPercent()
+    }
+    
 }
 
 
 extension ActionListViewModel {
-        
+    
     private func getActionListPercent() {
         print("getActionListPercent호출됩니다")
         ActionListService.getActionListPercent(with: 3)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.titlePersent.accept("\(data)")
-            }, onError: { [weak self] error in
-                guard let self else { return }
+            }, onError: { error in
+                print(error)
             })
             .disposed(by: disposeBag)
     }
@@ -140,9 +144,21 @@ extension ActionListViewModel {
         ActionListService.getDoingActionList(with: 3)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
-                self.actionList.accept(data)
-            }, onError: { [weak self] error in
+                self.doingActionList.accept(data)
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func getFinishedActionList() {
+        print("getFinishedActionList가 호출됩니다")
+        ActionListService.getFinishedActionList(with: 3)
+            .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
+                self.finishedActionList.accept(data)
+            }, onError: { error in
+                print(error)
             })
             .disposed(by: disposeBag)
     }
