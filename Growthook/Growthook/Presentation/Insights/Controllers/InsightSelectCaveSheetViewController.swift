@@ -27,11 +27,6 @@ final class InsightSelectCaveSheetViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        resetSelectedCaveWhenInitialized()
-    }
-    
     override func bindViewModel() {
     // MARK: - Tap Actions
         caveTableView.rx.modelSelected(InsightCaveModel.self)
@@ -106,13 +101,5 @@ final class InsightSelectCaveSheetViewController: BaseViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension InsightSelectCaveSheetViewController {
-    
-    // MARK: - Methods for Resetting Data
-    private func resetSelectedCaveWhenInitialized() {
-        viewModel.inputs.resetSelectedCave()
     }
 }

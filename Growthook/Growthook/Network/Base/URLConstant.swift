@@ -38,4 +38,10 @@ enum URLConstant {
     static let seed = "/api/v1/seed/{seedId}"
     static let seedDetailGet = "/api/v1/seed/{seedId}/detail"
     static let seedMove = "/api/v1/seed/{seedId}/move"
+    
+    // MARK: - MyPage
+    
+    static let myPageUserInfo = "/api/v1/member/{memberId}/profile"
+    static let myPageGetEarnedSsuk = "/api/v1/member/{memberId}/gathered-ssuk"
+    static let myPageGetSpentSsuk = "/api/v1/member/{memberId}/used-ssuk"
 }

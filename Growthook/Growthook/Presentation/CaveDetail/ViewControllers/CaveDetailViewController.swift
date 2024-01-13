@@ -128,6 +128,12 @@ final class CaveDetailViewController: BaseViewController {
                 self?.backToHomeVC()
             })
             .disposed(by: disposeBag)
+        
+        caveDetailView.navigationView.menuButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.presentToMenuVC()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - View Life Cycle
@@ -251,6 +257,25 @@ extension CaveDetailViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    private func presentToMenuVC() {
+        let menuVC = CaveDetailMenuBottomSheet()
+        menuVC.modalPresentationStyle = .pageSheet
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+        let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
+            return SizeLiterals.Screen.screenHeight * 165 / 812
+        }
+        
+        if let sheet = menuVC.sheetPresentationController {
+            sheet.detents = [customDetent]
+            sheet.preferredCornerRadius = 10
+            sheet.prefersGrabberVisible = true
+            sheet.delegate = self
+            sheet.delegate = menuVC as? any UISheetPresentationControllerDelegate
+        }
+        
+        present(menuVC, animated: true)
+    }
+    
     // MARK: - @objc Methods
     
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
@@ -276,6 +301,10 @@ extension CaveDetailViewController {
                 view.showToast(message: "씨앗을 옮겨 심었어요")
             case .delete:
                 view.showToast(message: "씨앗이 삭제되었어요")
+            case .none:
+                return
+            case .deleteCave:
+                view.showToast(message: "동굴이 삭제되었어요")
             }
         }
     }

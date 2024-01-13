@@ -1,8 +1,8 @@
 //
-//  RemoveInsightAlertViewController.swift
+//  RemoveCaveViewController.swift
 //  Growthook
 //
-//  Created by KJ on 11/29/23.
+//  Created by KJ on 1/10/24.
 //
 
 import UIKit
@@ -12,43 +12,44 @@ import Then
 import RxCocoa
 import RxSwift
 
-final class RemoveInsightAlertViewController: BaseViewController {
+final class RemoveCaveAlertViewController: BaseViewController {
     
     // MARK: - UI Components
-
+    
     private let removeInsightView = RemoveAlertView()
     
     // MARK: - Properties
     
-    private let viewModel = RemoveInsightViewModel()
     private let disposeBag = DisposeBag()
     private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
     
     override func bindViewModel() {
         removeInsightView.keepButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.keepInsight()
                 self?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-//                self?.dismiss(animated: false)
+//                self?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
         
         removeInsightView.removeButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.clearInsight()
-                                self?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                self?.rootViewChange()
+                
+//                self?.viewModel.inputs.deleteButtonTapped()
+//                self?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
             })
             .disposed(by: disposeBag)
     }
-
+    
     // MARK: - UI Components Property
     
     override func setStyles() {
         
         view.backgroundColor = .clear
         
-        removeInsightView.descriptionLabel.text = I18N.Component.RemoveAlert.removeInsight
-
+        removeInsightView.descriptionLabel.text = I18N.Component.RemoveAlert.removeCave
+        
     }
     
     // MARK: - Layout Helper
@@ -64,7 +65,7 @@ final class RemoveInsightAlertViewController: BaseViewController {
     }
 }
 
-extension RemoveInsightAlertViewController {
+extension RemoveCaveAlertViewController {
     
     // MARK: - Methods
     
@@ -72,15 +73,19 @@ extension RemoveInsightAlertViewController {
         NotificationCenter.default.post(
             name: deSelectInsightNotification,
             object: nil,
-            userInfo: ["type": ClearInsightType.delete]
+            userInfo: ["type": ClearInsightType.deleteCave]
         )
     }
     
-    private func keepInsight() {
-        NotificationCenter.default.post(
-            name: deSelectInsightNotification,
-            object: nil,
-            userInfo: ["type": ClearInsightType.none]
-        )
+    private func rootViewChange() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let sceneDelegate = windowScene.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            let vc = TabBarController()
+            let rootVC = UINavigationController(rootViewController: vc)
+            rootVC.navigationController?.isNavigationBarHidden = true
+            window.rootViewController = rootVC
+            window.makeKeyAndVisible()
+        }
     }
 }
