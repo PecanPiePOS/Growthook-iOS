@@ -100,8 +100,8 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
         }
     }
     
-    private func getScrappedActionList() -> [ActionListModel] {
-        return viewModel.outputs.actionList.value.filter { $0.scrapStatus == .scrap }
+    private func getScrappedActionList() -> [ActionListDoingResponse] {
+        return viewModel.outputs.actionList.value.filter { $0.isScraped == true }
     }
     
     func notificationDismissInCancelButton() {
@@ -134,7 +134,7 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "actionListTableCell", for: indexPath) as! ActionListTableViewCell
-        let model: ActionListModel
+        let model: ActionListDoingResponse
         
         if isShowingScrappedData {
             model = getScrappedActionList()[indexPath.row]

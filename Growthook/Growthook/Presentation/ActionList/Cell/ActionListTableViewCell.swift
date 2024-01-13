@@ -137,13 +137,13 @@ extension ActionListTableViewCell {
     
     // MARK: - Configure
     
-    func configure(_ model: ActionListModel) {
-        switch model.scrapStatus {
-        case .unScrap:
+    func configure(_ model: ActionListDoingResponse) {
+        switch model.isScraped {
+        case false:
             scrapButton.setImage(ImageLiterals.Scrap.seed_light_default, for: .normal)
-        case .scrap:
+        case true:
             scrapButton.setImage(ImageLiterals.Scrap.seed_light_active, for: .normal)
         }
-        actionTitleLabel.text = model.title
+        actionTitleLabel.text = model.content
     }
 }

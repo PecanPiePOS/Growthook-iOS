@@ -89,8 +89,8 @@ final class MainTitleBarView: BaseView {
          mainTitleLabel.text = "\(text)님의 액션"
      }
     
-    func setPersentText(_ text: String) {
-        percentLabel.text = "\(text)% 달성!"
+    func setPersentText(_ percent: String) {
+        percentLabel.text = "\(percent)% 달성!"
     }
     
     // MARK: - @objc Methods
