@@ -103,8 +103,18 @@ extension CreateCaveViewController {
         createCaveView.createCaveButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.viewModel.inputs.createButtonTapped()
-                self.pushToEmptyViewController()
+                self.viewModel.inputs.postCreateCave()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.networkState
+            .bind { [weak self] status in
+                guard let self else { return }
+                switch(status) {
+                case .done:
+                    self.pushToEmptyViewController()
+                default: break
+                }
             }
             .disposed(by: disposeBag)
         
@@ -150,8 +160,11 @@ extension CreateCaveViewController {
     }
     
     private func pushToEmptyViewController() {
-        let emptyViewController = EmptyViewController()
-        emptyViewController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        self.present(emptyViewController, animated: true)
+        let vc = EmptyViewController()
+        vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        vc.name = viewModel.outputs.name.value
+        vc.introduction = viewModel.outputs.description.value
+        vc.nickname = "쑥쑥이"
+        self.present(vc, animated: true)
     }
 }

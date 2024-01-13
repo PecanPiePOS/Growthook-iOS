@@ -7,35 +7,51 @@
 
 import UIKit
 
-import SnapKit
+import RxCocoa
+import RxSwift
+import Then
 
-final class EmptyViewController: UIViewController {
+final class EmptyViewController: BaseViewController {
 
-    private let emptySeedView = EmptySeedView()
+    private let emptyView = CaveEmptyView()
+    private let viewModel = CreateCaveViewModel()
+    private let disposeBag = DisposeBag()
+    
+    var name: String = ""
+    var introduction: String = ""
+    var nickname: String = ""
+    
+    override func loadView() {
+        view = emptyView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setLayout()
+        bindModel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         setToast()
+    }
+    
+    override func bindViewModel() {
+        emptyView.navigationBar.closeButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                /// closeButton Tapped
+            }
+            .disposed(by: disposeBag)
+        emptyView.plantSeedButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                /// 씨앗심기 button Tapped
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 extension EmptyViewController {
-
-    private func setLayout() {
-        view.backgroundColor = .black000
-        view.addSubview(emptySeedView)
-        emptySeedView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(280)
-            $0.horizontalEdges.bottom.equalToSuperview()
-        }
-    }
     
     private func setToast() {
         view.showToast(message: "새 동굴을 만들었어요!")
@@ -47,5 +63,9 @@ extension EmptyViewController {
         } else {
             self.dismiss(animated: false)
         }
+    }
+    
+    private func bindModel() {
+        emptyView.bindModel(model: CaveDetailModel(caveName: self.name, introduction: self.introduction, nickname: self.nickname, isShared: false))
     }
 }

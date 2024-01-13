@@ -14,6 +14,7 @@ import RxSwift
 
 enum CreateCaveTarget {
     case postcave(memberId: Int, parameter: CreateCaveRequest)
+    case getcavedetail(memberId: Int, caveId: Int)
 }
 
 extension CreateCaveTarget: BaseTargetType {
@@ -29,8 +30,13 @@ extension CreateCaveTarget: BaseTargetType {
     var path: String {
         switch self {
         case .postcave(let memberId, _):
-            let newPath = URLConstant.seedPost
+            let newPath = URLConstant.cavePost
                 .replacingOccurrences(of: "{memberId}", with: String(memberId))
+            return newPath
+        case .getcavedetail(let memberId, let caveId):
+            let newPath = URLConstant.caveDetailGet
+                .replacingOccurrences(of: "{memberId}", with: String(memberId))
+                .replacingOccurrences(of: "{caveId}", with: String(caveId))
             return newPath
         }
     }
@@ -39,6 +45,8 @@ extension CreateCaveTarget: BaseTargetType {
         switch self {
         case .postcave:
             return .post
+        case .getcavedetail:
+            return .get
         }
     }
     
@@ -47,6 +55,8 @@ extension CreateCaveTarget: BaseTargetType {
         case .postcave(_, let parameter):
             let parameters = try! parameter.asParameter()
             return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        case .getcavedetail(_, _):
+            return .requestPlain
         }
     }
 }
@@ -61,6 +71,13 @@ struct CreateCaveService: Networkable {
             .mapError()
             .decode(decodeType: CreateCaveResponse.self)
     }
+    
+    static func getCaveDetail(memberId: Int, caveId: Int) -> Observable<CaveDetailResponse> {
+        return provider.rx.request(.getcavedetail(memberId: memberId, caveId: caveId))
+            .asObservable()
+            .mapError()
+            .decode(decodeType: CaveDetailResponse.self)
+    }
 }
 
 struct CreateCaveRequest: Codable {
@@ -71,4 +88,18 @@ struct CreateCaveRequest: Codable {
 
 struct CreateCaveResponse: Codable {
     var caveId: Int
+}
+
+struct CaveDetailResponse: Codable {
+    var caveName: String
+    var introduction: String
+    var nickname: String
+    var isShared: Bool
+}
+
+struct CaveDetailModel {
+    var caveName: String
+    var introduction: String
+    var nickname: String
+    var isShared: Bool
 }

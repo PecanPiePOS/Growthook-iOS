@@ -94,6 +94,9 @@
 		03E481242AF2B1DA002F4CBC /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 03E481232AF2B1DA002F4CBC /* RxMoya */; };
 		09089A6A2B03B3E2006C07B8 /* AlertBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09089A692B03B3E2006C07B8 /* AlertBuilder.swift */; };
 		09089A6C2B03B41B006C07B8 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09089A6B2B03B41B006C07B8 /* CustomAlertViewController.swift */; };
+		092A518B2B52D2D100296B46 /* CaveDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092A518A2B52D2D100296B46 /* CaveDTO.swift */; };
+		092A518D2B52DEBD00296B46 /* CaveInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092A518C2B52DEBD00296B46 /* CaveInfoView.swift */; };
+		092A518F2B52E01700296B46 /* CaveEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092A518E2B52E01700296B46 /* CaveEmptyView.swift */; };
 		092C816D2B334E13006B0F65 /* CreateSpecificPlanView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 092C816C2B334E13006B0F65 /* CreateSpecificPlanView .swift */; };
 		092C81702B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092C816F2B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift */; };
 		093C1DFA2B4C314B00EF84AB /* CreateCaveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093C1DF92B4C314B00EF84AB /* CreateCaveAPI.swift */; };
@@ -248,6 +251,9 @@
 		03E4810D2AF2AFDD002F4CBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09089A692B03B3E2006C07B8 /* AlertBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertBuilder.swift; sourceTree = "<group>"; };
 		09089A6B2B03B41B006C07B8 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
+		092A518A2B52D2D100296B46 /* CaveDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDTO.swift; sourceTree = "<group>"; };
+		092A518C2B52DEBD00296B46 /* CaveInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveInfoView.swift; sourceTree = "<group>"; };
+		092A518E2B52E01700296B46 /* CaveEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveEmptyView.swift; sourceTree = "<group>"; };
 		092C816C2B334E13006B0F65 /* CreateSpecificPlanView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateSpecificPlanView .swift"; sourceTree = "<group>"; };
 		092C816F2B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificPlanCollectionViewCell.swift; sourceTree = "<group>"; };
 		093C1DF92B4C314B00EF84AB /* CreateCaveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCaveAPI.swift; sourceTree = "<group>"; };
@@ -486,6 +492,7 @@
 		03B9AC492AF55E3300A5751C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				092A51892B52D2C100296B46 /* CreateCave */,
 				586626112B4E65590084468C /* Insights */,
 				5866260C2B4E65410084468C /* MyPage */,
 				03B9AC612AF5624D00A5751C /* DTO.swift */,
@@ -732,6 +739,14 @@
 			path = Growthook;
 			sourceTree = "<group>";
 		};
+		092A51892B52D2C100296B46 /* CreateCave */ = {
+			isa = PBXGroup;
+			children = (
+				092A518A2B52D2D100296B46 /* CaveDTO.swift */,
+			);
+			path = CreateCave;
+			sourceTree = "<group>";
+		};
 		092C816E2B3351B6006B0F65 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,6 +798,8 @@
 				09A7D7042B00EC03005F8821 /* CreateCaveView.swift */,
 				09DE07FF2B04FAEE00D7DF3D /* EmptySeedView.swift */,
 				09089A692B03B3E2006C07B8 /* AlertBuilder.swift */,
+				092A518C2B52DEBD00296B46 /* CaveInfoView.swift */,
+				092A518E2B52E01700296B46 /* CaveEmptyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1183,6 +1200,7 @@
 				032213802B177F8E00FF5CF1 /* RemoveInsightViewModel.swift in Sources */,
 				259E7F772B4060EB00F3DC8F /* PageContentsViewController.swift in Sources */,
 				033E9C1E2AFE63D40051A9E8 /* HomeViewModel.swift in Sources */,
+				092A518B2B52D2D100296B46 /* CaveDTO.swift in Sources */,
 				58E75FAE2B00C1F000512FE2 /* CreatingNewInsightsView.swift in Sources */,
 				58EFF5D92B445A95003C3838 /* Networkable.swift in Sources */,
 				581D229C2B3364BB0068E58D /* EnlargedAreaButton.swift in Sources */,
@@ -1190,6 +1208,7 @@
 				03B9AC662AF5630200A5751C /* NSObject+.swift in Sources */,
 				034580852B2D6354002DDEBA /* CaveDetailView.swift in Sources */,
 				033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */,
+				092A518D2B52DEBD00296B46 /* CaveInfoView.swift in Sources */,
 				5866260E2B4E654E0084468C /* MyPageDTO.swift in Sources */,
 				03431ACF2B3D51220017EA52 /* Encodable+.swift in Sources */,
 				09A7D7052B00EC03005F8821 /* CreateCaveView.swift in Sources */,
@@ -1247,6 +1266,7 @@
 				58E75FAA2B00C15800512FE2 /* CreatingNewInsightsViewController.swift in Sources */,
 				03E481022AF2AFDC002F4CBC /* SceneDelegate.swift in Sources */,
 				03B9AC5B2AF5610D00A5751C /* APIConstant.swift in Sources */,
+				092A518F2B52E01700296B46 /* CaveEmptyView.swift in Sources */,
 				25BD951F2B08F73700E72ADC /* CompleteViewController.swift in Sources */,
 				035DB2A72B00E6F200161872 /* InsightListView.swift in Sources */,
 				25BD95182B0894A200E72ADC /* ActionListTableViewCell.swift in Sources */,

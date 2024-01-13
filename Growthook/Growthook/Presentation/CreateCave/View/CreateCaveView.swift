@@ -170,7 +170,7 @@ final class CreateCaveView: BaseView {
         }
         
         createCaveButton.snp.makeConstraints {
-            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(18)
+            $0.bottom.equalTo(self.safeAreaLayoutGuide).inset(20)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(SizeLiterals.Screen.screenHeight * 50 / 812)
         }
