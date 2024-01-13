@@ -42,7 +42,12 @@ final class AlertViewController: BaseViewController {
     }
     
     override func bindViewModel() {
-        
+        checkButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.viewModel.inputs.didTapCheckButtonInAcertView()
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property

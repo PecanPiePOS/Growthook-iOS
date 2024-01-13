@@ -81,8 +81,8 @@ final class CompleteViewController: BaseViewController {
     
     // MARK: - Methods
     
-    private func getScrappedActionList() -> [CompleteActionListModel] {
-        return viewModel.outputs.completeActionList.value.filter { $0.scrapStatus == .scrap }
+    private func getScrappedActionList() -> [ActionListFinishedResponse] {
+        return viewModel.outputs.finishedActionList.value.filter { $0.isScraped == true }
     }
     // MARK: - @objc Methods
     
@@ -102,17 +102,17 @@ extension CompleteViewController: UITableViewDelegate, UITableViewDataSource {
         if isShowingScrappedData {
             return getScrappedActionList().count
         } else {
-            return viewModel.outputs.completeActionList.value.count
+            return viewModel.outputs.finishedActionList.value.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "completeActionListTableCell", for: indexPath) as! ActionListCompleteTableViewCell
-        let model: CompleteActionListModel
+        let model: ActionListFinishedResponse
         if isShowingScrappedData {
             model = getScrappedActionList()[indexPath.row]
         } else {
-            model = viewModel.outputs.completeActionList.value[indexPath.row]
+            model = viewModel.outputs.finishedActionList.value[indexPath.row]
         }
         
         cell.configure(model)

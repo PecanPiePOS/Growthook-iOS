@@ -101,7 +101,7 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
     }
     
     private func getScrappedActionList() -> [ActionListDoingResponse] {
-        return viewModel.outputs.actionList.value.filter { $0.isScraped == true }
+        return viewModel.outputs.doingActionList.value.filter { $0.isScraped == true }
     }
     
     func notificationDismissInCancelButton() {
@@ -128,7 +128,7 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
         if isShowingScrappedData {
             return getScrappedActionList().count
         } else {
-            return viewModel.outputs.actionList.value.count
+            return viewModel.outputs.doingActionList.value.count
         }
     }
     
@@ -139,7 +139,7 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
         if isShowingScrappedData {
             model = getScrappedActionList()[indexPath.row]
         } else {
-            model = viewModel.outputs.actionList.value[indexPath.row]
+            model = viewModel.outputs.doingActionList.value[indexPath.row]
         }
         cell.configure(model)
         cell.disposeBag = DisposeBag()
