@@ -19,7 +19,7 @@ enum URLConstant {
     
     static let actionPlan = "/api/v1/actionPlan/{actionPlanId}"
     static let actionPlanCompletion = "/api/v1/actionPlan/{actionPlanId}/completion"
-    static let actionPlanPercent = "/api/v1/member/{memberId}/actionPlan/percent"
+    static let actionPlanPercent = "/api/v1/member/{memberId}/actionplan/percent"
     static let doingActionPlan = "/api/v1/member/{memberId}/doing"
     static let finishedActionPlan = "/api/v1/member/{memberId}/doing"
     static let actionPlanGet = "/api/v1/member/{memberId}/doing"
