@@ -5,12 +5,16 @@
 //  Created by Minjoo Kim on 11/22/23.
 //
 
-
 import UIKit
 
 import RxCocoa
 import RxSwift
 import Then
+
+struct CollViewModel {
+    var index: Int
+    var content: String?
+}
 
 final class CreateActionViewControlller: BaseViewController {
     
@@ -21,7 +25,8 @@ final class CreateActionViewControlller: BaseViewController {
     private var isFolded = true
     private var countPlan = 1
     private var textViewIndex = 0
-    private var actionPlanDict: [Int: String] = [:]
+    private var actionPlanData: [CollViewModel] = [CollViewModel(index: 0, content: "")]
+    
     
     override func loadView() {
         self.view = createActionView
@@ -75,8 +80,11 @@ final class CreateActionViewControlller: BaseViewController {
         createActionView.createSpecificPlanView.plusButton.rx.tap
             .bind {
                 self.countPlan += 1
+                self.textViewIndex += 1
                 self.viewModel.inputs.setCount(count: self.countPlan)
-                print(self.countPlan)
+                var newData = Array(self.actionPlanData.reversed())
+                newData.append(.init(index: self.textViewIndex, content: ""))
+                self.actionPlanData = Array(newData.reversed())
                 self.createActionView.createSpecificPlanView.planCollectionView.reloadData()
             }
             .disposed(by: disposeBag)
@@ -113,7 +121,37 @@ extension CreateActionViewControlller: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpecificPlanCollectionViewCell.className, for: indexPath) as? SpecificPlanCollectionViewCell else {
             return SpecificPlanCollectionViewCell()
         }
+        let textView = cell.planTextView
+        let data = self.actionPlanData[indexPath.item]
+        cell.configure(textViewIndex: data.index, content: data.content)
         cell.delegate = self
+        textView.rx.textInput.text
+            .orEmpty
+            .asDriver()
+            .drive(onNext: { [weak self] text in
+                if(text != "구체적인 계획을 설정해보세요"){
+                    self?.actionPlanData.remove(at: indexPath.row)
+                    self?.actionPlanData.insert(CollViewModel(index: indexPath.row, content: text), at: indexPath.row)
+                    print("😱😱😱😱😱😱😱😱", self?.actionPlanData ?? "")
+                }
+            })
+            .disposed(by: cell.disposeBag)
+        
+        cell.planTextView.rx.didEndEditing
+            .bind {
+                if cell.planTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    cell.planTextView.text = "구체적인 계획을 설정해보세요"
+                    cell.planTextView.textColor = .gray400
+                    cell.planTextView.font = .fontGuide(.body3_reg)
+                    cell.planTextView.modifyBorderLine(with: .gray200)
+            } else {
+                print("있슴")
+                cell.planTextView.textColor = .white000
+                cell.planTextView.modifyBorderLine(with: .white000)
+                cell.planTextView.font = .fontGuide(.body3_reg)
+            }
+        }
+        .disposed(by: disposeBag)
         return cell
     }
 }
@@ -168,9 +206,10 @@ extension CreateActionViewControlller {
 
 extension CreateActionViewControlller: SendTextDelegate {
     
-    func sendText(text: String) {
-        self.actionPlanDict.updateValue(text, forKey: 0)
-        print(actionPlanDict)
+    func sendText(index: Int, text: String?) {
+        guard let firstIndex = self.actionPlanData.firstIndex(where: { $0.index == index }) else { return }
+        self.actionPlanData[firstIndex] = .init(index: index, content: text)
+        self.createActionView.createSpecificPlanView.planCollectionView.reloadData()
     }
 }
 

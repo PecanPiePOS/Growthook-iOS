@@ -44,10 +44,14 @@ final class CreateCaveViewModel: CreateCaveViewModelInputs, CreateCaveViewModelO
     func switchTapped() {
         print("switchTapped")
     }
-    
+    private let createCaveService = CreateCaveService()
+
     func createButtonTapped() {
-        print(CreateCaveModel(name: name.value, description: description.value))
         caveModel.accept(CreateCaveModel(name: name.value, description: description.value))
+        print(name.value, description.value, switchStatus.value, "++++++++++++")
+        
+        let result = CreateCaveService.postcave(memberId: 3, cave: CreateCaveRequest(name: name.value, introduction: description.value, isShared: switchStatus.value))
+        print(result)
     }
     
     var inputs: CreateCaveViewModelInputs { return self }
@@ -63,6 +67,8 @@ final class CreateCaveViewModel: CreateCaveViewModelInputs, CreateCaveViewModelO
                 return !name.isEmpty && description != "동굴을 간략히 소개해주세요"
             }
     }
+    
+    
     
     init() {
         self.switchStatus.accept(false)
