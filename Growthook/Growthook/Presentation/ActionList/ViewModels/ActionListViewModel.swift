@@ -24,9 +24,10 @@ protocol ActionListViewModelInput {
 
 protocol ActionListViewModelOutput {
     var titleText: Driver<String> { get }
-    var titlePersent: Driver<String> { get }
+    var titlePersent: BehaviorRelay<String> { get }
     var selectedIndex: BehaviorRelay<Int> { get }
-    var actionList: BehaviorRelay<[ActionListModel]> { get }
+//    var actionList: BehaviorRelay<[ActionListModel]> { get }
+    var actionList: BehaviorRelay<[ActionListDoingResponse]> { get }
     var completeActionList: BehaviorRelay<[CompleteActionListModel]> { get }
     var isReviewEntered: Driver<Bool> { get }
     var reviewTextCount: Driver<String> { get }
@@ -39,13 +40,13 @@ protocol ActionListViewModelType {
 
 final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOutput, ActionListViewModelType {
     
-    let actionListPersentProvider = MoyaProvider<ActionListService>(plugins: [NetworkLoggerPlugin()])
-    private var actionListPersent: ActionListPersentModel?
-    
     var selectedIndex: BehaviorRelay<Int> = BehaviorRelay(value: 1)
-    var actionList: BehaviorRelay<[ActionListModel]> = BehaviorRelay(value: [])
+//    var actionList: BehaviorRelay<[ActionListModel]> = BehaviorRelay(value: [])
+    var actionList: BehaviorRelay<[ActionListDoingResponse]> = BehaviorRelay<[ActionListDoingResponse]>(value: [])
     var completeActionList: BehaviorRelay<[CompleteActionListModel]> = BehaviorRelay(value: [])
     var reviewText = BehaviorRelay<String>(value: "")
+    var titlePersent: BehaviorRelay<String> = BehaviorRelay(value: "")
+    private let disposeBag = DisposeBag()
     
     var inputs: ActionListViewModelInput { return self }
     var outputs: ActionListViewModelOutput { return self }
@@ -54,11 +55,6 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     var titleText: Driver<String> {
         return .just("Action List")
     }
-    
-    var titlePersent: Driver<String> {
-        return .just("00")
-    }
-
     
     var isReviewEntered: Driver<Bool> {
         return reviewText.asDriver()
@@ -75,12 +71,15 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     
     init() {
-        self.actionList.accept(ActionListModel.actionListModelDummyData())
+//        self.actionList.accept(ActionListModel.actionListModelDummyData())
         self.completeActionList.accept(CompleteActionListModel.completeActionListModelDummyData())
+//        getActionListPercent()
+        self.getDoingActionList()
     }
     
     func didTapInProgressButton() {
         selectedIndex.accept(1)
+        getDoingActionList()
     }
     
     func didTapCompletedButton() {
@@ -121,32 +120,31 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
 }
 
-// MARK: - API
 
 extension ActionListViewModel {
-    private func getActionListPersent(completion: @escaping (String?) -> Void) {
-        actionListPersentProvider.request(.getActionListPercent(memberID: "1")) { result in
-            switch result {
-            case .success(let result):
-                let status = result.statusCode
-                if status >= 200 && status < 300 {
-                    do {
-                        guard let data = try result.map(GeneralResponse<ActionListPercentResponse>.self).data else {
-                            return
-                        }
-                        self.actionListPersent = data.convertToActionListPersentModel()
-                        let userPersent = "\(self.actionListPersent)"
-                        print(self.actionListPersent)
-                        completion(userPersent)
-                        
-                    } catch (let error) {
-                        print(error.localizedDescription)
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion(nil)
-            }
-        }
+        
+    private func getActionListPercent() {
+        print("getActionListPercent호출됩니다")
+        ActionListService.getActionListPercent(with: 3)
+            .subscribe(onNext: { [weak self] data in
+                guard let self else { return }
+                self.titlePersent.accept("\(data)")
+            }, onError: { [weak self] error in
+                guard let self else { return }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func getDoingActionList() {
+        print("getDoingActionList가 호출됩니다")
+        ActionListService.getDoingActionList(with: 3)
+            .subscribe(onNext: { [weak self] data in
+                guard let self else { return }
+                self.actionList.accept(data)
+            }, onError: { [weak self] error in
+                guard let self else { return }
+            })
+            .disposed(by: disposeBag)
     }
 }
+
