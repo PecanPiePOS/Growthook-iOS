@@ -116,12 +116,10 @@
 		259E7F772B4060EB00F3DC8F /* PageContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F762B4060EB00F3DC8F /* PageContentsViewController.swift */; };
 		259E7F792B42A68B00F3DC8F /* OnboardingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F782B42A68B00F3DC8F /* OnboardingButtonView.swift */; };
 		259E7F7B2B42ABA600F3DC8F /* OnboardingSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F7A2B42ABA600F3DC8F /* OnboardingSelectViewController.swift */; };
-		259E7F8D2B4A768200F3DC8F /* ActionListPercentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F8C2B4A768200F3DC8F /* ActionListPercentResponse.swift */; };
 		259E7F912B4A7BCA00F3DC8F /* ActionListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */; };
-		259E7F932B4BD0F100F3DC8F /* ActionListDoingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F922B4BD0F100F3DC8F /* ActionListDoingModel.swift */; };
-		259E7F952B4BD12900F3DC8F /* ActionListDoingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F942B4BD12900F3DC8F /* ActionListDoingResponse.swift */; };
 		259E7F972B4D0C4200F3DC8F /* splash_growthook.json in Resources */ = {isa = PBXBuildFile; fileRef = 259E7F962B4D0C4200F3DC8F /* splash_growthook.json */; };
 		259E7F992B4D0EF600F3DC8F /* grothooksplash.json in Resources */ = {isa = PBXBuildFile; fileRef = 259E7F982B4D0EF600F3DC8F /* grothooksplash.json */; };
+		259E7F9C2B4FCA8C00F3DC8F /* ActionListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F9B2B4FCA8C00F3DC8F /* ActionListDTO.swift */; };
 		25BD95182B0894A200E72ADC /* ActionListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD95172B0894A200E72ADC /* ActionListTableViewCell.swift */; };
 		25BD951B2B089B9900E72ADC /* ActionListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951A2B089B9900E72ADC /* ActionListModel.swift */; };
 		25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951C2B08F6F600E72ADC /* InprogressViewController.swift */; };
@@ -260,12 +258,10 @@
 		259E7F762B4060EB00F3DC8F /* PageContentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentsViewController.swift; sourceTree = "<group>"; };
 		259E7F782B42A68B00F3DC8F /* OnboardingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButtonView.swift; sourceTree = "<group>"; };
 		259E7F7A2B42ABA600F3DC8F /* OnboardingSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSelectViewController.swift; sourceTree = "<group>"; };
-		259E7F8C2B4A768200F3DC8F /* ActionListPercentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListPercentResponse.swift; sourceTree = "<group>"; };
 		259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListService.swift; sourceTree = "<group>"; };
-		259E7F922B4BD0F100F3DC8F /* ActionListDoingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListDoingModel.swift; sourceTree = "<group>"; };
-		259E7F942B4BD12900F3DC8F /* ActionListDoingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListDoingResponse.swift; sourceTree = "<group>"; };
 		259E7F962B4D0C4200F3DC8F /* splash_growthook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_growthook.json; sourceTree = "<group>"; };
 		259E7F982B4D0EF600F3DC8F /* grothooksplash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = grothooksplash.json; sourceTree = "<group>"; };
+		259E7F9B2B4FCA8C00F3DC8F /* ActionListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListDTO.swift; sourceTree = "<group>"; };
 		25BD95172B0894A200E72ADC /* ActionListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListTableViewCell.swift; sourceTree = "<group>"; };
 		25BD951A2B089B9900E72ADC /* ActionListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListModel.swift; sourceTree = "<group>"; };
 		25BD951C2B08F6F600E72ADC /* InprogressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InprogressViewController.swift; sourceTree = "<group>"; };
@@ -462,9 +458,9 @@
 		03B9AC492AF55E3300A5751C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				259E7F9A2B4FCA7B00F3DC8F /* ActionList */,
 				03B9AC612AF5624D00A5751C /* DTO.swift */,
 				259E7F882B4A755E00F3DC8F /* DTO */,
-				259E7F892B4A756500F3DC8F /* Model */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -873,34 +869,16 @@
 		259E7F882B4A755E00F3DC8F /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				259E7F8A2B4A757100F3DC8F /* ActionListDTO */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
 		};
-		259E7F892B4A756500F3DC8F /* Model */ = {
+		259E7F9A2B4FCA7B00F3DC8F /* ActionList */ = {
 			isa = PBXGroup;
 			children = (
-				259E7F8B2B4A757900F3DC8F /* ActionListModel */,
+				259E7F9B2B4FCA8C00F3DC8F /* ActionListDTO.swift */,
 			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		259E7F8A2B4A757100F3DC8F /* ActionListDTO */ = {
-			isa = PBXGroup;
-			children = (
-				259E7F8C2B4A768200F3DC8F /* ActionListPercentResponse.swift */,
-				259E7F942B4BD12900F3DC8F /* ActionListDoingResponse.swift */,
-			);
-			path = ActionListDTO;
-			sourceTree = "<group>";
-		};
-		259E7F8B2B4A757900F3DC8F /* ActionListModel */ = {
-			isa = PBXGroup;
-			children = (
-				259E7F922B4BD0F100F3DC8F /* ActionListDoingModel.swift */,
-			);
-			path = ActionListModel;
+			path = ActionList;
 			sourceTree = "<group>";
 		};
 		25BD95162B08946D00E72ADC /* Cell */ = {
@@ -1191,7 +1169,6 @@
 				03C356672B108EB800750758 /* InsightTapViewModel.swift in Sources */,
 				58AB70AC2B2C7CC50061C072 /* MyPageViewModel.swift in Sources */,
 				581D228E2B320C630068E58D /* CommonTextFieldWithBorder.swift in Sources */,
-				259E7F952B4BD12900F3DC8F /* ActionListDoingResponse.swift in Sources */,
 				03115F8C2B27072A009D1517 /* LoginViewController.swift in Sources */,
 				03B9AC7E2AF5652E00A5751C /* UIButton+.swift in Sources */,
 				09DE08002B04FAEE00D7DF3D /* EmptySeedView.swift in Sources */,
@@ -1205,7 +1182,6 @@
 				03B9ACA62AF7B2A200A5751C /* ActionListViewController.swift in Sources */,
 				259E7F702B3E95E600F3DC8F /* OnboardingViewModel.swift in Sources */,
 				09CE00F72B0DBAE800CB42C4 /* InsightView.swift in Sources */,
-				259E7F932B4BD0F100F3DC8F /* ActionListDoingModel.swift in Sources */,
 				58E75F9D2B00B63C00512FE2 /* SplashViewController.swift in Sources */,
 				03B9AC562AF5608900A5751C /* NetworkLoggerPlugin.swift in Sources */,
 				03E481002AF2AFDC002F4CBC /* AppDelegate.swift in Sources */,
@@ -1246,6 +1222,7 @@
 				58E75FB22B00CF2100512FE2 /* UITextFieldWithTintedWhenEdited.swift in Sources */,
 				259E7F792B42A68B00F3DC8F /* OnboardingButtonView.swift in Sources */,
 				09A7D70A2B01E6A9005F8821 /* CreateCaveModel.swift in Sources */,
+				259E7F9C2B4FCA8C00F3DC8F /* ActionListDTO.swift in Sources */,
 				03B9AC592AF560D800A5751C /* Config.swift in Sources */,
 				03B9AC8D2AF5663C00A5751C /* Font.swift in Sources */,
 				09CE00EA2B0DB13700CB42C4 /* CreateActionViewModel.swift in Sources */,
@@ -1261,7 +1238,6 @@
 				259E7F7B2B42ABA600F3DC8F /* OnboardingSelectViewController.swift in Sources */,
 				5880F46D2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift in Sources */,
 				09CE00ED2B0DB1EA00CB42C4 /* CreateActionView.swift in Sources */,
-				259E7F8D2B4A768200F3DC8F /* ActionListPercentResponse.swift in Sources */,
 				034580972B36E343002DDEBA /* UICollectionView+.swift in Sources */,
 				033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */,
 				0322137E2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift in Sources */,
