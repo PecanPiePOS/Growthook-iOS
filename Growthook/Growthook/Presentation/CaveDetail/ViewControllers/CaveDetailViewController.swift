@@ -168,6 +168,13 @@ final class CaveDetailViewController: BaseViewController {
                 self?.presentToMenuVC()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.pushToChangeCave
+            .subscribe(onNext: { [weak self] in
+                guard let caveId = self?.caveId else { return }
+                self?.navigationController?.pushViewController(ChangeCaveViewController(caveId: caveId), animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - View Life Cycle
@@ -299,7 +306,7 @@ extension CaveDetailViewController {
     }
     
     private func presentToMenuVC() {
-        let menuVC = CaveDetailMenuBottomSheet(viewModel: viewModel, caveId: caveId)
+        let menuVC = UINavigationController(rootViewController: CaveDetailMenuBottomSheet(viewModel: viewModel, caveId: caveId))
         menuVC.modalPresentationStyle = .pageSheet
         let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in

@@ -14,7 +14,7 @@ import RxCocoa
 import RxSwift
 
 final class CaveDetailMenuBottomSheet: BaseViewController {
-
+    
     // MARK: - UI Components
     
     private lazy var changeCaveButton = CaveMenuButton(buttonTitle: "수정하기", buttonImage: ImageLiterals.Menu.ic_change, textColor: .white000)
@@ -40,12 +40,19 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
                 self?.addRemoveCaveAlert()
             }
             .disposed(by: disposeBag)
+        
+        changeCaveButton.rx.tap
+            .bind { [weak self] in
+                self?.viewModel.inputs.changeCaveButtonTap()
+                self?.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
     
     override func setStyles() {
-    
+        
         view.backgroundColor = .gray400
         
         changeCaveButton.do {

@@ -21,6 +21,17 @@ final class ChangeCaveViewController: BaseViewController {
     private let vieWModel = ChangeCaveViewModel()
     private let disposeBag = DisposeBag()
     
+    // MARK: - Properties
+    
+    private let caveId: Int?
+    
+    // MARK: - Initializer
+
+    init(caveId: Int) {
+        self.caveId = caveId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,6 +118,10 @@ final class ChangeCaveViewController: BaseViewController {
         changeCaveView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
