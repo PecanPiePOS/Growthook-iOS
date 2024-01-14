@@ -15,7 +15,7 @@ import RxSwift
 enum CaveTarget {
     case getCaveAll(memberId: Int)
     case getCaveDetail(memberId: Int, caveId: Int)
-    case patchCave(caveId: Int)
+    case patchCave(caveId: Int, param: CavePatchRequestDto)
     case deleteCave(caveId: Int)
 }
 
@@ -32,7 +32,7 @@ extension CaveTarget: BaseTargetType {
                 .replacingOccurrences(of: "{memberId}", with: String(memberId))
                 .replacingOccurrences(of: "{caveId}", with: String(caveId))
             return path
-        case .patchCave(caveId: let caveId):
+        case .patchCave(caveId: let caveId, param: _):
             let path = URLConstant.cave
                 .replacingOccurrences(of: "{caveId}", with: String(caveId))
             return path
@@ -56,6 +56,8 @@ extension CaveTarget: BaseTargetType {
     
     var task: Moya.Task {
         switch self {
+        case .patchCave(_, let param):
+            return .requestParameters(parameters: try! param.asParameter(), encoding: JSONEncoding.default)
         default:
             return .requestPlain
         }
