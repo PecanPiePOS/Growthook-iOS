@@ -58,6 +58,15 @@ final class CustomNavigationBar: UIView {
         set { completionButton.isHidden = !newValue }
     }
     
+    var completionEnableStatus: Bool = false {
+        didSet {
+            switch completionEnableStatus {
+            case true: setEnable()
+            case false: setDisable()
+            }
+        }
+    }
+    
     var backButtonAction: (() -> Void)?
     
     // MARK: - Initializer
@@ -164,5 +173,22 @@ extension CustomNavigationBar {
 
     func setupBackButtonTarget() {
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+    }
+}
+
+extension CustomNavigationBar {
+    
+    func setEnable() {
+        completionButton.do {
+            $0.setTitleColor(.green400, for: .normal)
+            $0.isEnabled = true
+        }
+    }
+    
+    func setDisable() {
+        completionButton.do {
+            $0.setTitleColor(.gray300, for: .normal)
+            $0.isEnabled = false
+        }
     }
 }
