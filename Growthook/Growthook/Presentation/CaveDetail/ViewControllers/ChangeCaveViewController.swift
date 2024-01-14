@@ -83,6 +83,12 @@ final class ChangeCaveViewController: BaseViewController {
             .map { $0 ? true : false }
             .bind(to: changeCaveView.navigationBar.rx.completionEnableStatus)
             .disposed(by: disposeBag)
+        
+        changeCaveView.navigationBar.backButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.popToCaveDetailVC()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
@@ -108,5 +114,9 @@ extension ChangeCaveViewController {
     
     private func setNextTextView() {
         changeCaveView.introduceTextView.becomeFirstResponder()
+    }
+
+    private func popToCaveDetailVC() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
