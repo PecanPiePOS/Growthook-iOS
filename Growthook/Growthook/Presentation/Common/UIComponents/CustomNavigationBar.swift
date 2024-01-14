@@ -19,6 +19,7 @@ final class CustomNavigationBar: UIView {
     lazy var backButton = UIButton()
     lazy var closeButton = UIButton()
     lazy var menuButton = UIButton()
+    lazy var completionButton = UIButton()
     
     // MARK: - Properties
     
@@ -50,6 +51,11 @@ final class CustomNavigationBar: UIView {
     var isBackgroundColor: UIColor? {
         get { backgroundColor }
         set { backgroundColor = newValue }
+    }
+    
+    var isCompletionButtonIncluded: Bool {
+        get { !completionButton.isHidden }
+        set { completionButton.isHidden = !newValue }
     }
     
     var backButtonAction: (() -> Void)?
@@ -98,13 +104,21 @@ extension CustomNavigationBar {
             $0.setImage(ImageLiterals.NavigationBar.menu, for: .normal)
             $0.isHidden = true
         }
+        
+        completionButton.do {
+            $0.setTitle("완료", for: .normal)
+            $0.setTitleColor(.gray300, for: .normal)
+            $0.titleLabel?.font = .fontGuide(.body1_bold)
+            $0.backgroundColor = .clear
+            $0.isHidden = true
+        }
     }
     
     // MARK: - Layout Helper
     
     private func setLayout() {
         
-        self.addSubviews(backButton, closeButton, menuButton, titleView)
+        self.addSubviews(backButton, closeButton, menuButton, titleView, completionButton)
         titleView.addSubview(titleLabel)
         
         self.snp.makeConstraints {
@@ -135,6 +149,12 @@ extension CustomNavigationBar {
         menuButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(8)
             $0.centerY.equalToSuperview()
+        }
+        
+        completionButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(8)
+            $0.centerY.equalToSuperview()
+            $0.size.equalTo(48)
         }
     }
     
