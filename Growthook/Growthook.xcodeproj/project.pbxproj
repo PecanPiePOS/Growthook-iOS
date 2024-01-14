@@ -150,6 +150,14 @@
 		5880F4672B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */; };
 		5880F46B2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F46A2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift */; };
 		5880F46D2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880F46C2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift */; };
+		588E2B422B539EE50014E6D5 /* InsightsDetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B412B539EE50014E6D5 /* InsightsDetailService.swift */; };
+		588E2B482B53AC690014E6D5 /* InsightsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B472B53AC690014E6D5 /* InsightsDetailViewController.swift */; };
+		588E2B4A2B53ACC80014E6D5 /* InsightsDetailMemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B492B53ACC80014E6D5 /* InsightsDetailMemoView.swift */; };
+		588E2B4C2B53ACD80014E6D5 /* InsightsDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B4B2B53ACD80014E6D5 /* InsightsDetailViewModel.swift */; };
+		588E2B4F2B53BBAF0014E6D5 /* InsightsDetailActionPlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B4E2B53BBAF0014E6D5 /* InsightsDetailActionPlanCollectionViewCell.swift */; };
+		588E2B512B5405F90014E6D5 /* InsightDetailMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B502B5405F90014E6D5 /* InsightDetailMenuViewController.swift */; };
+		588E2B962B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B952B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift */; };
+		588E2B9A2B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B992B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift */; };
 		58AB70AC2B2C7CC50061C072 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70AB2B2C7CC50061C072 /* MyPageViewModel.swift */; };
 		58AB70AE2B2C88570061C072 /* MyPageThookBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70AD2B2C88570061C072 /* MyPageThookBoxView.swift */; };
 		58AB70B12B2C90560061C072 /* MyPageListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70B02B2C90560061C072 /* MyPageListTableViewCell.swift */; };
@@ -303,6 +311,14 @@
 		5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveTableViewCell.swift; sourceTree = "<group>"; };
 		5880F46A2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveSheetViewController.swift; sourceTree = "<group>"; };
 		5880F46C2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectPeriodSheetViewController.swift; sourceTree = "<group>"; };
+		588E2B412B539EE50014E6D5 /* InsightsDetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDetailService.swift; sourceTree = "<group>"; };
+		588E2B472B53AC690014E6D5 /* InsightsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDetailViewController.swift; sourceTree = "<group>"; };
+		588E2B492B53ACC80014E6D5 /* InsightsDetailMemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDetailMemoView.swift; sourceTree = "<group>"; };
+		588E2B4B2B53ACD80014E6D5 /* InsightsDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDetailViewModel.swift; sourceTree = "<group>"; };
+		588E2B4E2B53BBAF0014E6D5 /* InsightsDetailActionPlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDetailActionPlanCollectionViewCell.swift; sourceTree = "<group>"; };
+		588E2B502B5405F90014E6D5 /* InsightDetailMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightDetailMenuViewController.swift; sourceTree = "<group>"; };
+		588E2B952B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsigthDetailActionPlanSheetViewController.swift; sourceTree = "<group>"; };
+		588E2B992B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsigthDetailActionPlanReviewSheetViewController.swift; sourceTree = "<group>"; };
 		58AB70AB2B2C7CC50061C072 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		58AB70AD2B2C88570061C072 /* MyPageThookBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageThookBoxView.swift; sourceTree = "<group>"; };
 		58AB70B02B2C90560061C072 /* MyPageListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageListTableViewCell.swift; sourceTree = "<group>"; };
@@ -494,6 +510,7 @@
 		03B9AC4A2AF55E3D00A5751C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				588E2B432B53AC2B0014E6D5 /* InsightsDetail */,
 				03115F892B270698009D1517 /* Onboarding */,
 				03B9AC982AF7A86800A5751C /* Common */,
 				58E75FA42B00C0C700512FE2 /* Insights */,
@@ -936,6 +953,7 @@
 			isa = PBXGroup;
 			children = (
 				586626182B4E658F0084468C /* InsightsService.swift */,
+				588E2B412B539EE50014E6D5 /* InsightsDetailService.swift */,
 			);
 			path = Insights;
 			sourceTree = "<group>";
@@ -952,6 +970,52 @@
 			isa = PBXGroup;
 			children = (
 				5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		588E2B432B53AC2B0014E6D5 /* InsightsDetail */ = {
+			isa = PBXGroup;
+			children = (
+				588E2B442B53AC390014E6D5 /* Controllers */,
+				588E2B452B53AC420014E6D5 /* Views */,
+				588E2B462B53AC460014E6D5 /* ViewModels */,
+			);
+			path = InsightsDetail;
+			sourceTree = "<group>";
+		};
+		588E2B442B53AC390014E6D5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				588E2B472B53AC690014E6D5 /* InsightsDetailViewController.swift */,
+				588E2B502B5405F90014E6D5 /* InsightDetailMenuViewController.swift */,
+				588E2B952B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift */,
+				588E2B992B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		588E2B452B53AC420014E6D5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				588E2B4D2B53BB8C0014E6D5 /* Components */,
+				588E2B492B53ACC80014E6D5 /* InsightsDetailMemoView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		588E2B462B53AC460014E6D5 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				588E2B4B2B53ACD80014E6D5 /* InsightsDetailViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		588E2B4D2B53BB8C0014E6D5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				588E2B4E2B53BBAF0014E6D5 /* InsightsDetailActionPlanCollectionViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1161,6 +1225,7 @@
 				58EFF5DE2B445AE2003C3838 /* ServiceError.swift in Sources */,
 				034580872B2D6B98002DDEBA /* CaveDescriptionView.swift in Sources */,
 				03B9AC822AF5658F00A5751C /* FontLiterals.swift in Sources */,
+				588E2B4C2B53ACD80014E6D5 /* InsightsDetailViewModel.swift in Sources */,
 				035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */,
 				58AB70B12B2C90560061C072 /* MyPageListTableViewCell.swift in Sources */,
 				0322137A2B17642E00FF5CF1 /* RemoveAlertView.swift in Sources */,
@@ -1185,6 +1250,7 @@
 				5880F46B2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift in Sources */,
 				03B9AC5D2AF5614A00A5751C /* URLConstant.swift in Sources */,
 				03B9AC882AF565CA00A5751C /* StringLiterals.swift in Sources */,
+				588E2B4A2B53ACC80014E6D5 /* InsightsDetailMemoView.swift in Sources */,
 				03C356612B0F533E00750758 /* CaveListHalfModal.swift in Sources */,
 				582F9C482B304B5E0000D161 /* TextFieldBlockWithTitle.swift in Sources */,
 				09A7D7002B00DED0005F8821 /* CreateCaveViewModel.swift in Sources */,
@@ -1198,6 +1264,7 @@
 				581D229A2B3362330068E58D /* CommonCustomNavigationBar.swift in Sources */,
 				250F7D772B16D01500D9726F /* AlertViewController.swift in Sources */,
 				250F7D752B14624300D9726F /* ActionListReviewViewController.swift in Sources */,
+				588E2B422B539EE50014E6D5 /* InsightsDetailService.swift in Sources */,
 				58E75F982B00B15A00512FE2 /* BaseViewController.swift in Sources */,
 				5880F4672B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift in Sources */,
 				09089A6A2B03B3E2006C07B8 /* AlertBuilder.swift in Sources */,
@@ -1217,6 +1284,7 @@
 				581D228E2B320C630068E58D /* CommonTextFieldWithBorder.swift in Sources */,
 				03115F8C2B27072A009D1517 /* LoginViewController.swift in Sources */,
 				03B9AC7E2AF5652E00A5751C /* UIButton+.swift in Sources */,
+				588E2B512B5405F90014E6D5 /* InsightDetailMenuViewController.swift in Sources */,
 				09DE08002B04FAEE00D7DF3D /* EmptySeedView.swift in Sources */,
 				03B9AC742AF5648900A5751C /* UITextView+.swift in Sources */,
 				58E75FAC2B00C16900512FE2 /* InsightsViewModel.swift in Sources */,
@@ -1227,9 +1295,11 @@
 				03B9ACA92AF7B2B000A5751C /* MypageViewController.swift in Sources */,
 				03B9ACA62AF7B2A200A5751C /* ActionListViewController.swift in Sources */,
 				259E7F702B3E95E600F3DC8F /* OnboardingViewModel.swift in Sources */,
+				588E2B9A2B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift in Sources */,
 				09CE00F72B0DBAE800CB42C4 /* InsightView.swift in Sources */,
 				58E75F9D2B00B63C00512FE2 /* SplashViewController.swift in Sources */,
 				03B9AC562AF5608900A5751C /* NetworkLoggerPlugin.swift in Sources */,
+				588E2B962B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift in Sources */,
 				03E481002AF2AFDC002F4CBC /* AppDelegate.swift in Sources */,
 				09CE00F92B0DD3E300CB42C4 /* ActionPlanModel.swift in Sources */,
 				58E75FAA2B00C15800512FE2 /* CreatingNewInsightsViewController.swift in Sources */,
@@ -1251,6 +1321,7 @@
 				584EDAD72B4A57E60094872A /* Observable+.swift in Sources */,
 				58EFF5DB2B445AB6003C3838 /* BaseTargetType.swift in Sources */,
 				03B9AC602AF561AD00A5751C /* API.swift in Sources */,
+				588E2B4F2B53BBAF0014E6D5 /* InsightsDetailActionPlanCollectionViewCell.swift in Sources */,
 				582F9C4A2B304B720000D161 /* TextViewBlockWithTitle.swift in Sources */,
 				2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */,
 				25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */,
@@ -1276,6 +1347,7 @@
 				03B9AC8D2AF5663C00A5751C /* Font.swift in Sources */,
 				09CE00EA2B0DB13700CB42C4 /* CreateActionViewModel.swift in Sources */,
 				035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */,
+				588E2B482B53AC690014E6D5 /* InsightsDetailViewController.swift in Sources */,
 				09DE08022B04FDF800D7DF3D /* EmptyViewController.swift in Sources */,
 				03B9AC722AF5646000A5751C /* UITextField+.swift in Sources */,
 				033E9C1B2AFE606E0051A9E8 /* CaveCollectionViewCell.swift in Sources */,
