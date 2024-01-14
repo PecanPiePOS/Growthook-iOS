@@ -14,7 +14,7 @@ final class ChangeCaveView: BaseView {
     
     // MARK: - UI Components
     
-    private let navigationBar = CustomNavigationBar()
+    let navigationBar = CustomNavigationBar()
     private let nameLabel = UILabel()
     let nameTextField = UITextFieldWithTinitedWhenEdited(placeholders: "")
     let nameCountLabel = UILabel()
@@ -34,7 +34,7 @@ final class ChangeCaveView: BaseView {
             $0.isTitleViewIncluded = true
             $0.isBackButtonIncluded = true
             $0.isTitleLabelIncluded = "동굴 편집"
-            $0.isCloseButtonIncluded = true
+            $0.isCompletionButtonIncluded = true
             $0.isBackgroundColor = .gray600
         }
         
@@ -62,6 +62,8 @@ final class ChangeCaveView: BaseView {
         
         introduceTextView.do {
             $0.returnKeyType = .done
+            $0.textColor = .white000
+            $0.font = .fontGuide(.body3_bold)
         }
         
         introduceCountLabel.do {
