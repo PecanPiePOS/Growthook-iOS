@@ -28,31 +28,54 @@ final class ChangeCaveViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
+    }
+    
     override func bindViewModel() {
-        changeCaveView.nameTextField.rx.text
+        changeCaveView.nameTextField.textFieldBlock.rx.text
             .orEmpty
             .distinctUntilChanged()
             .bind { [weak self] value in
                 guard let self else { return }
                 self.vieWModel.inputs.setName(value: value)
-                self.setNameCount(value.count)
             }
             .disposed(by: disposeBag)
         
-        changeCaveView.nameTextField.rx.controlEvent([.editingDidEndOnExit])
+        Observable.combineLatest(
+            changeCaveView.nameTextField.textFieldBlock.rxEditingAction,
+            changeCaveView.nameTextField.textFieldBlock.rx.text
+                .distinctUntilChanged()
+        )
+        .observe(on: MainScheduler.asyncInstance)
+        .bind { [weak self] event, text in
+            guard let self else { return }
+            let textField = self.changeCaveView.nameTextField
+            switch event {
+            case .editingDidBegin:
+                textField.textFieldBlock.focusWhenDidBeginEditing()
+            case .editingDidEnd:
+                textField.textFieldBlock.unfocusWhenDidEndEditing()
+            default:
+                break
+            }
+        }
+        .disposed(by: disposeBag)
+        
+        changeCaveView.nameTextField.textFieldBlock.rx.controlEvent([.editingDidEndOnExit])
             .bind { [weak self] in
                 guard let self else { return }
                 self.setNextTextView()
             }
             .disposed(by: disposeBag)
         
-        changeCaveView.introduceTextView.rx.text
+        changeCaveView.introduceTextView.textViewBlock.rx.text
             .orEmpty
             .distinctUntilChanged()
             .bind { [weak self] value in
                 guard let self else { return }
                 self.vieWModel.inputs.setIntroduce(value: value)
-                self.setIntroduceCount(value.count)
             }
             .disposed(by: disposeBag)
         
@@ -85,13 +108,5 @@ extension ChangeCaveViewController {
     
     private func setNextTextView() {
         changeCaveView.introduceTextView.becomeFirstResponder()
-    }
-    
-    private func setNameCount(_ count: Int) {
-        changeCaveView.nameCountLabel.text = "\(count)/7"
-    }
-    
-    private func setIntroduceCount(_ count: Int) {
-        changeCaveView.introduceCountLabel.text = "\(count)/20"
     }
 }
