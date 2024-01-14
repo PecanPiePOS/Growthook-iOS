@@ -61,6 +61,8 @@ enum I18N {
     
     enum ActionList {
         static let reviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
+        static let insightDetailPlaceholder = "구체적인 계획을 설정해보세요"
+        static let insightDetailReviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
     }
     
     enum CreateInsight {

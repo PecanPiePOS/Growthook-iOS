@@ -102,6 +102,7 @@ enum ImageLiterals {
     enum Menu {
         static var ic_change: UIImage { .load(name: "ic_change") }
         static var ic_delete: UIImage { .load(name: "ic_delete") }
+        static var ic_move
     }
     
     enum Onboarding {
