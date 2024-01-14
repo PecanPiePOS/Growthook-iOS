@@ -98,16 +98,16 @@ extension SpecificPlanCollectionViewCell: UITextViewDelegate {
 
     func textViewDidBeginEditing(_ textView: UITextView) {
         planTextView.modifyBorderLine(with: .green200)
-        if textView.text == planTextView.initialPlaceholder {
-            textView.text = nil
-            textView.textColor = .white000
-            textView.font = .fontGuide(.body3_bold)
-        }
+//        if textView.text == planTextView.initialPlaceholder {
+//            textView.text = nil
+//            textView.textColor = .white000
+//            textView.font = .fontGuide(.body3_bold)
+//        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = planTextView.initialPlaceholder
+//            textView.text = planTextView.initialPlaceholder
             textView.textColor = .gray400
             textView.font = .fontGuide(.body3_reg)
             planTextView.modifyBorderLine(with: .gray200)
