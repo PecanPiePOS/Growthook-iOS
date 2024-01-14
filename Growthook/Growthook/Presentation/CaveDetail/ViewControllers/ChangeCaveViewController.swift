@@ -17,7 +17,50 @@ final class ChangeCaveViewController: BaseViewController {
     
     // MARK: - UI Components
     
-    private let caveChagneView = ChangeCaveView()
+    private let changeCaveView = ChangeCaveView()
+    private let vieWModel = ChangeCaveViewModel()
+    private let disposeBag = DisposeBag()
+    
+    // MARK: - View Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func bindViewModel() {
+        changeCaveView.nameTextField.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .bind { [weak self] value in
+                guard let self else { return }
+                self.vieWModel.inputs.setName(value: value)
+                self.setNameCount(value.count)
+            }
+            .disposed(by: disposeBag)
+        
+        changeCaveView.nameTextField.rx.controlEvent([.editingDidEndOnExit])
+            .bind { [weak self] in
+                guard let self else { return }
+                self.setNextTextView()
+            }
+            .disposed(by: disposeBag)
+        
+        changeCaveView.introduceTextView.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .bind { [weak self] value in
+                guard let self else { return }
+                self.vieWModel.inputs.setIntroduce(value: value)
+                self.setIntroduceCount(value.count)
+            }
+            .disposed(by: disposeBag)
+        
+        vieWModel.outputs.isValid
+            .map { $0 ? true : false }
+            .bind(to: changeCaveView.navigationBar.rx.completionEnableStatus)
+            .disposed(by: disposeBag)
+    }
     
     // MARK: - UI Components Property
     
@@ -30,11 +73,25 @@ final class ChangeCaveViewController: BaseViewController {
     
     override func setLayout() {
         
-        self.view.addSubviews(caveChagneView)
+        self.view.addSubviews(changeCaveView)
         
-        caveChagneView.snp.makeConstraints {
+        changeCaveView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
+}
 
+extension ChangeCaveViewController {
+    
+    private func setNextTextView() {
+        changeCaveView.introduceTextView.becomeFirstResponder()
+    }
+    
+    private func setNameCount(_ count: Int) {
+        changeCaveView.nameCountLabel.text = "\(count)/7"
+    }
+    
+    private func setIntroduceCount(_ count: Int) {
+        changeCaveView.introduceCountLabel.text = "\(count)/20"
+    }
 }

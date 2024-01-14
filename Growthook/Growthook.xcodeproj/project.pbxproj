@@ -28,6 +28,7 @@
 		0332A39D2B51370000720CD3 /* SsukAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A39C2B51370000720CD3 /* SsukAPI.swift */; };
 		0332A39F2B53BA4E00720CD3 /* ChangeCaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A39E2B53BA4E00720CD3 /* ChangeCaveViewController.swift */; };
 		0332A3A12B53BBE700720CD3 /* ChangeCaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3A02B53BBE700720CD3 /* ChangeCaveView.swift */; };
+		0332A3A32B53C94200720CD3 /* ChangeCaveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3A22B53C94200720CD3 /* ChangeCaveViewModel.swift */; };
 		033E9C102AFCE0860051A9E8 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033E9C0F2AFCE0860051A9E8 /* Image.xcassets */; };
 		033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */; };
 		033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */; };
@@ -197,6 +198,7 @@
 		0332A39C2B51370000720CD3 /* SsukAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukAPI.swift; sourceTree = "<group>"; };
 		0332A39E2B53BA4E00720CD3 /* ChangeCaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCaveViewController.swift; sourceTree = "<group>"; };
 		0332A3A02B53BBE700720CD3 /* ChangeCaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCaveView.swift; sourceTree = "<group>"; };
+		0332A3A22B53C94200720CD3 /* ChangeCaveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCaveViewModel.swift; sourceTree = "<group>"; };
 		033E9C0F2AFCE0860051A9E8 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCaveView.swift; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 		034580882B2D716E002DDEBA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				0332A3A22B53C94200720CD3 /* ChangeCaveViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1386,6 +1389,7 @@
 				03C3565F2B0B702900750758 /* InsightTapBottomSheet.swift in Sources */,
 				586626192B4E658F0084468C /* InsightsService.swift in Sources */,
 				03B9AC762AF564AE00A5751C /* UIStackView+.swift in Sources */,
+				0332A3A32B53C94200720CD3 /* ChangeCaveViewModel.swift in Sources */,
 				586626132B4E656A0084468C /* InsightsDTO.swift in Sources */,
 				03B9AC8F2AF5667300A5751C /* MakeVibrate.swift in Sources */,
 				58E75FB22B00CF2100512FE2 /* UITextFieldWithTintedWhenEdited.swift in Sources */,
