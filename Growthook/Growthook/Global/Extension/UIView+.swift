@@ -51,10 +51,12 @@ extension UIView {
         }
     }
     
-    func showToast(message: String) {
+    func showToast(message: String, success: Bool = true) {
+        var tint: UIColor = success ? .green100: .red400
+        
         let toastLabel = UILabel()
         toastLabel.backgroundColor = .gray500
-        toastLabel.textColor = .green100
+        toastLabel.textColor = tint
         toastLabel.textAlignment = .left
         toastLabel.font = .fontGuide(.body3_reg)
         toastLabel.alpha = 0.0
@@ -93,10 +95,12 @@ extension UIView {
         })
     }
     
-    func showScrapToast(message: String) {
+    func showScrapToast(message: String, success: Bool = true) {
+        var tint: UIColor = success ? .green100: .red400
+        
         let toastLabel = UILabel()
         toastLabel.backgroundColor = .gray500
-        toastLabel.textColor = .green100
+        toastLabel.textColor = tint
         toastLabel.textAlignment = .left
         toastLabel.font = .fontGuide(.body3_reg)
         toastLabel.alpha = 0.0
