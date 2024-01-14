@@ -40,18 +40,34 @@ final class CreateCaveViewController: UIViewController {
 extension CreateCaveViewController {
     
     private func bindViewModel() {
+        
+//        createCaveView.nameTextField.rx.controlEvent(event: UIControl.Event.allEditingEvents)
+//            .bind { [weak self] _ in
+//                guard let self else { return }
+//                switch event {
+//                case .editingDidBegin:
+//                    createCaveView.nameTextField.focusWhenDidBeginEditing()
+//                case .editingDidEnd:
+//                    createCaveView.nameTextField.unfocusWhenDidEndEditing()
+//                case .editingDidEndOnExit:
+//                    createCaveView.nameTextField.unfocusWhenDidEndEditing()
+//                }
+
+                
         createCaveView.nameTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
             .bind { [weak self] value in
                 guard let self else { return }
                 self.viewModel.inputs.setName(with: value)
+                self.createCaveView.nameCountLabel.text = "\(value.count)/7"
             }
             .disposed(by: disposeBag)
         
         createCaveView.nameTextField.rx.controlEvent([.editingDidBegin])
             .bind { [weak self] in
                 guard let self else { return }
+                createCaveView.nameTextField.focusWhenDidBeginEditing()
                 self.setUpAnimation()
             }
             .disposed(by: disposeBag)
@@ -59,6 +75,7 @@ extension CreateCaveViewController {
         createCaveView.nameTextField.rx.controlEvent([.editingDidEnd])
             .bind { [weak self] in
                 guard let self else { return }
+                createCaveView.nameTextField.unfocusWhenDidEndEditing()
                 self.setDownAnimation()
             }
             .disposed(by: disposeBag)
@@ -75,6 +92,7 @@ extension CreateCaveViewController {
             .bind { [weak self] value in
                 guard let self else { return }
                 self.viewModel.inputs.setDescription(with: value)
+                self.createCaveView.introduceCountLabel.text = "\(value.count)/20"
             }
             .disposed(by: disposeBag)
         
