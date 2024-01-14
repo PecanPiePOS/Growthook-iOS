@@ -172,7 +172,8 @@ final class CaveDetailViewController: BaseViewController {
         viewModel.outputs.pushToChangeCave
             .subscribe(onNext: { [weak self] in
                 guard let caveId = self?.caveId else { return }
-                self?.navigationController?.pushViewController(ChangeCaveViewController(caveId: caveId), animated: true)
+                guard let viewModel = self?.viewModel else { return }
+                self?.navigationController?.pushViewController(ChangeCaveViewController(caveId: caveId, homeViewModel: viewModel), animated: true)
             })
             .disposed(by: disposeBag)
     }

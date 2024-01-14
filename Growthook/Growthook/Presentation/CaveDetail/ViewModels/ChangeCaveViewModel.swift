@@ -14,12 +14,14 @@ import RxRelay
 protocol ChangeCaveViewModelInputs {
     func setName(value: String)
     func setIntroduce(value: String)
+    func completionButtonTap(caveId: Int)
 }
 
 protocol ChangeCaveViewModelOutput {
     var name: BehaviorRelay<String> { get }
     var introduce: BehaviorRelay<String> { get }
     var isValid: Observable<Bool> { get }
+    var changeCave: PublishSubject<Void> { get }
 }
 
 protocol ChangeCaveViewModelType {
@@ -37,6 +39,11 @@ final class ChangeCaveViewModel: ChangeCaveViewModelInputs, ChangeCaveViewModelO
         introduce.accept(value)
     }
     
+    func completionButtonTap(caveId: Int) {
+        patchCave(caveId: caveId)
+        changeCave.onNext(())
+    }
+    
     var name: BehaviorRelay<String> = BehaviorRelay(value: "")
     var introduce: BehaviorRelay<String> = BehaviorRelay(value: "")
     var isValid: Observable<Bool> {
@@ -45,9 +52,20 @@ final class ChangeCaveViewModel: ChangeCaveViewModelInputs, ChangeCaveViewModelO
                 return !name.isEmpty && !introduce.isEmpty
             }
     }
+    var changeCave: PublishSubject<Void> = PublishSubject<Void>()
     
     var inputs: ChangeCaveViewModelInputs { return self }
     var outputs: ChangeCaveViewModelOutput { return self }
     
     init() {}
+}
+
+extension ChangeCaveViewModel {
+    
+    func patchCave(caveId: Int) {
+        let model: CavePatchRequestDto = CavePatchRequestDto(name: name.value, introduction: introduce.value, isShared: false)
+        CaveAPI.shared.patch(caveId: caveId, param: model) { [weak self] response in
+            guard self != nil else { return }
+        }
+    }
 }

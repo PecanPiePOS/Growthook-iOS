@@ -20,6 +20,7 @@ final class ChangeCaveViewController: BaseViewController {
     private let changeCaveView = ChangeCaveView()
     private let vieWModel = ChangeCaveViewModel()
     private let disposeBag = DisposeBag()
+    private let homeViewModel: HomeViewModel
     
     // MARK: - Properties
     
@@ -27,7 +28,8 @@ final class ChangeCaveViewController: BaseViewController {
     
     // MARK: - Initializer
 
-    init(caveId: Int) {
+    init(caveId: Int, homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
         self.caveId = caveId
         super.init(nibName: nil, bundle: nil)
     }
@@ -98,6 +100,22 @@ final class ChangeCaveViewController: BaseViewController {
         changeCaveView.navigationBar.backButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.popToCaveDetailVC()
+            })
+            .disposed(by: disposeBag)
+        
+        changeCaveView.navigationBar.completionButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let caveId = self?.caveId else { return }
+                self?.vieWModel.inputs.completionButtonTap(caveId: caveId)
+            })
+            .disposed(by: disposeBag)
+        
+        vieWModel.outputs.changeCave
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                guard let caveId = self.caveId else { return }
+                self.homeViewModel.inputs.caveDetail(caveId: caveId)
+                self.popToCaveDetailVC()
             })
             .disposed(by: disposeBag)
     }
