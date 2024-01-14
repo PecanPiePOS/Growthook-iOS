@@ -133,7 +133,7 @@ final class ChangeCaveView: BaseView {
         }
         
         isSharedButton.snp.makeConstraints {
-            $0.top.equalTo(isSharedLabel)
+            $0.top.equalTo(introduceCountLabel.snp.bottom).offset(4)
             $0.trailing.equalToSuperview().inset(6)
             $0.width.equalTo(90)
             $0.height.equalTo(48)
