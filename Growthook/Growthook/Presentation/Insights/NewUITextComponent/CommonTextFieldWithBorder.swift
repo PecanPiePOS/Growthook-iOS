@@ -165,7 +165,6 @@ extension CommonTextFieldWithBorder {
         if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             modifyBorderLine(with: .gray200)
         } else {
-            print("????")
             modifyBorderLine(with: .white000)
         }
     }
@@ -179,5 +178,3 @@ extension CommonTextFieldWithBorder {
         self.maxLength = newLimitCount
     }
 }
-
-

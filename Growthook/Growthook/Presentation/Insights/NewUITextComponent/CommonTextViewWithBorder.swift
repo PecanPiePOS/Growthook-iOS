@@ -92,30 +92,12 @@ extension CommonTextViewWithBorder {
             .bind { [weak self] in
                 guard let self else { return }
                 self.rxEditingAction.accept(.editingDidEnd)
-                print(self.text as Any)
                 if self.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     self.text = customPlaceholder
                     self.textColor = .gray400
                     self.font = .fontGuide(.body3_reg)
                     modifyBorderLine(with: .gray200)
                 } else {
-                    self.textColor = .white000
-                    modifyBorderLine(with: .white000)
-                }
-            }
-            .disposed(by: disposeBag)
-       
-        self.rx.text
-            .orEmpty
-            .bind { [weak self] _ in
-                guard let self else { return }
-                if self.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    self.text = customPlaceholder
-                    self.textColor = .gray400
-                    self.font = .fontGuide(.body3_reg)
-                    modifyBorderLine(with: .gray200)
-                } else {
-                    self.textColor = .white000
                     modifyBorderLine(with: .white000)
                 }
             }
