@@ -106,7 +106,7 @@ enum ImageLiterals {
     
     enum Onboarding {
         static var ic_Growthook_Login: UIImage { .load(name: "ic_Growthook_Login") }
-        static var btn_kakaologin: UIImage { .load(name: "btn_kakaologin")}
+        static var kakao_login_large_wide: UIImage { .load(name: "kakao_login_large_wide")}
         static var btn_applelogin: UIImage { .load(name: "btn_applelogin")}
         static var onboardingPage1: UIImage { .load(name: "page1")}
         static var onboardingPage2: UIImage { .load(name: "page2")}
