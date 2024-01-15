@@ -70,7 +70,7 @@ extension UIView {
         shadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
         shadowView.layer.masksToBounds = false
         
-        let leadingImage = NSTextAttachment(image: ImageLiterals.Component.icn_check_green)
+        let leadingImage = NSTextAttachment(image: success ? ImageLiterals.Component.icn_check_green: UIImage(named: "warningIcon")!)
         let attributedString = NSMutableAttributedString()
         attributedString.append(NSAttributedString(string: "       "))
         attributedString.append(NSAttributedString(attachment: leadingImage))
@@ -150,6 +150,47 @@ extension UIView {
         })
     }
 
+    func showToastWithRed(message: String) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = .red400
+        toastLabel.textColor = .white000
+        toastLabel.textAlignment = .left
+        toastLabel.font = .fontGuide(.body3_reg)
+        toastLabel.alpha = 0.0
+        toastLabel.layer.cornerRadius = SizeLiterals.Screen.screenHeight * 50.0 / 812 / 2
+        toastLabel.clipsToBounds = true
+        
+        let shadowView = UIView()
+        shadowView.layer.shadowColor = UIColor.black.cgColor
+        shadowView.layer.shadowOpacity = 0.5
+        shadowView.layer.shadowRadius = 5
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        shadowView.layer.masksToBounds = false
+        
+        let leadingImage = NSTextAttachment(image: UIImage(named: "warningIcon") ?? UIImage())
+        let attributedString = NSMutableAttributedString()
+        attributedString.append(NSAttributedString(string: "       "))
+        attributedString.append(NSAttributedString(attachment: leadingImage))
+        attributedString.append(NSAttributedString(string: "  \(message)"))
+        toastLabel.attributedText = attributedString
+        
+        let toastWidth = SizeLiterals.Screen.screenWidth - 38 * 2.0
+        let toastHeight = SizeLiterals.Screen.screenHeight * 50.0 / 812
+        toastLabel.frame = CGRect(x: SizeLiterals.Screen.screenWidth/2 - toastWidth/2,
+                                  y: SizeLiterals.Screen.screenHeight - toastHeight - 136,
+                                  width: toastWidth,
+                                  height: toastHeight)
+        self.addSubview(shadowView)
+        shadowView.addSubview(toastLabel)
+        UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseIn, animations: {
+            toastLabel.alpha = 1.0
+        })
+        UIView.animate(withDuration: 1.0, delay: 2.0, options: .curveEaseIn, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+    }
     
     func addBlurEffect(style: UIBlurEffect.Style, alpha: CGFloat) {
         let blurEffect = UIBlurEffect(style: style)
