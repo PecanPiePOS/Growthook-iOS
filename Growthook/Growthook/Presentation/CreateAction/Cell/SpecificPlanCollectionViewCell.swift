@@ -93,6 +93,10 @@ extension SpecificPlanCollectionViewCell {
         }
     }
     
+}
+
+extension SpecificPlanCollectionViewCell {
+    
     func configure(textViewIndex: Int, content: String?) {
         self.cellIndexForId = textViewIndex
         self.contents = content
@@ -100,10 +104,10 @@ extension SpecificPlanCollectionViewCell {
         if planTextView.text == nil || planTextView.text == "" {
             self.planTextView.setPlaceholder()
         }
-        setFocus()
+        setBorderAndFont()
     }
     
-    func setFocus() {
+    func setBorderAndFont() {
         planTextView.setBorderLine()
         planTextView.setFont()
     }

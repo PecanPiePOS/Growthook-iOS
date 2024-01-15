@@ -136,6 +136,7 @@ final class InsightView: BaseView {
 }
 
 extension InsightView {
+    
     func bindInsight(model: ActionPlanResponse) {
         nameLabel.text = model.caveName
         nameLabel.sizeToFit()

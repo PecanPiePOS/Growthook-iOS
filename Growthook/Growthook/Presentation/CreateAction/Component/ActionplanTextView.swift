@@ -14,6 +14,7 @@ import RxSwift
 final class ActionplanTextView: UITextView, CommonTextComponentType {
     
     // MARK: - Properties
+    
     private var disposeBag = DisposeBag()
     private var toolBarItems: [UIBarButtonItem] = []
     
@@ -24,6 +25,7 @@ final class ActionplanTextView: UITextView, CommonTextComponentType {
     var newText = BehaviorRelay<String>(value: "")
     
     // MARK: - Extended .rx Properties
+    
     var rxEditingAction = PublishRelay<UIControl.Event>()
     var rxStatus = PublishRelay<TextComponentStatus>()
     var rxTextCount = BehaviorRelay<Int>(value: 0)
@@ -123,6 +125,7 @@ extension ActionplanTextView {
     }
     
     // MARK: - Styles
+    
     private func setStyles() {
         self.backgroundColor = .gray900
         self.textColor = .gray300

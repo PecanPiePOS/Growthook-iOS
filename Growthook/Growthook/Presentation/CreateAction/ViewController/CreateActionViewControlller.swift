@@ -100,8 +100,6 @@ final class CreateActionViewControlller: BaseViewController {
                 print(self.countPlan)
                 self.viewModel.inputs.setCount(count: self.countPlan)
                 self.createActionView.createSpecificPlanView.planCollectionView.reloadData()
-//                let vc = ActionListBottomSheetViewController()
-//                self.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -187,6 +185,19 @@ extension CreateActionViewControlller {
     }
 }
 
+extension CreateActionViewControlller: SendTextDelegate {
+    func sendText(index: Int, text: String?) {
+        guard let text = text else { return }
+        if text == "" || text == placeholder {
+            self.actionplan.removeValue(forKey: index)
+        }
+        else {
+            self.actionplan.updateValue(text, forKey: index)
+        }
+        self.status = self.actionplan.count > 0
+    }
+}
+
 extension CreateActionViewControlller {
     
     func setKeyboardObserver() {
@@ -213,19 +224,5 @@ extension CreateActionViewControlller {
     
     func tapBackgroundView(_ sender: Any) {
         view.endEditing(true)
-    }
-}
-
-extension CreateActionViewControlller: SendTextDelegate {
-    func sendText(index: Int, text: String?) {
-        guard let text = text else { return }
-        if text == "" || text == placeholder {
-            self.actionplan.removeValue(forKey: index)
-        }
-        else {
-            self.actionplan.updateValue(text, forKey: index)
-        }
-        self.status = self.actionplan.count > 0
-        print(status)
     }
 }

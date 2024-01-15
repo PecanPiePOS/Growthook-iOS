@@ -779,6 +779,14 @@
 			path = CreateCave;
 			sourceTree = "<group>";
 		};
+		098DFC9F2B558CEB0099063D /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				098DFC9D2B5550010099063D /* ActionplanTextView.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
 		09A7D6FA2B00DCAA005F8821 /* CreateCave */ = {
 			isa = PBXGroup;
 			children = (
@@ -831,6 +839,7 @@
 		09CE00E72B0DB0F800CB42C4 /* CreateAction */ = {
 			isa = PBXGroup;
 			children = (
+				098DFC9F2B558CEB0099063D /* Component */,
 				09CE00F12B0DB9A100CB42C4 /* Model */,
 				09CE00EE2B0DB1EF00CB42C4 /* ViewController */,
 				09CE00EB2B0DB1E000CB42C4 /* View */,
@@ -854,7 +863,6 @@
 				09CE00EC2B0DB1EA00CB42C4 /* CreateActionView.swift */,
 				09CE00F62B0DBAE800CB42C4 /* InsightView.swift */,
 				092C816C2B334E13006B0F65 /* CreateSpecificPlanView .swift */,
-				098DFC9D2B5550010099063D /* ActionplanTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
