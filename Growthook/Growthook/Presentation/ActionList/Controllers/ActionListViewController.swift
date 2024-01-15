@@ -75,8 +75,8 @@ final class ActionListViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         viewModel.outputs.titlePersent
-            .subscribe(onNext: { persent in
-                self.titleBarView.setPersentText(persent)
+            .subscribe(onNext: { [weak self] persent in
+                self?.titleBarView.setPersentText(persent)
             })
             .disposed(by: disposeBag)
         

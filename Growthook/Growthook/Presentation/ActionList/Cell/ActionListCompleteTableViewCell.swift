@@ -28,7 +28,9 @@ final class ActionListCompleteTableViewCell: UITableViewCell {
     private let bottomBorder = UIView()
     
     // MARK: - Property
-
+    
+    var actionPlanId: Int = 0
+    var seedId: Int = 0
     
     // MARK: - Initializer
     
@@ -145,5 +147,6 @@ extension ActionListCompleteTableViewCell {
             scrapButton.setImage(ImageLiterals.Scrap.seed_light_active, for: .normal)
         }
         actionTitleLabel.text = model.content
+        actionPlanId = model.actionPlanId
     }
 }

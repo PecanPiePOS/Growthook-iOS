@@ -18,7 +18,6 @@ final class SplashViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        // 스플래시 애니메이션 대신 사용자 정의 작업 수행
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             var mainViewController: UIViewController
             

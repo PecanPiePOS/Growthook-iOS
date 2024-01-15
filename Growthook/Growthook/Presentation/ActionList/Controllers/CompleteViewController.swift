@@ -146,8 +146,9 @@ extension CompleteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.reviewButton.rx.tap
             .bind { [weak self]  in
                 guard let self else { return }
-                self.viewModel.inputs.didTapReviewButton()
+                self.viewModel.inputs.didTapReviewButton(with: cell.actionPlanId)
                 self.buttonTapped()
+                
             }
             .disposed(by: cell.disposeBag)
 
