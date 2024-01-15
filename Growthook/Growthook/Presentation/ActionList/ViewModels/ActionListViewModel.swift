@@ -20,8 +20,8 @@ protocol ActionListViewModelInput {
     func didTapCancelButtonInBottomSheet()
     func didTapSaveButtonInBottomSheet()
     func didTapCheckButtonInAcertView()
-    func didTapCancelButtonWithPatch(with actionPlanId: Int)
     func didTapCancelButtonInBottomSheetWithPost(with actionPlanId: Int)
+    func didTapCancelButtonWithPatch(with actionPlanId: Int)
 }
 
 protocol ActionListViewModelOutput {
@@ -49,7 +49,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     var titlePersent: BehaviorRelay<String> = BehaviorRelay(value: "")
     var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> = BehaviorRelay<ActionListReviewDetailResponse>(value: ActionListReviewDetailResponse.actionListReviewDetailDummy())
     private let disposeBag = DisposeBag()
-    
+        
     var inputs: ActionListViewModelInput { return self }
     var outputs: ActionListViewModelOutput { return self }
     
@@ -160,6 +160,7 @@ extension ActionListViewModel {
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.doingActionList.accept(data)
+                print("getDoingActionList accpet가 호출됩니다")
             }, onError: { error in
                 print(error)
             })
