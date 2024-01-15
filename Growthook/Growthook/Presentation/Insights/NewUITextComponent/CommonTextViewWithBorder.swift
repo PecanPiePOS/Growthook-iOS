@@ -62,8 +62,13 @@ final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
         bindEditingAction()
         bindText()
         setStyles()
-        setBorderLine()
         setToolBarItems()
+        setBorderLine()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setFont()
     }
     
     required init?(coder: NSCoder) {
@@ -130,7 +135,31 @@ extension CommonTextViewWithBorder {
         self.layer.borderWidth = 0.5
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 7
-        modifyBorderLine(with: .gray200)
+        
+        if let text {
+            if text.isEmpty {
+                modifyBorderLine(with: .gray200)
+            } else if text == customPlaceholder {
+                modifyBorderLine(with: .gray200)
+            } else {
+                modifyBorderLine(with: .white000)
+            }
+        }
+    }
+    
+    private func setFont() {
+        if let text {
+            if text.isEmpty {
+                textColor = .gray300
+                font = .fontGuide(.body3_reg)
+            } else if text == customPlaceholder {
+                textColor = .gray300
+                font = .fontGuide(.body3_reg)
+            } else {
+                textColor = .white000
+                font = .fontGuide(.body3_bold)
+            }
+        }
     }
     
     private func modifyBorderLine(with color: UIColor) {
