@@ -13,7 +13,6 @@ final class InsightsDetailMemoView: BaseView {
     private let referenceTitle = UILabel()
     private let referenceUrlTitle = UILabel()
     private let dividerView = UIView()
-    private let referenceStackView = UIStackView()
 
     override func setStyles() {
         backgroundColor = .clear
@@ -24,23 +23,20 @@ final class InsightsDetailMemoView: BaseView {
             $0.font = .fontGuide(.body3_reg)
         }
         
-        referenceStackView.do {
-            $0.axis = .horizontal
-            $0.spacing = 10
-            $0.makeCornerRound(radius: 5)
-            $0.backgroundColor = .gray500
-        }
-        
         referenceTitle.do {
             $0.numberOfLines = 1
             $0.font = .fontGuide(.detail2_bold)
             $0.textColor = .gray200
+            $0.backgroundColor = .gray500
+            $0.roundCorners(cornerRadius: 5, maskedCorners: [.bottomLeft, .topLeft])
         }
         
         referenceUrlTitle.do {
             $0.numberOfLines = 1
             $0.font = .fontGuide(.detail2_reg)
             $0.textColor = .gray200
+            $0.backgroundColor = .gray500
+            $0.roundCorners(cornerRadius: 5, maskedCorners: [.bottomRight, .topRight])
         }
         
         dividerView.do {
@@ -49,26 +45,35 @@ final class InsightsDetailMemoView: BaseView {
     }
  
     override func setLayout() {
-        self.addSubviews(memoContent, referenceStackView)
-        referenceStackView.addArrangedSubviews(
-            referenceTitle, dividerView, referenceUrlTitle
+        self.addSubviews(
+            memoContent, referenceUrlTitle, referenceTitle,
+            dividerView
         )
         
         memoContent.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
         }
         
-        referenceStackView.snp.makeConstraints {
+        referenceUrlTitle.snp.makeConstraints {
             $0.top.equalTo(memoContent.snp.bottom).offset(16)
             $0.trailing.equalToSuperview()
-            $0.height.equalTo(26)
-            $0.width.lessThanOrEqualTo(frame.size.width-50)
             $0.bottom.equalToSuperview()
+            $0.width.lessThanOrEqualTo(100)
+            $0.height.equalTo(26)
+        }
+        
+        referenceTitle.snp.makeConstraints {
+            $0.trailing.equalTo(referenceUrlTitle.snp.leading)
+            $0.centerY.equalTo(referenceUrlTitle)
+            $0.width.lessThanOrEqualTo(120)
+            $0.height.equalTo(26)
         }
     
         dividerView.snp.makeConstraints {
             $0.width.equalTo(1)
             $0.height.equalTo(14)
+            $0.centerY.equalTo(referenceTitle)
+            $0.centerX.equalTo(referenceTitle.snp.trailing)
         }
     }
 }
@@ -80,9 +85,10 @@ extension InsightsDetailMemoView {
     }
     
     func setReferenceContent(reference: String, url: String?) {
-        referenceTitle.text = reference
-        referenceUrlTitle.text = url
-        if url == nil {
+        if let url {
+            referenceTitle.text = "   " + reference + "   "
+            referenceUrlTitle.text = "   " + url + "   "
+        } else {
             dividerView.removeFromSuperview()
         }
     }
