@@ -92,7 +92,7 @@ extension CreateCaveViewController {
             .bind { [weak self] value in
                 guard let self else { return }
                 self.viewModel.inputs.setDescription(with: value)
-                self.createCaveView.introduceCountLabel.text = "\(value.count)/20"
+                self.createCaveView.introduceCountLabel.text = "\(value.count.toTwoDigitsString())/20"
             }
             .disposed(by: disposeBag)
         

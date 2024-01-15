@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import Then
 
-struct CollViewModel {
+struct ActionplanModel {
     var index: Int
     var content: String?
 }
@@ -21,12 +21,63 @@ final class CreateActionViewControlller: BaseViewController {
     private let createActionView = CreateActionView()
     private var viewModel = CreateActionViewModel()
     private let disposeBag = DisposeBag()
-    
+    private let placeholder = "구체적인 계획을 설정해보세요"
     private var isFolded = true
     private var countPlan = 1
     private var textViewIndex = 0
-    private var actionPlanData: [CollViewModel] = [CollViewModel(index: 0, content: "")]
+    private var actionplan: [Int: String] = [:]
+    private var status: Bool = false {
+        didSet(value) {
+            print(value,"???????")
+            if value == false {
+                self.createActionView.confirmButton.isEnabled = true
+                self.createActionView.confirmButton.setTitleColor(.green400, for: .normal)
+            }
+            else {
+                self.createActionView.confirmButton.isEnabled = false
+                self.createActionView.confirmButton.setTitleColor(.gray300, for: .normal)
+            }
+        }
+    }
     
+//    private var count: Int = 0 {
+//        didSet(value) {
+//            print(value,"???????")
+//            if value > 0 {
+//                self.createActionView.confirmButton.isEnabled = true
+//                self.createActionView.confirmButton.setTitleColor(.green400, for: .normal)
+//            }
+//            else {
+//                self.createActionView.confirmButton.isEnabled = false
+//                self.createActionView.confirmButton.setTitleColor(.gray300, for: .normal)
+//            }
+//        }
+//    }
+//    private var actionPlanData: [ActionplanModel] = [ActionplanModel(index: 0, content: "")] {
+//        didSet(value) {
+//            confirmStatus = false
+//            value.forEach {
+//                guard let content = $0.content else { return }
+//                if !content.isEmpty && content != "" && content != placeholder {
+//                    confirmStatus = true
+//                }
+//            }
+//        }
+//    }
+//    private var confirmStatus: Bool = false {
+//        didSet(value) {
+//            switch value {
+//            case true:
+//                self.createActionView.confirmButton.isEnabled = true
+//                self.createActionView.confirmButton.setTitleColor(.green400, for: .normal)
+//            case false:
+//                self.createActionView.confirmButton.isEnabled = false
+//                self.createActionView.confirmButton.setTitleColor(.gray300, for: .normal)
+//            }
+//        }
+//    }
+
+    var newActionPlan: CreateActionRequest = CreateActionRequest(contents: [])
     
     override func loadView() {
         self.view = createActionView
@@ -35,6 +86,8 @@ final class CreateActionViewControlller: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setKeyboardObserver()
+        
+        viewModel.inputs.getSeedDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,18 +135,34 @@ final class CreateActionViewControlller: BaseViewController {
                 self.countPlan += 1
                 self.textViewIndex += 1
                 self.viewModel.inputs.setCount(count: self.countPlan)
-                var newData = Array(self.actionPlanData.reversed())
-                newData.append(.init(index: self.textViewIndex, content: ""))
-                self.actionPlanData = Array(newData.reversed())
+//                var newData = Array(self.actionplan.reversed())
+//                print(newData,"aiaiaiai")
+//                var newData = Array(self.actionPlanData.reversed())
+//                newData.append(contentsOf: [self.textViewIndex: ""])
+                
+//                (.init(index: self.textViewIndex, content: "구체적인 계획을 설정해보세요"))
+//                self.actionPlanData = Array(newData.reversed())
+                print(self.actionplan, "143")
+//                actionplan.ke
                 self.createActionView.createSpecificPlanView.planCollectionView.reloadData()
             }
             .disposed(by: disposeBag)
         
-        createActionView.createSpecificPlanView.planCollectionView.rx.itemSelected
-            .subscribe(onNext: { index in
-                print("\(index.section) \(index.row)")
-            })
+        createActionView.confirmButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                print("완료버튼누름")
+                var newdata: [ActionplanModel] = []
+//                for i in 0... actionplan.count {
+//                    actionplan.values
+//                }
+                for (key,value) in actionplan {
+                    newdata.append(ActionplanModel(index: key, content: value))
+                }
+                self.viewModel.inputs.postActionPlan(data: newdata)
+            }
             .disposed(by: disposeBag)
+        
     }
 }
 
@@ -121,39 +190,203 @@ extension CreateActionViewControlller: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpecificPlanCollectionViewCell.className, for: indexPath) as? SpecificPlanCollectionViewCell else {
             return SpecificPlanCollectionViewCell()
         }
+        let placeholder = "구체적인 계획을 설정해보세요"
         let textView = cell.planTextView
-        let data = self.actionPlanData[indexPath.item]
-        cell.configure(textViewIndex: data.index, content: data.content)
-        cell.delegate = self
-        textView.rx.textInput.text
-            .orEmpty
-            .asDriver()
-            .drive(onNext: { [weak self] text in
-                if(text != "구체적인 계획을 설정해보세요"){
-                    self?.actionPlanData.remove(at: indexPath.row)
-                    self?.actionPlanData.insert(CollViewModel(index: indexPath.row, content: text), at: indexPath.row)
-                    print("😱😱😱😱😱😱😱😱", self?.actionPlanData ?? "")
-                }
-            })
-            .disposed(by: cell.disposeBag)
-        
-        cell.planTextView.rx.didEndEditing
-            .bind {
-                if cell.planTextView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    cell.planTextView.text = "구체적인 계획을 설정해보세요"
-                    cell.planTextView.textColor = .gray400
-                    cell.planTextView.font = .fontGuide(.body3_reg)
-                    cell.planTextView.modifyBorderLine(with: .gray200)
-            } else {
-                print("있슴")
-                cell.planTextView.textColor = .white000
-                cell.planTextView.modifyBorderLine(with: .white000)
-                cell.planTextView.font = .fontGuide(.body3_reg)
-            }
+//        let newIndex = countPlan - indexPath.item - 1
+//        print(newIndex, "rrrr")
+        let data = self.actionplan[countPlan - indexPath.item - 1]
+        if data == "" || data == nil || data == placeholder {
+            cell.configure(textViewIndex: countPlan - indexPath.item - 1, content: placeholder)
         }
-        .disposed(by: disposeBag)
+        else {
+            cell.configure(textViewIndex: countPlan - indexPath.item - 1, content: data ?? placeholder)
+        }
+//        cell.delegate = self
+        
+    var newIndex: Int = -1
+        
+        textView.rx.didBeginEditing
+            .bind { [weak self] in
+                guard let self else { return }
+                textView.rxEditingAction.accept(.editingDidBegin)
+                textView.modifyBorderLine(with: .green200)
+                newIndex = countPlan - indexPath.item - 1
+                print(newIndex)
+                if textView.text == placeholder {
+                    textView.text = nil
+                    textView.textColor = .white000
+                    textView.font = .fontGuide(.body3_bold)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+//        textView.rx.didBeginEditing
+//            .asObservable()
+
+//            .flatMapLatest( {
+//                newIndex = countPlan - indexPath.item - 1
+//            })
+//            .flatMapLatest()
+//            .flatMapLatest {
+//                print($0)
+//                   newIndex = countPlan - indexPath.item - 1
+//                   print(newIndex, "didBeginEditing")
+//            }
+//            .bind { [weak self] value in
+//                guard let self else { return }
+//                newIndex = countPlan - indexPath.item - 1
+//                print(newIndex, "didBeginEditing")
+                
+//                Student(score: ReplaySubject<Int>.createUnbounded())
+//            }
+//            .disposed(by: disposeBag)
+      
+        textView.rx.didEndEditing
+            .bind { [weak self] value in
+                guard let self else { return }
+                
+//                let newIndex = countPlan - indexPath.item - 1
+                textView.rxEditingAction.accept(.editingDidBegin)
+                print(newIndex, "newIndex")
+                if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
+                    textView.text = placeholder
+                    textView.textColor = .gray300
+                    textView.font = .fontGuide(.body3_reg)
+                    textView.modifyBorderLine(with: .gray200)
+                    self.actionplan.removeValue(forKey: newIndex)
+//                } else if textView.text == placeholder {
+                } else {
+                    textView.modifyBorderLine(with: .white000)
+                    self.actionplan.updateValue(textView.text, forKey: newIndex)
+//                    self.actionPlanData.remove(at: indexPath.row)
+//                    self.actionPlanData.insert(ActionplanModel(index: indexPath.row, content: textView.text), at: indexPath.row)
+                }
+                
+                
+            print("😱😱😱😱😱😱😱😱", self.actionplan)
+            self.status = self.actionplan.isEmpty
+            }
+            .disposed(by: disposeBag)
+        textView.rx.text.orEmpty
+            .distinctUntilChanged()
+            .bind { [weak self] text in
+                guard let self else { return }
+                if text.isEmpty || text == placeholder {
+                    cell.countLabel.text = "00/40"
+                } else {
+                    cell.countLabel.text = "\(text.count.toTwoDigitsString())/40"
+                }
+            }
+//
+//        textView.rx.text.orEmpty
+//            .distinctUntilChanged()
+//            .bind { [weak self] text in
+//                
+//                guard let self else { return }
+//                
+////                if text.isEmpty {
+////                        textView.text = "구체적인 계획을 설정해보세요"
+////                }
+//                
+//                if(text != "구체적인 계획을 설정해보세요" || !text.isEmpty || text != "" || !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty){
+//                    
+//                    self.createActionView.confirmButton.isEnabled = true
+//                    self.createActionView.confirmButton.setTitleColor(.green400, for: .normal)
+//                    self.actionPlanData.remove(at: indexPath.row)
+//                    self.actionPlanData.insert(CollViewModel(index: indexPath.row, content: text), at: indexPath.row)
+//                    print("😱😱😱😱😱😱😱😱", self.actionPlanData)
+//                }
+//                else {
+//                    self.createActionView.confirmButton.isEnabled = false
+//                    self.createActionView.confirmButton.setTitleColor(.gray300, for: .normal)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+//        
+//        textView.rx.didBeginEditing
+//            .bind { [weak self] in
+//            guard let self else { return }
+//                if textView.text.isEmpty {
+//                    textView
+//                }
+//                else {
+//                    textView.textColor = .white000
+//                }
+//        }
+//        .disposed(by: disposeBag)
+//            
+//        textView.rx.didEndEditing
+//            .bind { [weak self] in
+//                guard let self else { return }
+//                    if textView.text.isEmpty {
+//                        textView
+//                    }
+//                    else {
+//                        textView.textColor = .white000
+//                    }
+//            }
+//            .disposed(by: disposeBag)
+        
+        // 위에 주석 해제
+        
+        
+        
+        
+        
+        
+        //        textView.rx.textInput.text
+        //            .orEmpty
+        //            .asDriver()
+//            .drive(onNext: { [weak self] text in
+//                guard let self else { return }
+//                print(text, "??")
+//                if(text != "구체적인 계획을 설정해보세요" || !text.isEmpty || text != "" || !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty){
+                    
+//                    self.createActionView.confirmButton.isEnabled = true
+//                    self.createActionView.confirmButton.setTitleColor(.green400, for: .normal)
+//                    self.actionPlanData.remove(at: indexPath.row)
+//                    self.actionPlanData.insert(CollViewModel(index: indexPath.row, content: text), at: indexPath.row)
+//                    print("😱😱😱😱😱😱😱😱", self.actionPlanData)
+//                }
+//                else {
+//                    self.createActionView.confirmButton.isEnabled = false
+//                    self.createActionView.confirmButton.setTitleColor(.gray300, for: .normal)
+//                }
+//            })
+//            .disposed(by: cell.disposeBag)
+        
+        
+        
+        
+        // 아래 주석 해제
+//
+//        textView.rx.didEndEditing
+//            .bind {
+//                if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || cell.planTextView.text == "" {
+//                    textView.text = "구체적인 계획을 설정해보세요"
+////                    cell.planTextView.textColor = .gray400
+////                    cell.planTextView.font = .fontGuide(.body3_reg)
+////                    cell.planTextView.modifyBorderLine(with: .gray200)
+//            } else {
+//                print("있슴")
+//                textView.textColor = .white000
+//                textView.modifyBorderLine(with: .white000)
+//                textView.font = .fontGuide(.body3_reg)
+//            }
+//        }
+//        .disposed(by: disposeBag)
         return cell
     }
+//    
+//
+//    private func setActionplanData(data: [ActionplanModel]) {
+//        let placeholder = "구체적인 계획을 설정해보세요"
+//        for i in 0 ... (data.count) {
+//            if data[i].content != placeholder {
+//                newActionPlan.contents.append(data[i].content ?? "")
+//            }
+//        }
+//    }
 }
 
 extension CreateActionViewControlller {
@@ -201,21 +434,5 @@ extension CreateActionViewControlller {
     
     func tapBackgroundView(_ sender: Any) {
         view.endEditing(true)
-    }
-}
-
-extension CreateActionViewControlller: SendTextDelegate {
-    
-    func sendText(index: Int, text: String?) {
-        guard let firstIndex = self.actionPlanData.firstIndex(where: { $0.index == index }) else { return }
-        self.actionPlanData[firstIndex] = .init(index: index, content: text)
-        self.createActionView.createSpecificPlanView.planCollectionView.reloadData()
-    }
-}
-
-extension CreateActionViewControlller: UITextViewDelegate {
-    
-    func textViewDidChange(_ textView: UITextView) {
-        print(textView.text ?? "","????")
     }
 }

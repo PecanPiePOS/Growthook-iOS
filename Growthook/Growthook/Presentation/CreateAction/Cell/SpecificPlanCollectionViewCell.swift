@@ -102,13 +102,8 @@ extension SpecificPlanCollectionViewCell {
         }
     }
     
-    func configure(textViewIndex: Int, content: String?) {
+    func configure(textViewIndex: Int, content: String) {
         self.cellIndexForId = textViewIndex
-        guard let content else { return }
-        print(content)
-        if (content.isEmpty) {
-            self.planTextView.text = "구체적인 계획을 설정해보세요"
-        }
         self.planTextView.text = content
     }
 }

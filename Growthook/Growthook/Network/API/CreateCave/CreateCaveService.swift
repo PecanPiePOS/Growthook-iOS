@@ -1,5 +1,5 @@
 //
-//  CreateCaveAPI.swift
+//  CreateCaveService.swift
 //  Growthook
 //
 //  Created by Minjoo Kim on 1/8/24.
@@ -70,13 +70,6 @@ struct CreateCaveService: Networkable {
             .asObservable()
             .mapError()
             .decode(decodeType: CreateCaveResponse.self)
-    }
-    
-    static func getCaveDetail(memberId: Int, caveId: Int) -> Observable<CaveDetailResponse> {
-        return provider.rx.request(.getcavedetail(memberId: memberId, caveId: caveId))
-            .asObservable()
-            .mapError()
-            .decode(decodeType: CaveDetailResponse.self)
     }
 }
 
