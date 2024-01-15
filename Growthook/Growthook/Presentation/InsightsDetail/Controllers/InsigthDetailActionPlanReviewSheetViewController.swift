@@ -10,8 +10,13 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+protocol CompleteReviewDelegate: AnyObject {
+    func dismissWithAlertView()
+}
+
 final class InsigthDetailActionPlanReviewSheetViewController: BaseViewController {
 
+    weak var delegate: CompleteReviewDelegate?
     private let titleLabel = UILabel()
     private let exitButton = UIButton()
     private let textView = TextViewBlockWithTitle(placeholder: I18N.ActionList.insightDetailReviewPlaceholder, maxLength: 300)
@@ -25,6 +30,8 @@ final class InsigthDetailActionPlanReviewSheetViewController: BaseViewController
     private var keyboardHeight: CGFloat = 0
     private var newContentText: String = ""
     private var actionPlanId: Int
+    private var keyboardDuration: CGFloat = 0
+    private var isFirstPresented = true
 
     init(viewModel: InsightsDetailViewModel, actionPlanId: Int) {
         self.viewModel = viewModel
@@ -58,7 +65,7 @@ final class InsigthDetailActionPlanReviewSheetViewController: BaseViewController
         }
         
         exitButton.do {
-            let configuration = UIImage.SymbolConfiguration(pointSize: 28, weight: .bold)
+            let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
             $0.setImage(UIImage(systemName: "xmark", withConfiguration: configuration), for: .normal)
             $0.tintColor = .white000
         }
@@ -95,9 +102,10 @@ final class InsigthDetailActionPlanReviewSheetViewController: BaseViewController
         }
         
         skipButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(30)
+            $0.bottom.equalToSuperview().inset(40)
             $0.width.equalTo(100)
             $0.height.equalTo(25)
+            $0.centerX.equalToSuperview()
         }
         
         saveButton.snp.makeConstraints {
@@ -147,7 +155,6 @@ extension InsigthDetailActionPlanReviewSheetViewController {
                 switch events {
                 case .editingDidBegin:
                     self.moveButtonUp()
-    
                 case .editingDidEnd:
                     self.moveButtonDown()
                 default:
@@ -172,13 +179,21 @@ extension InsigthDetailActionPlanReviewSheetViewController {
             .bind { [weak self] in
                 guard let self else { return }
                 self.loadingView.isHidden = false
-                self.viewModel.inputs.completeActionPlan(withReviewOf: self.newContentText, actionPlanIdOf: self.actionPlanId) { success in
-                    if success != false {
-                        self.dismiss(animated: true)
-                    } else {
-                        self.loadingView.isHidden = true
-                    }
-                }
+                self.viewModel.inputs
+                    .completeActionPlan(actionPlanId: self.actionPlanId, handler: { success in
+                        switch success {
+                        case true:
+                            if !self.newContentText.isEmpty {
+                                self.viewModel.inputs
+                                    .postReviewToComplete(review: self.newContentText, actionPlanId: self.actionPlanId) { _ in }
+                            }
+                            self.delegate?.dismissWithAlertView()
+                            self.dismiss(animated: true)
+                        case false:
+                            self.loadingView.isHidden = true
+                            self.view.showToast(message: "실패했어요", success: false)
+                        }
+                    })
             }
             .disposed(by: disposeBag)
         
@@ -186,13 +201,17 @@ extension InsigthDetailActionPlanReviewSheetViewController {
             .bind { [weak self] in
                 guard let self else { return }
                 self.loadingView.isHidden = false
-                self.viewModel.inputs.completeActionPlan(withReviewOf: "", actionPlanIdOf: self.actionPlanId) { success in
-                    if success != false {
-                        self.dismiss(animated: true)
-                    } else {
-                        self.loadingView.isHidden = true
-                    }
-                }
+                self.viewModel.inputs
+                    .completeActionPlan(actionPlanId: self.actionPlanId, handler: { success in
+                        switch success {
+                        case true:
+                            self.delegate?.dismissWithAlertView()
+                            self.dismiss(animated: true)
+                        case false:
+                            self.loadingView.isHidden = true
+                            self.view.showToast(message: "실패했어요", success: false)
+                        }
+                    })
             }
             .disposed(by: disposeBag)
     }
@@ -200,20 +219,42 @@ extension InsigthDetailActionPlanReviewSheetViewController {
 
 extension InsigthDetailActionPlanReviewSheetViewController {
     
-    // 전체 ... 몇이지
     private func moveButtonUp() {
+
         saveButton.snp.remakeConstraints {
-            $0.bottom.equalToSuperview().inset(20+keyboardHeight)
+            $0.bottom.equalToSuperview().inset(70+keyboardHeight)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(50)
+        }
+        
+        skipButton.snp.remakeConstraints {
+            $0.bottom.equalToSuperview().inset(30+keyboardHeight)
+            $0.width.equalTo(100)
+            $0.height.equalTo(25)
+            $0.centerX.equalToSuperview()
+        }
+        
+        UIView.animate(withDuration: self.keyboardDuration) {
+            self.view.layoutIfNeeded()
         }
     }
     
     private func moveButtonDown() {
         saveButton.snp.remakeConstraints {
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(90)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(50)
+        }
+        
+        skipButton.snp.remakeConstraints {
+            $0.bottom.equalToSuperview().inset(40)
+            $0.width.equalTo(100)
+            $0.height.equalTo(25)
+            $0.centerX.equalToSuperview()
+        }
+        
+        UIView.animate(withDuration: self.keyboardDuration) {
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -227,9 +268,15 @@ extension InsigthDetailActionPlanReviewSheetViewController {
     
     @objc 
     private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+            let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
             let keyboardHeight = keyboardSize.height
             self.keyboardHeight = keyboardHeight
+            self.keyboardDuration = keyboardDuration
+            if self.isFirstPresented != false {
+                moveButtonUp()
+                self.isFirstPresented = false
+            }
         }
     }
 }

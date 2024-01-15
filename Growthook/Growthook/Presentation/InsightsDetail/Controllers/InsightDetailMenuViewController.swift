@@ -10,12 +10,18 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-final class InsightDetailMenuViewController: BaseViewController {
+protocol InsightMenuDelegate: AnyObject {
+    func pushToEditView()
+    func dismissAndShowAlertView()
+}
 
-    private let relocateButton = CaveMenuButton(buttonTitle: "이동하기", buttonImage: ImageLiterals.Home.btn_move, textColor: .white000)
+final class InsightDetailMenuViewController: BaseViewController {
+    
+    weak var delegate: InsightMenuDelegate?
+    
+    private let relocateButton = CaveMenuButton(buttonTitle: "이동하기", buttonImage: ImageLiterals.Insight.moveButton, textColor: .white000)
     private let editButton = CaveMenuButton(buttonTitle: "수정하기", buttonImage: ImageLiterals.Menu.ic_change, textColor: .white000)
     private let buttonStackView = UIStackView()
-    
     private let deleteButton = CaveMenuButton(buttonTitle: "삭제하기", buttonImage: ImageLiterals.Menu.ic_delete, textColor: .red200)
     
     private let disposeBag = DisposeBag()
@@ -37,14 +43,15 @@ final class InsightDetailMenuViewController: BaseViewController {
         editButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.pushToEditSeedView()
+                dismiss(animated: true)
+                self.delegate?.pushToEditView()
             }
             .disposed(by: disposeBag)
         
         deleteButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.showDeletePopView()
+                self.dismissAndShowDeleteAlertView()
             }
             .disposed(by: disposeBag)
     }
@@ -97,17 +104,32 @@ final class InsightDetailMenuViewController: BaseViewController {
     }
 }
 
-extension InsightDetailMenuViewController {
+extension InsightDetailMenuViewController: CaveDismissDelegate {
     
+    // TODO: memberId 어디서 받아옴... 임시로 4로 찍어놓음
     private func showCaveSheetView() {
-        
+        viewModel.inputs.getAllCaves(memberId: 4)
+        let caveBottomSheetViewController = InsightDetailCaveViewController(viewModel: self.viewModel)
+        caveBottomSheetViewController.modalPresentationStyle = .pageSheet
+        caveBottomSheetViewController.delegate = self
+        if let sheet = caveBottomSheetViewController.sheetPresentationController {
+            sheet.detents = [
+                .custom(resolver: { context in return 400 })
+            ]
+            sheet.preferredCornerRadius = 10
+            sheet.prefersGrabberVisible = true
+        }
+        present(caveBottomSheetViewController, animated: true)
     }
     
-    private func pushToEditSeedView() {
-        
+    func dismissPresentingView() {
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.4) {
+            self.dismiss(animated: true)
+        }
     }
     
-    private func showDeletePopView() {
-        
+    private func dismissAndShowDeleteAlertView() {
+        delegate?.dismissAndShowAlertView()
+        dismiss(animated: true)
     }
 }
