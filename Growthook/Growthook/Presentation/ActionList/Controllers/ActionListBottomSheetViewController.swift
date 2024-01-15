@@ -20,9 +20,11 @@ protocol NotificationDismissBottomSheet: AnyObject {
 
 final class ActionListBottomSheetViewController: BaseViewController {
     
-    private var viewModel = ActionListViewModel()
+    private var viewModel: ActionListViewModel
     private let disposeBag = DisposeBag()
     
+    // MARK: - UI Components
+
     private let bottomSheetTitleLabel = UILabel()
     private let dismissButton = UIButton()
     private let reviewTextView = UITextViewWithTintedWhenEdited(placeholder: I18N.ActionList.reviewPlaceholder, maxLength: 300)
@@ -30,13 +32,23 @@ final class ActionListBottomSheetViewController: BaseViewController {
     private let saveButton = UIButton()
     private let cancelButton = UIButton()
     
-    // MARK: - UI Components
-    
     // MARK: - Properties
+    
+    var actionPlanId: Int
     
     weak var delegate: NotificationDismissBottomSheet?
     
     // MARK: - Initializer
+
+    init(actionPlanId: Int, viewModel: ActionListViewModel) {
+        self.actionPlanId = actionPlanId
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - View Life Cycle
     
@@ -59,6 +71,7 @@ final class ActionListBottomSheetViewController: BaseViewController {
                 self.dismiss(animated: true)
                 self.delegate?.notificationDismissInCancelButton()
                 self.viewModel.inputs.didTapCancelButtonInBottomSheet()
+                self.viewModel.inputs.didTapCancelButtonWithPatch(with: self.actionPlanId)
             }
             .disposed(by: disposeBag)
         

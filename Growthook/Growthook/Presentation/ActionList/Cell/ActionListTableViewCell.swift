@@ -15,7 +15,6 @@ import Then
 
 final class ActionListTableViewCell: UITableViewCell {
     
-    private var viewModel = ActionListViewModel()
     var disposeBag = DisposeBag()
     
     // MARK: - UI Components
@@ -28,6 +27,9 @@ final class ActionListTableViewCell: UITableViewCell {
     private let bottomBorder = UIView()
     
     // MARK: - Property
+    
+    var actionPlanId: Int = 0
+    var seedId: Int = 0
     
     
     // MARK: - Initializer
@@ -87,11 +89,6 @@ extension ActionListTableViewCell {
         }
     }
     
-    // MARK: - Data Bind
-    /// Data 와 UI 를 bind 합니다.
-    
-    func bindViewModel() {}
-    
     
     // MARK: - Layout Helper
     
@@ -145,5 +142,7 @@ extension ActionListTableViewCell {
             scrapButton.setImage(ImageLiterals.Scrap.seed_light_active, for: .normal)
         }
         actionTitleLabel.text = model.content
+        actionPlanId = model.actionPlanId
+        seedId = model.seedId
     }
 }
