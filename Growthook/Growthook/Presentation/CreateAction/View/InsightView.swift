@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class InsightView: BaseView {
+final class InsightView: BaseView, InsightBoxViewType {
     
     private let nameLabel = UILabel()
     private let insightLabel = UILabel()
@@ -79,13 +79,12 @@ final class InsightView: BaseView {
     }
     
     override func setLayout() {
-        self.addSubviews(nameLabel, insightLabel, divisionLabel, moreButton, dateLabel, verticalDivisionLabel, dDayLabel, memoScrollView)
+        self.addSubviews(nameLabel, insightLabel, divisionLabel, dateLabel, verticalDivisionLabel, dDayLabel, memoScrollView, moreButton)
         memoScrollView.addSubview(memoLabel)
         
         nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(18)
             $0.leading.equalToSuperview().inset(18)
-            $0.width.equalTo(36)
             $0.height.equalTo(22)
         }
         
@@ -137,7 +136,7 @@ final class InsightView: BaseView {
 
 extension InsightView {
     func bindInsight(model: InsightModel) {
-        nameLabel.text = model.name
+        nameLabel.text = "" + model.name + "  "
         insightLabel.text = model.insight
         dateLabel.text = model.date
         dDayLabel.text = model.dDay
