@@ -100,11 +100,10 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     func didTapSeedButton() {
         print("씨앗보기 버튼이 탭 되었습니다")
+        // 씨앗 보기 화면 전환 코드 필요
     }
     
     func didTapReviewButton(with actionPlanId: Int) {
-        print("리뷰보기 버튼이 탭 되었습니다")
-        // 리뷰 get API 연결
         getpostActionListReview(actionPlanId: actionPlanId)
     }
     
