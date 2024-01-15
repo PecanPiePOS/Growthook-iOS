@@ -14,10 +14,10 @@ final class InsightsDetailActionPlanCollectionViewCell: UICollectionViewCell {
     
     private let seedImageView = UIImageView()
     private let contentLabel = UILabel()
-    private let menuButton = UIButton()
+    let menuButton = UIButton()
     private let completeButton = UIButton()
     
-    let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     lazy var rxMenuButtonTapControl: ControlEvent<Void> = menuButton.rx.tap
     lazy var rxCompleteButtonTapControl: ControlEvent<Void> = completeButton.rx.tap
     
@@ -29,9 +29,7 @@ final class InsightsDetailActionPlanCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        contentLabel.text = nil
-        completeButton.isEnabled = false
-        completeButton.backgroundColor = .gray400
+        disposeBag = DisposeBag()
     }
     
     required init?(coder: NSCoder) {
@@ -64,6 +62,7 @@ extension InsightsDetailActionPlanCollectionViewCell {
         
         completeButton.do {
             $0.setTitle("완료하기", for: .normal)
+            $0.titleLabel?.font = .fontGuide(.detail2_bold)
             $0.setTitleColor(.white000, for: .normal)
             $0.setBackgroundColor(.green400, for: .normal)
             $0.makeCornerRound(radius: 15)
@@ -108,6 +107,6 @@ extension InsightsDetailActionPlanCollectionViewCell {
     
     func setIsCompleted(_ completed: Bool) {
         completeButton.isEnabled = !completed
-        completeButton.backgroundColor = completed ? .gray400: .green400
+        completeButton.setBackgroundColor(completed ? .gray400: .green400, for: .normal)
     }
 }
