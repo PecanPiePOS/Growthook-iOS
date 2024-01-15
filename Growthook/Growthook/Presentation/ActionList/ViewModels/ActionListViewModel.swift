@@ -15,12 +15,12 @@ protocol ActionListViewModelInput {
     func didTapInprogressScrapButton()
     func didTapCompleteScrapButton()
     func didTapSeedButton()
-    func didTapCompletButton()
     func didTapReviewButton()
     func setReviewText(with value: String)
     func didTapCancelButtonInBottomSheet()
     func didTapSaveButtonInBottomSheet()
     func didTapCheckButtonInAcertView()
+    func didTapCancelButtonWithPatch(with actionPlanId: Int)
 }
 
 protocol ActionListViewModelOutput {
@@ -46,7 +46,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     var reviewText = BehaviorRelay<String>(value: "")
     var titlePersent: BehaviorRelay<String> = BehaviorRelay(value: "")
     private let disposeBag = DisposeBag()
-    
+        
     var inputs: ActionListViewModelInput { return self }
     var outputs: ActionListViewModelOutput { return self }
     
@@ -78,11 +78,13 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     func didTapInProgressButton() {
         selectedIndex.accept(1)
         getDoingActionList()
+        getActionListPercent()
     }
     
     func didTapCompletedButton() {
         selectedIndex.accept(0)
         getFinishedActionList()
+        getActionListPercent()
     }
     
     func didTapInprogressScrapButton() {
@@ -97,10 +99,6 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         print("씨앗보기 버튼이 탭 되었습니다")
     }
     
-    func didTapCompletButton() {
-        print("완료하기 버튼이 탭 되었습니다")
-    }
-    
     func didTapReviewButton() {
         print("리뷰보기 버튼이 탭 되었습니다")
     }
@@ -111,15 +109,24 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     func didTapCancelButtonInBottomSheet() {
         selectedIndex.accept(0)
+        getActionListPercent()
     }
     
     func didTapSaveButtonInBottomSheet() {
         selectedIndex.accept(2)
+        getFinishedActionList()
+        getActionListPercent()
     }
     
     func didTapCheckButtonInAcertView() {
-        self.getFinishedActionList()
-        self.getActionListPercent()
+        getFinishedActionList()
+        getActionListPercent()
+    }
+    
+    func didTapCancelButtonWithPatch(with actionPlanId: Int) {
+        patchActionPlanCompletion(actionPlanId: actionPlanId)
+        getFinishedActionList()
+        getActionListPercent()
     }
     
 }
@@ -128,8 +135,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
 extension ActionListViewModel {
     
     private func getActionListPercent() {
-        print("getActionListPercent호출됩니다")
-        ActionListService.getActionListPercent(with: 3)
+        ActionListService.getActionListPercent(with: 4)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.titlePersent.accept("\(data)")
@@ -140,11 +146,11 @@ extension ActionListViewModel {
     }
     
     private func getDoingActionList() {
-        print("getDoingActionList가 호출됩니다")
-        ActionListService.getDoingActionList(with: 3)
+        ActionListService.getDoingActionList(with: 4)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.doingActionList.accept(data)
+                print("getDoingActionList accpet가 호출됩니다")
             }, onError: { error in
                 print(error)
             })
@@ -153,7 +159,7 @@ extension ActionListViewModel {
     
     private func getFinishedActionList() {
         print("getFinishedActionList가 호출됩니다")
-        ActionListService.getFinishedActionList(with: 3)
+        ActionListService.getFinishedActionList(with: 4)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.finishedActionList.accept(data)
@@ -162,5 +168,20 @@ extension ActionListViewModel {
             })
             .disposed(by: disposeBag)
     }
+    
+    private func patchActionPlanCompletion(actionPlanId: Int) {
+        print("patchActionPlanCompletion가 호출됩니다")
+        ActionListService.patchActionListCompletion(with: actionPlanId)
+            .subscribe(onNext: { data in
+                print("👍👍👍👍👍👍👍👍👍👍")
+                print(data)
+                print("👍👍👍👍👍👍👍👍👍👍")
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    
 }
 

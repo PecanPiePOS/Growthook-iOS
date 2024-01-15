@@ -10,13 +10,13 @@ import UIKit
 import Then
 import SnapKit
 
-final class RemoveInsightAlertView: BaseView {
+final class RemoveAlertView: BaseView {
 
     // MARK: - UI Components
     
     private let contentView = UIView()
     private let titleLabel = UILabel()
-    private let descriptionLabel = UILabel()
+    var descriptionLabel = UILabel()
     private let underLineView = UIView()
     let keepButton = UIButton()
     let removeButton = UIButton()
@@ -33,13 +33,12 @@ final class RemoveInsightAlertView: BaseView {
         }
         
         titleLabel.do {
-            $0.text = I18N.Component.RemoveInsight.title
+            $0.text = I18N.Component.RemoveAlert.title
             $0.font = .fontGuide(.head4)
             $0.textColor = .white000
         }
         
         descriptionLabel.do {
-            $0.text = I18N.Component.RemoveInsight.description
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .gray100
             $0.textAlignment = .center
@@ -51,14 +50,14 @@ final class RemoveInsightAlertView: BaseView {
         }
         
         keepButton.do {
-            $0.setTitle(I18N.Component.RemoveInsight.keep, for: .normal)
+            $0.setTitle(I18N.Component.RemoveAlert.keep, for: .normal)
             $0.titleLabel?.font = .fontGuide(.body1_bold)
             $0.setTitleColor(.green400, for: .normal)
             $0.backgroundColor = .clear
         }
         
         removeButton.do {
-            $0.setTitle(I18N.Component.RemoveInsight.remove, for: .normal)
+            $0.setTitle(I18N.Component.RemoveAlert.remove, for: .normal)
             $0.titleLabel?.font = .fontGuide(.body1_bold)
             $0.setTitleColor(.gray200, for: .normal)
             $0.backgroundColor = .clear
@@ -108,12 +107,5 @@ final class RemoveInsightAlertView: BaseView {
             $0.width.equalTo(SizeLiterals.Screen.screenWidth * 145 / 375)
             $0.height.equalTo(50)
         }
-    }
-}
-
-extension RemoveInsightAlertView {
-    
-    func removeButtonTap() {
-        print("removeButtonTap")
     }
 }

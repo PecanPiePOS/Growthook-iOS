@@ -57,6 +57,7 @@ enum ImageLiterals {
         static var img_cave_pink: UIImage { .load(name: "img_cave_pink") }
         static var img_cave_sunrise: UIImage { .load(name: "img_cave_sunrise") }
         static var img_cave_sunset: UIImage { .load(name: "img_cave_sunset") }
+        static var img_emtpy_cave: UIImage { .load(name: "img_emtpy_cave") }
     }
     
     enum Insight {
@@ -96,6 +97,11 @@ enum ImageLiterals {
     
     enum MyPage {
         static var ic_mypage_profileImage: UIImage { .load(name: "ic_mypage").withRenderingMode(.alwaysTemplate).withTintColor(.gray100) }
+    }
+    
+    enum Menu {
+        static var ic_change: UIImage { .load(name: "ic_change") }
+        static var ic_delete: UIImage { .load(name: "ic_delete") }
     }
     
     enum Onboarding {

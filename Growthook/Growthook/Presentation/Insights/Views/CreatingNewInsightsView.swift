@@ -47,11 +47,24 @@ enum NewInsightItems: CaseIterable {
 final class CreatingNewInsightsView: BaseView {
     
     // MARK: - UI Properties
-    let insightTextView = TextViewBlockWithTitle(placeholder: "찾아낸 새로운 가치를 한 줄로 표현해주세요", maxLength: 30)
-    let memoTextView = TextViewBlockWithTitle(placeholder: "찾아낸 가치에 대한 생각을 적어보세요 (선택)", maxLength: 300)
-    let selectCaveView = SelectBlockWithTitle(placeholder: "어떤 동굴에 저장할까요?")
-    let referenceTextField = TextFieldBlockWithTitle(placeholder: "출처의 정보를 입력해주세요", maxLength: 20)
-    let referencURLTextField = TextFieldBlockWithTitle(placeholder: "참고한 url을 적어주세요 (선택)", maxLength: 200)
+    let insightTextView = TextViewBlockWithTitle(
+        placeholder: I18N.CreateInsight.insightTextViewPlaceholder,
+        maxLength: InsightTextLimits.insight.textLimit
+    )
+    let memoTextView = TextViewBlockWithTitle(
+        placeholder: I18N.CreateInsight.memoTextViewPlaceholder,
+        maxLength: InsightTextLimits.memo.textLimit
+    )
+    let selectCaveView = SelectBlockWithTitle(placeholder: I18N.CreateInsight.caveTitle)
+    let referenceTextField = TextFieldBlockWithTitle(
+        placeholder: I18N.CreateInsight.referencePlaceholder,
+        maxLength: InsightTextLimits.reference.textLimit
+    )
+        // MARK: 무제한의 값이 들어오면 안되므로, 정상적인 url 의 크기를 커버할 수 있는 값 200 을 넣음
+    let referencURLTextField = TextFieldBlockWithTitle(
+        placeholder: I18N.CreateInsight.referenceUrlPlaceholder,
+        maxLength: 200
+    )
     let dividerLine = UIView()
     let goalPeriodSelectView = SelectBlockWithTitle(placeholder: "선택")
     let warningImageView = UIImageView()
