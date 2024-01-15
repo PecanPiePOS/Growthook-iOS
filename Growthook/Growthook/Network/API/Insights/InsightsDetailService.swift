@@ -12,26 +12,6 @@ import RxCocoa
 import RxMoya
 import RxSwift
 
-/*
- Controller 에
- 선행 Data 가 있어야 함 - 액션 플렌이 있는지 없는지
- -> Protocol 을 사용해서 하나로 퉁쳐 만들어.
- -> 있으면 민주꺼 View -> 근데 수정 가능한지?
- -> 없으면 새로 만든 View
- 
- */
-
-
-/*
- 
-1. /api/v1/seed/{seedId}/actionplan - all 액션플랜 조회 (GET)
-2. /api/v1/actionplan/{actionPlanId} - 액션플랜 수정 (PATCH)
-3. /api/v1/actionplan/{actionPlanId} - 액션플랜 삭제 (Delete)
-4. /api/v1/actionplan/{actionPlanId}/completion - 액션 플랜 완성 (PATCH)
-5. /api/v1/seed/{seedId}/actionplan - 액션 플랜 생성 (POST)
- 
- */
-
 enum InsightsDetailTarget {
     case getAllActionPlans(seedId: Int)
     case editActionPlan(actionPlanId: Int, editedActionPlan: InsightActionPlanPatchRequest)
@@ -61,10 +41,10 @@ extension InsightsDetailTarget: BaseTargetType {
             let newPath = URLConstant.actionPlanGet.replacingOccurrences(of: "{seedId}", with: String(seedId))
             return newPath
         case .editActionPlan(let actionPlanId, _):
-            let newPath = URLConstant.actionPlanGet.replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
+            let newPath = URLConstant.actionPlanEdit.replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
             return newPath
         case .deleteActionPlan(let actionPlanId):
-            let newPath = URLConstant.actionPlanGet.replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
+            let newPath = URLConstant.actionPlanDelete.replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
             return newPath
         case .completeActionPlan(let actionPlanId):
             let newPath = URLConstant.actionPlanCompletion.replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
@@ -124,7 +104,7 @@ extension InsightsDetailTarget: BaseTargetType {
         case .postNewSingleActionPlan(_, let newActionPlan):
             let newData = try! newActionPlan.asParameter()
             return .requestParameters(parameters: newData, encoding: JSONEncoding.default)
-        case .moveSeed(seedId: let seedId, caveId: let caveId):
+        case .moveSeed(_, let caveId):
             let newCave = ["caveId": caveId]
             return .requestParameters(parameters: newCave, encoding: JSONEncoding.default)
         case .getAllCaves:
@@ -149,11 +129,27 @@ struct InsightsDetailService: Networkable {
             .decode(decodeType: [InsightActionPlanResponse].self)
     }
     
-    static func editActionPlan(actionPlanId: Int, editedActionPlan: InsightActionPlanPatchRequest) -> Observable<InsightSuccessResponse> {
+    static func editActionPlan(actionPlanId: Int, editedActionPlan: InsightActionPlanPatchRequest, handler: @escaping (_ success: Bool) -> Void) {
+        provider.request(.editActionPlan(actionPlanId: actionPlanId, editedActionPlan: editedActionPlan)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    handler(true)
+                } else {
+                    handler(false)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(false)
+            }
+        }
+    }
+    
+    static func editActionPlan(actionPlanId: Int, editedActionPlan: InsightActionPlanPatchRequest) -> Observable<GeneralResponse<InsightSuccessResponse>> {
         return provider.rx.request(.editActionPlan(actionPlanId: actionPlanId, editedActionPlan: editedActionPlan))
             .asObservable()
             .mapError()
-            .decode(decodeType: InsightSuccessResponse.self)
+            .decode(decodeType: GeneralResponse<InsightSuccessResponse>.self)
     }
     
     static func deleteActionPlan(actionPlanId: Int) -> Observable<InsightSuccessResponse> {
@@ -161,6 +157,22 @@ struct InsightsDetailService: Networkable {
             .asObservable()
             .mapError()
             .decode(decodeType: InsightSuccessResponse.self)
+    }
+    
+    static func deleteActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        provider.request(.deleteActionPlan(actionPlanId: actionPlanId)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    handler(true)
+                } else {
+                    handler(false)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(false)
+            }
+        }
     }
     
     static func completeActionPlan(actionPlanId: Int) -> Observable<InsightSuccessResponse> {
@@ -175,6 +187,54 @@ struct InsightsDetailService: Networkable {
             .asObservable()
             .mapError()
             .decode(decodeType: InsightSuccessResponse.self)
+    }
+    
+    static func postSingleNewActionPlan(seedId: Int, newActionPlan: InsightAddExtraActionPlanRequest, handler: @escaping (_ success: Bool) -> Void) {
+        provider.request(.postNewSingleActionPlan(seedId: seedId, newActionPlan: newActionPlan)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    handler(true)
+                } else {
+                    handler(false)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(false)
+            }
+        }
+    }
+    
+    static func completeActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        provider.request(.completeActionPlan(actionPlanId: actionPlanId)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    handler(true)
+                } else {
+                    handler(false)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(false)
+            }
+        }
+    }
+    
+    static func postReview(content: String, actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        provider.request(.postReviewToCompleteActionPlan(content: content, actionPlanId: actionPlanId)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    handler(true)
+                } else {
+                    handler(false)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(false)
+            }
+        }
     }
     
     static func moveSeed(withSeedOf seedId: Int, to caveId: Int) -> Observable<CaveSuccessResponse> {
