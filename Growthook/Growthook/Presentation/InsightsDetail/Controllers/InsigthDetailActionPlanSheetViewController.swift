@@ -32,7 +32,7 @@ final class InsigthDetailActionPlanSheetViewController: BaseViewController {
     private let doneButton = UIButton()
     private let loadingView = FullCoverLoadingView()
     
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
     private var savedContent: String?
     private let originalContent: String?
     private let isButtonEnabled = BehaviorRelay(value: false)
@@ -40,8 +40,10 @@ final class InsigthDetailActionPlanSheetViewController: BaseViewController {
     private let viewModel: InsightsDetailViewModel
     private var newContentText: String = ""
     private var keyboardHeight: CGFloat = 0
+    private var keyboardDuration: CGFloat = 0
+    private var isFirstPresented = true
     
-    init(purpose: ActionPlanSheetPurpose, viewModel: InsightsDetailViewModel, originalContentText: String?) {
+    init(purpose: ActionPlanSheetPurpose, viewModel: InsightsDetailViewModel, originalContentText: String? = nil) {
         self.viewModel = viewModel
         self.savedContent = originalContentText
         self.originalContent = originalContentText
@@ -61,6 +63,8 @@ final class InsigthDetailActionPlanSheetViewController: BaseViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeNotification()
+        reloadIfNeeded()
+        disposeBag = DisposeBag()
     }
     
     override func setStyles() {
@@ -73,7 +77,7 @@ final class InsigthDetailActionPlanSheetViewController: BaseViewController {
         }
         
         exitButton.do {
-            let configuration = UIImage.SymbolConfiguration(pointSize: 28, weight: .bold)
+            let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium)
             $0.setImage(UIImage(systemName: "xmark", withConfiguration: configuration), for: .normal)
             $0.tintColor = .white000
         }
@@ -111,7 +115,7 @@ final class InsigthDetailActionPlanSheetViewController: BaseViewController {
         }
         
         doneButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(40)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(50)
         }
@@ -134,7 +138,7 @@ extension InsigthDetailActionPlanSheetViewController {
                 guard let self else { return }
                 guard let text else { return }
                 self.newContentText = text
-                print(self.newContentText)
+                print(self.newContentText, "ddd")
                 if text == I18N.ActionList.insightDetailPlaceholder {
                     self.isButtonEnabled.accept(false)
                 } else if text.isEmpty {
@@ -171,6 +175,12 @@ extension InsigthDetailActionPlanSheetViewController {
             }
             .disposed(by: disposeBag)
         
+        exitButton.rx.tap
+            .bind { [weak self] in
+                self?.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         doneButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
@@ -178,25 +188,46 @@ extension InsigthDetailActionPlanSheetViewController {
                 switch self.purpose {
                 case .create:
                     self.viewModel.inputs.addSingleNewAction(newActionPlanText: self.newContentText) { success in
-                        if success != false {
+                        switch success {
+                        case true:
                             self.dismiss(animated: true)
-                        } else {
+                        case false:
                             self.loadingView.isHidden = true
+                            self.view.showToast(message: "실패했어요 다시 시도해주세요", success: false)
                         }
                     }
+                    self.view.endEditing(true)
                 case .edit(let actionPlanId):
                     if newContentText == originalContent {
                         self.dismiss(animated: true)
                         return
                     }
-                    
                     self.viewModel.inputs.editActionPlan(actionPlanId: actionPlanId, editedActionPlanText: self.newContentText) { success in
-                        if success != false {
+                        switch success {
+                        case true:
                             self.dismiss(animated: true)
-                        } else {
+                        case false:
                             self.loadingView.isHidden = true
+                            self.view.showToast(message: "실패했어요 다시 시도해주세요", success: false)
                         }
+                        self.view.endEditing(true)
                     }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.actionPlanPatchStatus
+            .bind { [weak self] status in
+                guard let self else { return }
+                switch status {
+                case .normal:
+                    break
+                case .error:
+                    self.loadingView.isHidden = true
+                    self.view.showToast(message: "재시도해주세요", success: false)
+                case .done:
+                    self.dismiss(animated: true)
+                    self.viewModel.reloadActionPlan()
                 }
             }
             .disposed(by: disposeBag)
@@ -205,20 +236,41 @@ extension InsigthDetailActionPlanSheetViewController {
 
 extension InsigthDetailActionPlanSheetViewController {
     
-    // 전체 560
     private func moveButtonUp() {
         doneButton.snp.remakeConstraints {
             $0.bottom.equalToSuperview().inset(20+keyboardHeight)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(50)
         }
+        UIView.animate(withDuration: self.keyboardDuration) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func moveButtonDown() {
         doneButton.snp.remakeConstraints {
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(40)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(50)
+        }
+        UIView.animate(withDuration: self.keyboardDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func reloadIfNeeded() {
+        var isEdited: Bool = true
+
+        if let originalContent {
+            if originalContent == newContentText {
+                isEdited = false
+            } else {
+                isEdited = true
+            }
+        }
+        
+        if !newContentText.isEmpty || isEdited != false {
+            viewModel.inputs.reloadActionPlan()
         }
     }
     
@@ -232,9 +284,15 @@ extension InsigthDetailActionPlanSheetViewController {
     
     @objc
     private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue, 
+            let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double {
             let keyboardHeight = keyboardSize.height
             self.keyboardHeight = keyboardHeight
+            self.keyboardDuration = keyboardDuration
+            if self.isFirstPresented != false {
+                moveButtonUp()
+                self.isFirstPresented = false
+            }
         }
     }
 }
