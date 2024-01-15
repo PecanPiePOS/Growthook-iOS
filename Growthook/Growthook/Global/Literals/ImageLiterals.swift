@@ -66,6 +66,7 @@ enum ImageLiterals {
         static var img_warning: UIImage { .load(name: "warning_img") }
         static var img_warning_wholeText: UIImage { .load(name: "insightPeroidWarning") }
         static var img_selected_dot: UIImage { .load(name: "InsightSelectedCaveDot") }
+        static var moveButton: UIImage { .load(name: "moveIconWithoutText") }
     }
     
     enum ActionPlan {
