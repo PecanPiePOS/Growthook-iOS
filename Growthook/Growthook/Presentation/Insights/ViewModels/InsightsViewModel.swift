@@ -33,11 +33,13 @@ protocol InsightsViewModelInput {
     func setPeriodDataWhenSheetIsPresented()
     // MARK: 네트워크 Error 처리
     func cancelErrorAlert()
+    // MARK: 수정 시에, 기존의 값을 주입
+    func viewWillAppearWhenEditing()
 }
 
 protocol InsightsViewModelOutput {
     var networkState: BehaviorRelay<SomeNetworkStatus> { get }
-    var myOwnCaves: Observable<[InsightCaveModel]> { get }
+    var myOwnCaves: BehaviorRelay<[InsightCaveModel]> { get }
     var selectedCave: BehaviorRelay<InsightCaveModel?> { get }
     var availablePeriodList: [InsightPeriodModel] { get }
     var selectedPeriod: BehaviorRelay<InsightPeriodModel?> { get }
@@ -60,16 +62,18 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     // MARK: - Outputs
     var networkState = BehaviorRelay<SomeNetworkStatus>(value: .normal)
     var availablePeriodList: [InsightPeriodModel] = []
-    var myOwnCaves: Observable<[InsightCaveModel]>
+    var myOwnCaves = BehaviorRelay<[InsightCaveModel]>(value: [])
     var selectedCave = BehaviorRelay<InsightCaveModel?>(value: nil)
     var selectedPeriod = BehaviorRelay<InsightPeriodModel?>(value: nil)
     var isPostingValid = BehaviorRelay<Bool>(value: false)
+    var isKeyboardShown = BehaviorRelay(value: false)
     
     // MARK: - 내부 로직을 위한 프로퍼티
     private let newInsightContent = BehaviorRelay<InsightContent>(value: nil)
     private let newMemoContent = BehaviorRelay<MemoContent>(value: nil)
     private let newReferenceContent = BehaviorRelay<ReferenceContent>(value: nil)
     private let newReferenceUrlContent = BehaviorRelay<ReferenceUrlContent>(value: nil)
+    private var existingData = SeedEditModel(caveName: "", insight: "", memo: "", source: "", url: "")
     
     private let isNewInsightValid = BehaviorRelay(value: false)
     private let isCaveSelectedValid = BehaviorRelay(value: false)
@@ -83,15 +87,36 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     
     // MARK: - Life Cycle
     init() {
-        // TODO: 내 동굴의 값을 API 를 통해 받아와야 하는지, 내부에 저장한 값을 가저올지 정해야 합니다. + 시점도 정해야 합니다.
-        myOwnCaves = Observable.just([
-            .init(caveId: 48, caveTitle: "Cave11"),
-            .init(caveId: 49, caveTitle: "Cave12"),
-            .init(caveId: 50, caveTitle: "Cave13"),
-            .init(caveId: 51, caveTitle: "Cave14"),
-            .init(caveId: 52, caveTitle: "Cave15")
-        ])
+        // TODO: memberId 여기서 찍어야함 - 임시로 4로 찍어놓음
         
+        InsightsDetailService.getAllCaves(memberId: 4)
+            .subscribe(onNext: { [weak self] caves in
+                guard let self else { return }
+                let caveModel: [InsightCaveModel] = caves.map { .init(caveId: $0.caveId, caveTitle: $0.caveName) }
+                self.myOwnCaves.accept(caveModel)
+            }, onError: { error in
+                print(error)
+                self.myOwnCaves.accept([])
+            })
+            .disposed(by: disposeBag)
+
+        bindValidation()
+    }
+    
+    init(isEditing: Bool = true, seedEditModel: SeedEditModel) {
+        self.existingData = seedEditModel
+        // TODO: memberId 여기서 찍어야함 - 임시로 4로 찍어놓음
+        InsightsDetailService.getAllCaves(memberId: 4)
+            .subscribe(onNext: { [weak self] caves in
+                guard let self else { return }
+                let caveModel: [InsightCaveModel] = caves.map { .init(caveId: $0.caveId, caveTitle: $0.caveName) }
+                self.myOwnCaves.accept(caveModel)
+            }, onError: { error in
+                print(error)
+                self.myOwnCaves.accept([])
+            })
+            .disposed(by: disposeBag)
+
         bindValidation()
     }
     
@@ -140,7 +165,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
             newInsightContent.accept(nil)
         }
     }
-    
+        
     func addMemo(content: String) {
         let isEditCancelledWithNoneInput: Bool = content == I18N.CreateInsight.memoTextViewPlaceholder
 
@@ -191,6 +216,25 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     func cancelErrorAlert() {
         networkState.accept(.normal)
     }
+    
+    func viewWillAppearWhenEditing() {
+        addInsight(content: existingData.insight)
+        addReference(content: existingData.source)
+        selectGoalPeriodToAdd(of: .init(periodMonthAsInteger: 1, periodTitle: "수정 불가"))
+        if !existingData.memo.isEmpty {
+            addMemo(content: existingData.memo)
+        }
+        
+        if !existingData.url.isEmpty {
+            addReferenceUrl(content: existingData.url)
+        }
+        
+        if let existingCave = myOwnCaves.value.first(where: {
+            $0.caveTitle == existingData.caveName
+        }) {
+            selectCaveToAdd(of: existingCave)
+        }
+    }
 }
 
 extension InsightsViewModel {
@@ -219,9 +263,27 @@ extension InsightsViewModel {
         
         Observable.combineLatest(isNewInsightValid, isCaveSelectedValid, isNewReferenceValid, isPeriodValid)
             .map { isInsightValid, isCaveValid, isReferenceValid, isPeriodValid in
+                print("000", isInsightValid, isCaveValid, isReferenceValid, isPeriodValid)
                 return isInsightValid && isCaveValid && isReferenceValid && isPeriodValid
             }
             .bind(to: isPostingValid)
             .disposed(by: disposeBag)
+    }
+    
+    func fetchModifiedInsight() -> InsightEditRequest? {
+        if let selectedCaveId = selectedCave.value?.caveId,
+           let insight = newInsightContent.value,
+           let source = newReferenceContent.value
+        {
+            let newInsight = InsightEditRequest(insight: insight, source: source, memo: newMemoContent.value, url: newReferenceUrlContent.value)
+            return newInsight
+        } else {
+            print("❗️ This shouldn't be nil!!")
+            return nil
+        }
+    }
+    
+    func setKeyboardSetting(isShown: Bool) {
+        isKeyboardShown.accept(isShown)
     }
 }
