@@ -15,12 +15,13 @@ protocol ActionListViewModelInput {
     func didTapInprogressScrapButton()
     func didTapCompleteScrapButton()
     func didTapSeedButton()
-    func didTapReviewButton()
+    func didTapReviewButton(with actionPlanId: Int)
     func setReviewText(with value: String)
     func didTapCancelButtonInBottomSheet()
     func didTapSaveButtonInBottomSheet()
     func didTapCheckButtonInAcertView()
     func didTapCancelButtonWithPatch(with actionPlanId: Int)
+    func didTapCancelButtonInBottomSheetWithPost(with actionPlanId: Int)
 }
 
 protocol ActionListViewModelOutput {
@@ -31,6 +32,7 @@ protocol ActionListViewModelOutput {
     var finishedActionList: BehaviorRelay<[ActionListFinishedResponse]> { get }
     var isReviewEntered: Driver<Bool> { get }
     var reviewTextCount: Driver<String> { get }
+    var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> { get }
 }
 
 protocol ActionListViewModelType {
@@ -45,8 +47,9 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     var finishedActionList: BehaviorRelay<[ActionListFinishedResponse]> = BehaviorRelay<[ActionListFinishedResponse]>(value: [])
     var reviewText = BehaviorRelay<String>(value: "")
     var titlePersent: BehaviorRelay<String> = BehaviorRelay(value: "")
+    var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> = BehaviorRelay<ActionListReviewDetailResponse>(value: ActionListReviewDetailResponse.actionListReviewDetailDummy())
     private let disposeBag = DisposeBag()
-        
+    
     var inputs: ActionListViewModelInput { return self }
     var outputs: ActionListViewModelOutput { return self }
     
@@ -99,8 +102,10 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         print("씨앗보기 버튼이 탭 되었습니다")
     }
     
-    func didTapReviewButton() {
+    func didTapReviewButton(with actionPlanId: Int) {
         print("리뷰보기 버튼이 탭 되었습니다")
+        // 리뷰 get API 연결
+        getpostActionListReview(actionPlanId: actionPlanId)
     }
     
     func setReviewText(with value: String) {
@@ -113,8 +118,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     }
     
     func didTapSaveButtonInBottomSheet() {
-        selectedIndex.accept(2)
-        getFinishedActionList()
+        selectedIndex.accept(0)
         getActionListPercent()
     }
     
@@ -129,6 +133,12 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         getActionListPercent()
     }
     
+    func didTapCancelButtonInBottomSheetWithPost(with actionPlanId: Int) {
+        postActionListReview(actionPlanId: actionPlanId)
+        patchActionPlanCompletion(actionPlanId: actionPlanId)
+        getFinishedActionList()
+        getActionListPercent()
+    }
 }
 
 
@@ -150,7 +160,6 @@ extension ActionListViewModel {
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.doingActionList.accept(data)
-                print("getDoingActionList accpet가 호출됩니다")
             }, onError: { error in
                 print(error)
             })
@@ -170,18 +179,41 @@ extension ActionListViewModel {
     }
     
     private func patchActionPlanCompletion(actionPlanId: Int) {
-        print("patchActionPlanCompletion가 호출됩니다")
         ActionListService.patchActionListCompletion(with: actionPlanId)
-            .subscribe(onNext: { data in
-                print("👍👍👍👍👍👍👍👍👍👍")
-                print(data)
-                print("👍👍👍👍👍👍👍👍👍👍")
+            .subscribe(onNext: { _ in
+                print("patchActionPlanCompletion가 호출됩니다")
             }, onError: { error in
                 print(error)
             })
             .disposed(by: disposeBag)
     }
     
+    private func postActionListReview(actionPlanId: Int) {
+        let newReview = ActionListReviewPostRequest(content: reviewText.value)
+        
+        ActionListService.postActionListReview(actionPlanId: actionPlanId, review: newReview)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
+                print("review작성에 성공했습니다")
+                print("리뷰 내용: \(newReview)")
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
     
+    private func getpostActionListReview(actionPlanId: Int) {
+        print("getpostActionListReview가 호출됩니다")
+        ActionListService.getActionListReview(with: actionPlanId)
+            .subscribe(onNext: { [weak self] data in
+                guard let self else { return }
+                self.reviewDetail.accept(data)
+                print(data)
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
