@@ -109,7 +109,7 @@ final class ActionListReviewViewController: BaseViewController {
         }
         
         scrapButton.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(18)
+            $0.centerY.equalTo(titleLabel.snp.centerY)
             $0.trailing.equalToSuperview().inset(8)
             $0.width.height.equalTo(48)
         }
@@ -135,9 +135,9 @@ final class ActionListReviewViewController: BaseViewController {
         writtenDateLabel.text = reviewData.reviewDate
         switch reviewData.isScraped {
         case false:
-            scrapButton.setImage(ImageLiterals.Scrap.seed_light_default, for: .normal)
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
         case true:
-            scrapButton.setImage(ImageLiterals.Scrap.seed_light_active, for: .normal)
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
         }
     }
     

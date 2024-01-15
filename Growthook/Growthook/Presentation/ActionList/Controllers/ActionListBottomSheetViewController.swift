@@ -81,7 +81,7 @@ final class ActionListBottomSheetViewController: BaseViewController {
                 self.dismiss(animated: true)
                 self.delegate?.notificationDismissInSaveButton()
                 self.viewModel.inputs.didTapSaveButtonInBottomSheet()
-//                self.viewModel.inputs.didTapCancelButtonInBottomSheetWithPost(with: self.actionPlanId)
+                self.viewModel.inputs.didTapCancelButtonInBottomSheetWithPost(with: self.actionPlanId)
                 
             }
             .disposed(by: disposeBag)
