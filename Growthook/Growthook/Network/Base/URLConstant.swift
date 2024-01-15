@@ -17,13 +17,13 @@ enum URLConstant {
     
     // MARK: - ActionPlan
     
-    static let actionPlanDelete = "/api/v1/actionPlan/{actionPlanId}"
-    static let actionPlanCompletion = "/api/v1/actionPlan/{actionPlanId}/completion"
-    static let actionPlanPercent = "/api/v1/member/{memberId}/actionPlan/percent"
+    static let actionPlanDelete = "/api/v1/actionplan/{actionPlanId}"
+    static let actionPlanCompletion = "/api/v1/actionplan/{actionPlanId}/completion"
+    static let actionPlanPercent = "/api/v1/member/{memberId}/actionplan/percent"
     static let doingActionPlan = "/api/v1/member/{memberId}/doing"
     static let finishedActionPlan = "/api/v1/member/{memberId}/finished"
     static let actionPlanGet = "/api/v1/seed/{seedId}/actionplan"
-    static let actionPlanPost = "/api/v1/seed/{seedId}/actionPlan"
+    static let actionPlanPost = "/api/v1/seed/{seedId}/actionplan"
     static let actionPlanEdit = "/api/v1/actionplan/{actionPlanId}"
     static let actionPlanReview = "/api/v1/actionplan/{actionPlanId}/review"
     // MARK: - Cave
