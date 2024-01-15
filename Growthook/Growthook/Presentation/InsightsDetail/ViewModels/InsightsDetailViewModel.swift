@@ -44,6 +44,12 @@ enum InsightsDetailToastType {
     }
 }
 
+enum PostSuccessState {
+    case normal
+    case error(of: Error)
+    case done
+}
+
 enum InsightDetailNetworkState {
     case normal
     case error(of: Error)
@@ -52,20 +58,26 @@ enum InsightDetailNetworkState {
 protocol InsightsDetailViewModelInput {
     func navigationBarMenuDidTap() //
     func relocateSeed(to newCaveId: Int)
-    func editSeedSucceeded()
+    func editSeed(editedSeed :InsightEditRequest)
     func deleteSeedDidTap(handler: @escaping (Bool) -> Void)
     func moveSeedToOtherCave(of selectedCave: InsightCaveModel)
+    func getAllCaves(memberId: Int)
+    func reloadActionPlan()
+    func reloadSeedData()
+    func completeActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void)
+    func postReviewToComplete(review: String, actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void)
     
     func readMoreDidTap()
     func actionPlanMenuDidTap()
     func completeActionPlan(withReviewOf review: String?, actionPlanIdOf actionPlanId: Int, handler: @escaping (Bool) -> Void)
     func addSingleNewAction(newActionPlanText: String, handler: @escaping (Bool) -> Void)
-    func editActionPlan(actionPlanId: Int, editedActionPlanText: String, handler: @escaping (Bool) -> Void)
-    func deleteActionPlan(actionPlanId: Int)
+    func editActionPlan(actionPlanId: Int, editedActionPlanText: String, handler: @escaping (_ success: Bool) -> Void)
+    func deleteActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void)
     
     func hideMemoView(_ hasActionPlans: Bool)
     func resetToastStatus()
     func resetNetworkStatus()
+    func fetchSeedModel() -> SeedEditModel
 }
 
 protocol InsightsDetailViewModelOutput {
@@ -74,8 +86,9 @@ protocol InsightsDetailViewModelOutput {
     var networkStatus: BehaviorRelay<InsightDetailNetworkState> { get }
     
     var seedDetail: PublishSubject<SeedDetailResponsse> { get }
-    var caveData: PublishSubject<[InsightCaveModel]> { get } /// Not Yet
+    var caveData: PublishSubject<[InsightCaveModel]> { get }
     var actionPlans: BehaviorRelay<[InsightActionPlanResponse]> { get }
+    var actionPlanPatchStatus: BehaviorRelay<PostSuccessState> { get }
 }
 
 protocol InsightsDetailViewModelType {
@@ -85,6 +98,7 @@ protocol InsightsDetailViewModelType {
 
 final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetailViewModelOutput, InsightsDetailViewModelType {
     
+    var actionPlanPatchStatus =  BehaviorRelay<PostSuccessState>(value: .normal)
     var networkStatus = BehaviorRelay<InsightDetailNetworkState>(value: .normal)
     var toastStatus = BehaviorRelay<InsightsDetailToastType>(value: .none)
     var shouldHideMemoView = PublishSubject<Bool>()
@@ -94,6 +108,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     
     private let disposeBag = DisposeBag()
     private let seedId: Int
+    private var seedEditData: SeedEditModel?
     
     var inputs: InsightsDetailViewModelInput { return self }
     var outputs: InsightsDetailViewModelOutput { return self }
@@ -127,15 +142,14 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
         self.toastStatus.accept(.none)
     }
     
-    /// 씨앗 수정 실패시에는 기존의 내용을 유지하기 위해, 에러 처리 및 화면 전환이 없습니다.
-    /// toast 는 성공일 때만 띄웁니다.
-    func editSeedSucceeded() {
-        InsightsDetailService.getSeedDetail(seedId: seedId)
-            .subscribe(onNext: { [weak self] seedDetail in
+    func editSeed(editedSeed: InsightEditRequest) {
+        InsightsService.editInsight(seedId: seedId, of: editedSeed)
+            .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
-                self.seedDetail.onNext(seedDetail)
                 self.toastStatus.accept(.editSeedToast(success: true))
-                self.resetToastStatus()
+            }, onError: { error in
+                print(error)
+                self.toastStatus.accept(.editSeedToast(success: false))
             })
             .disposed(by: disposeBag)
     }
@@ -160,9 +174,11 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
             .subscribe(onNext: { [weak self] response in
                 guard let self else { return }
                 self.toastStatus.accept(.moveSeedToast(success: true))
+                self.resetToastStatus()
             }, onError: { error in
                 print(error)
                 self.toastStatus.accept(.moveSeedToast(success: false))
+                self.resetToastStatus()
             })
             .disposed(by: disposeBag)
     }
@@ -196,48 +212,82 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
             .disposed(by: disposeBag)
     }
     
-    func addSingleNewAction(newActionPlanText: String, handler: @escaping (_ success: Bool) -> Void) {
+    func completeActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        InsightsDetailService.completeActionPlan(actionPlanId: actionPlanId) { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
+                handler(true)
+                self.getActionPlans()
+            case false:
+                handler(false)
+            }
+        }
+    }
+    
+    func postReviewToComplete(review: String, actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        InsightsDetailService.postReview(content: review, actionPlanId: actionPlanId) { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
+                handler(true)
+            case false:
+                handler(false)
+            }
+        }
+    }
+    
+    func addSingleNewAction(newActionPlanText: String, handler: @escaping (Bool) -> Void) {
         let newActionPlan: InsightAddExtraActionPlanRequest = .init(contents: [newActionPlanText])
-        InsightsDetailService.postSingleNewActionPlan(seedId: seedId, newActionPlan: newActionPlan)
-            .subscribe(onNext: { [weak self] response in
-                guard let self else { return }
-                self.getActionPlans()
+        InsightsDetailService.postSingleNewActionPlan(seedId: seedId, newActionPlan: newActionPlan) { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
                 handler(true)
-            }, onError: { error in
-                print(error)
+                self.toastStatus.accept(.createActionPlan(success: true))
+                self.resetToastStatus()
+            case false:
                 handler(false)
-            })
-            .disposed(by: disposeBag)
+                self.toastStatus.accept(.createActionPlan(success: false))
+                self.resetToastStatus()
+            }
+        }
     }
     
-    
-    func editActionPlan(actionPlanId: Int, editedActionPlanText: String, handler: @escaping (Bool) -> Void) {
+    func editActionPlan(actionPlanId: Int, editedActionPlanText: String, handler: @escaping (_ success: Bool) -> Void) {
         let newActionPlan: InsightActionPlanPatchRequest = .init(content: editedActionPlanText)
-        InsightsDetailService.editActionPlan(actionPlanId: actionPlanId, editedActionPlan: newActionPlan)
-            .subscribe(onNext: { [weak self] response in
-                guard let self else { return }
-                self.getActionPlans()
+        InsightsDetailService.editActionPlan(actionPlanId: actionPlanId, editedActionPlan: newActionPlan) { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
                 handler(true)
-            }, onError: { error in
-                print(error)
+                self.toastStatus.accept(.editActionPlan(success: true))
+                self.resetToastStatus()
+            case false:
                 handler(false)
-            })
-            .disposed(by: disposeBag)
+                self.toastStatus.accept(.editActionPlan(success: false))
+                self.resetToastStatus()
+            }
+        }
     }
     
-    func deleteActionPlan(actionPlanId: Int) {
-        InsightsDetailService.deleteActionPlan(actionPlanId: actionPlanId)
-            .subscribe(onNext: { [weak self] response in
-                guard let self else { return }
-                self.getActionPlans()
+    func deleteActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        
+        InsightsDetailService.deleteActionPlan(actionPlanId: actionPlanId) { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
+                handler(true)
                 self.toastStatus.accept(.deleteActionPlan(success: true))
-            }, onError: { error in
-                print(error)
-                self.toastStatus.accept(.deleteActionPlan(success: false))
-            })
-            .disposed(by: disposeBag)
+                self.resetToastStatus()
+                self.reloadActionPlan()
+            case false:
+                handler(false)
+                self.toastStatus.accept(.deleteSeedToast(success: false))
+                self.resetToastStatus()
+            }
+        }
     }
-    
 
     func hideMemoView(_ hasActionPlans: Bool) {
         shouldHideMemoView.onNext(hasActionPlans)
@@ -245,6 +295,38 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     
     func resetNetworkStatus() {
         networkStatus.accept(.normal)
+    }
+    
+    func getAllCaves(memberId: Int) {
+        InsightsDetailService.getAllCaves(memberId: memberId)
+            .subscribe(onNext: { [weak self] caves in
+                guard let self else { return }
+                let caveModel: [InsightCaveModel] = caves.map { .init(caveId: $0.caveId, caveTitle: $0.caveName) }
+                self.caveData.onNext(caveModel)
+            }, onError: { error in
+                print(error)
+                self.caveData.onNext([])
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func fetchSeedModel() -> SeedEditModel {
+        guard let seedEditData else {
+            return SeedEditModel(caveName: "", insight: "", memo: "", source: "", url: "")
+        }
+        return seedEditData
+    }
+    
+    func fetchSeedId() -> Int {
+        return seedId
+    }
+    
+    func reloadActionPlan() {
+        getActionPlans()
+    }
+    
+    func reloadSeedData() {
+        getSeedDetail()
     }
 }
 
@@ -255,6 +337,7 @@ extension InsightsDetailViewModel {
             .subscribe(onNext: { [weak self] seedDetail in
                 guard let self else { return }
                 self.seedDetail.onNext(seedDetail)
+                self.seedEditData = .init(caveName: seedDetail.caveName, insight: seedDetail.insight, memo: seedDetail.memo, source: seedDetail.source, url: seedDetail.url)
             }, onError: { error in
                 print(error)
                 self.networkStatus.accept(.error(of: error))
