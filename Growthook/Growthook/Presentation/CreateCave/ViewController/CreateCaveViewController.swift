@@ -40,19 +40,6 @@ final class CreateCaveViewController: UIViewController {
 extension CreateCaveViewController {
     
     private func bindViewModel() {
-        
-//        createCaveView.nameTextField.rx.controlEvent(event: UIControl.Event.allEditingEvents)
-//            .bind { [weak self] _ in
-//                guard let self else { return }
-//                switch event {
-//                case .editingDidBegin:
-//                    createCaveView.nameTextField.focusWhenDidBeginEditing()
-//                case .editingDidEnd:
-//                    createCaveView.nameTextField.unfocusWhenDidEndEditing()
-//                case .editingDidEndOnExit:
-//                    createCaveView.nameTextField.unfocusWhenDidEndEditing()
-//                }
-
                 
         createCaveView.nameTextField.rx.text
             .orEmpty
@@ -140,6 +127,13 @@ extension CreateCaveViewController {
             .map { $0 ? true : false }
             .bind(to: createCaveView.createCaveButton.rx.enableStatus)
             .disposed(by: disposeBag)
+        
+        createCaveView.customNavigationBar.closeButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.dismiss(animated: true)
+                /// closeButton Tapped
+            }
     }
     
     func setUpAnimation() {

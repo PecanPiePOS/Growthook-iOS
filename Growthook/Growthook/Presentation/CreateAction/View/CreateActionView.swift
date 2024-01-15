@@ -13,7 +13,7 @@ import Then
 final class CreateActionView: BaseView {
     
     private let topView = UIView()
-    private let navigationBar = CustomNavigationBar()
+    let navigationBar = CustomNavigationBar()
     let confirmButton = UIButton()
     let insightView = InsightView()
     let createSpecificPlanView = CreateSpecificPlanView()

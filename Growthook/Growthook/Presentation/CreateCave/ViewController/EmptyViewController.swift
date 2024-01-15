@@ -39,6 +39,7 @@ final class EmptyViewController: BaseViewController {
         emptyView.navigationBar.closeButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
+                self.dismiss(animated: true)
                 /// closeButton Tapped
             }
             .disposed(by: disposeBag)

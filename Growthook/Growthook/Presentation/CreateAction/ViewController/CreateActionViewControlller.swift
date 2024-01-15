@@ -70,7 +70,6 @@ final class CreateActionViewControlller: BaseViewController {
     override func setDelegates() {
         createActionView.createSpecificPlanView.planCollectionView.delegate = self
         createActionView.createSpecificPlanView.planCollectionView.dataSource = self
-        
     }
     
     override func bindViewModel() {
@@ -114,6 +113,12 @@ final class CreateActionViewControlller: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        createActionView.navigationBar.backButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -186,6 +191,7 @@ extension CreateActionViewControlller {
 }
 
 extension CreateActionViewControlller: SendTextDelegate {
+    
     func sendText(index: Int, text: String?) {
         guard let text = text else { return }
         if text == "" || text == placeholder {

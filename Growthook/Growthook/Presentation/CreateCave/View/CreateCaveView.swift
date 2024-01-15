@@ -12,7 +12,7 @@ import Then
 
 final class CreateCaveView: BaseView {
     
-    private let closeButton = CustomNavigationBar()
+    let customNavigationBar = CustomNavigationBar()
     let containerView = UIView()
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
@@ -38,7 +38,7 @@ final class CreateCaveView: BaseView {
     override func setStyles() {
         self.backgroundColor = .gray700
         
-        closeButton.do {
+        customNavigationBar.do {
             $0.isCloseButtonIncluded = true
         }
         
@@ -101,16 +101,16 @@ final class CreateCaveView: BaseView {
     }
     
     override func setLayout() {
-        self.addSubviews(closeButton, containerView, createCaveButton)
+        self.addSubviews(customNavigationBar, containerView, createCaveButton)
         containerView.addSubviews(titleLabel, descriptionLabel, nameLabel, nameTextField, nameCountLabel, introduceLabel, introduceTextView, introduceCountLabel, shareLabel, switchButton)
         
-        closeButton.snp.makeConstraints {
+        customNavigationBar.snp.makeConstraints {
             $0.top.equalToSuperview().inset(44)
             $0.trailing.equalToSuperview().inset(8)
         }
         
         containerView.snp.makeConstraints {
-            $0.top.equalTo(closeButton.snp.bottom).offset(52)
+            $0.top.equalTo(customNavigationBar.snp.bottom).offset(52)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(431)
         }
@@ -180,7 +180,7 @@ final class CreateCaveView: BaseView {
 extension CreateCaveView {
     func setLayoutUp() {
         containerView.snp.remakeConstraints {
-            $0.top.equalTo(closeButton.snp.bottom).offset(2)
+            $0.top.equalTo(customNavigationBar.snp.bottom).offset(2)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(431)
         }
@@ -204,7 +204,7 @@ extension CreateCaveView {
     
     func setLayoutDown() {
         containerView.snp.updateConstraints {
-            $0.top.equalTo(closeButton.snp.bottom).offset(52)
+            $0.top.equalTo(customNavigationBar.snp.bottom).offset(52)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(431)
         }
