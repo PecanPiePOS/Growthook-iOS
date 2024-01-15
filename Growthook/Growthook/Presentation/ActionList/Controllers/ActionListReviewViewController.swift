@@ -49,7 +49,11 @@ final class ActionListReviewViewController: BaseViewController {
     }
     
     override func bindViewModel() {
-        
+        viewModel.outputs.reviewDetail
+            .subscribe(onNext: { [weak self] data in
+                self?.setReviewDetail(reviewData: data)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
@@ -70,6 +74,11 @@ final class ActionListReviewViewController: BaseViewController {
         
         titleLabel.do {
             $0.font = .fontGuide(.body1_bold)
+            $0.textColor = .white000
+        }
+        
+        reviewTextView.do {
+            $0.isEditable = false
             $0.textColor = .white000
         }
         
@@ -119,6 +128,18 @@ final class ActionListReviewViewController: BaseViewController {
     }
     
     // MARK: - Methods
+    
+    func setReviewDetail(reviewData: ActionListReviewDetailResponse) {
+        titleLabel.text = reviewData.actionPlan
+        reviewTextView.text = reviewData.content
+        writtenDateLabel.text = reviewData.reviewDate
+        switch reviewData.isScraped {
+        case false:
+            scrapButton.setImage(ImageLiterals.Scrap.seed_light_default, for: .normal)
+        case true:
+            scrapButton.setImage(ImageLiterals.Scrap.seed_light_active, for: .normal)
+        }
+    }
     
     // MARK: - @objc Methods
     
