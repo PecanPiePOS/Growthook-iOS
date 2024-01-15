@@ -13,20 +13,20 @@ struct ActionListPercentResponse: Codable {
 }
 
 struct ActionListDoingResponse: Codable {
-    let actionPlanID: Int
+    let actionPlanId: Int
     let content: String
     let isScraped: Bool
-    let seedID: Int
+    let seedId: Int
 }
 
 struct ActionListFinishedResponse: Codable {
-    let actionPlanID: Int
+    let actionPlanId: Int
     let content: String
     let isScraped: Bool
-    let seedID: Int
+    let seedId: Int
 }
 
-struct ActionListCompletionResponse: Codable{
+struct ActionListCompletionResponse: Codable {
     
 }
 
