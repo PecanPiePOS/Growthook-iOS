@@ -127,6 +127,7 @@
 		25BD951F2B08F73700E72ADC /* CompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951E2B08F73700E72ADC /* CompleteViewController.swift */; };
 		25EAFA5B2B0255BB00283CD8 /* MainTitleBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EAFA5A2B0255BB00283CD8 /* MainTitleBarView.swift */; };
 		25EAFA5D2B02597800283CD8 /* ActionListSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EAFA5C2B02597800283CD8 /* ActionListSegmentedView.swift */; };
+		58026D992B55264B00176D12 /* ActionPlanCellMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58026D982B55264B00176D12 /* ActionPlanCellMenuView.swift */; };
 		581D228E2B320C630068E58D /* CommonTextFieldWithBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D228D2B320C630068E58D /* CommonTextFieldWithBorder.swift */; };
 		581D22902B32A9240068E58D /* Reactive+UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D228F2B32A9240068E58D /* Reactive+UITextField.swift */; };
 		581D22922B32A92F0068E58D /* Reactive+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D22912B32A92F0068E58D /* Reactive+UIControl.swift */; };
@@ -158,6 +159,9 @@
 		588E2B512B5405F90014E6D5 /* InsightDetailMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B502B5405F90014E6D5 /* InsightDetailMenuViewController.swift */; };
 		588E2B962B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B952B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift */; };
 		588E2B9A2B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B992B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift */; };
+		588E2B9C2B543B3C0014E6D5 /* InsightsDetailMainBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B9B2B543B3C0014E6D5 /* InsightsDetailMainBlockView.swift */; };
+		588E2B9E2B5449D80014E6D5 /* InsightDetailCaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B9D2B5449D80014E6D5 /* InsightDetailCaveViewController.swift */; };
+		588E2BA02B544E240014E6D5 /* InsightDetailEditSeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B9F2B544E240014E6D5 /* InsightDetailEditSeedViewController.swift */; };
 		58AB70AC2B2C7CC50061C072 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70AB2B2C7CC50061C072 /* MyPageViewModel.swift */; };
 		58AB70AE2B2C88570061C072 /* MyPageThookBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70AD2B2C88570061C072 /* MyPageThookBoxView.swift */; };
 		58AB70B12B2C90560061C072 /* MyPageListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70B02B2C90560061C072 /* MyPageListTableViewCell.swift */; };
@@ -288,6 +292,7 @@
 		25BD951E2B08F73700E72ADC /* CompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteViewController.swift; sourceTree = "<group>"; };
 		25EAFA5A2B0255BB00283CD8 /* MainTitleBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleBarView.swift; sourceTree = "<group>"; };
 		25EAFA5C2B02597800283CD8 /* ActionListSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListSegmentedView.swift; sourceTree = "<group>"; };
+		58026D982B55264B00176D12 /* ActionPlanCellMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPlanCellMenuView.swift; sourceTree = "<group>"; };
 		581D228D2B320C630068E58D /* CommonTextFieldWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextFieldWithBorder.swift; sourceTree = "<group>"; };
 		581D228F2B32A9240068E58D /* Reactive+UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UITextField.swift"; sourceTree = "<group>"; };
 		581D22912B32A92F0068E58D /* Reactive+UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UIControl.swift"; sourceTree = "<group>"; };
@@ -319,6 +324,9 @@
 		588E2B502B5405F90014E6D5 /* InsightDetailMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightDetailMenuViewController.swift; sourceTree = "<group>"; };
 		588E2B952B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsigthDetailActionPlanSheetViewController.swift; sourceTree = "<group>"; };
 		588E2B992B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsigthDetailActionPlanReviewSheetViewController.swift; sourceTree = "<group>"; };
+		588E2B9B2B543B3C0014E6D5 /* InsightsDetailMainBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDetailMainBlockView.swift; sourceTree = "<group>"; };
+		588E2B9D2B5449D80014E6D5 /* InsightDetailCaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightDetailCaveViewController.swift; sourceTree = "<group>"; };
+		588E2B9F2B544E240014E6D5 /* InsightDetailEditSeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightDetailEditSeedViewController.swift; sourceTree = "<group>"; };
 		58AB70AB2B2C7CC50061C072 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		58AB70AD2B2C88570061C072 /* MyPageThookBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageThookBoxView.swift; sourceTree = "<group>"; };
 		58AB70B02B2C90560061C072 /* MyPageListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageListTableViewCell.swift; sourceTree = "<group>"; };
@@ -991,6 +999,8 @@
 				588E2B502B5405F90014E6D5 /* InsightDetailMenuViewController.swift */,
 				588E2B952B5410280014E6D5 /* InsigthDetailActionPlanSheetViewController.swift */,
 				588E2B992B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift */,
+				588E2B9D2B5449D80014E6D5 /* InsightDetailCaveViewController.swift */,
+				588E2B9F2B544E240014E6D5 /* InsightDetailEditSeedViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1000,6 +1010,8 @@
 			children = (
 				588E2B4D2B53BB8C0014E6D5 /* Components */,
 				588E2B492B53ACC80014E6D5 /* InsightsDetailMemoView.swift */,
+				588E2B9B2B543B3C0014E6D5 /* InsightsDetailMainBlockView.swift */,
+				58026D982B55264B00176D12 /* ActionPlanCellMenuView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1307,6 +1319,7 @@
 				03B9AC5B2AF5610D00A5751C /* APIConstant.swift in Sources */,
 				25BD951F2B08F73700E72ADC /* CompleteViewController.swift in Sources */,
 				035DB2A72B00E6F200161872 /* InsightListView.swift in Sources */,
+				58026D992B55264B00176D12 /* ActionPlanCellMenuView.swift in Sources */,
 				25BD95182B0894A200E72ADC /* ActionListTableViewCell.swift in Sources */,
 				03B9AC7C2AF5651600A5751C /* UITabBar+.swift in Sources */,
 				25BD951B2B089B9900E72ADC /* ActionListModel.swift in Sources */,
@@ -1344,10 +1357,13 @@
 				259E7F792B42A68B00F3DC8F /* OnboardingButtonView.swift in Sources */,
 				09A7D70A2B01E6A9005F8821 /* CreateCaveModel.swift in Sources */,
 				03B9AC592AF560D800A5751C /* Config.swift in Sources */,
+				588E2BA02B544E240014E6D5 /* InsightDetailEditSeedViewController.swift in Sources */,
 				03B9AC8D2AF5663C00A5751C /* Font.swift in Sources */,
 				09CE00EA2B0DB13700CB42C4 /* CreateActionViewModel.swift in Sources */,
 				035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */,
 				588E2B482B53AC690014E6D5 /* InsightsDetailViewController.swift in Sources */,
+				588E2B9E2B5449D80014E6D5 /* InsightDetailCaveViewController.swift in Sources */,
+				588E2B9C2B543B3C0014E6D5 /* InsightsDetailMainBlockView.swift in Sources */,
 				09DE08022B04FDF800D7DF3D /* EmptyViewController.swift in Sources */,
 				03B9AC722AF5646000A5751C /* UITextField+.swift in Sources */,
 				033E9C1B2AFE606E0051A9E8 /* CaveCollectionViewCell.swift in Sources */,
