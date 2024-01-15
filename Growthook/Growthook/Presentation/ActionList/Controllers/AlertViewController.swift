@@ -16,7 +16,7 @@ import Then
 
 final class AlertViewController: BaseViewController {
     
-    private var viewModel = ActionListViewModel()
+    private var viewModel: ActionListViewModel
     private let disposeBag = DisposeBag()
     
     // MARK: - UI Components
@@ -34,6 +34,11 @@ final class AlertViewController: BaseViewController {
     
     
     // MARK: - Initializer
+        
+    init(viewModel: ActionListViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     // MARK: - View Life Cycle
     
@@ -154,6 +159,10 @@ final class AlertViewController: BaseViewController {
     @objc
     private func didTapCheckButton() {
         dismiss(animated: false, completion: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

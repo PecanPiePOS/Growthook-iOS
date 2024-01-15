@@ -20,7 +20,7 @@ protocol NotificationActionListVC: AnyObject {
 
 final class InprogressViewController: BaseViewController, NotificationDismissBottomSheet {
     
-    private var viewModel = ActionListViewModel()
+    private var viewModel: ActionListViewModel
     private var disposeBag = DisposeBag()
     
     // MARK: - UI Components
@@ -33,8 +33,14 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
     weak var delegate: NotificationActionListVC?
     private var isShowingScrappedData = false
     private var isPresentingBottomSheet = false
+    var indexPath: IndexPath? = nil
     
     // MARK: - Initializer
+    
+    init(viewModel: ActionListViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     // MARK: - View Life Cycle
     
@@ -50,6 +56,13 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
                 self.isShowingScrappedData.toggle()
                 self.tableView.reloadData()
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.doingActionList
+            .subscribe(onNext: { [weak self] data in
+                guard let self = self else { return }
+                self.tableView.reloadData()
+            })
             .disposed(by: disposeBag)
     }
     
@@ -86,13 +99,13 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
     
     // MARK: - Methods
     
-    private func presentToBottomSheet() {
+    private func presentToBottomSheet(actionPlanId: Int) {
         guard !isPresentingBottomSheet else {
             return
         }
         isPresentingBottomSheet = true
 
-        let bottomSheetVC = ActionListBottomSheetViewController()
+        let bottomSheetVC = ActionListBottomSheetViewController(actionPlanId: actionPlanId, viewModel: viewModel)
         bottomSheetVC.delegate = self
 
         self.present(bottomSheetVC, animated: true) {
@@ -114,7 +127,9 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
         delegate?.moveToCompletePageBySaveButton()
     }
     
-    // MARK: - @objc Methods
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 
@@ -154,8 +169,7 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
         cell.completButton.rx.tap
             .bind { [weak self]  in
                 guard let self else { return }
-                self.viewModel.inputs.didTapCompletButton()
-                self.presentToBottomSheet()
+                self.presentToBottomSheet(actionPlanId: cell.actionPlanId)
             }
             .disposed(by: cell.disposeBag)
 

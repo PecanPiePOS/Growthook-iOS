@@ -652,7 +652,6 @@
 		03B9ACA22AF7B27600A5751C /* ActionList */ = {
 			isa = PBXGroup;
 			children = (
-				25BD95192B089B9000E72ADC /* Model */,
 				252DD8822B0639FF00DBB1D1 /* Controllers */,
 				252DD8812B0639FE00DBB1D1 /* ViewModels */,
 				252DD8802B0639FC00DBB1D1 /* Views */,
@@ -886,13 +885,6 @@
 				250F7D722B145F4C00D9726F /* ActionListCompleteTableViewCell.swift */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		25BD95192B089B9000E72ADC /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		581D228C2B320BE70068E58D /* NewUITextComponent */ = {

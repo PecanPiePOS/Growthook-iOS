@@ -15,7 +15,7 @@ import Then
 
 final class CompleteViewController: BaseViewController {
     
-    private var viewModel = ActionListViewModel()
+    private var viewModel: ActionListViewModel
     private let disposeBag = DisposeBag()
     
     // MARK: - UI Components
@@ -29,6 +29,12 @@ final class CompleteViewController: BaseViewController {
     private var isShowingScrappedData = false
     
     // MARK: - Initializer
+    
+    init(viewModel: ActionListViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     
     // MARK: - View Life Cycle
     
@@ -44,6 +50,13 @@ final class CompleteViewController: BaseViewController {
                 self.isShowingScrappedData.toggle()
                 self.tableView.reloadData()
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.finishedActionList
+            .subscribe(onNext: { [weak self] data in
+                guard let self = self else { return }
+                self.tableView.reloadData()
+            })
             .disposed(by: disposeBag)
     }
     
@@ -84,10 +97,15 @@ final class CompleteViewController: BaseViewController {
     private func getScrappedActionList() -> [ActionListFinishedResponse] {
         return viewModel.outputs.finishedActionList.value.filter { $0.isScraped == true }
     }
+    
     // MARK: - @objc Methods
     
     @objc func buttonTapped() {
         delegate?.didTapButtonInCompleteViewController()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

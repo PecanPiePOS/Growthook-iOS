@@ -26,8 +26,8 @@ final class ActionListViewController: BaseViewController {
     
     private let titleBarView = MainTitleBarView()
     let segmentedView = ActionListSegmentedView()
-    private let inprogressViewController = InprogressViewController()
-    private let completeViewController = CompleteViewController()
+    private let inprogressViewController: InprogressViewController
+    private let completeViewController: CompleteViewController
     private lazy var viewControllers: [UIViewController] = [inprogressViewController, completeViewController]
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     private var currentPage: UIViewController!
@@ -38,6 +38,13 @@ final class ActionListViewController: BaseViewController {
     
     
     // MARK: - Initializer
+    
+    override init(nibName: String?, bundle: Bundle?) {
+        inprogressViewController = InprogressViewController(viewModel: viewModel)
+        completeViewController = CompleteViewController(viewModel: viewModel)
+
+        super.init(nibName: nibName, bundle: bundle)
+    }
     
     // MARK: - View Life Cycle
     
@@ -67,15 +74,9 @@ final class ActionListViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        //        viewModel.outputs.titlePersent
-        //            .drive(onNext: { [weak self] persent in
-        //                self?.titleBarView.setPersentText(persent)
-        //            })
-        //            .disposed(by: disposeBag)
-        
         viewModel.outputs.titlePersent
-            .bind(onNext: { [weak self] persent in
-                self?.titleBarView.setPersentText(persent)
+            .subscribe(onNext: { persent in
+                self.titleBarView.setPersentText(persent)
             })
             .disposed(by: disposeBag)
         
@@ -139,13 +140,13 @@ final class ActionListViewController: BaseViewController {
     }
     
     func didTapButtonInCompleteViewController() {
-        let vc = ActionListReviewViewController()
+        let vc = ActionListReviewViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
         print("didTapButtonInCompleteViewController")
     }
     
     func openAlert() {
-        let customAlertVC = AlertViewController()
+        let customAlertVC = AlertViewController(viewModel: viewModel)
         customAlertVC.modalPresentationStyle = .overFullScreen
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let mainWindow = windowScene.windows.first {
@@ -153,8 +154,10 @@ final class ActionListViewController: BaseViewController {
         }
     }
     
-    // MARK: - @objc Methods
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 
