@@ -27,8 +27,8 @@ final class CreateActionViewControlller: BaseViewController {
     private var textViewIndex = 0
     private var actionplan: [Int: String] = [:]
     private var status: Bool = false {
-        didSet(value) {
-            if value == false {
+        willSet(value) {
+            if value == true {
                 self.createActionView.confirmButton.isEnabled = true
                 self.createActionView.confirmButton.setTitleColor(.green400, for: .normal)
             }
@@ -70,6 +70,7 @@ final class CreateActionViewControlller: BaseViewController {
     override func setDelegates() {
         createActionView.createSpecificPlanView.planCollectionView.delegate = self
         createActionView.createSpecificPlanView.planCollectionView.dataSource = self
+        
     }
     
     override func bindViewModel() {
@@ -96,8 +97,11 @@ final class CreateActionViewControlller: BaseViewController {
             .bind {
                 self.countPlan += 1
                 self.textViewIndex += 1
+                print(self.countPlan)
                 self.viewModel.inputs.setCount(count: self.countPlan)
                 self.createActionView.createSpecificPlanView.planCollectionView.reloadData()
+//                let vc = ActionListBottomSheetViewController()
+//                self.present(vc, animated: true)
             }
             .disposed(by: disposeBag)
         
@@ -139,51 +143,17 @@ extension CreateActionViewControlller: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpecificPlanCollectionViewCell.className, for: indexPath) as? SpecificPlanCollectionViewCell else {
             return SpecificPlanCollectionViewCell()
         }
+        cell.delegate = self
         let placeholder = "구체적인 계획을 설정해보세요"
         let textView = cell.planTextView
         let data = self.actionplan[countPlan - indexPath.item - 1]
         if data == "" || data == nil || data == placeholder {
-            cell.configure(textViewIndex: countPlan - indexPath.item - 1, content: placeholder)
+            cell.configure(textViewIndex: countPlan - indexPath.item - 1, content: nil)
         }
         else {
-            cell.configure(textViewIndex: countPlan - indexPath.item - 1, content: data ?? placeholder)
+            cell.configure(textViewIndex: countPlan - indexPath.item - 1, content: data ?? "")
         }
         
-        var newIndex: Int = -1
-        
-        textView.rx.didBeginEditing
-            .bind { [weak self] in
-                guard let self else { return }
-                textView.rxEditingAction.accept(.editingDidBegin)
-                textView.modifyBorderLine(with: .green200)
-                newIndex = countPlan - indexPath.item - 1
-                if textView.text == placeholder {
-                    textView.text = nil
-                    textView.textColor = .white000
-                    textView.font = .fontGuide(.body3_bold)
-                }
-            }
-            .disposed(by: disposeBag)
-        
-        textView.rx.didEndEditing
-            .bind { [weak self] value in
-                guard let self else { return }
-                textView.rxEditingAction.accept(.editingDidBegin)
-                if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
-                    textView.text = placeholder
-                    textView.textColor = .gray300
-                    textView.font = .fontGuide(.body3_reg)
-                    textView.modifyBorderLine(with: .gray200)
-                    self.actionplan.removeValue(forKey: newIndex)
-                } else {
-                    textView.modifyBorderLine(with: .white000)
-                    self.actionplan.updateValue(textView.text, forKey: newIndex)
-                }
-                
-                print("😱😱😱😱😱😱😱😱", self.actionplan)
-                self.status = self.actionplan.isEmpty
-            }
-            .disposed(by: disposeBag)
         textView.rx.text.orEmpty
             .distinctUntilChanged()
             .bind { [weak self] text in
@@ -243,5 +213,19 @@ extension CreateActionViewControlller {
     
     func tapBackgroundView(_ sender: Any) {
         view.endEditing(true)
+    }
+}
+
+extension CreateActionViewControlller: SendTextDelegate {
+    func sendText(index: Int, text: String?) {
+        guard let text = text else { return }
+        if text == "" || text == placeholder {
+            self.actionplan.removeValue(forKey: index)
+        }
+        else {
+            self.actionplan.updateValue(text, forKey: index)
+        }
+        self.status = self.actionplan.count > 0
+        print(status)
     }
 }

@@ -1,8 +1,8 @@
 //
-//  CommonTextViewWithBorder.swift
+//  ActionplanTextView.swift
 //  Growthook
 //
-//  Created by KYUBO A. SHIM on 12/20/23.
+//  Created by Minjoo Kim on 1/15/24.
 //
 
 import UIKit
@@ -10,7 +10,8 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
+
+final class ActionplanTextView: UITextView, CommonTextComponentType {
     
     // MARK: - Properties
     private var disposeBag = DisposeBag()
@@ -18,6 +19,9 @@ final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
     
     private(set) var customPlaceholder: String
     private(set) var maxLength: Int
+    
+    var editedText: String = ""
+    var newText = BehaviorRelay<String>(value: "")
     
     // MARK: - Extended .rx Properties
     var rxEditingAction = PublishRelay<UIControl.Event>()
@@ -77,7 +81,7 @@ final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
     }
 }
 
-extension CommonTextViewWithBorder {
+extension ActionplanTextView {
     
     // MARK: - Bind Action
     private func bindEditingAction() {
@@ -105,7 +109,8 @@ extension CommonTextViewWithBorder {
                     modifyBorderLine(with: .gray200)
                 } else {
                     modifyBorderLine(with: .white000)
-                    print("작성끝", self.text)
+                    editedText = self.text
+                    newText.accept(self.text)
                 }
             }
             .disposed(by: disposeBag)
@@ -133,7 +138,7 @@ extension CommonTextViewWithBorder {
         self.isScrollEnabled = true
     }
     
-    private func setBorderLine() {
+    func setBorderLine() {
         self.layer.borderWidth = 0.5
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 7
@@ -149,7 +154,7 @@ extension CommonTextViewWithBorder {
         }
     }
     
-    private func setFont() {
+    func setFont() {
         if let text {
             if text.isEmpty {
                 textColor = .gray300
@@ -193,7 +198,7 @@ extension CommonTextViewWithBorder {
     }
 }
 
-extension CommonTextViewWithBorder {
+extension ActionplanTextView {
     // MARK: - @objc methods
     @objc
     private func hidesKeyboardWhenTapped() {
@@ -201,7 +206,7 @@ extension CommonTextViewWithBorder {
     }
 }
 
-extension CommonTextViewWithBorder {
+extension ActionplanTextView {
     
     func setPlaceholder() {
         if self.text.isEmpty || self.text == "" {

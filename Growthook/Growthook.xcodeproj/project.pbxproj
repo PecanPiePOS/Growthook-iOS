@@ -102,6 +102,7 @@
 		092C816D2B334E13006B0F65 /* CreateSpecificPlanView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 092C816C2B334E13006B0F65 /* CreateSpecificPlanView .swift */; };
 		092C81702B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092C816F2B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift */; };
 		093C1DFA2B4C314B00EF84AB /* CreateCaveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093C1DF92B4C314B00EF84AB /* CreateCaveService.swift */; };
+		098DFC9E2B5550010099063D /* ActionplanTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098DFC9D2B5550010099063D /* ActionplanTextView.swift */; };
 		09A7D6FD2B00DE9C005F8821 /* CreateCaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7D6FC2B00DE9C005F8821 /* CreateCaveViewController.swift */; };
 		09A7D7002B00DED0005F8821 /* CreateCaveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7D6FF2B00DED0005F8821 /* CreateCaveViewModel.swift */; };
 		09A7D7022B00DFC6005F8821 /* BottomCTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7D7012B00DFC6005F8821 /* BottomCTAButton.swift */; };
@@ -261,6 +262,7 @@
 		092C816C2B334E13006B0F65 /* CreateSpecificPlanView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateSpecificPlanView .swift"; sourceTree = "<group>"; };
 		092C816F2B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificPlanCollectionViewCell.swift; sourceTree = "<group>"; };
 		093C1DF92B4C314B00EF84AB /* CreateCaveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCaveService.swift; sourceTree = "<group>"; };
+		098DFC9D2B5550010099063D /* ActionplanTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionplanTextView.swift; sourceTree = "<group>"; };
 		09A7D6FC2B00DE9C005F8821 /* CreateCaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCaveViewController.swift; sourceTree = "<group>"; };
 		09A7D6FF2B00DED0005F8821 /* CreateCaveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCaveViewModel.swift; sourceTree = "<group>"; };
 		09A7D7012B00DFC6005F8821 /* BottomCTAButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCTAButton.swift; sourceTree = "<group>"; };
@@ -852,6 +854,7 @@
 				09CE00EC2B0DB1EA00CB42C4 /* CreateActionView.swift */,
 				09CE00F62B0DBAE800CB42C4 /* InsightView.swift */,
 				092C816C2B334E13006B0F65 /* CreateSpecificPlanView .swift */,
+				098DFC9D2B5550010099063D /* ActionplanTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1207,6 +1210,7 @@
 				58AB70B12B2C90560061C072 /* MyPageListTableViewCell.swift in Sources */,
 				0322137A2B17642E00FF5CF1 /* RemoveAlertView.swift in Sources */,
 				03C356632B1069AC00750758 /* CaveListHalfModalCell.swift in Sources */,
+				098DFC9E2B5550010099063D /* ActionplanTextView.swift in Sources */,
 				03B9AC952AF566C800A5751C /* BlurredLabel.swift in Sources */,
 				586626222B4E7CC00084468C /* NetworkManager.swift in Sources */,
 				03B9AC9D2AF7A9EB00A5751C /* TabBarItem.swift in Sources */,

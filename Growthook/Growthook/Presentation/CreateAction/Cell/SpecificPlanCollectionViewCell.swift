@@ -21,13 +21,14 @@ final class SpecificPlanCollectionViewCell: UICollectionViewCell {
     weak var delegate: SendTextDelegate?
     private var cellIndexForId: Int?
     private var contents: String?
+
     
     private let viewModel = CreateActionViewModel()
     var disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
-    let planTextView = CommonTextViewWithBorder(placeholder: "구체적인 계획을 설정해보세요", maxLength: 40)
+    var planTextView = ActionplanTextView(placeholder: "구체적인 계획을 설정해보세요", maxLength: 40)
     let countLabel = UILabel()
     
     // MARK: - View Life Cycle
@@ -48,9 +49,9 @@ final class SpecificPlanCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        cellIndexForId = 0
+        contents = nil
         planTextView.text = nil
-        self.disposeBag = DisposeBag()
-
     }
 }
 
@@ -65,22 +66,12 @@ extension SpecificPlanCollectionViewCell {
             $0.font = .fontGuide(.detail1_reg)
         }
         
-        planTextView.rx.text
-            .bind { [weak self] text in
-                guard let self else {return }
-                self.contents = text
-            }
-            .disposed(by: disposeBag)
-        
-        planTextView.rxEditingAction
-            .bind { [weak self] event in
-                guard let self = self, let id = self.cellIndexForId else { return }
-                switch event {
-                case .editingDidEnd:
-                    self.delegate?.sendText(index: id, text: self.contents)
-                default:
-                    break
-                }
+        planTextView.rx.didEndEditing
+            .bind { [weak self] _ in
+                guard let self else { return }
+                guard let index = cellIndexForId else { return }
+                self.contents = self.planTextView.text
+                delegate?.sendText(index: index, text: contents)
             }
             .disposed(by: disposeBag)
     }
@@ -102,8 +93,18 @@ extension SpecificPlanCollectionViewCell {
         }
     }
     
-    func configure(textViewIndex: Int, content: String) {
+    func configure(textViewIndex: Int, content: String?) {
         self.cellIndexForId = textViewIndex
+        self.contents = content
         self.planTextView.text = content
+        if planTextView.text == nil || planTextView.text == "" {
+            self.planTextView.setPlaceholder()
+        }
+        setFocus()
+    }
+    
+    func setFocus() {
+        planTextView.setBorderLine()
+        planTextView.setFont()
     }
 }
