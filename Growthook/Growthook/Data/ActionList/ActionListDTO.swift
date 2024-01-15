@@ -36,6 +36,12 @@ struct ActionListReviewDetailResponse: Codable {
     let content, reviewDate: String
 }
 
+extension ActionListReviewDetailResponse {
+    static func actionListReviewDetailDummy() -> ActionListReviewDetailResponse {
+        return ActionListReviewDetailResponse(actionPlan: "", isScraped: false, content: "", reviewDate: "")
+    }
+}
+
 struct ActionListReviewPostRequest: Codable {
     let content: String
 }
