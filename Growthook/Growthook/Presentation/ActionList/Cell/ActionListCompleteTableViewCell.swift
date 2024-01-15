@@ -142,9 +142,9 @@ extension ActionListCompleteTableViewCell {
     func configure(_ model: ActionListFinishedResponse) {
         switch model.isScraped {
         case false:
-            scrapButton.setImage(ImageLiterals.Scrap.seed_light_default, for: .normal)
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
         case true:
-            scrapButton.setImage(ImageLiterals.Scrap.seed_light_active, for: .normal)
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
         }
         actionTitleLabel.text = model.content
         actionPlanId = model.actionPlanId

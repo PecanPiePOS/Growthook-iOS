@@ -78,7 +78,7 @@ final class MainTitleBarView: BaseView {
         percentView.snp.makeConstraints {
             $0.top.equalTo(mainTitleLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(18)
-            $0.width.equalTo(97)
+            $0.width.equalTo(99)
             $0.height.equalTo(28)
         }
     }

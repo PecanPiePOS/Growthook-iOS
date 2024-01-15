@@ -20,7 +20,7 @@ final class CompleteViewController: BaseViewController {
     
     // MARK: - UI Components
     
-    private let scrapButton = ScrapOnlyButton()
+    private let scrapButton = UIButton	()
     private let tableView = UITableView(frame: .zero, style: .plain)
     
     // MARK: - Properties
@@ -65,6 +65,10 @@ final class CompleteViewController: BaseViewController {
     override func setStyles() {
         view.backgroundColor = .gray700
         
+        scrapButton.do {
+            $0.setImage(ImageLiterals.Scrap.btn_scrap_default, for: .normal)
+        }
+        
         tableView.do {
             $0.showsVerticalScrollIndicator = false
             $0.separatorStyle = .none
@@ -87,7 +91,7 @@ final class CompleteViewController: BaseViewController {
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(scrapButton.snp.bottom).offset(13)
+            $0.top.equalTo(scrapButton.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }

@@ -140,6 +140,8 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     }
 }
 
+// memberID 값 받아와야함. 언제? ActionList 탭을 터치할 때 한 마디로 init 이 될 때
+
 
 extension ActionListViewModel {
     
