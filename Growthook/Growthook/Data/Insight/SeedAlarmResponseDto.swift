@@ -12,7 +12,7 @@ struct SeedAlarmResponseDto: Codable {
 }
 
 extension SeedAlarmResponseDto {
-    static func alarmDummy() -> SeedAlarmResponseDto {
+    static func alarmInitValue() -> SeedAlarmResponseDto {
         return SeedAlarmResponseDto(seedCount: 0)
     }
 }

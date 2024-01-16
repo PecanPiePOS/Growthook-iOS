@@ -76,7 +76,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var insightAlarm: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var insightScrapToggle: PublishSubject<Void> = PublishSubject<Void>()
     var unLockSeed: PublishSubject<Void> = PublishSubject<Void>()
-    var caveDetail: BehaviorRelay<CaveDetailResponseDto> = BehaviorRelay<CaveDetailResponseDto>(value: CaveDetailResponseDto.caveDetailDummy())
+    var caveDetail: BehaviorRelay<CaveDetailResponseDto> = BehaviorRelay<CaveDetailResponseDto>(value: CaveDetailResponseDto.caveDetailInitValue())
     var caveInsightList: BehaviorRelay<[SeedListResponseDto]> = BehaviorRelay<[SeedListResponseDto]>(value: [])
     
     private let disposeBag = DisposeBag()
