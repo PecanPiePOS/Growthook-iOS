@@ -14,8 +14,14 @@ import SnapKit
 import Then
 
 protocol PushToActionListReviewViewController: AnyObject {
-    func didTapButtonInCompleteViewController()
+    func didTapReviewButtonInCompleteViewController()
+    func didTapSeedButtonInCompleteViewController(seedId: Int)
 }
+
+protocol PushInsightsDetailViewController: AnyObject {
+    func didTapSeedButtonInInprogressViewController(seedId: Int)
+}
+
 
 final class ActionListViewController: BaseViewController {
     
@@ -128,6 +134,7 @@ final class ActionListViewController: BaseViewController {
         segmentedView.delegate = self
         completeViewController.delegate = self
         inprogressViewController.delegate = self
+        inprogressViewController.pushDelegate = self
     }
     
     // MARK: - Methods
@@ -139,12 +146,17 @@ final class ActionListViewController: BaseViewController {
         }
     }
     
-    func didTapButtonInCompleteViewController() {
+    func didTapReviewButtonInCompleteViewController() {
         let vc = ActionListReviewViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(vc, animated: true)
-        print("didTapButtonInCompleteViewController")
     }
     
+    func didTapSeedButtonInCompleteViewController(seedId: Int) {
+        print("pushToInsightsDetailViewController by Complete \(seedId)")
+        // TODO: Connet
+    }
+    
+ 
     func openAlert() {
         let customAlertVC = AlertViewController(viewModel: viewModel)
         customAlertVC.modalPresentationStyle = .overFullScreen
@@ -161,7 +173,13 @@ final class ActionListViewController: BaseViewController {
 }
 
 
-extension ActionListViewController: ActionListSegmentDelegate , PushToActionListReviewViewController, NotificationActionListVC {
+extension ActionListViewController: ActionListSegmentDelegate , PushToActionListReviewViewController, NotificationActionListVC, PushInsightsDetailViewController {
+    
+    func didTapSeedButtonInInprogressViewController(seedId: Int) {
+        print("pushToInsightsDetailViewController by InProgress \(seedId)")
+        // TODO: Connet
+    }
+    
     
     func movePage(to index: Int) {
         switch index {

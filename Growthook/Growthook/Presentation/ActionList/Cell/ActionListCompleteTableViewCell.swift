@@ -148,5 +148,6 @@ extension ActionListCompleteTableViewCell {
         }
         actionTitleLabel.text = model.content
         actionPlanId = model.actionPlanId
+        seedId = model.seedId
     }
 }

@@ -31,6 +31,7 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
     // MARK: - Properties
     
     weak var delegate: NotificationActionListVC?
+    weak var pushDelegate: PushInsightsDetailViewController?
     private var isShowingScrappedData = false
     private var isPresentingBottomSheet = false
     var indexPath: IndexPath? = nil
@@ -47,7 +48,7 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     override func bindViewModel() {
         scrapButton.rx.tap
             .bind { [weak self] in
@@ -108,10 +109,10 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
             return
         }
         isPresentingBottomSheet = true
-
+        
         let bottomSheetVC = ActionListBottomSheetViewController(actionPlanId: actionPlanId, viewModel: viewModel)
         bottomSheetVC.delegate = self
-
+        
         self.present(bottomSheetVC, animated: true) {
             self.isPresentingBottomSheet = false
         }
@@ -119,6 +120,10 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
     
     private func getScrappedActionList() -> [ActionListDoingResponse] {
         return viewModel.outputs.doingActionList.value.filter { $0.isScraped == true }
+    }
+    
+    func pushToInsightsDetailViewControllerInInprogressViewController(seedId: Int) {
+        pushDelegate?.didTapSeedButtonInInprogressViewController(seedId : seedId)
     }
     
     func notificationDismissInCancelButton() {
@@ -167,6 +172,7 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
             .bind { [weak self] in
                 guard let self else { return }
                 self.viewModel.inputs.didTapSeedButton()
+                self.pushToInsightsDetailViewControllerInInprogressViewController(seedId: cell.seedId)
             }
             .disposed(by: cell.disposeBag)
 

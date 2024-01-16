@@ -102,10 +102,12 @@ final class CompleteViewController: BaseViewController {
         return viewModel.outputs.finishedActionList.value.filter { $0.isScraped == true }
     }
     
-    // MARK: - @objc Methods
+    private func pushToReviewViewController() {
+        delegate?.didTapReviewButtonInCompleteViewController()
+    }
     
-    @objc func buttonTapped() {
-        delegate?.didTapButtonInCompleteViewController()
+    private func pushToInsightsDetailViewControllerInCompleteViewController(seedId: Int) {
+        delegate?.didTapSeedButtonInCompleteViewController(seedId: seedId)
     }
     
     required init?(coder: NSCoder) {
@@ -144,6 +146,7 @@ extension CompleteViewController: UITableViewDelegate, UITableViewDataSource {
             .bind { [weak self] in
                 guard let self else { return }
                 self.viewModel.inputs.didTapSeedButton()
+                self.pushToInsightsDetailViewControllerInCompleteViewController(seedId: cell.seedId)
             }
             .disposed(by: cell.disposeBag)
         
@@ -151,8 +154,7 @@ extension CompleteViewController: UITableViewDelegate, UITableViewDataSource {
             .bind { [weak self]  in
                 guard let self else { return }
                 self.viewModel.inputs.didTapReviewButton(with: cell.actionPlanId)
-                self.buttonTapped()
-                
+                self.pushToReviewViewController()
             }
             .disposed(by: cell.disposeBag)
 
