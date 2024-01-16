@@ -55,7 +55,7 @@ protocol HomeViewModelOutputs {
     var removeCave: PublishSubject<Void> { get }
     var insightAllCount: BehaviorRelay<Int> { get }
     var caveInsightAllCount: BehaviorRelay<Int> { get }
-    var ssukCount: BehaviorRelay<SsukResponseGto> { get }
+    var ssukCount: BehaviorRelay<SsukResponseDto> { get }
 }
 
 protocol HomeViewModelType {
@@ -106,7 +106,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var caveInsightAllCount: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     
     // 현재 쑥 개수
-    var ssukCount: BehaviorRelay<SsukResponseGto> = BehaviorRelay<SsukResponseGto>(value: SsukResponseGto.ssukDummy())
+    var ssukCount: BehaviorRelay<SsukResponseDto> = BehaviorRelay<SsukResponseDto>(value: SsukResponseDto.ssukDummy())
     
     var inputs: HomeViewModelInputs { return self }
     var outputs: HomeViewModelOutputs { return self }

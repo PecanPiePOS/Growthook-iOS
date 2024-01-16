@@ -14,18 +14,18 @@ final class SsukAPI {
     
     private init() {}
     
-    public private(set) var ssukData: GeneralResponse<SsukResponseGto>?
-    public private(set) var usedSsukData: GeneralResponse<SsukResponseGto>?
+    public private(set) var ssukData: GeneralResponse<SsukResponseDto>?
+    public private(set) var usedSsukData: GeneralResponse<SsukResponseDto>?
     
     // MARK: - GET
     /// 수확한 쑥 조회
     func getGatheredSsuk(memberId: Int,
-                         completion: @escaping(GeneralResponse<SsukResponseGto>?) -> Void) {
+                         completion: @escaping(GeneralResponse<SsukResponseDto>?) -> Void) {
         ssukProvider.request(.getSsuk(memberId: memberId)) { result in
             switch result {
             case .success(let response):
                 do {
-                    self.ssukData = try response.map(GeneralResponse<SsukResponseGto>?.self)
+                    self.ssukData = try response.map(GeneralResponse<SsukResponseDto>?.self)
                     guard let ssukData = self.ssukData else { return }
                     completion(ssukData)
                 } catch let err {
@@ -40,12 +40,12 @@ final class SsukAPI {
     
     /// 사용한 쑥 조회
     func getUsedSsuk(memberId: Int,
-                     completion: @escaping(GeneralResponse<SsukResponseGto>?) -> Void) {
+                     completion: @escaping(GeneralResponse<SsukResponseDto>?) -> Void) {
         ssukProvider.request(.getUsedSsuk(memberId: memberId)) { result in
             switch result {
             case .success(let response):
                 do {
-                    self.usedSsukData = try response.map(GeneralResponse<SsukResponseGto>?.self)
+                    self.usedSsukData = try response.map(GeneralResponse<SsukResponseDto>?.self)
                     guard let usedSsukData = self.usedSsukData else { return }
                     completion(usedSsukData)
                 } catch let err {

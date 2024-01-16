@@ -23,7 +23,7 @@
 		0332A38D2B501E0700720CD3 /* CavePatchRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */; };
 		0332A3902B5020CC00720CD3 /* CaveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38F2B5020CC00720CD3 /* CaveAPI.swift */; };
 		0332A3922B50433200720CD3 /* SeedMoveRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3912B50433200720CD3 /* SeedMoveRequestDto.swift */; };
-		0332A3952B5135A900720CD3 /* SsukResponseGto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3942B5135A900720CD3 /* SsukResponseGto.swift */; };
+		0332A3952B5135A900720CD3 /* SsukResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3942B5135A900720CD3 /* SsukResponseDto.swift */; };
 		0332A39A2B5135F900720CD3 /* SsukTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3992B5135F900720CD3 /* SsukTarget.swift */; };
 		0332A39D2B51370000720CD3 /* SsukAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A39C2B51370000720CD3 /* SsukAPI.swift */; };
 		033E9C102AFCE0860051A9E8 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033E9C0F2AFCE0860051A9E8 /* Image.xcassets */; };
@@ -190,7 +190,7 @@
 		0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavePatchRequestDto.swift; sourceTree = "<group>"; };
 		0332A38F2B5020CC00720CD3 /* CaveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAPI.swift; sourceTree = "<group>"; };
 		0332A3912B50433200720CD3 /* SeedMoveRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedMoveRequestDto.swift; sourceTree = "<group>"; };
-		0332A3942B5135A900720CD3 /* SsukResponseGto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukResponseGto.swift; sourceTree = "<group>"; };
+		0332A3942B5135A900720CD3 /* SsukResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukResponseDto.swift; sourceTree = "<group>"; };
 		0332A3992B5135F900720CD3 /* SsukTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukTarget.swift; sourceTree = "<group>"; };
 		0332A39C2B51370000720CD3 /* SsukAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukAPI.swift; sourceTree = "<group>"; };
 		033E9C0F2AFCE0860051A9E8 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
@@ -395,7 +395,7 @@
 		0332A3932B51357E00720CD3 /* Ssuk */ = {
 			isa = PBXGroup;
 			children = (
-				0332A3942B5135A900720CD3 /* SsukResponseGto.swift */,
+				0332A3942B5135A900720CD3 /* SsukResponseDto.swift */,
 			);
 			path = Ssuk;
 			sourceTree = "<group>";
@@ -592,7 +592,6 @@
 				035701E82B4EBA7100A9E47A /* Cave */,
 				586626112B4E65590084468C /* Insights */,
 				5866260C2B4E65410084468C /* MyPage */,
-				03B9AC612AF5624D00A5751C /* DTO.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -732,7 +731,6 @@
 				035701F12B4EFBA200A9E47A /* SeedListAPI */,
 				586626172B4E65810084468C /* Insights */,
 				586626162B4E65780084468C /* MyPage */,
-				03B9AC5F2AF561AD00A5751C /* API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1367,7 +1365,7 @@
 				2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */,
 				25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */,
 				581D22942B32EC950068E58D /* CommonTextViewWithBorder.swift in Sources */,
-				0332A3952B5135A900720CD3 /* SsukResponseGto.swift in Sources */,
+				0332A3952B5135A900720CD3 /* SsukResponseDto.swift in Sources */,
 				09A7D6FD2B00DE9C005F8821 /* CreateCaveViewController.swift in Sources */,
 				03B9AC642AF562D000A5751C /* UIView+.swift in Sources */,
 				032213322B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift in Sources */,
