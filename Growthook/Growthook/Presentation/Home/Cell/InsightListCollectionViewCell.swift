@@ -152,6 +152,7 @@ extension InsightListCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         lockView.isHidden = true
+        makeBorder(width: 0, color: .gray200)
     }
     
     func configureCell(_ model: SeedListResponseDto) {
