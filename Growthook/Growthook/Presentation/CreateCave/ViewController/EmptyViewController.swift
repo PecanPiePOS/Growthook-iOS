@@ -39,7 +39,7 @@ final class EmptyViewController: BaseViewController {
         emptyView.navigationBar.closeButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.dismiss(animated: true)
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             }
             .disposed(by: disposeBag)
         emptyView.plantSeedButton.rx.tap
