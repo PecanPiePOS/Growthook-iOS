@@ -73,11 +73,10 @@ final class CaveDetailViewController: BaseViewController {
                 cell.scrapButtonTapHandler = { [weak self] in
                     guard let self else { return }
                     if !cell.isScrapButtonTapped {
-                        // 스크랩
-                        print("scrap")
-                        self.view.showScrapToast(message: "스크랩 완료!")
+                        self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
                     }
                     cell.isScrapButtonTapped.toggle()
+                    self.viewModel.inputs.insightScrap(seedId: model.seedId, index: index)
                 }
             }
             .disposed(by: disposeBag)
@@ -148,12 +147,13 @@ final class CaveDetailViewController: BaseViewController {
         unLockCaveAlertView.checkButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.unLockCaveAlertView.removeFromSuperview()
+                // TODO: - 인사이트 디테일 이동
             })
             .disposed(by: disposeBag)
         
         caveDetailView.addSeedButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                // add Seed
+                // TODO: - 인사이트 생성 뷰 이동
             })
             .disposed(by: disposeBag)
         
@@ -166,6 +166,14 @@ final class CaveDetailViewController: BaseViewController {
         caveDetailView.navigationView.menuButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.presentToMenuVC()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.pushToChangeCave
+            .subscribe(onNext: { [weak self] in
+                guard let caveId = self?.caveId else { return }
+                guard let viewModel = self?.viewModel else { return }
+                self?.navigationController?.pushViewController(ChangeCaveViewController(caveId: caveId, homeViewModel: viewModel), animated: true)
             })
             .disposed(by: disposeBag)
     }
@@ -225,7 +233,7 @@ extension CaveDetailViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(clearNotification(_:)),
-            name: Notification.Name("DeSelectInsightNotification"),
+            name: Notification.Name(I18N.Component.Identifier.deSelectNoti),
             object: nil)
     }
     
@@ -239,7 +247,7 @@ extension CaveDetailViewController {
                 }
                 self.lockSeedId = cell.seedId
             } else {
-                print("pushToInsightDetail")
+                // TODO: - 인사이트 디테일 이동
             }
         }
     }
@@ -266,7 +274,7 @@ extension CaveDetailViewController {
     func presentToHalfModalViewController(_ indexPath: IndexPath) {
         let insightTapVC = InsightTapBottomSheet(viewModel: viewModel)
         insightTapVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.type)
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
             return SizeLiterals.Screen.screenHeight * 84 / 812
         }
@@ -279,7 +287,6 @@ extension CaveDetailViewController {
         }
         
         insightTapVC.onDismiss = { [weak self] in
-            print("Dismissed")
             self?.viewModel.inputs.dismissInsightTap(at: indexPath)
         }
         
@@ -299,9 +306,9 @@ extension CaveDetailViewController {
     }
     
     private func presentToMenuVC() {
-        let menuVC = CaveDetailMenuBottomSheet(viewModel: viewModel, caveId: caveId)
+        let menuVC = UINavigationController(rootViewController: CaveDetailMenuBottomSheet(viewModel: viewModel, caveId: caveId))
         menuVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.customDetent)
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
             return SizeLiterals.Screen.screenHeight * 165 / 812
         }
@@ -338,7 +345,7 @@ extension CaveDetailViewController {
     @objc func clearNotification(_ notification: Notification) {
         updateInsightList()
         caveDetailView.addSeedButton.isHidden = false
-        if let info = notification.userInfo?["type"] as? ClearInsightType {
+        if let info = notification.userInfo?[I18N.Component.Identifier.type] as? ClearInsightType {
             switch info {
             case .move:
                 view.showToast(message: I18N.Component.ToastMessage.moveInsight)

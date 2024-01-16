@@ -12,8 +12,6 @@ import Then
 
 final class CaveCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "CaveCollectionViewCell"
-    
     // MARK: - UI Components
     
     private let caveImageView = UIImageView()
@@ -50,7 +48,6 @@ extension CaveCollectionViewCell {
         }
         
         caveTitle.do {
-            $0.text = "일곱글자까지만"
             $0.font = .fontGuide(.detail2_reg)
             $0.textColor = .white000
         }

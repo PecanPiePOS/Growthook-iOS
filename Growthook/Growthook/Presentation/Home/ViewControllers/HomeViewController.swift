@@ -184,13 +184,20 @@ final class HomeViewController: BaseViewController {
         viewModel.outputs.unLockSeed
             .subscribe(onNext: { [weak self] in
                 self?.unLockAlertView.removeFromSuperview()
+                // TODO: - 인사이트 뷰 이동
                 print("인사이트 잠금 해제 뷰 이동")
             })
             .disposed(by: disposeBag)
         
         homeCaveView.addCaveButton.rx.tap
             .subscribe(onNext: { _ in
-                
+                // TODO: - 동굴 추가 뷰 이동
+            })
+            .disposed(by: disposeBag)
+        
+        seedPlusButton.rx.tap
+            .subscribe(onNext: { _ in
+                // TODO: - 씨앗 생성 뷰 이동
             })
             .disposed(by: disposeBag)
         
@@ -304,7 +311,7 @@ extension HomeViewController {
     func presentToHalfModalViewController(_ indexPath: IndexPath) {
         let insightTapVC = InsightTapBottomSheet(viewModel: viewModel)
         insightTapVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.customDetent)
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
             return SizeLiterals.Screen.screenHeight * 84 / 812
         }
@@ -317,7 +324,6 @@ extension HomeViewController {
         }
         
         insightTapVC.onDismiss = { [weak self] in
-            print("Dismissed")
             self?.viewModel.inputs.dismissInsightTap(at: indexPath)
         }
         
@@ -339,7 +345,7 @@ extension HomeViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(clearNotification(_:)),
-            name: Notification.Name("DeSelectInsightNotification"),
+            name: Notification.Name(I18N.Component.Identifier.deSelectNoti),
             object: nil)
     }
     
@@ -353,7 +359,7 @@ extension HomeViewController {
                 }
                 self.lockSeedId = cell.seedId
             } else {
-                print("pushToInsightDetail")
+                // TODO: - 인사이트 뷰 이동
             }
         }
     }
@@ -392,7 +398,7 @@ extension HomeViewController {
             self.notificationView.notiLabel1.text = I18N.Home.notiDescription1
             self.notificationView.notiLabel2.text = "\(I18N.Home.notiDescription2)\(count)\(I18N.Home.notiDescription3)"
             self.notificationView.notiLabel1.partChange(targetString: I18N.Home.day3, textColor: .red200, font: .fontGuide(.body1_bold))
-            self.notificationView.notiLabel2.partFontChange(targetString: "\(count)개", font: .fontGuide(.body1_bold))
+            self.notificationView.notiLabel2.partFontChange(targetString: "\(count)\(I18N.Home.count)", font: .fontGuide(.body1_bold))
         }
     }
     
@@ -416,7 +422,7 @@ extension HomeViewController {
     
     @objc func clearNotification(_ notification: Notification) {
         updateInsightList()
-        if let info = notification.userInfo?["type"] as? ClearInsightType {
+        if let info = notification.userInfo?[I18N.Component.Identifier.type] as? ClearInsightType {
             print(info)
             switch info {
             case .move:

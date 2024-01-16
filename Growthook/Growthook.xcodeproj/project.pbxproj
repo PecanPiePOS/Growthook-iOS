@@ -26,6 +26,9 @@
 		0332A3952B5135A900720CD3 /* SsukResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3942B5135A900720CD3 /* SsukResponseDto.swift */; };
 		0332A39A2B5135F900720CD3 /* SsukTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3992B5135F900720CD3 /* SsukTarget.swift */; };
 		0332A39D2B51370000720CD3 /* SsukAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A39C2B51370000720CD3 /* SsukAPI.swift */; };
+		0332A39F2B53BA4E00720CD3 /* ChangeCaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A39E2B53BA4E00720CD3 /* ChangeCaveViewController.swift */; };
+		0332A3A12B53BBE700720CD3 /* ChangeCaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3A02B53BBE700720CD3 /* ChangeCaveView.swift */; };
+		0332A3A32B53C94200720CD3 /* ChangeCaveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3A22B53C94200720CD3 /* ChangeCaveViewModel.swift */; };
 		033E9C102AFCE0860051A9E8 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033E9C0F2AFCE0860051A9E8 /* Image.xcassets */; };
 		033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */; };
 		033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */; };
@@ -200,6 +203,9 @@
 		0332A3942B5135A900720CD3 /* SsukResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukResponseDto.swift; sourceTree = "<group>"; };
 		0332A3992B5135F900720CD3 /* SsukTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukTarget.swift; sourceTree = "<group>"; };
 		0332A39C2B51370000720CD3 /* SsukAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukAPI.swift; sourceTree = "<group>"; };
+		0332A39E2B53BA4E00720CD3 /* ChangeCaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCaveViewController.swift; sourceTree = "<group>"; };
+		0332A3A02B53BBE700720CD3 /* ChangeCaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCaveView.swift; sourceTree = "<group>"; };
+		0332A3A22B53C94200720CD3 /* ChangeCaveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCaveViewModel.swift; sourceTree = "<group>"; };
 		033E9C0F2AFCE0860051A9E8 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCaveView.swift; sourceTree = "<group>"; };
@@ -507,6 +513,7 @@
 				034580812B2D628F002DDEBA /* CaveDetailViewController.swift */,
 				035701E22B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift */,
 				035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */,
+				0332A39E2B53BA4E00720CD3 /* ChangeCaveViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -517,6 +524,7 @@
 				034580842B2D6354002DDEBA /* CaveDetailView.swift */,
 				034580862B2D6B98002DDEBA /* CaveDescriptionView.swift */,
 				035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */,
+				0332A3A02B53BBE700720CD3 /* ChangeCaveView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -524,6 +532,7 @@
 		034580882B2D716E002DDEBA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				0332A3A22B53C94200720CD3 /* ChangeCaveViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1391,6 +1400,7 @@
 				03B9AC742AF5648900A5751C /* UITextView+.swift in Sources */,
 				58E75FAC2B00C16900512FE2 /* InsightsViewModel.swift in Sources */,
 				58AB70AE2B2C88570061C072 /* MyPageThookBoxView.swift in Sources */,
+				0332A39F2B53BA4E00720CD3 /* ChangeCaveViewController.swift in Sources */,
 				58E75FB02B00C59200512FE2 /* UITextViewWithTintedWhenEdited.swift in Sources */,
 				092C81702B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift in Sources */,
 				09089A6C2B03B41B006C07B8 /* CustomAlertViewController.swift in Sources */,
@@ -1440,9 +1450,11 @@
 				03C3565F2B0B702900750758 /* InsightTapBottomSheet.swift in Sources */,
 				586626192B4E658F0084468C /* InsightsService.swift in Sources */,
 				03B9AC762AF564AE00A5751C /* UIStackView+.swift in Sources */,
+				0332A3A32B53C94200720CD3 /* ChangeCaveViewModel.swift in Sources */,
 				586626132B4E656A0084468C /* InsightsDTO.swift in Sources */,
 				03B9AC8F2AF5667300A5751C /* MakeVibrate.swift in Sources */,
 				58E75FB22B00CF2100512FE2 /* UITextFieldWithTintedWhenEdited.swift in Sources */,
+				0332A3A12B53BBE700720CD3 /* ChangeCaveView.swift in Sources */,
 				259E7F792B42A68B00F3DC8F /* OnboardingButtonView.swift in Sources */,
 				09A7D70A2B01E6A9005F8821 /* CreateCaveModel.swift in Sources */,
 				03B9AC592AF560D800A5751C /* Config.swift in Sources */,
@@ -1619,7 +1631,7 @@
 				BASE_URL = "http://3.35.58.218:8080";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KKFK367WP8;
+				DEVELOPMENT_TEAM = DGT9BQA4KH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Growthook/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Growthook;
@@ -1634,7 +1646,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = growthook.mj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.growthook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1653,7 +1665,7 @@
 				BASE_URL = "http://3.35.58.218:8080";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = KKFK367WP8;
+				DEVELOPMENT_TEAM = DGT9BQA4KH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Growthook/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Growthook;
@@ -1668,7 +1680,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = growthook.mj;
+				PRODUCT_BUNDLE_IDENTIFIER = com.growthook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

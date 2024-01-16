@@ -119,6 +119,7 @@ extension InsightListCollectionViewCell {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.leading.equalTo(scrapButton.snp.trailing)
+            $0.width.equalTo(self.bounds.width - 48 * 2)
         }
         
         dueTimeLabel.snp.makeConstraints {
@@ -151,12 +152,12 @@ extension InsightListCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         lockView.isHidden = true
-//        scrapButtonTapped()
+        makeBorder(width: 0, color: .gray200)
     }
     
     func configureCell(_ model: SeedListResponseDto) {
         titleLabel.text = model.insight
-        dueTimeLabel.text = "\(model.remainingDays)일 후 잠금"
+        dueTimeLabel.text = "\(model.remainingDays)\(I18N.InsightList.lockInsight)"
         isLock = model.isLocked
         isScrapButtonTapped = model.isScraped
         hasActionPlan = model.hasActionPlan

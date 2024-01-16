@@ -93,6 +93,8 @@ enum ImageLiterals {
     
     enum Storage {
         static var img_mugwort_empty: UIImage { .load(name: "mugwort_empty_img") }
+        static var close_btn: UIImage { .load(name: "close_btn") }
+        static var open_btn: UIImage { .load(name: "open_btn") }
     }
     
     enum MyPage {

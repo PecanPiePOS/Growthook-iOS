@@ -32,6 +32,7 @@ protocol HomeViewModelInputs {
     func removeCaveButtonTap(caveId: Int)
     func onlyScrapInsight()
     func caveOnlyScrapInsight(caveId: Int)
+    func changeCaveButtonTap()
 }
 
 protocol HomeViewModelOutputs {
@@ -56,6 +57,7 @@ protocol HomeViewModelOutputs {
     var insightAllCount: BehaviorRelay<Int> { get }
     var caveInsightAllCount: BehaviorRelay<Int> { get }
     var ssukCount: BehaviorRelay<SsukResponseDto> { get }
+    var pushToChangeCave: PublishSubject<Void> { get }
 }
 
 protocol HomeViewModelType {
@@ -107,6 +109,9 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     // 현재 쑥 개수
     var ssukCount: BehaviorRelay<SsukResponseDto> = BehaviorRelay<SsukResponseDto>(value: SsukResponseDto.ssukDummy())
+    
+    // 동굴 수정 뷰로 이동
+    var pushToChangeCave: PublishSubject<Void> = PublishSubject<Void>()
     
     var inputs: HomeViewModelInputs { return self }
     var outputs: HomeViewModelOutputs { return self }
@@ -232,6 +237,10 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
             guard self != nil else { return }
             self?.removeCave.onNext(())
         }
+    }
+    
+    func changeCaveButtonTap() {
+        self.pushToChangeCave.onNext(())
     }
 }
 

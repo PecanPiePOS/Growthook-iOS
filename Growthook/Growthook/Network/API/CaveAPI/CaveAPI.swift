@@ -82,9 +82,9 @@ final class CaveAPI {
     
     // MARK: - PATCH
     /// 동굴 내용 수정
-    func patch(caveId: Int,
+    func patch(caveId: Int, param: CavePatchRequestDto,
                     completion: @escaping (GeneralResponse<CavePatchRequestDto>?) -> Void) {
-        caveProvider.request(.patchCave(caveId: caveId)) { result in
+        caveProvider.request(.patchCave(caveId: caveId, param: param)) { result in
             switch result {
             case .success(let response):
                 do {
