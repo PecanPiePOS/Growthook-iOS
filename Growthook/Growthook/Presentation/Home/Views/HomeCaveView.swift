@@ -36,7 +36,6 @@ final class HomeCaveView: BaseView {
         backgroundColor = .clear
         
         userLabel.do {
-            $0.text = "EON님의 동굴 속"
             $0.font = .fontGuide(.head1)
             $0.textColor = .white000
         }

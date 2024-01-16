@@ -26,7 +26,7 @@ class CaveListHalfModal: BaseViewController {
     private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
     var indexPath: IndexPath? = nil
-    private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
+    private let deSelectInsightNotification = Notification.Name(I18N.Component.Identifier.deSelectNoti)
     private var selectedCaveId: Int?
     
     // MARK: - Initializer
@@ -166,7 +166,7 @@ class CaveListHalfModal: BaseViewController {
         NotificationCenter.default.post(
             name: deSelectInsightNotification,
             object: nil,
-            userInfo: ["type": ClearInsightType.move]
+            userInfo: [I18N.Component.Identifier.type: ClearInsightType.move]
         )
     }
     
@@ -174,7 +174,7 @@ class CaveListHalfModal: BaseViewController {
         NotificationCenter.default.post(
             name: deSelectInsightNotification,
             object: nil,
-            userInfo: ["type": ClearInsightType.none]
+            userInfo: [I18N.Component.Identifier.type: ClearInsightType.none]
         )
     }
     

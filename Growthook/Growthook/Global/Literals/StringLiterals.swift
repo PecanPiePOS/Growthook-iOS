@@ -46,6 +46,16 @@ enum I18N {
             static let removeCave = "동굴이 삭제되었어요"
             static let scrap = "스크랩 완료!"
         }
+        
+        enum Identifier {
+            static let deSelectNoti = "DeSelectInsightNotification"
+            static let customDetent = "customDetent"
+            static let type = "type"
+        }
+        
+        enum Button {
+            static let check = "확인"
+        }
     }
     
     enum Home {
@@ -60,6 +70,7 @@ enum I18N {
         static let caveName = "동굴 이름"
         static let emptyCaveList = "아직 만들어진 동굴이 없어요"
         static let emptyCave = "오른쪽의 +를 눌러 동굴을 추가해보세요!"
+        static let count = "개"
     }
     
     enum CaveDetail {

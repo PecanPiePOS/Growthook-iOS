@@ -22,7 +22,7 @@ final class RemoveInsightAlertViewController: BaseViewController {
     
     private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
-    private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
+    private let deSelectInsightNotification = Notification.Name(I18N.Component.Identifier.deSelectNoti)
     
     // MARK: - Initializer
 
@@ -47,7 +47,6 @@ final class RemoveInsightAlertViewController: BaseViewController {
         
         viewModel.outputs.removeInsight
             .subscribe(onNext: { [weak self] in
-//                self?.viewModel.inputs.reloadInsight()
                 self?.clearInsight()
                 self?.presentingViewController?.presentingViewController?.dismiss(animated: true)
             })
@@ -89,7 +88,7 @@ extension RemoveInsightAlertViewController {
         NotificationCenter.default.post(
             name: deSelectInsightNotification,
             object: nil,
-            userInfo: ["type": ClearInsightType.delete]
+            userInfo: [I18N.Component.Identifier.type: ClearInsightType.delete]
         )
     }
     
@@ -97,7 +96,7 @@ extension RemoveInsightAlertViewController {
         NotificationCenter.default.post(
             name: deSelectInsightNotification,
             object: nil,
-            userInfo: ["type": ClearInsightType.none]
+            userInfo: [I18N.Component.Identifier.type: ClearInsightType.none]
         )
     }
 }

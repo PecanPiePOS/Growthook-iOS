@@ -114,7 +114,7 @@ final class InsightTapBottomSheet: BaseViewController {
     private func presentToCaveListVC() {
         let caveListVC = CaveListHalfModal(viewModel: viewModel)
         caveListVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.customDetent)
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
             return SizeLiterals.Screen.screenHeight * 420 / 812
         }

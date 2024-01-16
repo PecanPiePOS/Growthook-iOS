@@ -157,7 +157,7 @@ extension InsightListCollectionViewCell {
     
     func configureCell(_ model: SeedListResponseDto) {
         titleLabel.text = model.insight
-        dueTimeLabel.text = "\(model.remainingDays)일 후 잠금"
+        dueTimeLabel.text = "\(model.remainingDays)\(I18N.InsightList.lockInsight)"
         isLock = model.isLocked
         isScrapButtonTapped = model.isScraped
         hasActionPlan = model.hasActionPlan
