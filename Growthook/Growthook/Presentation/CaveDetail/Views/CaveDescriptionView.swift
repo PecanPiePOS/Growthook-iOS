@@ -21,6 +21,10 @@ final class CaveDescriptionView: BaseView {
     private let nicknameLabel = UILabel()
     let lockButton = UIButton()
     
+    // MARK: - Properties
+    
+    private var isShared: Bool = false
+    
     override func setStyles() {
         
         self.backgroundColor = .gray600
@@ -84,5 +88,14 @@ final class CaveDescriptionView: BaseView {
             $0.top.equalTo(userImageView.snp.bottom).offset(17)
             $0.leading.equalToSuperview().inset(6)
         }
+    }
+    
+    // MARK: - Methods
+    
+    func configureView(_ model: CaveDetailResponseDto) {
+        caveTitle.text = model.caveName
+        caveDescriptionLabel.text = model.introduction
+        nicknameLabel.text = model.nickname
+        isShared = model.isShared
     }
 }

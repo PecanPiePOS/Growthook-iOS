@@ -97,6 +97,16 @@ extension UILabel {
         self.attributedText = attributedString
     }
     
+    /// 라벨 font와 textColor 동시 변경 함수
+    func partChange(targetString: String, textColor: UIColor, font: UIFont) {
+        let fullText = self.text ?? ""
+        let range = (fullText as NSString).range(of: targetString)
+        let attributedString = NSMutableAttributedString(string: fullText)
+        attributedString.addAttribute(.foregroundColor, value: textColor, range: range)
+        attributedString.addAttribute(.font, value: font, range: range)
+        self.attributedText = attributedString
+    }
+    
     func htmlToString(_ targetString: String) -> NSAttributedString? {
         let text = targetString
         

@@ -96,28 +96,28 @@ extension SpecificPlanCollectionViewCell {
 
 extension SpecificPlanCollectionViewCell: UITextViewDelegate {
 
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        planTextView.modifyBorderLine(with: .green200)
-        if textView.text == planTextView.initialPlaceholder {
-            textView.text = nil
-            textView.textColor = .white000
-            textView.font = .fontGuide(.body3_bold)
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            textView.text = planTextView.initialPlaceholder
-            textView.textColor = .gray400
-            textView.font = .fontGuide(.body3_reg)
-            planTextView.modifyBorderLine(with: .gray200)
-        } else {
-            planTextView.modifyBorderLine(with: .white000)
-            guard let text = textView.text else { return }
-            print(text)
-            self.delegate?.sendText(text: text)
-        }
-    }
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        planTextView.modifyBorderLine(with: .green200)
+//        if textView.text == planTextView.initialPlaceholder {
+//            textView.text = nil
+//            textView.textColor = .white000
+//            textView.font = .fontGuide(.body3_bold)
+//        }
+//    }
+//    
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+//            textView.text = planTextView.initialPlaceholder
+//            textView.textColor = .gray400
+//            textView.font = .fontGuide(.body3_reg)
+//            planTextView.modifyBorderLine(with: .gray200)
+//        } else {
+//            planTextView.modifyBorderLine(with: .white000)
+//            guard let text = textView.text else { return }
+//            print(text)
+//            self.delegate?.sendText(text: text)
+//        }
+//    }
     
     func textViewDidChange(_ textView: UITextView) {
         let maxLength = planTextView.maxLength
