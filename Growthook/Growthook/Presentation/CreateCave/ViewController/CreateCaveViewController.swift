@@ -40,7 +40,7 @@ final class CreateCaveViewController: UIViewController {
 extension CreateCaveViewController {
     
     private func bindViewModel() {
-                
+        
         createCaveView.nameTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
@@ -96,7 +96,7 @@ extension CreateCaveViewController {
                 self.setDownAnimation()
             }
             .disposed(by: disposeBag)
-
+        
         createCaveView.switchButton.rx.isOn
             .subscribe { [weak self] value in
                 if value == true {
@@ -129,10 +129,11 @@ extension CreateCaveViewController {
             .disposed(by: disposeBag)
         
         createCaveView.customNavigationBar.closeButton.rx.tap
-            .bind { [weak self] in
+            .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.dismiss(animated: true)
-            }
+            })
+            .disposed(by: disposeBag)
     }
     
     func setUpAnimation() {
@@ -171,11 +172,12 @@ extension CreateCaveViewController {
     }
     
     private func pushToEmptyViewController() {
-        let vc = EmptyViewController()
+        let emptyVC = EmptyViewController()
+        emptyVC.name = viewModel.outputs.name.value
+        emptyVC.introduction = viewModel.outputs.description.value
+        emptyVC.nickname = "쑥쑥이"
+        let vc = UINavigationController(rootViewController: emptyVC)
         vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        vc.name = viewModel.outputs.name.value
-        vc.introduction = viewModel.outputs.description.value
-        vc.nickname = "쑥쑥이"
         self.present(vc, animated: true)
     }
 }

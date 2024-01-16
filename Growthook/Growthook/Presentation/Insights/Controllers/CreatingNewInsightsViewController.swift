@@ -47,7 +47,8 @@ final class CreatingNewInsightsViewController: BaseViewController {
                     }
                 case .done:
                     self.showLoadingView(false)
-                    // 넘어가기
+                    // 수정하기
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
             .disposed(by: disposeBag)

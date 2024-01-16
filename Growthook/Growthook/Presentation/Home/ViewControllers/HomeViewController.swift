@@ -191,13 +191,17 @@ final class HomeViewController: BaseViewController {
         
         homeCaveView.addCaveButton.rx.tap
             .subscribe(onNext: { _ in
-                // TODO: - 동굴 추가 뷰 이동
+                let vc = CreateCaveViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
         seedPlusButton.rx.tap
             .subscribe(onNext: { _ in
-                // TODO: - 씨앗 생성 뷰 이동
+                let vc = CreatingNewInsightsViewController()
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -359,7 +363,9 @@ extension HomeViewController {
                 }
                 self.lockSeedId = cell.seedId
             } else {
-                // TODO: - 인사이트 뷰 이동
+                let vc = InsightsDetailViewController(hasAnyActionPlan: cell.hasActionPlan, seedId: cell.seedId)
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }

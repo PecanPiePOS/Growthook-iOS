@@ -105,8 +105,9 @@ final class CreateCaveView: BaseView {
         containerView.addSubviews(titleLabel, descriptionLabel, nameLabel, nameTextField, nameCountLabel, introduceLabel, introduceTextView, introduceCountLabel, shareLabel, switchButton)
         
         customNavigationBar.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(44)
-            $0.trailing.equalToSuperview().inset(8)
+            $0.top.equalTo(safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 48 / 812)
         }
         
         containerView.snp.makeConstraints {

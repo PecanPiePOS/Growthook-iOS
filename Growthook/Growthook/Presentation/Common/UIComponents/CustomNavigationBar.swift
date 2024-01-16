@@ -107,6 +107,7 @@ extension CustomNavigationBar {
         closeButton.do {
             $0.setImage(ImageLiterals.NavigationBar.close, for: .normal)
             $0.isHidden = true
+            $0.isEnabled = true
         }
         
         menuButton.do {
