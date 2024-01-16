@@ -15,7 +15,7 @@ struct CaveDetailResponseDto: Codable {
 }
 
 extension CaveDetailResponseDto {
-    static func caveDetailDummy() -> CaveDetailResponseDto {
+    static func caveDetailInitValue() -> CaveDetailResponseDto {
         return CaveDetailResponseDto(caveName: "", introduction: "", nickname: "", isShared: false)
     }
 }

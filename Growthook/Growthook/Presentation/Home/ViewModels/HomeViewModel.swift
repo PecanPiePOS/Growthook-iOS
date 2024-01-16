@@ -78,7 +78,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var insightAlarm: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var insightScrapToggle: PublishSubject<Void> = PublishSubject<Void>()
     var unLockSeed: PublishSubject<Void> = PublishSubject<Void>()
-    var caveDetail: BehaviorRelay<CaveDetailResponseDto> = BehaviorRelay<CaveDetailResponseDto>(value: CaveDetailResponseDto.caveDetailDummy())
+    var caveDetail: BehaviorRelay<CaveDetailResponseDto> = BehaviorRelay<CaveDetailResponseDto>(value: CaveDetailResponseDto.caveDetailInitValue())
     var caveInsightList: BehaviorRelay<[SeedListResponseDto]> = BehaviorRelay<[SeedListResponseDto]>(value: [])
     
     private let disposeBag = DisposeBag()
@@ -108,7 +108,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var caveInsightAllCount: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     
     // 현재 쑥 개수
-    var ssukCount: BehaviorRelay<SsukResponseGto> = BehaviorRelay<SsukResponseGto>(value: SsukResponseGto.ssukDummy())
+    var ssukCount: BehaviorRelay<SsukResponseDto> = BehaviorRelay<SsukResponseDto>(value: SsukResponseDto.ssukDummy())
     
     // 동굴 수정 뷰로 이동
     var pushToChangeCave: PublishSubject<Void> = PublishSubject<Void>()
