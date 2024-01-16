@@ -5,23 +5,41 @@
 //  Created by Minjoo Kim on 11/22/23.
 //
 
-
 import UIKit
 
 import RxCocoa
 import RxSwift
 import Then
 
+struct ActionplanModel {
+    var index: Int
+    var content: String?
+}
+
 final class CreateActionViewControlller: BaseViewController {
     
     private let createActionView = CreateActionView()
     private var viewModel = CreateActionViewModel()
     private let disposeBag = DisposeBag()
-    
+    private let placeholder = "구체적인 계획을 설정해보세요"
     private var isFolded = true
     private var countPlan = 1
     private var textViewIndex = 0
-    private var actionPlanDict: [Int: String] = [:]
+    private var actionplan: [Int: String] = [:]
+    private var status: Bool = false {
+        willSet(value) {
+            if value == true {
+                self.createActionView.confirmButton.isEnabled = true
+                self.createActionView.confirmButton.setTitleColor(.green400, for: .normal)
+            }
+            else {
+                self.createActionView.confirmButton.isEnabled = false
+                self.createActionView.confirmButton.setTitleColor(.gray300, for: .normal)
+            }
+        }
+    }
+    
+    var newActionPlan: CreateActionRequest = CreateActionRequest(contents: [])
     
     override func loadView() {
         self.view = createActionView
@@ -30,6 +48,8 @@ final class CreateActionViewControlller: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setKeyboardObserver()
+        
+        viewModel.inputs.getSeedDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,16 +95,30 @@ final class CreateActionViewControlller: BaseViewController {
         createActionView.createSpecificPlanView.plusButton.rx.tap
             .bind {
                 self.countPlan += 1
-                self.viewModel.inputs.setCount(count: self.countPlan)
+                self.textViewIndex += 1
                 print(self.countPlan)
+                self.viewModel.inputs.setCount(count: self.countPlan)
                 self.createActionView.createSpecificPlanView.planCollectionView.reloadData()
             }
             .disposed(by: disposeBag)
         
-        createActionView.createSpecificPlanView.planCollectionView.rx.itemSelected
-            .subscribe(onNext: { index in
-                print("\(index.section) \(index.row)")
-            })
+        createActionView.confirmButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                var newdata: [ActionplanModel] = []
+                for (key,value) in actionplan {
+                    newdata.append(ActionplanModel(index: key, content: value))
+                }
+                self.viewModel.inputs.postActionPlan(data: newdata)
+                // TODO: Connect
+            }
+            .disposed(by: disposeBag)
+        
+        createActionView.navigationBar.backButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.navigationController?.popViewController(animated: true)
+            }
             .disposed(by: disposeBag)
     }
 }
@@ -114,6 +148,26 @@ extension CreateActionViewControlller: UICollectionViewDataSource {
             return SpecificPlanCollectionViewCell()
         }
         cell.delegate = self
+        let placeholder = "구체적인 계획을 설정해보세요"
+        let textView = cell.planTextView
+        let data = self.actionplan[countPlan - indexPath.item - 1]
+        if data == "" || data == nil || data == placeholder {
+            cell.configure(textViewIndex: countPlan - indexPath.item - 1, content: nil)
+        }
+        else {
+            cell.configure(textViewIndex: countPlan - indexPath.item - 1, content: data ?? "")
+        }
+        
+        textView.rx.text.orEmpty
+            .distinctUntilChanged()
+            .bind { [weak self] text in
+                guard let self else { return }
+                if text.isEmpty || text == placeholder {
+                    cell.countLabel.text = "00/40"
+                } else {
+                    cell.countLabel.text = "\(text.count.toTwoDigitsString())/40"
+                }
+            }
         return cell
     }
 }
@@ -134,6 +188,20 @@ extension CreateActionViewControlller {
             createActionView.insightView.showDetail()
         })
         createActionView.setShowingLayout()
+    }
+}
+
+extension CreateActionViewControlller: SendTextDelegate {
+    
+    func sendText(index: Int, text: String?) {
+        guard let text = text else { return }
+        if text == "" || text == placeholder {
+            self.actionplan.removeValue(forKey: index)
+        }
+        else {
+            self.actionplan.updateValue(text, forKey: index)
+        }
+        self.status = self.actionplan.count > 0
     }
 }
 
@@ -163,20 +231,5 @@ extension CreateActionViewControlller {
     
     func tapBackgroundView(_ sender: Any) {
         view.endEditing(true)
-    }
-}
-
-extension CreateActionViewControlller: SendTextDelegate {
-    
-    func sendText(text: String) {
-        self.actionPlanDict.updateValue(text, forKey: 0)
-        print(actionPlanDict)
-    }
-}
-
-extension CreateActionViewControlller: UITextViewDelegate {
-    
-    func textViewDidChange(_ textView: UITextView) {
-        print(textView.text ?? "","????")
     }
 }

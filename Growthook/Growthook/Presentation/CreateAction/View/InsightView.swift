@@ -136,13 +136,18 @@ final class InsightView: BaseView {
 }
 
 extension InsightView {
-    func bindInsight(model: InsightModel) {
-        nameLabel.text = model.name
+    
+    func bindInsight(model: ActionPlanResponse) {
+        nameLabel.text = model.caveName
+        nameLabel.sizeToFit()
         insightLabel.text = model.insight
-        dateLabel.text = model.date
-        dDayLabel.text = model.dDay
+        dateLabel.text = model.lockDate
+        dDayLabel.text = "D\(model.remainingDays)"
         memoLabel.text = model.memo
         memoLabel.setLineSpacing(lineSpacing: 4)
+        nameLabel.snp.updateConstraints {
+            $0.width.equalTo(nameLabel.frame.width + 14)
+        }
     }
     
     func showDetail() {
