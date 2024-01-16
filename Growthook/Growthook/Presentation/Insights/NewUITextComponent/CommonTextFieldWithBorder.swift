@@ -178,5 +178,3 @@ extension CommonTextFieldWithBorder {
         self.maxLength = newLimitCount
     }
 }
-
-

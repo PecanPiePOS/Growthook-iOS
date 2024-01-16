@@ -13,7 +13,7 @@ import Then
 final class CreateActionView: BaseView {
     
     private let topView = UIView()
-    private let navigationBar = CustomNavigationBar()
+    let navigationBar = CustomNavigationBar()
     let confirmButton = UIButton()
     let insightView = InsightView()
     let createSpecificPlanView = CreateSpecificPlanView()
@@ -36,7 +36,7 @@ final class CreateActionView: BaseView {
             $0.setTitle("완료", for: .normal)
             $0.setTitleColor(.gray300, for: .normal)
             $0.titleLabel?.font = .fontGuide(.body1_bold)
-            $0.isEnabled = false
+            $0.isEnabled = true
         }
     }
     
