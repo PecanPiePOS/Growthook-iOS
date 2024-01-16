@@ -119,6 +119,7 @@ extension InsightListCollectionViewCell {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.leading.equalTo(scrapButton.snp.trailing)
+            $0.width.equalTo(self.bounds.width - 48 * 2)
         }
         
         dueTimeLabel.snp.makeConstraints {
@@ -151,7 +152,6 @@ extension InsightListCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         lockView.isHidden = true
-//        scrapButtonTapped()
     }
     
     func configureCell(_ model: SeedListResponseDto) {
