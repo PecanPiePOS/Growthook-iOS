@@ -172,11 +172,12 @@ extension CreateCaveViewController {
     }
     
     private func pushToEmptyViewController() {
-        let vc = EmptyViewController()
+        let emptyVC = EmptyViewController()
+        emptyVC.name = viewModel.outputs.name.value
+        emptyVC.introduction = viewModel.outputs.description.value
+        emptyVC.nickname = "쑥쑥이"
+        let vc = UINavigationController(rootViewController: emptyVC)
         vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        vc.name = viewModel.outputs.name.value
-        vc.introduction = viewModel.outputs.description.value
-        vc.nickname = "쑥쑥이"
         self.present(vc, animated: true)
     }
 }

@@ -152,9 +152,11 @@ final class CaveDetailViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         caveDetailView.addSeedButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                // TODO: - 인사이트 생성 뷰 이동
-            })
+            .bind { [weak self] in
+                let vc = CreatingNewInsightsViewController()
+                vc.hidesBottomBarWhenPushed = true
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
             .disposed(by: disposeBag)
         
         caveDetailView.navigationView.backButton.rx.tap
@@ -247,7 +249,9 @@ extension CaveDetailViewController {
                 }
                 self.lockSeedId = cell.seedId
             } else {
-                // TODO: - 인사이트 디테일 이동
+                let vc = InsightsDetailViewController(hasAnyActionPlan: cell.hasActionPlan, seedId: cell.seedId)
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
     }

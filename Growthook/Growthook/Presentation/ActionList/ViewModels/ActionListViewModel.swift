@@ -7,6 +7,7 @@
 
 import RxCocoa
 import RxSwift
+import Moya
 
 protocol ActionListViewModelInput {
     func didTapInProgressButton()
@@ -14,21 +15,24 @@ protocol ActionListViewModelInput {
     func didTapInprogressScrapButton()
     func didTapCompleteScrapButton()
     func didTapSeedButton()
-    func didTapCompletButton()
-    func didTapReviewButton()
+    func didTapReviewButton(with actionPlanId: Int)
     func setReviewText(with value: String)
     func didTapCancelButtonInBottomSheet()
     func didTapSaveButtonInBottomSheet()
+    func didTapCheckButtonInAcertView()
+    func didTapCancelButtonInBottomSheetWithPost(with actionPlanId: Int)
+    func didTapCancelButtonWithPatch(with actionPlanId: Int)
 }
 
 protocol ActionListViewModelOutput {
     var titleText: Driver<String> { get }
-    var titlePersent: Driver<String> { get }
+    var titlePersent: BehaviorRelay<String> { get }
     var selectedIndex: BehaviorRelay<Int> { get }
-    var actionList: BehaviorRelay<[ActionListModel]> { get }
-    var completeActionList: BehaviorRelay<[CompleteActionListModel]> { get }
+    var doingActionList: BehaviorRelay<[ActionListDoingResponse]> { get }
+    var finishedActionList: BehaviorRelay<[ActionListFinishedResponse]> { get }
     var isReviewEntered: Driver<Bool> { get }
     var reviewTextCount: Driver<String> { get }
+    var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> { get }
 }
 
 protocol ActionListViewModelType {
@@ -39,20 +43,19 @@ protocol ActionListViewModelType {
 final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOutput, ActionListViewModelType {
     
     var selectedIndex: BehaviorRelay<Int> = BehaviorRelay(value: 1)
-    var actionList: BehaviorRelay<[ActionListModel]> = BehaviorRelay(value: [])
-    var completeActionList: BehaviorRelay<[CompleteActionListModel]> = BehaviorRelay(value: [])
+    var doingActionList: BehaviorRelay<[ActionListDoingResponse]> = BehaviorRelay<[ActionListDoingResponse]>(value: [])
+    var finishedActionList: BehaviorRelay<[ActionListFinishedResponse]> = BehaviorRelay<[ActionListFinishedResponse]>(value: [])
     var reviewText = BehaviorRelay<String>(value: "")
-
+    var titlePersent: BehaviorRelay<String> = BehaviorRelay(value: "")
+    var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> = BehaviorRelay<ActionListReviewDetailResponse>(value: ActionListReviewDetailResponse.actionListReviewDetailDummy())
+    private let disposeBag = DisposeBag()
+        
     var inputs: ActionListViewModelInput { return self }
     var outputs: ActionListViewModelOutput { return self }
     
     
     var titleText: Driver<String> {
         return .just("Action List")
-    }
-    
-    var titlePersent: Driver<String> {
-        return .just("00")
     }
     
     var isReviewEntered: Driver<Bool> {
@@ -70,16 +73,21 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     
     init() {
-        self.actionList.accept(ActionListModel.actionListModelDummyData())
-        self.completeActionList.accept(CompleteActionListModel.completeActionListModelDummyData())
+        self.getActionListPercent()
+        self.getFinishedActionList()
+        self.getDoingActionList()
     }
     
     func didTapInProgressButton() {
         selectedIndex.accept(1)
+        getDoingActionList()
+        getActionListPercent()
     }
     
     func didTapCompletedButton() {
         selectedIndex.accept(0)
+        getFinishedActionList()
+        getActionListPercent()
     }
     
     func didTapInprogressScrapButton() {
@@ -92,14 +100,11 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     func didTapSeedButton() {
         print("씨앗보기 버튼이 탭 되었습니다")
+        // 씨앗 보기 화면 전환 코드 필요
     }
     
-    func didTapCompletButton() {
-        print("완료하기 버튼이 탭 되었습니다")
-    }
-    
-    func didTapReviewButton() {
-        print("리뷰보기 버튼이 탭 되었습니다")
+    func didTapReviewButton(with actionPlanId: Int) {
+        getpostActionListReview(actionPlanId: actionPlanId)
     }
     
     func setReviewText(with value: String) {
@@ -108,10 +113,109 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     func didTapCancelButtonInBottomSheet() {
         selectedIndex.accept(0)
+        getActionListPercent()
     }
     
     func didTapSaveButtonInBottomSheet() {
-        selectedIndex.accept(2)
+        selectedIndex.accept(0)
+        getActionListPercent()
     }
     
+    func didTapCheckButtonInAcertView() {
+        getFinishedActionList()
+        getActionListPercent()
+    }
+    
+    func didTapCancelButtonWithPatch(with actionPlanId: Int) {
+        patchActionPlanCompletion(actionPlanId: actionPlanId)
+        getFinishedActionList()
+        getActionListPercent()
+    }
+    
+    func didTapCancelButtonInBottomSheetWithPost(with actionPlanId: Int) {
+        postActionListReview(actionPlanId: actionPlanId)
+        patchActionPlanCompletion(actionPlanId: actionPlanId)
+        getFinishedActionList()
+        getActionListPercent()
+    }
 }
+
+// memberID 값 받아와야함. 언제? ActionList 탭을 터치할 때 한 마디로 init 이 될 때
+
+
+extension ActionListViewModel {
+    
+    private func getActionListPercent() {
+        ActionListService.getActionListPercent(with: 4)
+            .subscribe(onNext: { [weak self] data in
+                guard let self else { return }
+                self.titlePersent.accept("\(data)")
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func getDoingActionList() {
+        ActionListService.getDoingActionList(with: 4)
+            .subscribe(onNext: { [weak self] data in
+                guard let self else { return }
+                self.doingActionList.accept(data)
+                print("getDoingActionList accpet가 호출됩니다")
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func getFinishedActionList() {
+        print("getFinishedActionList가 호출됩니다")
+        ActionListService.getFinishedActionList(with: 4)
+            .subscribe(onNext: { [weak self] data in
+                guard let self else { return }
+                self.finishedActionList.accept(data)
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func patchActionPlanCompletion(actionPlanId: Int) {
+        ActionListService.patchActionListCompletion(with: actionPlanId)
+            .subscribe(onNext: { _ in
+                print("patchActionPlanCompletion가 호출됩니다")
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func postActionListReview(actionPlanId: Int) {
+        let newReview = ActionListReviewPostRequest(content: reviewText.value)
+        
+        ActionListService.postActionListReview(actionPlanId: actionPlanId, review: newReview)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
+                print("review작성에 성공했습니다")
+                print("리뷰 내용: \(newReview)")
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func getpostActionListReview(actionPlanId: Int) {
+        print("getpostActionListReview가 호출됩니다")
+        ActionListService.getActionListReview(with: actionPlanId)
+            .subscribe(onNext: { [weak self] data in
+                guard let self else { return }
+                self.reviewDetail.accept(data)
+                print(data)
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+}
+

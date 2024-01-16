@@ -78,7 +78,7 @@ final class MainTitleBarView: BaseView {
         percentView.snp.makeConstraints {
             $0.top.equalTo(mainTitleLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(18)
-            $0.width.equalTo(97)
+            $0.width.equalTo(99)
             $0.height.equalTo(28)
         }
     }
@@ -89,8 +89,8 @@ final class MainTitleBarView: BaseView {
          mainTitleLabel.text = "\(text)님의 액션"
      }
     
-    func setPersentText(_ text: String) {
-        percentLabel.text = "\(text)% 달성!"
+    func setPersentText(_ percent: String) {
+        percentLabel.text = "\(percent)% 달성!"
     }
     
     // MARK: - @objc Methods

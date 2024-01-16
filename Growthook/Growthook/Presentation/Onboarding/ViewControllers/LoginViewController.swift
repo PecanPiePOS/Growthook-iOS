@@ -40,7 +40,7 @@ final class LoginViewController: BaseViewController {
         view.backgroundColor = .gray700
         
         kakaoLoginButton.do {
-            $0.setImage(ImageLiterals.Onboarding.btn_kakaologin, for: .normal)
+            $0.setImage(ImageLiterals.Onboarding.kakao_login_large_wide, for: .normal)
             $0.imageView?.contentMode = .scaleAspectFill
         }
         
@@ -51,7 +51,7 @@ final class LoginViewController: BaseViewController {
     }
     
     override func setLayout() {
-        
+    
         self.view.addSubviews(loginView, kakaoLoginButton, appleLoginButton)
         
         loginView.snp.makeConstraints {
@@ -60,15 +60,15 @@ final class LoginViewController: BaseViewController {
             $0.height.equalTo(388)
         }
         
-        kakaoLoginButton.snp.makeConstraints {
+        appleLoginButton.snp.makeConstraints {
             $0.top.equalTo(loginView.snp.bottom).offset(105)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(50)
             $0.width.equalTo(343)
         }
         
-        appleLoginButton.snp.makeConstraints {
-            $0.top.equalTo(kakaoLoginButton.snp.bottom).offset(15)
+        kakaoLoginButton.snp.makeConstraints {
+            $0.top.equalTo(appleLoginButton.snp.bottom).offset(15)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(50)
             $0.width.equalTo(343)

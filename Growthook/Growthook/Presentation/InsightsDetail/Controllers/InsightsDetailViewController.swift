@@ -205,7 +205,12 @@ final class InsightsDetailViewController: BaseViewController {
         actionPlanButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.showAddEtraActionPlanView()
+                switch self.hasActionPlan {
+                case true:
+                    self.showAddEtraActionPlanView()
+                case false:
+                    self.showAddNewActionPlanView()
+                }
             }
             .disposed(by: disposeBag)
         
@@ -446,6 +451,11 @@ extension InsightsDetailViewController {
             sheet.prefersGrabberVisible = false
         }
         present(createSingleActionPlanViewController, animated: true)
+    }
+    
+    private func showAddNewActionPlanView() {
+        let vc = CreateActionViewControlller()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     private func showEditActionPlanview(actionId: Int, content: String) {

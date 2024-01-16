@@ -16,7 +16,7 @@ import Then
 
 final class AlertViewController: BaseViewController {
     
-    private var viewModel = ActionListViewModel()
+    private var viewModel: ActionListViewModel
     private let disposeBag = DisposeBag()
     
     // MARK: - UI Components
@@ -34,6 +34,16 @@ final class AlertViewController: BaseViewController {
     
     
     // MARK: - Initializer
+        
+    init(viewModel: ActionListViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    convenience init() {
+        let test = ActionListViewModel()
+        self.init(viewModel: test)
+    }
     
     // MARK: - View Life Cycle
     
@@ -42,7 +52,12 @@ final class AlertViewController: BaseViewController {
     }
     
     override func bindViewModel() {
-        
+        checkButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.viewModel.inputs.didTapCheckButtonInAcertView()
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
@@ -51,7 +66,7 @@ final class AlertViewController: BaseViewController {
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
         
         growthookImage.do {
-            $0.image = ImageLiterals.Component.img_mugwort
+            $0.image = ImageLiterals.Component.ic_largethook_color
         }
         
         mainView.do {
@@ -97,13 +112,13 @@ final class AlertViewController: BaseViewController {
         alertView.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
             $0.width.equalTo(290)
-            $0.height.equalTo(291)
+            $0.height.equalTo(311)
         }
         
         growthookImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
-            $0.width.height.equalTo(70)
+            $0.height.equalTo(94)
         }
         
         mainView.snp.makeConstraints {
@@ -121,7 +136,7 @@ final class AlertViewController: BaseViewController {
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(183)
             $0.height.equalTo(63)
@@ -149,6 +164,10 @@ final class AlertViewController: BaseViewController {
     @objc
     private func didTapCheckButton() {
         dismiss(animated: false, completion: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

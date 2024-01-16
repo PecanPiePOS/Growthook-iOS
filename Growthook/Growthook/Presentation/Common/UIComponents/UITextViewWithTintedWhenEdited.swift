@@ -13,7 +13,7 @@ import Then
 // https://liveupdate.tistory.com/460 이거 쓰면 될듯 (크기 변환)
 final class UITextViewWithTintedWhenEdited: UITextView {
     
-    private var initialPlaceholder: String
+    var initialPlaceholder: String
     private(set) var maxLength: Int
     private var toolBarItems: [UIBarButtonItem] = []
 

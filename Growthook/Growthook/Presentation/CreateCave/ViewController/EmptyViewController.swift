@@ -25,6 +25,11 @@ final class EmptyViewController: BaseViewController {
         view = emptyView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindModel()
@@ -45,7 +50,8 @@ final class EmptyViewController: BaseViewController {
         emptyView.plantSeedButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                // TODO: Connect
+                let vc = CreatingNewInsightsViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
