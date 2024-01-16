@@ -156,4 +156,8 @@ extension SelectBlockWithTitle {
         self.seletedCave = text
         selectedCaveLabel.text = seletedCave
     }
+    
+    func hideArrow() {
+        arrowImageView.image = nil
+    }
 }

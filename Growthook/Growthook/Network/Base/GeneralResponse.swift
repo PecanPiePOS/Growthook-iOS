@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GeneralResponse<T: Decodable>: Decodable {
+struct GeneralResponse<T: Codable>: Codable {
     var status: Int
     var success: Bool
     var message: String?
@@ -29,4 +29,4 @@ struct GeneralResponse<T: Decodable>: Decodable {
     }
 }
 
-struct VoidType: Decodable {}
+struct VoidType: Codable {}

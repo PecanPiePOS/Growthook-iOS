@@ -21,6 +21,11 @@ struct InsightPeriodModel {
     var periodTitle: String
 }
 
+struct ActionPlanListModel {
+    var content: String
+    var isCompleted: Bool
+}
+
 struct PeriodModel {
     /// 변경 가능한 기한
     private static let maximumPeriodMonthCount: Int = 12
