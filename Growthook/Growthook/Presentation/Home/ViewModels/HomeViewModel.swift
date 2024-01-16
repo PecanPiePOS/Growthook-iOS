@@ -56,7 +56,7 @@ protocol HomeViewModelOutputs {
     var removeCave: PublishSubject<Void> { get }
     var insightAllCount: BehaviorRelay<Int> { get }
     var caveInsightAllCount: BehaviorRelay<Int> { get }
-    var ssukCount: BehaviorRelay<SsukResponseGto> { get }
+    var ssukCount: BehaviorRelay<SsukResponseDto> { get }
     var pushToChangeCave: PublishSubject<Void> { get }
 }
 
