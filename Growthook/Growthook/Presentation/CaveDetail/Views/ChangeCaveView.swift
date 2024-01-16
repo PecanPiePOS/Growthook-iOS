@@ -29,21 +29,21 @@ final class ChangeCaveView: BaseView {
         navigationBar.do {
             $0.isTitleViewIncluded = true
             $0.isBackButtonIncluded = true
-            $0.isTitleLabelIncluded = "동굴 편집"
+            $0.isTitleLabelIncluded = I18N.CaveDetail.caveChange
             $0.isCompletionButtonIncluded = true
             $0.isBackgroundColor = .gray600
         }
         
         nameTextField.do {
-            $0.setMainTitleLabel(with: "이름")
+            $0.setMainTitleLabel(with: I18N.CaveDetail.name)
         }
         
         introduceTextView.do {
-            $0.setMainTitleLabel(with: "소개")
+            $0.setMainTitleLabel(with: I18N.CaveDetail.introduce)
         }
         
         isSharedLabel.do {
-            $0.text = "공개 여부"
+            $0.text = I18N.CaveDetail.isShared
             $0.font = .fontGuide(.body2_bold)
             $0.textColor = .white000
         }

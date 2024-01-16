@@ -23,7 +23,7 @@ final class RemoveCaveAlertViewController: BaseViewController {
     private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
     private var caveId: Int?
-    private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
+    private let deSelectInsightNotification = Notification.Name(I18N.Component.Identifier.deSelectNoti)
     
     // MARK: - Initializer
 
@@ -91,7 +91,7 @@ extension RemoveCaveAlertViewController {
         NotificationCenter.default.post(
             name: deSelectInsightNotification,
             object: nil,
-            userInfo: ["type": ClearInsightType.deleteCave]
+            userInfo: [I18N.Component.Identifier.type: ClearInsightType.deleteCave]
         )
     }
     

@@ -76,6 +76,12 @@ enum I18N {
     
     enum CaveDetail {
         static let addSeed = "씨앗 심기"
+        static let caveChange = "동굴 편집"
+        static let name = "이름"
+        static let introduce = "소개"
+        static let isShared = "공개 여부"
+        static let changeCaveMenu = "수정하기"
+        static let deleteCaveMenu = "삭제하기"
     }
     
     enum InsightList {
