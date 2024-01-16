@@ -148,12 +148,13 @@ final class CaveDetailViewController: BaseViewController {
         unLockCaveAlertView.checkButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.unLockCaveAlertView.removeFromSuperview()
+                // TODO: - 인사이트 디테일 이동
             })
             .disposed(by: disposeBag)
         
         caveDetailView.addSeedButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                // add Seed
+                // TODO: - 인사이트 생성 뷰 이동
             })
             .disposed(by: disposeBag)
         
@@ -247,7 +248,7 @@ extension CaveDetailViewController {
                 }
                 self.lockSeedId = cell.seedId
             } else {
-                print("pushToInsightDetail")
+                // TODO: - 인사이트 디테일 이동
             }
         }
     }

@@ -184,13 +184,20 @@ final class HomeViewController: BaseViewController {
         viewModel.outputs.unLockSeed
             .subscribe(onNext: { [weak self] in
                 self?.unLockAlertView.removeFromSuperview()
+                // TODO: - 인사이트 뷰 이동
                 print("인사이트 잠금 해제 뷰 이동")
             })
             .disposed(by: disposeBag)
         
         homeCaveView.addCaveButton.rx.tap
             .subscribe(onNext: { _ in
-                
+                // TODO: - 동굴 추가 뷰 이동
+            })
+            .disposed(by: disposeBag)
+        
+        seedPlusButton.rx.tap
+            .subscribe(onNext: { _ in
+                // TODO: - 씨앗 생성 뷰 이동
             })
             .disposed(by: disposeBag)
         
@@ -353,7 +360,7 @@ extension HomeViewController {
                 }
                 self.lockSeedId = cell.seedId
             } else {
-                print("pushToInsightDetail")
+                // TODO: - 인사이트 뷰 이동
             }
         }
     }
