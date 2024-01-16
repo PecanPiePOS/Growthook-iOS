@@ -13,26 +13,47 @@ final class SplashViewController: BaseViewController {
 
     private let splashLottieView: LottieAnimationView = LottieAnimationView(name: "grothooksplash", configuration: LottieConfiguration(renderingEngine: .mainThread))
     private let splashLabel = UILabel()
+    private let splashImageView = UIImageView()
     
-    override func setStyles() {
-        view.backgroundColor = .gray700.withAlphaComponent(0.9)
-        
-        splashLottieView.animationSpeed = 0.8
-        splashLottieView.play { _ in
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             var mainViewController: UIViewController
-        
+            
             if self.isFirstLaunch() {
                 mainViewController = OnboardingSelectViewController()
             } else {
                 mainViewController = TabBarController()
                 (mainViewController as? TabBarController)?.selectedIndex = 0
             }
-            
-            guard let sceneDeleagate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-            
-            sceneDeleagate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
-            sceneDeleagate.window?.makeKeyAndVisible()
+
+            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+
+            sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+            sceneDelegate.window?.makeKeyAndVisible()
         }
+    }
+    
+    override func setStyles() {
+        view.backgroundColor = .gray700.withAlphaComponent(0.9)
+        
+//        splashLottieView.animationSpeed = 0.8
+//        splashLottieView.play { _ in
+//            var mainViewController: UIViewController
+//        
+//            if self.isFirstLaunch() {
+//                mainViewController = OnboardingSelectViewController()
+//            } else {
+//                mainViewController = TabBarController()
+//                (mainViewController as? TabBarController)?.selectedIndex = 0
+//            }
+//            
+//            guard let sceneDeleagate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+//            
+//            sceneDeleagate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+//            sceneDeleagate.window?.makeKeyAndVisible()
+//        }
         
         splashLabel.do {
             let paragraphStyle = NSMutableParagraphStyle()
@@ -51,19 +72,24 @@ final class SplashViewController: BaseViewController {
             $0.textAlignment = .center
             $0.numberOfLines = 2
         }
+        
+        splashImageView.do {
+            $0.image = ImageLiterals.Onboarding.growthook_Splash
+            $0.contentMode = .scaleAspectFit
+        }
     }
     
     override func setLayout() {
-        view.addSubviews(splashLabel, splashLottieView)
+        view.addSubviews(splashLabel, splashImageView)
         
         splashLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(splashLottieView.snp.top).inset(7)
+            $0.bottom.equalTo(splashImageView.snp.top).inset(7)
         }
         
-        splashLottieView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview()
+        splashImageView.snp.makeConstraints {
+            $0.bottom.leading.trailing.equalToSuperview()
+            $0.height.equalTo(491)
         }
     }
     

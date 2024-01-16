@@ -20,28 +20,35 @@ protocol NotificationActionListVC: AnyObject {
 
 final class InprogressViewController: BaseViewController, NotificationDismissBottomSheet {
     
-    private var viewModel = ActionListViewModel()
+    private var viewModel: ActionListViewModel
     private var disposeBag = DisposeBag()
     
     // MARK: - UI Components
     
-    private let scrapButton = ScrapOnlyButton()
+    private let scrapButton = UIButton()
     private let tableView = UITableView(frame: .zero, style: .plain)
     
     // MARK: - Properties
     
     weak var delegate: NotificationActionListVC?
+    weak var pushDelegate: PushInsightsDetailViewController?
     private var isShowingScrappedData = false
     private var isPresentingBottomSheet = false
+    var indexPath: IndexPath? = nil
     
     // MARK: - Initializer
+    
+    init(viewModel: ActionListViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     override func bindViewModel() {
         scrapButton.rx.tap
             .bind { [weak self] in
@@ -51,12 +58,23 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
                 self.tableView.reloadData()
             }
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.doingActionList
+            .subscribe(onNext: { [weak self] data in
+                guard let self = self else { return }
+                self.tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
     
     override func setStyles() {
         view.backgroundColor = .gray700
+        
+        scrapButton.do {
+            $0.setImage(ImageLiterals.Scrap.btn_scrap_default, for: .normal)
+        }
         
         tableView.do {
             $0.showsVerticalScrollIndicator = false
@@ -79,29 +97,33 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
         }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(scrapButton.snp.bottom).offset(13)
+            $0.top.equalTo(scrapButton.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     // MARK: - Methods
     
-    private func presentToBottomSheet() {
+    private func presentToBottomSheet(actionPlanId: Int) {
         guard !isPresentingBottomSheet else {
             return
         }
         isPresentingBottomSheet = true
-
-        let bottomSheetVC = ActionListBottomSheetViewController()
+        
+        let bottomSheetVC = ActionListBottomSheetViewController(actionPlanId: actionPlanId, viewModel: viewModel)
         bottomSheetVC.delegate = self
-
+        
         self.present(bottomSheetVC, animated: true) {
             self.isPresentingBottomSheet = false
         }
     }
     
-    private func getScrappedActionList() -> [ActionListModel] {
-        return viewModel.outputs.actionList.value.filter { $0.scrapStatus == .scrap }
+    private func getScrappedActionList() -> [ActionListDoingResponse] {
+        return viewModel.outputs.doingActionList.value.filter { $0.isScraped == true }
+    }
+    
+    func pushToInsightsDetailViewControllerInInprogressViewController(seedId: Int) {
+        pushDelegate?.didTapSeedButtonInInprogressViewController(seedId : seedId)
     }
     
     func notificationDismissInCancelButton() {
@@ -114,7 +136,9 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
         delegate?.moveToCompletePageBySaveButton()
     }
     
-    // MARK: - @objc Methods
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 
@@ -128,18 +152,18 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
         if isShowingScrappedData {
             return getScrappedActionList().count
         } else {
-            return viewModel.outputs.actionList.value.count
+            return viewModel.outputs.doingActionList.value.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "actionListTableCell", for: indexPath) as! ActionListTableViewCell
-        let model: ActionListModel
+        let model: ActionListDoingResponse
         
         if isShowingScrappedData {
             model = getScrappedActionList()[indexPath.row]
         } else {
-            model = viewModel.outputs.actionList.value[indexPath.row]
+            model = viewModel.outputs.doingActionList.value[indexPath.row]
         }
         cell.configure(model)
         cell.disposeBag = DisposeBag()
@@ -148,14 +172,14 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
             .bind { [weak self] in
                 guard let self else { return }
                 self.viewModel.inputs.didTapSeedButton()
+                self.pushToInsightsDetailViewControllerInInprogressViewController(seedId: cell.seedId)
             }
             .disposed(by: cell.disposeBag)
 
         cell.completButton.rx.tap
             .bind { [weak self]  in
                 guard let self else { return }
-                self.viewModel.inputs.didTapCompletButton()
-                self.presentToBottomSheet()
+                self.presentToBottomSheet(actionPlanId: cell.actionPlanId)
             }
             .disposed(by: cell.disposeBag)
 

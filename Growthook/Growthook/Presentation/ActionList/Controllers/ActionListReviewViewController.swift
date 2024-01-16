@@ -15,6 +15,9 @@ import Then
 
 final class ActionListReviewViewController: BaseViewController {
     
+    private var viewModel: ActionListViewModel
+    private let disposeBag = DisposeBag()
+    
     // MARK: - UI Components
     
     private let navigationBar = CustomNavigationBar()
@@ -28,6 +31,10 @@ final class ActionListReviewViewController: BaseViewController {
     
     // MARK: - Initializer
     
+    init(viewModel: ActionListViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
     // MARK: - View Life Cycle
     
@@ -42,7 +49,11 @@ final class ActionListReviewViewController: BaseViewController {
     }
     
     override func bindViewModel() {
-        
+        viewModel.outputs.reviewDetail
+            .subscribe(onNext: { [weak self] data in
+                self?.setReviewDetail(reviewData: data)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
@@ -63,6 +74,11 @@ final class ActionListReviewViewController: BaseViewController {
         
         titleLabel.do {
             $0.font = .fontGuide(.body1_bold)
+            $0.textColor = .white000
+        }
+        
+        reviewTextView.do {
+            $0.isEditable = false
             $0.textColor = .white000
         }
         
@@ -93,7 +109,7 @@ final class ActionListReviewViewController: BaseViewController {
         }
         
         scrapButton.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(18)
+            $0.centerY.equalTo(titleLabel.snp.centerY)
             $0.trailing.equalToSuperview().inset(8)
             $0.width.height.equalTo(48)
         }
@@ -113,6 +129,18 @@ final class ActionListReviewViewController: BaseViewController {
     
     // MARK: - Methods
     
+    func setReviewDetail(reviewData: ActionListReviewDetailResponse) {
+        titleLabel.text = reviewData.actionPlan
+        reviewTextView.text = reviewData.content
+        writtenDateLabel.text = reviewData.reviewDate
+        switch reviewData.isScraped {
+        case false:
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+        case true:
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        }
+    }
+    
     // MARK: - @objc Methods
     
     @objc
@@ -120,4 +148,7 @@ final class ActionListReviewViewController: BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

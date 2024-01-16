@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "growthook_Splash.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

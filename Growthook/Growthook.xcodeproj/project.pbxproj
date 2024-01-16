@@ -139,9 +139,11 @@
 		259E7F772B4060EB00F3DC8F /* PageContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F762B4060EB00F3DC8F /* PageContentsViewController.swift */; };
 		259E7F792B42A68B00F3DC8F /* OnboardingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F782B42A68B00F3DC8F /* OnboardingButtonView.swift */; };
 		259E7F7B2B42ABA600F3DC8F /* OnboardingSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F7A2B42ABA600F3DC8F /* OnboardingSelectViewController.swift */; };
-		259E7F852B47B9A300F3DC8F /* grothooksplash.json in Resources */ = {isa = PBXBuildFile; fileRef = 259E7F842B47B9A300F3DC8F /* grothooksplash.json */; };
+		259E7F912B4A7BCA00F3DC8F /* ActionListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */; };
+		259E7F972B4D0C4200F3DC8F /* splash_growthook.json in Resources */ = {isa = PBXBuildFile; fileRef = 259E7F962B4D0C4200F3DC8F /* splash_growthook.json */; };
+		259E7F992B4D0EF600F3DC8F /* grothooksplash.json in Resources */ = {isa = PBXBuildFile; fileRef = 259E7F982B4D0EF600F3DC8F /* grothooksplash.json */; };
+		259E7F9C2B4FCA8C00F3DC8F /* ActionListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F9B2B4FCA8C00F3DC8F /* ActionListDTO.swift */; };
 		25BD95182B0894A200E72ADC /* ActionListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD95172B0894A200E72ADC /* ActionListTableViewCell.swift */; };
-		25BD951B2B089B9900E72ADC /* ActionListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951A2B089B9900E72ADC /* ActionListModel.swift */; };
 		25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951C2B08F6F600E72ADC /* InprogressViewController.swift */; };
 		25BD951F2B08F73700E72ADC /* CompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951E2B08F73700E72ADC /* CompleteViewController.swift */; };
 		25EAFA5B2B0255BB00283CD8 /* MainTitleBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EAFA5A2B0255BB00283CD8 /* MainTitleBarView.swift */; };
@@ -323,9 +325,11 @@
 		259E7F762B4060EB00F3DC8F /* PageContentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentsViewController.swift; sourceTree = "<group>"; };
 		259E7F782B42A68B00F3DC8F /* OnboardingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingButtonView.swift; sourceTree = "<group>"; };
 		259E7F7A2B42ABA600F3DC8F /* OnboardingSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSelectViewController.swift; sourceTree = "<group>"; };
-		259E7F842B47B9A300F3DC8F /* grothooksplash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = grothooksplash.json; sourceTree = "<group>"; };
+		259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListService.swift; sourceTree = "<group>"; };
+		259E7F962B4D0C4200F3DC8F /* splash_growthook.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_growthook.json; sourceTree = "<group>"; };
+		259E7F982B4D0EF600F3DC8F /* grothooksplash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = grothooksplash.json; sourceTree = "<group>"; };
+		259E7F9B2B4FCA8C00F3DC8F /* ActionListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListDTO.swift; sourceTree = "<group>"; };
 		25BD95172B0894A200E72ADC /* ActionListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListTableViewCell.swift; sourceTree = "<group>"; };
-		25BD951A2B089B9900E72ADC /* ActionListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListModel.swift; sourceTree = "<group>"; };
 		25BD951C2B08F6F600E72ADC /* InprogressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InprogressViewController.swift; sourceTree = "<group>"; };
 		25BD951E2B08F73700E72ADC /* CompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteViewController.swift; sourceTree = "<group>"; };
 		25EAFA5A2B0255BB00283CD8 /* MainTitleBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleBarView.swift; sourceTree = "<group>"; };
@@ -634,12 +638,14 @@
 		03B9AC492AF55E3300A5751C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				259E7F9A2B4FCA7B00F3DC8F /* ActionList */,
 				0332A3932B51357E00720CD3 /* Ssuk */,
 				035701EB2B4EBED500A9E47A /* Insight */,
 				035701E82B4EBA7100A9E47A /* Cave */,
 				092A51892B52D2C100296B46 /* CreateCave */,
 				586626112B4E65590084468C /* Insights */,
 				5866260C2B4E65410084468C /* MyPage */,
+				03B9AC612AF5624D00A5751C /* DTO.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -776,6 +782,8 @@
 		03B9AC5E2AF561A200A5751C /* API */ = {
 			isa = PBXGroup;
 			children = (
+				259E7F872B4A6FAA00F3DC8F /* Auth */,
+				259E7F862B4A6FA100F3DC8F /* ActionList */,
 				0332A39B2B5136F400720CD3 /* SsukAPI */,
 				0332A38E2B5020BD00720CD3 /* CaveAPI */,
 				035701F12B4EFBA200A9E47A /* SeedListAPI */,
@@ -841,7 +849,6 @@
 		03B9ACA22AF7B27600A5751C /* ActionList */ = {
 			isa = PBXGroup;
 			children = (
-				25BD95192B089B9000E72ADC /* Model */,
 				252DD8822B0639FF00DBB1D1 /* Controllers */,
 				252DD8812B0639FE00DBB1D1 /* ViewModels */,
 				252DD8802B0639FC00DBB1D1 /* Views */,
@@ -1073,6 +1080,36 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		259E7F862B4A6FA100F3DC8F /* ActionList */ = {
+			isa = PBXGroup;
+			children = (
+				259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */,
+			);
+			path = ActionList;
+			sourceTree = "<group>";
+		};
+		259E7F872B4A6FAA00F3DC8F /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		259E7F882B4A755E00F3DC8F /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		259E7F9A2B4FCA7B00F3DC8F /* ActionList */ = {
+			isa = PBXGroup;
+			children = (
+				259E7F9B2B4FCA8C00F3DC8F /* ActionListDTO.swift */,
+			);
+			path = ActionList;
+			sourceTree = "<group>";
+		};
 		25BD95162B08946D00E72ADC /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1080,14 +1117,6 @@
 				250F7D722B145F4C00D9726F /* ActionListCompleteTableViewCell.swift */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		25BD95192B089B9000E72ADC /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				25BD951A2B089B9900E72ADC /* ActionListModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		581D228C2B320BE70068E58D /* NewUITextComponent */ = {
@@ -1249,7 +1278,8 @@
 		58E75FA12B00BAFC00512FE2 /* Lotties */ = {
 			isa = PBXGroup;
 			children = (
-				259E7F842B47B9A300F3DC8F /* grothooksplash.json */,
+				259E7F962B4D0C4200F3DC8F /* splash_growthook.json */,
+				259E7F982B4D0EF600F3DC8F /* grothooksplash.json */,
 				58E75FA22B00BB1E00512FE2 /* GrowthookSplashLottie.json */,
 			);
 			path = Lotties;
@@ -1389,10 +1419,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				03E4810C2AF2AFDD002F4CBC /* LaunchScreen.storyboard in Resources */,
-				259E7F852B47B9A300F3DC8F /* grothooksplash.json in Resources */,
 				033E9C102AFCE0860051A9E8 /* Image.xcassets in Resources */,
 				58E75FA32B00BB1E00512FE2 /* GrowthookSplashLottie.json in Resources */,
+				259E7F992B4D0EF600F3DC8F /* grothooksplash.json in Resources */,
 				03E481092AF2AFDD002F4CBC /* Assets.xcassets in Resources */,
+				259E7F972B4D0C4200F3DC8F /* splash_growthook.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1503,7 +1534,6 @@
 				58026D992B55264B00176D12 /* ActionPlanCellMenuView.swift in Sources */,
 				25BD95182B0894A200E72ADC /* ActionListTableViewCell.swift in Sources */,
 				03B9AC7C2AF5651600A5751C /* UITabBar+.swift in Sources */,
-				25BD951B2B089B9900E72ADC /* ActionListModel.swift in Sources */,
 				03B9AC862AF565BA00A5751C /* SizeLiterals.swift in Sources */,
 				035701E12B4E6DA700A9E47A /* CaveListEmptyView.swift in Sources */,
 				035701EA2B4EBA9600A9E47A /* CaveListResponseDto.swift in Sources */,
@@ -1542,6 +1572,7 @@
 				0332A3A12B53BBE700720CD3 /* ChangeCaveView.swift in Sources */,
 				259E7F792B42A68B00F3DC8F /* OnboardingButtonView.swift in Sources */,
 				09A7D70A2B01E6A9005F8821 /* CreateCaveModel.swift in Sources */,
+				259E7F9C2B4FCA8C00F3DC8F /* ActionListDTO.swift in Sources */,
 				03B9AC592AF560D800A5751C /* Config.swift in Sources */,
 				588E2BA02B544E240014E6D5 /* InsightDetailEditSeedViewController.swift in Sources */,
 				03B9AC8D2AF5663C00A5751C /* Font.swift in Sources */,
@@ -1558,6 +1589,7 @@
 				033E9C1B2AFE606E0051A9E8 /* CaveCollectionViewCell.swift in Sources */,
 				03B9AC782AF564C400A5751C /* UILabel+.swift in Sources */,
 				250F7D732B145F4C00D9726F /* ActionListCompleteTableViewCell.swift in Sources */,
+				259E7F912B4A7BCA00F3DC8F /* ActionListService.swift in Sources */,
 				03B9AC6A2AF5638700A5751C /* UIResponder+.swift in Sources */,
 				035701E72B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift in Sources */,
 				03B9AC802AF5657500A5751C /* ColorLiterals.swift in Sources */,
