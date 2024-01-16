@@ -166,6 +166,13 @@ final class InsightsDetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        customNavigationView.rxBackButtonTapControl
+            .bind { [weak self] in
+                guard let self else { return }
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         actionPlanCollectionView.rx.didScroll
             .bind { [weak self] in
                 guard let self else { return }
