@@ -153,7 +153,8 @@ final class ActionListViewController: BaseViewController {
     
     func didTapSeedButtonInCompleteViewController(seedId: Int) {
         print("pushToInsightsDetailViewController by Complete \(seedId)")
-        // TODO: Connet
+        let vc = InsightsDetailViewController(hasAnyActionPlan: true, seedId: seedId)
+        // TODO: pushToInsightsDetailViewController push 이동
     }
     
  
@@ -177,7 +178,8 @@ extension ActionListViewController: ActionListSegmentDelegate , PushToActionList
     
     func didTapSeedButtonInInprogressViewController(seedId: Int) {
         print("pushToInsightsDetailViewController by InProgress \(seedId)")
-        // TODO: Connet
+        let vc = InsightsDetailViewController(hasAnyActionPlan: true, seedId: seedId)
+        // TODO: pushToInsightsDetailViewController push 이동
     }
     
     
