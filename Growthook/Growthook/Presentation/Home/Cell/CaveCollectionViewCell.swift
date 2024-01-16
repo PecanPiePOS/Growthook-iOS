@@ -12,12 +12,14 @@ import Then
 
 final class CaveCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "CaveCollectionViewCell"
-    
     // MARK: - UI Components
     
     private let caveImageView = UIImageView()
     private let caveTitle = UILabel()
+    
+    // MARK: - Properties
+    
+    var caveId: Int?
     
     // MARK: - View Life Cycle
     
@@ -46,7 +48,6 @@ extension CaveCollectionViewCell {
         }
         
         caveTitle.do {
-            $0.text = "일곱글자까지만"
             $0.font = .fontGuide(.detail2_reg)
             $0.textColor = .white000
         }
@@ -72,8 +73,8 @@ extension CaveCollectionViewCell {
     
     // MARK: - Methods
     
-    func configureCell(_ model: CaveProfile) {
-        caveImageView.image = model.image
-        caveTitle.text = model.title
+    func configureCell(_ model: CaveListResponseDto) {
+        caveTitle.text = model.caveName
+        caveId = model.caveId
     }
 }

@@ -40,18 +40,21 @@ final class CreateCaveViewController: UIViewController {
 extension CreateCaveViewController {
     
     private func bindViewModel() {
+                
         createCaveView.nameTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
             .bind { [weak self] value in
                 guard let self else { return }
                 self.viewModel.inputs.setName(with: value)
+                self.createCaveView.nameCountLabel.text = "\(value.count)/7"
             }
             .disposed(by: disposeBag)
         
         createCaveView.nameTextField.rx.controlEvent([.editingDidBegin])
             .bind { [weak self] in
                 guard let self else { return }
+                createCaveView.nameTextField.focusWhenDidBeginEditing()
                 self.setUpAnimation()
             }
             .disposed(by: disposeBag)
@@ -59,6 +62,7 @@ extension CreateCaveViewController {
         createCaveView.nameTextField.rx.controlEvent([.editingDidEnd])
             .bind { [weak self] in
                 guard let self else { return }
+                createCaveView.nameTextField.unfocusWhenDidEndEditing()
                 self.setDownAnimation()
             }
             .disposed(by: disposeBag)
@@ -75,6 +79,7 @@ extension CreateCaveViewController {
             .bind { [weak self] value in
                 guard let self else { return }
                 self.viewModel.inputs.setDescription(with: value)
+                self.createCaveView.introduceCountLabel.text = "\(value.count.toTwoDigitsString())/20"
             }
             .disposed(by: disposeBag)
         
@@ -103,8 +108,18 @@ extension CreateCaveViewController {
         createCaveView.createCaveButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.viewModel.inputs.createButtonTapped()
-                self.pushToEmptyViewController()
+                self.viewModel.inputs.postCreateCave()
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.networkState
+            .bind { [weak self] status in
+                guard let self else { return }
+                switch(status) {
+                case .done:
+                    self.pushToEmptyViewController()
+                default: break
+                }
             }
             .disposed(by: disposeBag)
         
@@ -112,6 +127,12 @@ extension CreateCaveViewController {
             .map { $0 ? true : false }
             .bind(to: createCaveView.createCaveButton.rx.enableStatus)
             .disposed(by: disposeBag)
+        
+        createCaveView.customNavigationBar.closeButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.dismiss(animated: true)
+            }
     }
     
     func setUpAnimation() {
@@ -150,8 +171,11 @@ extension CreateCaveViewController {
     }
     
     private func pushToEmptyViewController() {
-        let emptyViewController = EmptyViewController()
-        emptyViewController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-        self.present(emptyViewController, animated: true)
+        let vc = EmptyViewController()
+        vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        vc.name = viewModel.outputs.name.value
+        vc.introduction = viewModel.outputs.description.value
+        vc.nickname = "쑥쑥이"
+        self.present(vc, animated: true)
     }
 }

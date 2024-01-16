@@ -24,7 +24,7 @@ final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
     var rxStatus = PublishRelay<TextComponentStatus>()
     var rxTextCount = BehaviorRelay<Int>(value: 0)
     lazy var rxNextButtonTapControl: ControlEvent<Void> = moveToNextButton.rx.tap
-    private lazy var modifiedText: Driver<String?> = self.rx.text
+    lazy var modifiedText: Driver<String?> = self.rx.text
         .orEmpty
         .distinctUntilChanged()
         .scan(self.text) { [weak self] (previousValue, newValue) -> String? in
@@ -99,7 +99,7 @@ extension CommonTextViewWithBorder {
                 self.rxEditingAction.accept(.editingDidEnd)
                 if self.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     self.text = customPlaceholder
-                    self.textColor = .gray400
+                    self.textColor = .gray300
                     self.font = .fontGuide(.body3_reg)
                     modifyBorderLine(with: .gray200)
                 } else {
@@ -196,5 +196,14 @@ extension CommonTextViewWithBorder {
     @objc
     private func hidesKeyboardWhenTapped() {
         self.resignFirstResponder()
+    }
+}
+
+extension CommonTextViewWithBorder {
+    
+    func setPlaceholder() {
+        if self.text.isEmpty || self.text == "" {
+            self.text = customPlaceholder
+        }
     }
 }

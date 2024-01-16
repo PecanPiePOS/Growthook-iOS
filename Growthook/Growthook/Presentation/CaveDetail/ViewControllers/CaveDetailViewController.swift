@@ -31,30 +31,60 @@ final class CaveDetailViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel = HomeViewModel()
-    private let caveDetailViewModel = CaveDetailViewModel()
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
-    private var insightDummyData = InsightList.insightListDummyData()
+    private var lockSeedId: Int?
+    private var caveId: Int
+    
+    // MARK: - Initializer
+
+    init(viewModel: HomeViewModel, caveId: Int){
+        self.viewModel = viewModel
+        self.caveId = caveId
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func bindViewModel() {
         
-        viewModel.outputs.insightList
+        viewModel.inputs.caveDetail(caveId: caveId)
+        
+        viewModel.outputs.caveDetail
+            .bind(onNext: { [weak self] model in
+                guard let self = self else { return }
+                caveDetailView.caveDescriptionView.configureView(model)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.caveInsightList
+            .do(onNext: { [weak self] list in
+                guard list.isEmpty else { return }
+                self?.caveDetailView.emptyInsightView.isHidden = false
+                self?.caveDetailView.insightListView.isHidden = true
+            })
+            .map { [weak self] list in
+                guard let type = self?.caveDetailView.insightListView.scrapType else { return list }
+                return type ? list.filter { $0.isScraped } : list
+            }
             .bind(to: caveDetailView.insightListView.insightCollectionView.rx.items(cellIdentifier: InsightListCollectionViewCell.className, cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
+                self.caveDetailView.emptyInsightView.isHidden = true
+                self.caveDetailView.insightListView.isHidden = false
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
                     guard let self else { return }
                     if !cell.isScrapButtonTapped {
-                        // 스크랩
-                        print("scrap")
-                        self.view.showScrapToast(message: "스크랩 완료!")
-                    } else {
-                        // 스크랩 해제
-                        print("unScrap")
+                        self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
                     }
                     cell.isScrapButtonTapped.toggle()
+                    self.viewModel.inputs.insightScrap(seedId: model.seedId, index: index)
                 }
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.caveInsightAllCount
+            .subscribe(onNext: { [weak self] count in
+                self?.caveDetailView.insightListView.seedTitleLabel.text = "\(count)\(I18N.Home.seedsCollected)"
+            })
             .disposed(by: disposeBag)
         
         viewModel.outputs.insightLongTap
@@ -87,7 +117,8 @@ final class CaveDetailViewController: BaseViewController {
         
         unLockInsightAlertView.useButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.unLockInsightAlertView.useButtonTapped()
+                guard let seedId = self?.lockSeedId else { return }
+                self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
             })
             .disposed(by: disposeBag)
         
@@ -100,6 +131,8 @@ final class CaveDetailViewController: BaseViewController {
         caveDetailView.insightListView.scrapButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 if let type = self?.caveDetailView.insightListView.scrapType {
+                    guard let caveId = self?.caveId else { return }
+                    self?.viewModel.inputs.caveOnlyScrapInsight(caveId: caveId)
                     self?.scrapTypeSetting(type)
                 }
             })
@@ -114,12 +147,13 @@ final class CaveDetailViewController: BaseViewController {
         unLockCaveAlertView.checkButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.unLockCaveAlertView.removeFromSuperview()
+                // TODO: - 인사이트 디테일 이동
             })
             .disposed(by: disposeBag)
         
         caveDetailView.addSeedButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                // add Seed
+                // TODO: - 인사이트 생성 뷰 이동
             })
             .disposed(by: disposeBag)
         
@@ -132,6 +166,14 @@ final class CaveDetailViewController: BaseViewController {
         caveDetailView.navigationView.menuButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.presentToMenuVC()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.pushToChangeCave
+            .subscribe(onNext: { [weak self] in
+                guard let caveId = self?.caveId else { return }
+                guard let viewModel = self?.viewModel else { return }
+                self?.navigationController?.pushViewController(ChangeCaveViewController(caveId: caveId, homeViewModel: viewModel), animated: true)
             })
             .disposed(by: disposeBag)
     }
@@ -173,6 +215,10 @@ final class CaveDetailViewController: BaseViewController {
     override func setRegister() {
         caveDetailView.insightListView.insightCollectionView.register(InsightListCollectionViewCell.self, forCellWithReuseIdentifier: InsightListCollectionViewCell.className)
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension CaveDetailViewController {
@@ -187,19 +233,22 @@ extension CaveDetailViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(clearNotification(_:)),
-            name: Notification.Name("DeSelectInsightNotification"),
+            name: Notification.Name(I18N.Component.Identifier.deSelectNoti),
             object: nil)
     }
     
     private func pushToInsightDetail(at indexPath: IndexPath) {
         caveDetailView.insightListView.insightCollectionView.deselectItem(at: indexPath, animated: false)
-        if insightDummyData[indexPath.item].InsightStatus == .lock {
-            view.addSubview(unLockInsightAlertView)
-            unLockInsightAlertView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
+        if let cell = caveDetailView.insightListView.insightCollectionView.cellForItem(at: indexPath) as? InsightListCollectionViewCell {
+            if cell.isLock {
+                view.addSubview(unLockInsightAlertView)
+                unLockInsightAlertView.snp.makeConstraints {
+                    $0.edges.equalToSuperview()
+                }
+                self.lockSeedId = cell.seedId
+            } else {
+                // TODO: - 인사이트 디테일 이동
             }
-        } else {
-            print("pushToInsightDetail")
         }
     }
     
@@ -223,9 +272,9 @@ extension CaveDetailViewController {
     }
     
     func presentToHalfModalViewController(_ indexPath: IndexPath) {
-        let insightTapVC = InsightTapBottomSheet()
+        let insightTapVC = InsightTapBottomSheet(viewModel: viewModel)
         insightTapVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.type)
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
             return SizeLiterals.Screen.screenHeight * 84 / 812
         }
@@ -238,7 +287,6 @@ extension CaveDetailViewController {
         }
         
         insightTapVC.onDismiss = { [weak self] in
-            print("Dismissed")
             self?.viewModel.inputs.dismissInsightTap(at: indexPath)
         }
         
@@ -258,9 +306,9 @@ extension CaveDetailViewController {
     }
     
     private func presentToMenuVC() {
-        let menuVC = CaveDetailMenuBottomSheet()
+        let menuVC = UINavigationController(rootViewController: CaveDetailMenuBottomSheet(viewModel: viewModel, caveId: caveId))
         menuVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.customDetent)
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
             return SizeLiterals.Screen.screenHeight * 165 / 812
         }
@@ -283,10 +331,12 @@ extension CaveDetailViewController {
         if gesture.state == .began {
             // 꾹 눌림이 시작될 때 실행할 코드
             if let indexPath = caveDetailView.insightListView.insightCollectionView.indexPathForItem(at: location) {
-                if insightDummyData[indexPath.item].InsightStatus == .lock {
-                    return
-                } else {
-                    viewModel.inputs.handleLongPress(at: indexPath)
+                if let cell = caveDetailView.insightListView.insightCollectionView.cellForItem(at: indexPath) as? InsightListCollectionViewCell {
+                    if cell.isLock {
+                        return
+                    } else {
+                        viewModel.inputs.handleLongPress(at: indexPath)
+                    }
                 }
             }
         }
@@ -295,16 +345,16 @@ extension CaveDetailViewController {
     @objc func clearNotification(_ notification: Notification) {
         updateInsightList()
         caveDetailView.addSeedButton.isHidden = false
-        if let info = notification.userInfo?["type"] as? ClearInsightType {
+        if let info = notification.userInfo?[I18N.Component.Identifier.type] as? ClearInsightType {
             switch info {
             case .move:
-                view.showToast(message: "씨앗을 옮겨 심었어요")
+                view.showToast(message: I18N.Component.ToastMessage.moveInsight)
             case .delete:
-                view.showToast(message: "씨앗이 삭제되었어요")
+                view.showToast(message: I18N.Component.ToastMessage.removeInsight)
             case .none:
                 return
             case .deleteCave:
-                view.showToast(message: "동굴이 삭제되었어요")
+                view.showToast(message: I18N.Component.ToastMessage.removeCave)
             }
         }
     }

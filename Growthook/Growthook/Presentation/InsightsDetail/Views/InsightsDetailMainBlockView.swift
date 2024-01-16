@@ -95,14 +95,14 @@ final class InsightsDetailMainBlockView: BaseView {
 }
 
 extension InsightsDetailMainBlockView: InsightBoxViewType {
-    var moreButton: UIButton { return UIButton() }
-    
-    func bindInsight(model: InsightModel) {
-        nameLabel.text = "" + model.name + "   "
+    func bindInsight(model: ActionPlanResponse) {
+        nameLabel.text = "" + model.caveName + "   "
         insightLabel.text = model.insight
-        dateLabel.text = model.date
-        remainingDateLabel.text = "D-" + model.dDay
+        dateLabel.text = model.lockDate
+        remainingDateLabel.text = "D-" + String(model.remainingDays)
     }
+    
+    var moreButton: UIButton { return UIButton() }
     
     func showDetail() {}
     func fold() {}

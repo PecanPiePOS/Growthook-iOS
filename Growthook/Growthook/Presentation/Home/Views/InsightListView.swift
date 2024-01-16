@@ -16,7 +16,7 @@ final class InsightListView: BaseView {
     
     // MARK: - UI Components
     
-    private let seedTitleLabel = UILabel()
+    let seedTitleLabel = UILabel()
     let scrapButton = UIButton()
     lazy var insightCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     private let flowLayout = UICollectionViewFlowLayout()
@@ -24,8 +24,7 @@ final class InsightListView: BaseView {
     // MARK: - Properties
     
     var scrapType: Bool = false
-    private let dummyModel: [InsightList] = InsightList.insightListDummyData()
-    
+
     // MARK: - UI Components Property
     
     override func setStyles() {
@@ -33,7 +32,6 @@ final class InsightListView: BaseView {
         backgroundColor = .gray700
         
         seedTitleLabel.do {
-            $0.text = "00\(I18N.Home.seedsCollected)"
             $0.font = .fontGuide(.head4)
             $0.textColor = .white000
         }

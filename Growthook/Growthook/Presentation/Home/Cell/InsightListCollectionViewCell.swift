@@ -26,14 +26,15 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
 
-    private var disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     var scrapButtonTapHandler: (() -> Void)?
     var isScrapButtonTapped: Bool = false {
         didSet {
             scrapButtonTapped()
         }
     }
-    var cellType: InsightStatus?
+    var isLock: Bool = false
+    var hasActionPlan: Bool = false
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -43,6 +44,7 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    var seedId: Int = 0
     
     // MARK: - View Life Cycle
     
@@ -73,13 +75,11 @@ extension InsightListCollectionViewCell {
         }
         
         titleLabel.do {
-            $0.text = "쑥쑥이들은 최고다."
             $0.font = .fontGuide(.body2_bold)
             $0.textColor = .white000
         }
         
         dueTimeLabel.do {
-            $0.text = "00\(I18N.InsightList.lockInsight)"
             $0.font = .fontGuide(.detail3_reg)
             $0.textColor = .white000
         }
@@ -119,6 +119,7 @@ extension InsightListCollectionViewCell {
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(12)
             $0.leading.equalTo(scrapButton.snp.trailing)
+            $0.width.equalTo(self.bounds.width - 48 * 2)
         }
         
         dueTimeLabel.snp.makeConstraints {
@@ -151,32 +152,41 @@ extension InsightListCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         lockView.isHidden = true
-        isScrapButtonTapped = false
+        makeBorder(width: 0, color: .gray200)
     }
     
-    func configureCell(_ model: InsightList) {
-        titleLabel.text = model.title
-        dueTimeLabel.text = model.dueTime
-        cellType = model.InsightStatus
-        isScrapButtonTapped = model.scrapStatus
+    func configureCell(_ model: SeedListResponseDto) {
+        titleLabel.text = model.insight
+        dueTimeLabel.text = "\(model.remainingDays)\(I18N.InsightList.lockInsight)"
+        isLock = model.isLocked
+        isScrapButtonTapped = model.isScraped
+        hasActionPlan = model.hasActionPlan
+        seedId = model.seedId
         setCellStyle()
     }
     
     func setCellStyle() {
         scrapButtonTapped()
-        switch cellType {
-        case .lock:
+        if isLock {
             lockCellStyle()
-            cellType = .lock
-        case .dark:
-            darkCellStyle()
-            cellType = .dark
-        case .light:
-            lightCellStyle()
-            cellType = .light
-        case .none:
-            return
+            isLock = true
         }
+        
+        if hasActionPlan {
+            darkCellStyle()
+        } else {
+            lightCellStyle()
+        }
+    }
+    
+    func scrapButtonTapped() {
+        let buttonImage: UIImage
+        if hasActionPlan {
+            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_dark_on : ImageLiterals.Home.btn_scrap_dark_off
+        } else {
+            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
+        }
+        scrapButton.setImage(buttonImage, for: .normal)
     }
     
     private func lockCellStyle() {
@@ -210,19 +220,6 @@ extension InsightListCollectionViewCell {
     
     private func setAddTarget() {
         scrapButton.addTarget(self, action: #selector(scrapButtonTap), for: .touchUpInside)
-    }
-    
-    func scrapButtonTapped() {
-        let buttonImage: UIImage
-        switch cellType {
-        case .light:
-            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
-        case .dark:
-            buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_dark_on : ImageLiterals.Home.btn_scrap_dark_off
-        case .none, .lock:
-            return
-        }
-        scrapButton.setImage(buttonImage, for: .normal)
     }
     
     @objc

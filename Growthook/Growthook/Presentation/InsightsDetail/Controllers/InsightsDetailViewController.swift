@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 protocol InsightBoxViewType: AnyObject {
-    func bindInsight(model: InsightModel)
+    func bindInsight(model: ActionPlanResponse)
     func showDetail()
     func fold() 
     var moreButton: UIButton { get }
@@ -63,13 +63,29 @@ final class InsightsDetailViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    
+    /**
+     struct ActionPlanResponse: Codable {
+         let caveName: String
+         let insight: String
+         let memo: String
+         let source: String
+         let url: String
+         let isScraped: Bool
+         let lockDate: String
+         let remainingDays: Int
+     }
+     */
+    
+    
     // MARK: - Bind
     override func bindViewModel() {
         // MARK: - Bind UI With Data
         viewModel.outputs.seedDetail
             .bind { [weak self] data in
                 guard let self else { return }
-                let model: InsightModel = .init(name: data.caveName, insight: data.insight, date: data.lockDate, dDay: String(data.remainingDays), memo: data.memo)
+                let model: ActionPlanResponse =
+                    .init(caveName: data.caveName, insight: data.insight, memo: data.memo, source: data.source, url: data.url, isScraped: data.isScraped, lockDate: data.lockDate, remainingDays: data.remainingDays)
                 mainInsightBlock.bindInsight(model: model)
                 memoView.setMemoContent(with: model.memo)
                 memoView.setReferenceContent(reference: data.source, url: data.url)

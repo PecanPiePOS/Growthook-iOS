@@ -16,9 +16,11 @@ protocol CreateCaveViewModelInputs {
     func setDescription(with value: String)
     func switchTapped()
     func createButtonTapped()
+    func postCreateCave()
 }
 
 protocol CreateCaveViewModelOutput {
+    var networkState: BehaviorRelay<SomeNetworkStatus> { get }
     var name: BehaviorRelay<String> { get }
     var description: BehaviorRelay<String> { get }
     var caveModel: BehaviorRelay<CreateCaveModel> { get }
@@ -44,15 +46,31 @@ final class CreateCaveViewModel: CreateCaveViewModelInputs, CreateCaveViewModelO
     func switchTapped() {
         print("switchTapped")
     }
-    
+    private let createCaveService = CreateCaveService()
+
     func createButtonTapped() {
-        print(CreateCaveModel(name: name.value, description: description.value))
         caveModel.accept(CreateCaveModel(name: name.value, description: description.value))
+        print(name.value, description.value, switchStatus.value, "++++++++++++")
+        
+    }
+    
+    func postCreateCave() {
+        let newCave = CreateCaveRequest(name: name.value, introduction: description.value, isShared: switchStatus.value)
+        CreateCaveService.postcave(memberId: 4, cave: newCave)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self else { return }
+                self.networkState.accept(.done)
+            }, onError: { [weak self] error in
+                guard let self else { return }
+                self.networkState.accept(.error(error))
+            })
+            .disposed(by: disposeBag)
     }
     
     var inputs: CreateCaveViewModelInputs { return self }
     var outputs: CreateCaveViewModelOutput { return self }
     
+    var networkState = BehaviorRelay<SomeNetworkStatus>(value: .normal)
     var name = BehaviorRelay<String>(value: "")
     var description = BehaviorRelay<String>(value: "")
     var caveModel: BehaviorRelay<CreateCaveModel> = BehaviorRelay(value: CreateCaveModel(name: "", description: ""))
@@ -63,6 +81,9 @@ final class CreateCaveViewModel: CreateCaveViewModelInputs, CreateCaveViewModelO
                 return !name.isEmpty && description != "동굴을 간략히 소개해주세요"
             }
     }
+    
+    private let disposeBag = DisposeBag()
+    
     
     init() {
         self.switchStatus.accept(false)
