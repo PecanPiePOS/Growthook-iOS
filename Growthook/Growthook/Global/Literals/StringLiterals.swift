@@ -71,6 +71,7 @@ enum I18N {
         static let emptyCaveList = "아직 만들어진 동굴이 없어요"
         static let emptyCave = "오른쪽의 +를 눌러 동굴을 추가해보세요!"
         static let count = "개"
+        static let userCave = "님의 동굴 속"
     }
     
     enum CaveDetail {
