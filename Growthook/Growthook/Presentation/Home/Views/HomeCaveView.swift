@@ -19,10 +19,10 @@ final class HomeCaveView: BaseView {
     private let userLabel = UILabel()
     private let seedView = UILabel()
     private let seedImage = UIImageView()
-    private let seedCountLabel = UILabel()
+    let seedCountLabel = UILabel()
     let notificationButton = UIButton()
     lazy var caveCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-    private lazy var caveEmptyView = UIView()
+    lazy var caveEmptyView = UIView()
     private lazy var caveEmptyTextLabel = UILabel()
     private let caveLineView = UIView()
     let addCaveButton = UIButton()
@@ -51,7 +51,6 @@ final class HomeCaveView: BaseView {
         }
         
         seedCountLabel.do {
-            $0.text = "00"
             $0.font = .fontGuide(.detail2_bold)
             $0.textColor = .white000
         }
@@ -88,11 +87,10 @@ final class HomeCaveView: BaseView {
         
         caveEmptyView.do {
             $0.backgroundColor = .clear
-            $0.isHidden = true
         }
         
         caveEmptyTextLabel.do {
-            $0.text = "오른쪽의 +를 눌러 동굴을 추가해보세요!"
+            $0.text = I18N.Home.emptyCave
             $0.font = .fontGuide(.detail1_reg)
             $0.textColor = .gray200
         }
@@ -134,7 +132,7 @@ final class HomeCaveView: BaseView {
         
         seedCountLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(11)
+            $0.leading.equalTo(seedImage.snp.trailing).offset(4)
         }
         
         addCaveButton.snp.makeConstraints {

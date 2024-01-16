@@ -22,7 +22,17 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
     
     // MARK: - Properties
     
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
+    private var caveId: Int?
+    
+    // MARK: - Initializer
+    
+    init(viewModel: HomeViewModel, caveId: Int){
+        self.viewModel = viewModel
+        self.caveId = caveId
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func bindViewModel() {
         deleteCaveButton.rx.tap
@@ -67,6 +77,10 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
             $0.height.equalTo(SizeLiterals.Screen.screenHeight * 50 / 812)
         }
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension CaveDetailMenuBottomSheet {
@@ -74,7 +88,8 @@ extension CaveDetailMenuBottomSheet {
     // MARK: - Methods
     
     private func addRemoveCaveAlert() {
-        let removeCaveAlertVC = RemoveCaveAlertViewController()
+        guard let caveId = self.caveId else { return }
+        let removeCaveAlertVC = RemoveCaveAlertViewController(viewModel: viewModel, caveId: caveId)
         removeCaveAlertVC.modalPresentationStyle = .overFullScreen
         self.present(removeCaveAlertVC, animated: false, completion: nil)
     }

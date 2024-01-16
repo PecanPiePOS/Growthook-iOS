@@ -20,24 +20,38 @@ final class RemoveCaveAlertViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
+    private var caveId: Int?
     private let deSelectInsightNotification = Notification.Name("DeSelectInsightNotification")
+    
+    // MARK: - Initializer
+
+    init(viewModel: HomeViewModel, caveId: Int){
+        self.viewModel = viewModel
+        self.caveId = caveId
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func bindViewModel() {
         removeInsightView.keepButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-//                self?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
         
+        // 동굴 삭제
         removeInsightView.removeButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let caveId = self?.caveId else { return }
+                self?.viewModel.removeCaveButtonTap(caveId: caveId)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.removeCave
             .subscribe(onNext: { [weak self] in
                 self?.clearInsight()
                 self?.rootViewChange()
-                
-//                self?.viewModel.inputs.deleteButtonTapped()
-//                self?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
             })
             .disposed(by: disposeBag)
     }
@@ -63,6 +77,10 @@ final class RemoveCaveAlertViewController: BaseViewController {
             $0.bottom.horizontalEdges.equalToSuperview()
         }
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension RemoveCaveAlertViewController {
@@ -83,6 +101,7 @@ extension RemoveCaveAlertViewController {
            let window = sceneDelegate.window {
             let vc = TabBarController()
             let rootVC = UINavigationController(rootViewController: vc)
+            rootVC.view.showToast(message: I18N.Component.ToastMessage.removeCave)
             rootVC.navigationController?.isNavigationBarHidden = true
             window.rootViewController = rootVC
             window.makeKeyAndVisible()

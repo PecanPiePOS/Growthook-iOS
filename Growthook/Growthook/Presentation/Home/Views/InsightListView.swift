@@ -16,7 +16,7 @@ final class InsightListView: BaseView {
     
     // MARK: - UI Components
     
-    private let seedTitleLabel = UILabel()
+    let seedTitleLabel = UILabel()
     let scrapButton = UIButton()
     lazy var insightCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
     private let flowLayout = UICollectionViewFlowLayout()
@@ -24,8 +24,7 @@ final class InsightListView: BaseView {
     // MARK: - Properties
     
     var scrapType: Bool = false
-    private let dummyModel: [InsightList] = InsightList.insightListDummyData()
-    
+
     // MARK: - UI Components Property
     
     override func setStyles() {

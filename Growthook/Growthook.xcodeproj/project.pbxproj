@@ -16,9 +16,16 @@
 		032213322B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032213312B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift */; };
 		0322137A2B17642E00FF5CF1 /* RemoveAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032213792B17642E00FF5CF1 /* RemoveAlertView.swift */; };
 		0322137E2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322137D2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift */; };
-		032213802B177F8E00FF5CF1 /* RemoveInsightViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322137F2B177F8E00FF5CF1 /* RemoveInsightViewModel.swift */; };
 		032213822B17960700FF5CF1 /* NotificationAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032213812B17960700FF5CF1 /* NotificationAlertView.swift */; };
 		032213A52B1C54EB00FF5CF1 /* ScrapOnlyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032213A42B1C54EB00FF5CF1 /* ScrapOnlyButton.swift */; };
+		0332A3892B501CD400720CD3 /* CaveTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3882B501CD400720CD3 /* CaveTarget.swift */; };
+		0332A38B2B501D7000720CD3 /* CaveDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38A2B501D7000720CD3 /* CaveDetailResponseDto.swift */; };
+		0332A38D2B501E0700720CD3 /* CavePatchRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */; };
+		0332A3902B5020CC00720CD3 /* CaveAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A38F2B5020CC00720CD3 /* CaveAPI.swift */; };
+		0332A3922B50433200720CD3 /* SeedMoveRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3912B50433200720CD3 /* SeedMoveRequestDto.swift */; };
+		0332A3952B5135A900720CD3 /* SsukResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3942B5135A900720CD3 /* SsukResponseDto.swift */; };
+		0332A39A2B5135F900720CD3 /* SsukTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A3992B5135F900720CD3 /* SsukTarget.swift */; };
+		0332A39D2B51370000720CD3 /* SsukAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0332A39C2B51370000720CD3 /* SsukAPI.swift */; };
 		033E9C102AFCE0860051A9E8 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033E9C0F2AFCE0860051A9E8 /* Image.xcassets */; };
 		033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */; };
 		033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */; };
@@ -29,23 +36,27 @@
 		034580822B2D628F002DDEBA /* CaveDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034580812B2D628F002DDEBA /* CaveDetailViewController.swift */; };
 		034580852B2D6354002DDEBA /* CaveDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034580842B2D6354002DDEBA /* CaveDetailView.swift */; };
 		034580872B2D6B98002DDEBA /* CaveDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034580862B2D6B98002DDEBA /* CaveDescriptionView.swift */; };
-		0345808A2B2D717D002DDEBA /* CaveDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034580892B2D717D002DDEBA /* CaveDetailViewModel.swift */; };
 		0345808C2B2DBC15002DDEBA /* UnLockCaveAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0345808B2B2DBC15002DDEBA /* UnLockCaveAlertView.swift */; };
 		034580972B36E343002DDEBA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034580962B36E343002DDEBA /* UICollectionView+.swift */; };
 		035701E12B4E6DA700A9E47A /* CaveListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E02B4E6DA700A9E47A /* CaveListEmptyView.swift */; };
 		035701E32B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E22B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift */; };
 		035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */; };
 		035701E72B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */; };
+		035701EA2B4EBA9600A9E47A /* CaveListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701E92B4EBA9600A9E47A /* CaveListResponseDto.swift */; };
+		035701ED2B4EBF4800A9E47A /* SeedListResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EC2B4EBF4800A9E47A /* SeedListResponseDto.swift */; };
+		035701F02B4EF3B200A9E47A /* SeedListTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701EF2B4EF3B200A9E47A /* SeedListTarget.swift */; };
+		035701F32B4EFBB200A9E47A /* SeedListAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F22B4EFBB200A9E47A /* SeedListAPI.swift */; };
+		035701F52B4F14BC00A9E47A /* InsightList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F42B4F14BC00A9E47A /* InsightList.swift */; };
+		035701F72B4F17E100A9E47A /* SeedAlarmResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */; };
+		035701FB2B4F18E600A9E47A /* SeedMoveResponsetDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701FA2B4F18E600A9E47A /* SeedMoveResponsetDto.swift */; };
+		035701FD2B4F1AF700A9E47A /* PatchSeedRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701FC2B4F1AF700A9E47A /* PatchSeedRequestDto.swift */; };
 		035DB2A72B00E6F200161872 /* InsightListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2A62B00E6F200161872 /* InsightListView.swift */; };
 		035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */; };
-		035DB2AD2B01041B00161872 /* InsightList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AC2B01041B00161872 /* InsightList.swift */; };
 		03B9AC542AF55FF900A5751C /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC532AF55FF900A5751C /* GeneralResponse.swift */; };
 		03B9AC562AF5608900A5751C /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC552AF5608900A5751C /* NetworkLoggerPlugin.swift */; };
 		03B9AC592AF560D800A5751C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC582AF560D800A5751C /* Config.swift */; };
 		03B9AC5B2AF5610D00A5751C /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC5A2AF5610D00A5751C /* APIConstant.swift */; };
 		03B9AC5D2AF5614A00A5751C /* URLConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC5C2AF5614A00A5751C /* URLConstant.swift */; };
-		03B9AC602AF561AD00A5751C /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC5F2AF561AD00A5751C /* API.swift */; };
-		03B9AC622AF5624D00A5751C /* DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC612AF5624D00A5751C /* DTO.swift */; };
 		03B9AC642AF562D000A5751C /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC632AF562D000A5751C /* UIView+.swift */; };
 		03B9AC662AF5630200A5751C /* NSObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC652AF5630200A5751C /* NSObject+.swift */; };
 		03B9AC682AF5635800A5751C /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC672AF5635800A5751C /* String+.swift */; };
@@ -79,8 +90,6 @@
 		03C3565F2B0B702900750758 /* InsightTapBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C3565E2B0B702900750758 /* InsightTapBottomSheet.swift */; };
 		03C356612B0F533E00750758 /* CaveListHalfModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C356602B0F533E00750758 /* CaveListHalfModal.swift */; };
 		03C356632B1069AC00750758 /* CaveListHalfModalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C356622B1069AC00750758 /* CaveListHalfModalCell.swift */; };
-		03C356652B106AC800750758 /* CaveListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C356642B106AC800750758 /* CaveListViewModel.swift */; };
-		03C356672B108EB800750758 /* InsightTapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C356662B108EB800750758 /* InsightTapViewModel.swift */; };
 		03E481002AF2AFDC002F4CBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E480FF2AF2AFDC002F4CBC /* AppDelegate.swift */; };
 		03E481022AF2AFDC002F4CBC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E481012AF2AFDC002F4CBC /* SceneDelegate.swift */; };
 		03E481092AF2AFDD002F4CBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03E481082AF2AFDD002F4CBC /* Assets.xcassets */; };
@@ -181,9 +190,16 @@
 		032213312B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnLockInsightAlertView.swift; sourceTree = "<group>"; };
 		032213792B17642E00FF5CF1 /* RemoveAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAlertView.swift; sourceTree = "<group>"; };
 		0322137D2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveInsightAlertViewController.swift; sourceTree = "<group>"; };
-		0322137F2B177F8E00FF5CF1 /* RemoveInsightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveInsightViewModel.swift; sourceTree = "<group>"; };
 		032213812B17960700FF5CF1 /* NotificationAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAlertView.swift; sourceTree = "<group>"; };
 		032213A42B1C54EB00FF5CF1 /* ScrapOnlyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapOnlyButton.swift; sourceTree = "<group>"; };
+		0332A3882B501CD400720CD3 /* CaveTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveTarget.swift; sourceTree = "<group>"; };
+		0332A38A2B501D7000720CD3 /* CaveDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailResponseDto.swift; sourceTree = "<group>"; };
+		0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavePatchRequestDto.swift; sourceTree = "<group>"; };
+		0332A38F2B5020CC00720CD3 /* CaveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveAPI.swift; sourceTree = "<group>"; };
+		0332A3912B50433200720CD3 /* SeedMoveRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedMoveRequestDto.swift; sourceTree = "<group>"; };
+		0332A3942B5135A900720CD3 /* SsukResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukResponseDto.swift; sourceTree = "<group>"; };
+		0332A3992B5135F900720CD3 /* SsukTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukTarget.swift; sourceTree = "<group>"; };
+		0332A39C2B51370000720CD3 /* SsukAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsukAPI.swift; sourceTree = "<group>"; };
 		033E9C0F2AFCE0860051A9E8 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		033E9C122AFD2F630051A9E8 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		033E9C172AFE33A80051A9E8 /* HomeCaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCaveView.swift; sourceTree = "<group>"; };
@@ -194,23 +210,27 @@
 		034580812B2D628F002DDEBA /* CaveDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailViewController.swift; sourceTree = "<group>"; };
 		034580842B2D6354002DDEBA /* CaveDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailView.swift; sourceTree = "<group>"; };
 		034580862B2D6B98002DDEBA /* CaveDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDescriptionView.swift; sourceTree = "<group>"; };
-		034580892B2D717D002DDEBA /* CaveDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailViewModel.swift; sourceTree = "<group>"; };
 		0345808B2B2DBC15002DDEBA /* UnLockCaveAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnLockCaveAlertView.swift; sourceTree = "<group>"; };
 		034580962B36E343002DDEBA /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		035701E02B4E6DA700A9E47A /* CaveListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cave\U0010ListEmptyView.swift"; sourceTree = "<group>"; };
 		035701E22B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailMenuBottomSheet.swift; sourceTree = "<group>"; };
 		035701E42B4E7DFD00A9E47A /* CaveMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveMenuButton.swift; sourceTree = "<group>"; };
 		035701E62B4E8D7600A9E47A /* RemoveCaveAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveCaveAlertViewController.swift; sourceTree = "<group>"; };
+		035701E92B4EBA9600A9E47A /* CaveListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveListResponseDto.swift; sourceTree = "<group>"; };
+		035701EC2B4EBF4800A9E47A /* SeedListResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListResponseDto.swift; sourceTree = "<group>"; };
+		035701EF2B4EF3B200A9E47A /* SeedListTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListTarget.swift; sourceTree = "<group>"; };
+		035701F22B4EFBB200A9E47A /* SeedListAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedListAPI.swift; sourceTree = "<group>"; };
+		035701F42B4F14BC00A9E47A /* InsightList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightList.swift; sourceTree = "<group>"; };
+		035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedAlarmResponseDto.swift; sourceTree = "<group>"; };
+		035701FA2B4F18E600A9E47A /* SeedMoveResponsetDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedMoveResponsetDto.swift; sourceTree = "<group>"; };
+		035701FC2B4F1AF700A9E47A /* PatchSeedRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSeedRequestDto.swift; sourceTree = "<group>"; };
 		035DB2A62B00E6F200161872 /* InsightListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListView.swift; sourceTree = "<group>"; };
 		035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListCollectionViewCell.swift; sourceTree = "<group>"; };
-		035DB2AC2B01041B00161872 /* InsightList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightList.swift; sourceTree = "<group>"; };
 		03B9AC532AF55FF900A5751C /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		03B9AC552AF5608900A5751C /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		03B9AC582AF560D800A5751C /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		03B9AC5A2AF5610D00A5751C /* APIConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstant.swift; sourceTree = "<group>"; };
 		03B9AC5C2AF5614A00A5751C /* URLConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstant.swift; sourceTree = "<group>"; };
-		03B9AC5F2AF561AD00A5751C /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		03B9AC612AF5624D00A5751C /* DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTO.swift; sourceTree = "<group>"; };
 		03B9AC632AF562D000A5751C /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		03B9AC652AF5630200A5751C /* NSObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+.swift"; sourceTree = "<group>"; };
 		03B9AC672AF5635800A5751C /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -244,8 +264,6 @@
 		03C3565E2B0B702900750758 /* InsightTapBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightTapBottomSheet.swift; sourceTree = "<group>"; };
 		03C356602B0F533E00750758 /* CaveListHalfModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveListHalfModal.swift; sourceTree = "<group>"; };
 		03C356622B1069AC00750758 /* CaveListHalfModalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveListHalfModalCell.swift; sourceTree = "<group>"; };
-		03C356642B106AC800750758 /* CaveListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveListViewModel.swift; sourceTree = "<group>"; };
-		03C356662B108EB800750758 /* InsightTapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightTapViewModel.swift; sourceTree = "<group>"; };
 		03E480FC2AF2AFDC002F4CBC /* Growthook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Growthook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E480FF2AF2AFDC002F4CBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03E481012AF2AFDC002F4CBC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -380,6 +398,54 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		0332A38E2B5020BD00720CD3 /* CaveAPI */ = {
+			isa = PBXGroup;
+			children = (
+				0332A38F2B5020CC00720CD3 /* CaveAPI.swift */,
+			);
+			path = CaveAPI;
+			sourceTree = "<group>";
+		};
+		0332A3932B51357E00720CD3 /* Ssuk */ = {
+			isa = PBXGroup;
+			children = (
+				0332A3942B5135A900720CD3 /* SsukResponseDto.swift */,
+			);
+			path = Ssuk;
+			sourceTree = "<group>";
+		};
+		0332A3962B5135D200720CD3 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				035701EF2B4EF3B200A9E47A /* SeedListTarget.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		0332A3972B5135DC00720CD3 /* Cave */ = {
+			isa = PBXGroup;
+			children = (
+				0332A3882B501CD400720CD3 /* CaveTarget.swift */,
+			);
+			path = Cave;
+			sourceTree = "<group>";
+		};
+		0332A3982B5135E400720CD3 /* Ssuk */ = {
+			isa = PBXGroup;
+			children = (
+				0332A3992B5135F900720CD3 /* SsukTarget.swift */,
+			);
+			path = Ssuk;
+			sourceTree = "<group>";
+		};
+		0332A39B2B5136F400720CD3 /* SsukAPI */ = {
+			isa = PBXGroup;
+			children = (
+				0332A39C2B51370000720CD3 /* SsukAPI.swift */,
+			);
+			path = SsukAPI;
+			sourceTree = "<group>";
+		};
 		033E9C112AFD2F230051A9E8 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -420,7 +486,7 @@
 			isa = PBXGroup;
 			children = (
 				033E9C1F2AFE725D0051A9E8 /* CaveProfile.swift */,
-				035DB2AC2B01041B00161872 /* InsightList.swift */,
+				035701F42B4F14BC00A9E47A /* InsightList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -458,18 +524,54 @@
 		034580882B2D716E002DDEBA /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				034580892B2D717D002DDEBA /* CaveDetailViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		035701E82B4EBA7100A9E47A /* Cave */ = {
+			isa = PBXGroup;
+			children = (
+				035701E92B4EBA9600A9E47A /* CaveListResponseDto.swift */,
+				0332A38A2B501D7000720CD3 /* CaveDetailResponseDto.swift */,
+				0332A38C2B501E0700720CD3 /* CavePatchRequestDto.swift */,
+			);
+			path = Cave;
+			sourceTree = "<group>";
+		};
+		035701EB2B4EBED500A9E47A /* Insight */ = {
+			isa = PBXGroup;
+			children = (
+				035701EC2B4EBF4800A9E47A /* SeedListResponseDto.swift */,
+				035701F62B4F17E100A9E47A /* SeedAlarmResponseDto.swift */,
+				035701FA2B4F18E600A9E47A /* SeedMoveResponsetDto.swift */,
+				035701FC2B4F1AF700A9E47A /* PatchSeedRequestDto.swift */,
+				0332A3912B50433200720CD3 /* SeedMoveRequestDto.swift */,
+			);
+			path = Insight;
+			sourceTree = "<group>";
+		};
+		035701EE2B4EF35000A9E47A /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				0332A3962B5135D200720CD3 /* Home */,
+				0332A3972B5135DC00720CD3 /* Cave */,
+				0332A3982B5135E400720CD3 /* Ssuk */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
+		035701F12B4EFBA200A9E47A /* SeedListAPI */ = {
+			isa = PBXGroup;
+			children = (
+				035701F22B4EFBB200A9E47A /* SeedListAPI.swift */,
+			);
+			path = SeedListAPI;
 			sourceTree = "<group>";
 		};
 		035DB2AE2B076F4B00161872 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				033E9C1D2AFE63D40051A9E8 /* HomeViewModel.swift */,
-				03C356662B108EB800750758 /* InsightTapViewModel.swift */,
-				03C356642B106AC800750758 /* CaveListViewModel.swift */,
-				0322137F2B177F8E00FF5CF1 /* RemoveInsightViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -487,6 +589,7 @@
 		03B9AC482AF55E1E00A5751C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				035701EE2B4EF35000A9E47A /* APIService */,
 				58EFF5DC2B445AD2003C3838 /* ServiceError */,
 				03B9AC5E2AF561A200A5751C /* API */,
 				03B9AC522AF55FBB00A5751C /* Base */,
@@ -498,10 +601,12 @@
 		03B9AC492AF55E3300A5751C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0332A3932B51357E00720CD3 /* Ssuk */,
+				035701EB2B4EBED500A9E47A /* Insight */,
+				035701E82B4EBA7100A9E47A /* Cave */,
 				092A51892B52D2C100296B46 /* CreateCave */,
 				586626112B4E65590084468C /* Insights */,
 				5866260C2B4E65410084468C /* MyPage */,
-				03B9AC612AF5624D00A5751C /* DTO.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -637,6 +742,9 @@
 		03B9AC5E2AF561A200A5751C /* API */ = {
 			isa = PBXGroup;
 			children = (
+				0332A39B2B5136F400720CD3 /* SsukAPI */,
+				0332A38E2B5020BD00720CD3 /* CaveAPI */,
+				035701F12B4EFBA200A9E47A /* SeedListAPI */,
 				092A51902B52F22300296B46 /* CreateAction */,
 				586626172B4E65810084468C /* Insights */,
 				586626162B4E65780084468C /* MyPage */,
@@ -1214,23 +1322,25 @@
 				58EFF5DE2B445AE2003C3838 /* ServiceError.swift in Sources */,
 				034580872B2D6B98002DDEBA /* CaveDescriptionView.swift in Sources */,
 				03B9AC822AF5658F00A5751C /* FontLiterals.swift in Sources */,
+				035701ED2B4EBF4800A9E47A /* SeedListResponseDto.swift in Sources */,
 				035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */,
 				58AB70B12B2C90560061C072 /* MyPageListTableViewCell.swift in Sources */,
 				0322137A2B17642E00FF5CF1 /* RemoveAlertView.swift in Sources */,
+				0332A38D2B501E0700720CD3 /* CavePatchRequestDto.swift in Sources */,
 				03C356632B1069AC00750758 /* CaveListHalfModalCell.swift in Sources */,
 				098DFC9E2B5550010099063D /* ActionplanTextView.swift in Sources */,
 				03B9AC952AF566C800A5751C /* BlurredLabel.swift in Sources */,
 				586626222B4E7CC00084468C /* NetworkManager.swift in Sources */,
 				03B9AC9D2AF7A9EB00A5751C /* TabBarItem.swift in Sources */,
-				035DB2AD2B01041B00161872 /* InsightList.swift in Sources */,
-				032213802B177F8E00FF5CF1 /* RemoveInsightViewModel.swift in Sources */,
 				259E7F772B4060EB00F3DC8F /* PageContentsViewController.swift in Sources */,
 				033E9C1E2AFE63D40051A9E8 /* HomeViewModel.swift in Sources */,
+				0332A3922B50433200720CD3 /* SeedMoveRequestDto.swift in Sources */,
 				092A518B2B52D2D100296B46 /* CaveDTO.swift in Sources */,
 				58E75FAE2B00C1F000512FE2 /* CreatingNewInsightsView.swift in Sources */,
 				58EFF5D92B445A95003C3838 /* Networkable.swift in Sources */,
 				581D229C2B3364BB0068E58D /* EnlargedAreaButton.swift in Sources */,
 				25EAFA5B2B0255BB00283CD8 /* MainTitleBarView.swift in Sources */,
+				035701F52B4F14BC00A9E47A /* InsightList.swift in Sources */,
 				03B9AC662AF5630200A5751C /* NSObject+.swift in Sources */,
 				034580852B2D6354002DDEBA /* CaveDetailView.swift in Sources */,
 				033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */,
@@ -1247,12 +1357,14 @@
 				09A7D7002B00DED0005F8821 /* CreateCaveViewModel.swift in Sources */,
 				586626152B4E65720084468C /* InsightsModel.swift in Sources */,
 				581D22982B3356150068E58D /* SelectBlockWithTitle.swift in Sources */,
+				0332A38B2B501D7000720CD3 /* CaveDetailResponseDto.swift in Sources */,
 				03B9AC842AF565A300A5751C /* ImageLiterals.swift in Sources */,
 				035701E32B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift in Sources */,
 				581D22902B32A9240068E58D /* Reactive+UITextField.swift in Sources */,
 				581D22922B32A92F0068E58D /* Reactive+UIControl.swift in Sources */,
 				03B9AC542AF55FF900A5751C /* GeneralResponse.swift in Sources */,
 				581D229A2B3362330068E58D /* CommonCustomNavigationBar.swift in Sources */,
+				0332A3892B501CD400720CD3 /* CaveTarget.swift in Sources */,
 				250F7D772B16D01500D9726F /* AlertViewController.swift in Sources */,
 				250F7D752B14624300D9726F /* ActionListReviewViewController.swift in Sources */,
 				58E75F982B00B15A00512FE2 /* BaseViewController.swift in Sources */,
@@ -1270,9 +1382,9 @@
 				259E7F722B3E95F600F3DC8F /* LoginView.swift in Sources */,
 				03B9AC6E2AF563E200A5751C /* UIImage+.swift in Sources */,
 				03B9AC702AF563F300A5751C /* UIViewController+.swift in Sources */,
-				03C356672B108EB800750758 /* InsightTapViewModel.swift in Sources */,
 				58AB70AC2B2C7CC50061C072 /* MyPageViewModel.swift in Sources */,
 				581D228E2B320C630068E58D /* CommonTextFieldWithBorder.swift in Sources */,
+				0332A39D2B51370000720CD3 /* SsukAPI.swift in Sources */,
 				03115F8C2B27072A009D1517 /* LoginViewController.swift in Sources */,
 				03B9AC7E2AF5652E00A5751C /* UIButton+.swift in Sources */,
 				09DE08002B04FAEE00D7DF3D /* EmptySeedView.swift in Sources */,
@@ -1300,8 +1412,8 @@
 				03B9AC7C2AF5651600A5751C /* UITabBar+.swift in Sources */,
 				25BD951B2B089B9900E72ADC /* ActionListModel.swift in Sources */,
 				03B9AC862AF565BA00A5751C /* SizeLiterals.swift in Sources */,
-				0345808A2B2D717D002DDEBA /* CaveDetailViewModel.swift in Sources */,
 				035701E12B4E6DA700A9E47A /* CaveListEmptyView.swift in Sources */,
+				035701EA2B4EBA9600A9E47A /* CaveListResponseDto.swift in Sources */,
 				03B9ACA12AF7B25B00A5751C /* HomeViewController.swift in Sources */,
 				252DD8842B063A7900DBB1D1 /* ActionListViewModel.swift in Sources */,
 				03B9AC912AF5669600A5751C /* MakeAlert.swift in Sources */,
@@ -1309,11 +1421,11 @@
 				032213822B17960700FF5CF1 /* NotificationAlertView.swift in Sources */,
 				584EDAD72B4A57E60094872A /* Observable+.swift in Sources */,
 				58EFF5DB2B445AB6003C3838 /* BaseTargetType.swift in Sources */,
-				03B9AC602AF561AD00A5751C /* API.swift in Sources */,
 				582F9C4A2B304B720000D161 /* TextViewBlockWithTitle.swift in Sources */,
 				2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */,
 				25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */,
 				581D22942B32EC950068E58D /* CommonTextViewWithBorder.swift in Sources */,
+				0332A3952B5135A900720CD3 /* SsukResponseDto.swift in Sources */,
 				09A7D6FD2B00DE9C005F8821 /* CreateCaveViewController.swift in Sources */,
 				03B9AC642AF562D000A5751C /* UIView+.swift in Sources */,
 				032213322B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift in Sources */,
@@ -1321,6 +1433,7 @@
 				259E7F752B405D3800F3DC8F /* OnboardingViewController.swift in Sources */,
 				586626262B4EB06F0084468C /* MyPageUserInformationViewController.swift in Sources */,
 				03B9AC682AF5635800A5751C /* String+.swift in Sources */,
+				0332A3902B5020CC00720CD3 /* CaveAPI.swift in Sources */,
 				033E9C202AFE725D0051A9E8 /* CaveProfile.swift in Sources */,
 				03B9AC7A2AF564FC00A5751C /* UITableView+.swift in Sources */,
 				032213A52B1C54EB00FF5CF1 /* ScrapOnlyButton.swift in Sources */,
@@ -1334,12 +1447,14 @@
 				09A7D70A2B01E6A9005F8821 /* CreateCaveModel.swift in Sources */,
 				03B9AC592AF560D800A5751C /* Config.swift in Sources */,
 				03B9AC8D2AF5663C00A5751C /* Font.swift in Sources */,
+				035701F02B4EF3B200A9E47A /* SeedListTarget.swift in Sources */,
 				09CE00EA2B0DB13700CB42C4 /* CreateActionViewModel.swift in Sources */,
+				035701F32B4EFBB200A9E47A /* SeedListAPI.swift in Sources */,
 				035701E52B4E7DFD00A9E47A /* CaveMenuButton.swift in Sources */,
+				0332A39A2B5135F900720CD3 /* SsukTarget.swift in Sources */,
 				09DE08022B04FDF800D7DF3D /* EmptyViewController.swift in Sources */,
 				03B9AC722AF5646000A5751C /* UITextField+.swift in Sources */,
 				033E9C1B2AFE606E0051A9E8 /* CaveCollectionViewCell.swift in Sources */,
-				03C356652B106AC800750758 /* CaveListViewModel.swift in Sources */,
 				03B9AC782AF564C400A5751C /* UILabel+.swift in Sources */,
 				250F7D732B145F4C00D9726F /* ActionListCompleteTableViewCell.swift in Sources */,
 				03B9AC6A2AF5638700A5751C /* UIResponder+.swift in Sources */,
@@ -1350,13 +1465,15 @@
 				09CE00ED2B0DB1EA00CB42C4 /* CreateActionView.swift in Sources */,
 				034580972B36E343002DDEBA /* UICollectionView+.swift in Sources */,
 				033E9C182AFE33A80051A9E8 /* HomeCaveView.swift in Sources */,
+				035701FB2B4F18E600A9E47A /* SeedMoveResponsetDto.swift in Sources */,
 				586626102B4E65550084468C /* MyPageModel.swift in Sources */,
 				0322137E2B17731E00FF5CF1 /* RemoveInsightAlertViewController.swift in Sources */,
 				58E75F9A2B00B33F00512FE2 /* BaseView.swift in Sources */,
 				5866261B2B4E65970084468C /* MyPageService.swift in Sources */,
 				25EAFA5D2B02597800283CD8 /* ActionListSegmentedView.swift in Sources */,
 				09A7D7022B00DFC6005F8821 /* BottomCTAButton.swift in Sources */,
-				03B9AC622AF5624D00A5751C /* DTO.swift in Sources */,
+				035701F72B4F17E100A9E47A /* SeedAlarmResponseDto.swift in Sources */,
+				035701FD2B4F1AF700A9E47A /* PatchSeedRequestDto.swift in Sources */,
 				03B9AC8B2AF5660D00A5751C /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,15 +24,22 @@ final class InsightTapBottomSheet: BaseViewController {
     
     // MARK: - Properties
     
-    private let viewModel = InsightTapViewModel()
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
     var onDismiss: (() -> Void)?
     var indexPath: IndexPath? = nil
     
+    // MARK: - Initializer
+    
+    init(viewModel: HomeViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     override func bindViewModel() {
         moveButton.rx.tap
             .bind { [weak self] in
-                self?.viewModel.inputs.moveButtonTap()
+                self?.viewModel.inputs.moveMenuTap()
             }
             .disposed(by: disposeBag)
         
@@ -44,7 +51,7 @@ final class InsightTapBottomSheet: BaseViewController {
         
         deleteButton.rx.tap
             .bind { [weak self] in
-                self?.viewModel.inputs.deleteButtonTap()
+                self?.viewModel.inputs.removeMenuTap()
             }
             .disposed(by: disposeBag)
         
@@ -105,7 +112,7 @@ final class InsightTapBottomSheet: BaseViewController {
     }
     
     private func presentToCaveListVC() {
-        let caveListVC = CaveListHalfModal()
+        let caveListVC = CaveListHalfModal(viewModel: viewModel)
         caveListVC.modalPresentationStyle = .pageSheet
         let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
@@ -124,9 +131,13 @@ final class InsightTapBottomSheet: BaseViewController {
     }
     
     private func addRemoveInsightAlert() {
-        let removeInsightAlertVC = RemoveInsightAlertViewController()
+        let removeInsightAlertVC = RemoveInsightAlertViewController(viewModel: viewModel)
         removeInsightAlertVC.modalPresentationStyle = .overFullScreen
         self.present(removeInsightAlertVC, animated: false, completion: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
