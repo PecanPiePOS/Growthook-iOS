@@ -40,6 +40,11 @@ final class AlertViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    convenience init() {
+        let test = ActionListViewModel()
+        self.init(viewModel: test)
+    }
+    
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
