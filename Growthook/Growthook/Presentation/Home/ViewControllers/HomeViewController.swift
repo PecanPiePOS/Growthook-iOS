@@ -191,7 +191,9 @@ final class HomeViewController: BaseViewController {
         
         homeCaveView.addCaveButton.rx.tap
             .subscribe(onNext: { _ in
-                // TODO: - 동굴 추가 뷰 이동
+                let vc = CreateCaveViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
             })
             .disposed(by: disposeBag)
         

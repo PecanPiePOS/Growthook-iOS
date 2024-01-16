@@ -40,7 +40,7 @@ final class CreateCaveViewController: UIViewController {
 extension CreateCaveViewController {
     
     private func bindViewModel() {
-                
+        
         createCaveView.nameTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
@@ -96,7 +96,7 @@ extension CreateCaveViewController {
                 self.setDownAnimation()
             }
             .disposed(by: disposeBag)
-
+        
         createCaveView.switchButton.rx.isOn
             .subscribe { [weak self] value in
                 if value == true {
@@ -129,10 +129,11 @@ extension CreateCaveViewController {
             .disposed(by: disposeBag)
         
         createCaveView.customNavigationBar.closeButton.rx.tap
-            .bind { [weak self] in
+            .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.dismiss(animated: true)
-            }
+            })
+            .disposed(by: disposeBag)
     }
     
     func setUpAnimation() {
