@@ -27,6 +27,7 @@ extension Observable where Element == Response {
                 case 400...499:
                     /// 이 400 대 에러에 대해서는 추후에 백엔드분들께서 에러 케이스를 정리해주시면 그에 따라 어떤 error 를 방출할지 정하면 됩니다.
                     observer.onError(ServiceError.invalidResponse(responseCode: element.statusCode, message: element.description))
+                    print("❗️ Error Occurred.")
                 default:
                     break
                 }
@@ -45,6 +46,7 @@ extension Observable where Element == Response {
                     guard let decoded = try JSONDecoder().decode(GeneralResponse<Result>.self, from: element.data).data else { return Disposables.create() }
                     observer.onNext(decoded)
                 } catch let error {
+                    print("❗️ Decoding Error")
                     observer.onError(error)
                 }
                 return Disposables.create()

@@ -32,6 +32,7 @@ enum I18N {
             static let removeCave = "삭제한 보관함은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
             static let keep = "유지하기"
             static let remove = "삭제하기"
+            static let removeActionPlan = "삭제한 액션플랜은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
         }
         
         enum UnLockCave {
@@ -90,6 +91,8 @@ enum I18N {
     
     enum ActionList {
         static let reviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
+        static let insightDetailPlaceholder = "구체적인 계획을 설정해보세요"
+        static let insightDetailReviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
     }
     
     enum CreateInsight {

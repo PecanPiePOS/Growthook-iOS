@@ -64,12 +64,11 @@ final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
         setStyles()
         setToolBarItems()
         setBorderLine()
-        setFont()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        setFont()
     }
     
     required init?(coder: NSCoder) {
@@ -105,7 +104,6 @@ extension CommonTextViewWithBorder {
                     modifyBorderLine(with: .gray200)
                 } else {
                     modifyBorderLine(with: .white000)
-                    print("작성끝", self.text)
                 }
             }
             .disposed(by: disposeBag)

@@ -28,6 +28,11 @@ final class TextFieldBlockWithTitle: BaseView {
         super.init(frame: .zero)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setCountWhenTextIsInjected()
+    }
+    
     override func bindViewModel() {
     // MARK: - Bind UI With Data
         textFieldBlock.rxTextCount
@@ -77,6 +82,14 @@ final class TextFieldBlockWithTitle: BaseView {
         }
     }
     
+    private func setCountWhenTextIsInjected() {
+        if let text = textFieldBlock.text {
+            if !text.isEmpty {
+                textCountLabel.text = "\(text.count)/\(self.maximumTextLimit)"
+            }
+        }
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -99,3 +112,4 @@ extension TextFieldBlockWithTitle {
         }
     }
 }
+
