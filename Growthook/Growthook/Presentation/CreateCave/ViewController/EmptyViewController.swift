@@ -40,13 +40,12 @@ final class EmptyViewController: BaseViewController {
             .bind { [weak self] in
                 guard let self else { return }
                 self.dismiss(animated: true)
-                /// closeButton Tapped
             }
             .disposed(by: disposeBag)
         emptyView.plantSeedButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                /// 씨앗심기 button Tapped
+                // TODO: Connect
             }
             .disposed(by: disposeBag)
     }
