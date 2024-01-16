@@ -37,7 +37,7 @@ final class HomeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private let viewModel = HomeViewModel()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-    private var insightDummyData = InsightList.insightListDummyData()
+    private var lockSeedId: Int?
     
     // MARK: - View Life Cycle
     
@@ -54,38 +54,64 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         addGesture()
         setNotification()
-        // empty 뷰 hidden
-        insightEmptyView.isHidden = true
     }
     
     override func bindViewModel() {
+        
         viewModel.outputs.caveProfile
+            .do(onNext: { [weak self] cave in
+                guard cave.isEmpty else { return }
+                self?.homeCaveView.caveEmptyView.isHidden = false
+                self?.homeCaveView.caveCollectionView.isHidden = true
+            })
             .bind(to: homeCaveView.caveCollectionView.rx
                 .items(cellIdentifier: CaveCollectionViewCell.className,
                        cellType: CaveCollectionViewCell.self)) { (index, model, cell) in
+                self.homeCaveView.caveEmptyView.isHidden = true
+                self.homeCaveView.caveCollectionView.isHidden = false
                 cell.configureCell(model)
             }
                        .disposed(by: disposeBag)
         
         viewModel.outputs.insightList
+            .do(onNext: { [weak self] list in
+                guard list.isEmpty else { return }
+                self?.insightEmptyView.isHidden = false
+                self?.insightListView.isHidden = true
+            })
+            .map { [weak self] list in
+                guard let type = self?.insightListView.scrapType else { return list }
+                return type ? list.filter { $0.isScraped } : list
+            }
             .bind(to: insightListView.insightCollectionView.rx
                 .items(cellIdentifier: InsightListCollectionViewCell.className,
                        cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
+                self.insightEmptyView.isHidden = true
+                self.insightListView.isHidden = false
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
-                    guard let self else { return }
+                    guard let self = self else { return }
                     if !cell.isScrapButtonTapped {
-                        // 스크랩
-                        print("scrap")
-                        self.view.showScrapToast(message: "스크랩 완료!")
-                    } else {
-                        // 스크랩 해제
-                        print("unScrap")
+                        self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
                     }
                     cell.isScrapButtonTapped.toggle()
+                    self.viewModel.inputs.insightScrap(seedId: model.seedId, index: index)
                 }
             }
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.insightAllCount
+            .subscribe(onNext: { [weak self] count in
+                self?.insightListView.seedTitleLabel.text = "\(count)\(I18N.Home.seedsCollected)"
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.ssukCount
+            .subscribe(onNext: { [weak self] model in
+                self?.homeCaveView.seedCountLabel.text = "\(model.gatheredSsuk)"
+                self?.unLockAlertView.mugwortCount.text = "\(model.gatheredSsuk)"
+            })
             .disposed(by: disposeBag)
         
         // 인사이트 셀 스타일 재설정
@@ -120,13 +146,12 @@ final class HomeViewController: BaseViewController {
         homeCaveView.caveCollectionView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
-                self.viewModel.inputs.caveCellTap(at: indexPath)
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.outputs.pushToCaveDetail
-            .subscribe(onNext: { [weak self] indexPath in
-                self?.pushToCaveDetailVC()
+                if let cell = homeCaveView.caveCollectionView.cellForItem(at: indexPath) as? CaveCollectionViewCell {
+                    guard let caveId = cell.caveId else { return }
+                    self.viewModel.inputs.caveDetail(caveId: caveId)
+                    self.viewModel.inputs.caveInsightList(caveId: caveId)
+                    self.pushToCaveDetailVC(caveId: caveId)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -151,18 +176,35 @@ final class HomeViewController: BaseViewController {
         
         unLockAlertView.useButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.unLockAlertView.useButtonTapped()
+                guard let seedId = self?.lockSeedId else { return }
+                self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.unLockSeed
+            .subscribe(onNext: { [weak self] in
+                self?.unLockAlertView.removeFromSuperview()
+                // TODO: - 인사이트 뷰 이동
+                print("인사이트 잠금 해제 뷰 이동")
             })
             .disposed(by: disposeBag)
         
         homeCaveView.addCaveButton.rx.tap
             .subscribe(onNext: { _ in
-                
+                // TODO: - 동굴 추가 뷰 이동
+            })
+            .disposed(by: disposeBag)
+        
+        seedPlusButton.rx.tap
+            .subscribe(onNext: { _ in
+                // TODO: - 씨앗 생성 뷰 이동
             })
             .disposed(by: disposeBag)
         
         homeCaveView.notificationButton.rx.tap
             .subscribe(onNext: { [weak self] in
+                guard let memberId = self?.viewModel.memberId else { return }
+                self?.viewModel.inputs.alarmButtonTap(memberId: memberId)
                 self?.notificationButtonTap()
             })
             .disposed(by: disposeBag)
@@ -170,11 +212,24 @@ final class HomeViewController: BaseViewController {
         insightListView.scrapButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 if let type = self?.insightListView.scrapType {
+                    self?.viewModel.inputs.onlyScrapInsight()
                     self?.scrapTypeSetting(type)
                 }
             })
             .disposed(by: disposeBag)
         
+        viewModel.outputs.insightAlarm
+            .bind(onNext: { [weak self] count in
+                self?.setNotiStyle(count)
+                self?.notificationButtonTap()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.reloadInsights
+            .bind(onNext: { [weak self] in
+                self?.insightListView.insightCollectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
@@ -254,9 +309,9 @@ extension HomeViewController {
     }
     
     func presentToHalfModalViewController(_ indexPath: IndexPath) {
-        let insightTapVC = InsightTapBottomSheet()
+        let insightTapVC = InsightTapBottomSheet(viewModel: viewModel)
         insightTapVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier("customDetent")
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.customDetent)
         let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
             return SizeLiterals.Screen.screenHeight * 84 / 812
         }
@@ -269,7 +324,6 @@ extension HomeViewController {
         }
         
         insightTapVC.onDismiss = { [weak self] in
-            print("Dismissed")
             self?.viewModel.inputs.dismissInsightTap(at: indexPath)
         }
         
@@ -284,26 +338,29 @@ extension HomeViewController {
                 insightListView.insightCollectionView.deselectItem(at: indexPath, animated: false)
             }
         }
-        insightListView.insightCollectionView.reloadData()
+        self.insightListView.insightCollectionView.reloadData()
     }
     
     private func setNotification() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(clearNotification(_:)),
-            name: Notification.Name("DeSelectInsightNotification"),
+            name: Notification.Name(I18N.Component.Identifier.deSelectNoti),
             object: nil)
     }
     
     private func pushToInsightDetail(at indexPath: IndexPath) {
         insightListView.insightCollectionView.deselectItem(at: indexPath, animated: false)
-        if insightDummyData[indexPath.item].InsightStatus == .lock {
-            view.addSubview(unLockAlertView)
-            unLockAlertView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
+        if let cell = insightListView.insightCollectionView.cellForItem(at: indexPath) as? InsightListCollectionViewCell {
+            if cell.isLock {
+                view.addSubview(unLockAlertView)
+                unLockAlertView.snp.makeConstraints {
+                    $0.edges.equalToSuperview()
+                }
+                self.lockSeedId = cell.seedId
+            } else {
+                // TODO: - 인사이트 뷰 이동
             }
-        } else {
-            print("pushToInsightDetail")
         }
     }
     
@@ -329,10 +386,20 @@ extension HomeViewController {
         tapGesture.cancelsTouchesInView = false
     }
     
-    private func pushToCaveDetailVC() {
-        let caveDetailVC = CaveDetailViewController()
+    private func pushToCaveDetailVC(caveId: Int) {
+        let caveDetailVC = CaveDetailViewController(viewModel: viewModel, caveId: caveId)
         caveDetailVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(caveDetailVC, animated: true)
+    }
+    
+    private func setNotiStyle(_ count: Int) {
+        if count > 0  {
+            self.notificationView.lockImage.image = ImageLiterals.Home.notification_new
+            self.notificationView.notiLabel1.text = I18N.Home.notiDescription1
+            self.notificationView.notiLabel2.text = "\(I18N.Home.notiDescription2)\(count)\(I18N.Home.notiDescription3)"
+            self.notificationView.notiLabel1.partChange(targetString: I18N.Home.day3, textColor: .red200, font: .fontGuide(.body1_bold))
+            self.notificationView.notiLabel2.partFontChange(targetString: "\(count)\(I18N.Home.count)", font: .fontGuide(.body1_bold))
+        }
     }
     
     // MARK: - @objc Methods
@@ -342,10 +409,12 @@ extension HomeViewController {
         if gesture.state == .began {
             // 꾹 눌림이 시작될 때 실행할 코드
             if let indexPath = insightListView.insightCollectionView.indexPathForItem(at: location) {
-                if insightDummyData[indexPath.item].InsightStatus == .lock {
-                    return
-                } else {
-                    viewModel.inputs.handleLongPress(at: indexPath)
+                if let cell = insightListView.insightCollectionView.cellForItem(at: indexPath) as? InsightListCollectionViewCell {
+                    if cell.isLock {
+                        return
+                    } else {
+                        viewModel.inputs.handleLongPress(at: indexPath)
+                    }
                 }
             }
         }
@@ -353,17 +422,17 @@ extension HomeViewController {
     
     @objc func clearNotification(_ notification: Notification) {
         updateInsightList()
-        if let info = notification.userInfo?["type"] as? ClearInsightType {
+        if let info = notification.userInfo?[I18N.Component.Identifier.type] as? ClearInsightType {
             print(info)
             switch info {
             case .move:
-                view.showToast(message: "씨앗을 옮겨 심었어요")
+                view.showToast(message: I18N.Component.ToastMessage.moveInsight)
             case .delete:
-                view.showToast(message: "씨앗이 삭제되었어요")
+                view.showToast(message: I18N.Component.ToastMessage.removeInsight)
             case .none:
                 return
             case .deleteCave:
-                view.showToast(message: "동굴이 삭제되었어요")
+                view.showToast(message: I18N.Component.ToastMessage.removeCave)
             }
         }
     }

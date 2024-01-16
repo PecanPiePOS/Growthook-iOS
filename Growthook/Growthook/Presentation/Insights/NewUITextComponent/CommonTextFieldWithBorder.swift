@@ -84,6 +84,10 @@ final class CommonTextFieldWithBorder: UITextField, CommonTextComponentType {
         bindEditingAction()
         bindText()
         setStyles()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setBorderLine()
     }
     
@@ -145,7 +149,14 @@ extension CommonTextFieldWithBorder {
         self.layer.borderWidth = 0.5
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 7
-        modifyBorderLine(with: .gray200)
+        
+        if let text {
+            if text.isEmpty {
+                modifyBorderLine(with: .gray200)
+            } else {
+                modifyBorderLine(with: .white000)
+            }
+        }
     }
     
     private func modifyBorderLine(with color: UIColor) {
@@ -178,5 +189,3 @@ extension CommonTextFieldWithBorder {
         self.maxLength = newLimitCount
     }
 }
-
-

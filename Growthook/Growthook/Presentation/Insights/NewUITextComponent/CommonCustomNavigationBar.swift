@@ -76,6 +76,10 @@ extension CommonCustomNavigationBar {
         titleLabel.text = title
     }
     
+    func setBackgroundColor(_ color: UIColor) {
+        backgroundColor = color
+    }
+    
     func hideDoneButton() {
         doneButton.isHidden = true
     }
@@ -93,5 +97,12 @@ extension CommonCustomNavigationBar {
     func setButtonColorForWhen(enabled: UIColor, disabled: UIColor) {
         enabledColor = enabled
         disabledColor = disabled
+    }
+    
+    func modifyActionButtonConfigurationWithSymbol(of systemName: String) {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium)
+        doneButton.setImage(UIImage(systemName: systemName, withConfiguration: configuration), for: .normal)
+        doneButton.tintColor = .white000
+        doneButton.setTitle(nil, for: .normal)
     }
 }

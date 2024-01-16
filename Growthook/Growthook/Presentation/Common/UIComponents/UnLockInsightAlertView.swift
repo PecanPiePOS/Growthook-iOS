@@ -22,7 +22,7 @@ final class UnLockInsightAlertView: BaseView {
     private let leftoverMugwortView = UIView()
     private let mugwortLabel = UILabel()
     private let mugwortImage = UIImageView()
-    private let mugwortCount = UILabel()
+    let mugwortCount = UILabel()
     private let underLineView = UIView()
     let giveUpButton = UIButton()
     let useButton = UIButton()
@@ -82,7 +82,6 @@ final class UnLockInsightAlertView: BaseView {
         }
         
         mugwortCount.do {
-            $0.text = "00"
             $0.font = .fontGuide(.detail2_bold)
             $0.textColor = .white000
         }
@@ -158,7 +157,7 @@ final class UnLockInsightAlertView: BaseView {
         mugwortImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(mugwortLabel.snp.trailing).offset(4)
-            $0.size.equalTo(12)
+            $0.size.equalTo(17)
         }
         
         mugwortCount.snp.makeConstraints {
@@ -183,12 +182,5 @@ final class UnLockInsightAlertView: BaseView {
             $0.width.equalTo(SizeLiterals.Screen.screenWidth * 145 / 375)
             $0.height.equalTo(giveUpButton)
         }
-    }
-}
-
-extension UnLockInsightAlertView {
-    
-    func useButtonTapped() {
-        print("useButtonTapped")
     }
 }

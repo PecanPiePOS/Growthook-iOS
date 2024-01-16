@@ -14,6 +14,8 @@ import RxSwift
 
 enum InsightsTarget {
     case postNewInsight(caveId: Int, insightParameter: InsightPostRequest)
+    case editInsight(seedId: Int, insightParameter: InsightEditRequest)
+    case deleteInsight(seedId: Int)
 }
 
 extension InsightsTarget: BaseTargetType {
@@ -32,13 +34,24 @@ extension InsightsTarget: BaseTargetType {
             let newPath: String = URLConstant.seedPost
                 .replacingOccurrences(of: "{caveId}", with: String(caveId))
             return newPath
+        case .editInsight(let seedId, _):
+            let newPath: String = URLConstant.seed
+                .replacingOccurrences(of: "{seedId}", with: String(seedId))
+            return newPath
+        case .deleteInsight(let seedId):
+            let newPath = URLConstant.seed.replacingOccurrences(of: "{seedId}", with: String(seedId))
+            return newPath
         }
     }
-    
+        
     var method: Moya.Method {
         switch self {
         case .postNewInsight:
             return .post
+        case .editInsight:
+            return .patch
+        case .deleteInsight:
+            return .delete
         }
     }
     
@@ -47,6 +60,11 @@ extension InsightsTarget: BaseTargetType {
         case .postNewInsight(_, let insightParameter):
             let parameters = try! insightParameter.asParameter()
             return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        case .editInsight(_, let insightParameter):
+            let parameters = try! insightParameter.asParameter()
+            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+        case .deleteInsight:
+            return .requestPlain
         }
     }
 }
@@ -62,4 +80,17 @@ struct InsightsService: Networkable {
             .decode(decodeType: InsightPostResponse.self)
     }
     
+    static func editInsight(seedId: Int, of insight: InsightEditRequest) -> Observable<InsightSuccessResponse> {
+        return provider.rx.request(.editInsight(seedId: seedId, insightParameter: insight))
+            .asObservable()
+            .mapError()
+            .decode(decodeType: InsightSuccessResponse.self)
+    }
+    
+    static func deleteInsight(seedId: Int) -> Observable<InsightSuccessResponse> {
+        return provider.rx.request(.deleteInsight(seedId: seedId))
+            .asObservable()
+            .mapError()
+            .decode(decodeType: InsightSuccessResponse.self)
+    }
 }

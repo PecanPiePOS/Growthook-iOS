@@ -21,18 +21,20 @@ final class CaveDescriptionView: BaseView {
     private let nicknameLabel = UILabel()
     let lockButton = UIButton()
     
+    // MARK: - Properties
+    
+    private var isShared: Bool = false
+    
     override func setStyles() {
         
         self.backgroundColor = .gray600
         
         caveTitle.do {
-            $0.text = "동굴이름임다"
             $0.font = .fontGuide(.head4)
             $0.textColor = .white
         }
         
         caveDescriptionLabel.do {
-            $0.text = "동굴 설명자리에요:)"
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .gray100
         }
@@ -42,7 +44,6 @@ final class CaveDescriptionView: BaseView {
         }
         
         nicknameLabel.do {
-            $0.text = "색성한사람닉네임자리"
             $0.font = .fontGuide(.detail2_reg)
             $0.textColor = .gray200
         }
@@ -84,5 +85,14 @@ final class CaveDescriptionView: BaseView {
             $0.top.equalTo(userImageView.snp.bottom).offset(17)
             $0.leading.equalToSuperview().inset(6)
         }
+    }
+    
+    // MARK: - Methods
+    
+    func configureView(_ model: CaveDetailResponseDto) {
+        caveTitle.text = model.caveName
+        caveDescriptionLabel.text = model.introduction
+        nicknameLabel.text = model.nickname
+        isShared = model.isShared
     }
 }

@@ -14,7 +14,7 @@ import RxCocoa
 import RxSwift
 
 final class CaveDetailMenuBottomSheet: BaseViewController {
-
+    
     // MARK: - UI Components
     
     private lazy var changeCaveButton = CaveMenuButton(buttonTitle: "수정하기", buttonImage: ImageLiterals.Menu.ic_change, textColor: .white000)
@@ -22,7 +22,17 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
     
     // MARK: - Properties
     
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
+    private var caveId: Int?
+    
+    // MARK: - Initializer
+    
+    init(viewModel: HomeViewModel, caveId: Int){
+        self.viewModel = viewModel
+        self.caveId = caveId
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func bindViewModel() {
         deleteCaveButton.rx.tap
@@ -30,12 +40,19 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
                 self?.addRemoveCaveAlert()
             }
             .disposed(by: disposeBag)
+        
+        changeCaveButton.rx.tap
+            .bind { [weak self] in
+                self?.viewModel.inputs.changeCaveButtonTap()
+                self?.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
     
     override func setStyles() {
-    
+        
         view.backgroundColor = .gray400
         
         changeCaveButton.do {
@@ -67,6 +84,10 @@ final class CaveDetailMenuBottomSheet: BaseViewController {
             $0.height.equalTo(SizeLiterals.Screen.screenHeight * 50 / 812)
         }
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension CaveDetailMenuBottomSheet {
@@ -74,7 +95,8 @@ extension CaveDetailMenuBottomSheet {
     // MARK: - Methods
     
     private func addRemoveCaveAlert() {
-        let removeCaveAlertVC = RemoveCaveAlertViewController()
+        guard let caveId = self.caveId else { return }
+        let removeCaveAlertVC = RemoveCaveAlertViewController(viewModel: viewModel, caveId: caveId)
         removeCaveAlertVC.modalPresentationStyle = .overFullScreen
         self.present(removeCaveAlertVC, animated: false, completion: nil)
     }

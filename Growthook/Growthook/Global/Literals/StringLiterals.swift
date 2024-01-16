@@ -32,6 +32,7 @@ enum I18N {
             static let removeCave = "삭제한 보관함은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
             static let keep = "유지하기"
             static let remove = "삭제하기"
+            static let removeActionPlan = "삭제한 액션플랜은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
         }
         
         enum UnLockCave {
@@ -39,20 +40,49 @@ enum I18N {
             static let description = "해당 기능은 추후 업데이트 예정이에요:)"
             static let check = "확인"
         }
+        
+        enum ToastMessage {
+            static let moveInsight = "씨앗을 옮겨 심었어요"
+            static let removeInsight = "씨앗이 삭제되었어요"
+            static let removeCave = "동굴이 삭제되었어요"
+            static let scrap = "스크랩 완료!"
+        }
+        
+        enum Identifier {
+            static let deSelectNoti = "DeSelectInsightNotification"
+            static let customDetent = "customDetent"
+            static let type = "type"
+        }
+        
+        enum Button {
+            static let check = "확인"
+        }
     }
     
     enum Home {
         static let select = "선택"
         static let seedsCollected = "개의 씨앗을 모았어요!"
-        static let notiDescription1 = "잠금이 "
-        static let notiDescription2 = "일 이하로\n남은 씨앗이 "
+        static let notiDescription1 = "잠금이 3일 이하로"
+        static let notiDescription2 = "남은 씨앗이 "
         static let notiDescription3 = "개 있어요!"
+        static let day3 = "3일 이하"
+        static let notNotiDescription1 = "씨앗의 잠금이 3일"
+        static let notNotiDescription2 = "남았을 때 알려드릴게요!"
         static let caveName = "동굴 이름"
         static let emptyCaveList = "아직 만들어진 동굴이 없어요"
+        static let emptyCave = "오른쪽의 +를 눌러 동굴을 추가해보세요!"
+        static let count = "개"
+        static let userCave = "님의 동굴 속"
     }
     
     enum CaveDetail {
         static let addSeed = "씨앗 심기"
+        static let caveChange = "동굴 편집"
+        static let name = "이름"
+        static let introduce = "소개"
+        static let isShared = "공개 여부"
+        static let changeCaveMenu = "수정하기"
+        static let deleteCaveMenu = "삭제하기"
     }
     
     enum InsightList {
@@ -61,6 +91,8 @@ enum I18N {
     
     enum ActionList {
         static let reviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
+        static let insightDetailPlaceholder = "구체적인 계획을 설정해보세요"
+        static let insightDetailReviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
     }
     
     enum CreateInsight {

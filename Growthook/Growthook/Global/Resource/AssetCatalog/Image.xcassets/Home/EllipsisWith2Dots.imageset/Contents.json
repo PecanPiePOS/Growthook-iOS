@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "EllipsisWith2Dots.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

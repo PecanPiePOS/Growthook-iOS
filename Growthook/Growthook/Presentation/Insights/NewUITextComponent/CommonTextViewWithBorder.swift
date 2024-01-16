@@ -24,7 +24,7 @@ final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
     var rxStatus = PublishRelay<TextComponentStatus>()
     var rxTextCount = BehaviorRelay<Int>(value: 0)
     lazy var rxNextButtonTapControl: ControlEvent<Void> = moveToNextButton.rx.tap
-    private lazy var modifiedText: Driver<String?> = self.rx.text
+    lazy var modifiedText: Driver<String?> = self.rx.text
         .orEmpty
         .distinctUntilChanged()
         .scan(self.text) { [weak self] (previousValue, newValue) -> String? in
@@ -62,8 +62,13 @@ final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
         bindEditingAction()
         bindText()
         setStyles()
-        setBorderLine()
         setToolBarItems()
+        setBorderLine()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setFont()
     }
     
     required init?(coder: NSCoder) {
@@ -94,7 +99,7 @@ extension CommonTextViewWithBorder {
                 self.rxEditingAction.accept(.editingDidEnd)
                 if self.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     self.text = customPlaceholder
-                    self.textColor = .gray400
+                    self.textColor = .gray300
                     self.font = .fontGuide(.body3_reg)
                     modifyBorderLine(with: .gray200)
                 } else {
@@ -130,7 +135,31 @@ extension CommonTextViewWithBorder {
         self.layer.borderWidth = 0.5
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 7
-        modifyBorderLine(with: .gray200)
+        
+        if let text {
+            if text.isEmpty {
+                modifyBorderLine(with: .gray200)
+            } else if text == customPlaceholder {
+                modifyBorderLine(with: .gray200)
+            } else {
+                modifyBorderLine(with: .white000)
+            }
+        }
+    }
+    
+    private func setFont() {
+        if let text {
+            if text.isEmpty {
+                textColor = .gray300
+                font = .fontGuide(.body3_reg)
+            } else if text == customPlaceholder {
+                textColor = .gray300
+                font = .fontGuide(.body3_reg)
+            } else {
+                textColor = .white000
+                font = .fontGuide(.body3_bold)
+            }
+        }
     }
     
     private func modifyBorderLine(with color: UIColor) {
@@ -167,5 +196,14 @@ extension CommonTextViewWithBorder {
     @objc
     private func hidesKeyboardWhenTapped() {
         self.resignFirstResponder()
+    }
+}
+
+extension CommonTextViewWithBorder {
+    
+    func setPlaceholder() {
+        if self.text.isEmpty || self.text == "" {
+            self.text = customPlaceholder
+        }
     }
 }
