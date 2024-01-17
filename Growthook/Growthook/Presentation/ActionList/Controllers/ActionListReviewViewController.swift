@@ -101,6 +101,7 @@ final class ActionListReviewViewController: BaseViewController {
         navigationBar.snp.makeConstraints {
             $0.top.equalTo(safeAreaTopInset())
             $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 48 / 812)
         }
         
         titleLabel.snp.makeConstraints {
