@@ -645,7 +645,6 @@
 				092A51892B52D2C100296B46 /* CreateCave */,
 				586626112B4E65590084468C /* Insights */,
 				5866260C2B4E65410084468C /* MyPage */,
-				03B9AC612AF5624D00A5751C /* DTO.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -791,7 +790,6 @@
 				586626172B4E65810084468C /* Insights */,
 				586626162B4E65780084468C /* MyPage */,
 				093C1DF82B4C311E00EF84AB /* CreateCave */,
-				03B9AC5F2AF561AD00A5751C /* API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1093,13 +1091,6 @@
 			children = (
 			);
 			path = Auth;
-			sourceTree = "<group>";
-		};
-		259E7F882B4A755E00F3DC8F /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DTO;
 			sourceTree = "<group>";
 		};
 		259E7F9A2B4FCA7B00F3DC8F /* ActionList */ = {
@@ -1544,7 +1535,6 @@
 				032213822B17960700FF5CF1 /* NotificationAlertView.swift in Sources */,
 				584EDAD72B4A57E60094872A /* Observable+.swift in Sources */,
 				58EFF5DB2B445AB6003C3838 /* BaseTargetType.swift in Sources */,
-				03B9AC602AF561AD00A5751C /* API.swift in Sources */,
 				588E2B4F2B53BBAF0014E6D5 /* InsightsDetailActionPlanCollectionViewCell.swift in Sources */,
 				582F9C4A2B304B720000D161 /* TextViewBlockWithTitle.swift in Sources */,
 				2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */,
