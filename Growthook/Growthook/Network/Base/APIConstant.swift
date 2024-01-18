@@ -22,6 +22,7 @@ enum APIConstants {
     static var deviceToken: String = ""
     static var jwtToken: String = ""
     static var memberId: Int = 4
+    static var refreshToken: String = ""
     
     //MARK: - Header
     

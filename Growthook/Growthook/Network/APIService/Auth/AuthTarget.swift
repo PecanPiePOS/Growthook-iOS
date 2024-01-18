@@ -46,7 +46,7 @@ extension AuthTarget: BaseTargetType {
     var headers: [String : String]? {
         switch self {
         case .login(_):
-            return APIConstants.headerWithDeviceToken
+            return APIConstants.headerWithOutToken
         case .tokenRefresh:
             return APIConstants.headerWithRefresh
         }
