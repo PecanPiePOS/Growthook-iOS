@@ -75,31 +75,6 @@ final class LoginViewController: BaseViewController {
         }
     }
     
-    /// 사용자 정보 가져오기
-    private func kakaoGetUserInfo() {
-        
-        UserApi.shared.me() { (user, error) in
-            if let error = error {
-                print(error)
-            }
-            
-            let userName = user?.kakaoAccount?.name
-            let userEmail = user?.kakaoAccount?.email
-            print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
-            print("userName : ", userName ?? "")
-            print("userEmail : ", userEmail ?? "")
-            
-            self.loginSuccess()
-            
-            if userEmail == nil {
-                // 동의 안함
-                return
-            }
-            
-            //            self.textField.text = contentText
-        }
-    }
-    
     private func kakaoLogin() {
         if (UserApi.isKakaoTalkLoginAvailable()) {
             UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
@@ -109,14 +84,13 @@ final class LoginViewController: BaseViewController {
                 else {
                     print("✉️ loginWithKakaoTalk() success.")
                     guard let accessToken = oauthToken?.accessToken else { return }
-                    APIConstants.deviceToken = accessToken
+                    APIConstants.deviceToken = "Bearer " + accessToken
                     print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
                     print(APIConstants.deviceToken)
                     
                     //let idToken = oAuthToken.idToken ?? ""
                     //let accessToken = oAuthToken.accessToken
-                    
-                    self.kakaoGetUserInfo()
+                    self.postKakaoLogin()
                 }
             }
         } else {
@@ -127,9 +101,9 @@ final class LoginViewController: BaseViewController {
                     print("✉️ loginWithKakaoAccount() success.")
                     print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
                     guard let accessToken = oauthToken?.accessToken else { return }
-                    APIConstants.deviceToken = accessToken
+                    APIConstants.deviceToken = "Bearer " + accessToken
                     print(APIConstants.deviceToken)
-                    self.kakaoGetUserInfo()
+                    self.postKakaoLogin()
                 }
             }
         }
@@ -144,6 +118,21 @@ final class LoginViewController: BaseViewController {
             rootVC.navigationController?.isNavigationBarHidden = true
             window.rootViewController = rootVC
             window.makeKeyAndVisible()
+        }
+    }
+    
+    private func postKakaoLogin() {
+        let model: LoginRequestDto = LoginRequestDto(socialPlatform: "KAKAO", socialToken: APIConstants.deviceToken)
+        AuthAPI.shared.postKakaoLogin(param: model) { [weak self]
+            response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            APIConstants.jwtToken = data.accessToken
+            APIConstants.refreshToken = data.refreshToken
+            UserDefaults.standard.set(data.nickname, forKey: "nickname")
+            UserDefaults.standard.set(data.memberId, forKey: "memberId")
+            APIConstants.memberId = data.memberId
+            self?.loginSuccess()
         }
     }
 }
