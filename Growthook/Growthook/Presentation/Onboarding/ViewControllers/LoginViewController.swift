@@ -85,7 +85,7 @@ final class LoginViewController: BaseViewController {
             
             let userName = user?.kakaoAccount?.name
             let userEmail = user?.kakaoAccount?.email
-            
+            print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
             print("userName : ", userName ?? "")
             print("userEmail : ", userEmail ?? "")
             
@@ -108,6 +108,10 @@ final class LoginViewController: BaseViewController {
                 }
                 else {
                     print("✉️ loginWithKakaoTalk() success.")
+                    guard let accessToken = oauthToken?.accessToken else { return }
+                    APIConstants.deviceToken = accessToken
+                    print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+                    print(APIConstants.deviceToken)
                     
                     //let idToken = oAuthToken.idToken ?? ""
                     //let accessToken = oAuthToken.accessToken
@@ -121,6 +125,10 @@ final class LoginViewController: BaseViewController {
                     print(error)
                 } else {
                     print("✉️ loginWithKakaoAccount() success.")
+                    print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+                    guard let accessToken = oauthToken?.accessToken else { return }
+                    APIConstants.deviceToken = accessToken
+                    print(APIConstants.deviceToken)
                     self.kakaoGetUserInfo()
                 }
             }
