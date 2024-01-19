@@ -85,11 +85,6 @@ final class LoginViewController: BaseViewController {
                     print("✉️ loginWithKakaoTalk() success.")
                     guard let accessToken = oauthToken?.accessToken else { return }
                     APIConstants.deviceToken = "Bearer " + accessToken
-                    print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
-                    print(APIConstants.deviceToken)
-                    
-                    //let idToken = oAuthToken.idToken ?? ""
-                    //let accessToken = oAuthToken.accessToken
                     self.postKakaoLogin()
                 }
             }
@@ -99,10 +94,8 @@ final class LoginViewController: BaseViewController {
                     print(error)
                 } else {
                     print("✉️ loginWithKakaoAccount() success.")
-                    print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
                     guard let accessToken = oauthToken?.accessToken else { return }
                     APIConstants.deviceToken = "Bearer " + accessToken
-                    print(APIConstants.deviceToken)
                     self.postKakaoLogin()
                 }
             }
