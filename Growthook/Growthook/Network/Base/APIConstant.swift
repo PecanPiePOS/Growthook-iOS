@@ -21,7 +21,6 @@ enum APIConstants {
     static let applicationJSON = "application/json"
     static var deviceToken: String = ""
     static var jwtToken: String = ""
-    static var memberId: Int = 0
     static var refreshToken: String = ""
     
     //MARK: - Header

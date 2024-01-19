@@ -115,7 +115,7 @@ final class LoginViewController: BaseViewController {
     }
     
     private func postKakaoLogin() {
-        let model: LoginRequestDto = LoginRequestDto(socialPlatform: "KAKAO", socialToken: APIConstants.deviceToken)
+        let model: LoginRequestDto = LoginRequestDto(socialPlatform: I18N.Auth.kakao, socialToken: APIConstants.deviceToken)
         AuthAPI.shared.postKakaoLogin(param: model) { [weak self]
             response in
             guard let status = response?.status else { return }
@@ -128,9 +128,8 @@ final class LoginViewController: BaseViewController {
             guard let data = response?.data else { return }
             APIConstants.jwtToken = data.accessToken
             APIConstants.refreshToken = data.refreshToken
-            UserDefaults.standard.set(data.nickname, forKey: "nickname")
-            UserDefaults.standard.set(data.memberId, forKey: "memberId")
-            APIConstants.memberId = data.memberId
+            UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
+            UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
             self?.loginSuccess()
         }
     }

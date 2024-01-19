@@ -102,4 +102,10 @@ enum I18N {
         static let referencePlaceholder = "출처의 정보를 입력해주세요"
         static let referenceUrlPlaceholder = "참고한 url을 적어주세요 (선택)"
     }
+    
+    enum Auth {
+        static let kakao = "KAKAO"
+        static let nickname = "nickname"
+        static let memberId = "memberId"
+    }
 }
