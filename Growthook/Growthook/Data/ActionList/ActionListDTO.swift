@@ -24,6 +24,7 @@ struct ActionListFinishedResponse: Codable {
     let content: String
     let isScraped: Bool
     let seedId: Int
+    let hasReview: Bool
 }
 
 struct ActionListCompletionResponse: Codable {
