@@ -60,14 +60,4 @@ final class AuthAPI {
             }
         }
     }
-    
-    private func getNewToken() {
-        AuthAPI.shared.getRefreshToken() { [weak self] response in
-            guard self != nil else { return }
-            guard let data = response?.data else { return }
-            APIConstants.jwtToken = data.accessToken
-            APIConstants.refreshToken = data.refreshToken
-            
-        }
-    }
 }
