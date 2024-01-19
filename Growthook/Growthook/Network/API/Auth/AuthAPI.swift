@@ -6,6 +6,7 @@
 //
 
 import Moya
+import Foundation
 
 final class AuthAPI {
     static let shared: AuthAPI = AuthAPI()
@@ -24,13 +25,14 @@ final class AuthAPI {
             result in
             switch result {
             case .success(let response):
-                do {
-                    self.authData = try response.map(GeneralResponse<LoginResponseDto>?.self)
-                    guard let authData = self.authData else { return }
-                    completion(authData)
-                } catch let err {
-                    print(err.localizedDescription, 500)
-                }
+                let status = response.statusCode
+                    do {
+                        self.authData = try response.map(GeneralResponse<LoginResponseDto>?.self)
+                        guard let authData = self.authData else { return }
+                        completion(authData)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
             case .failure(let err):
                 print(err.localizedDescription)
                 completion(nil)
@@ -56,6 +58,16 @@ final class AuthAPI {
                 print(err.localizedDescription)
                 completion(nil)
             }
+        }
+    }
+    
+    private func getNewToken() {
+        AuthAPI.shared.getRefreshToken() { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            APIConstants.jwtToken = data.accessToken
+            APIConstants.refreshToken = data.refreshToken
+            
         }
     }
 }
