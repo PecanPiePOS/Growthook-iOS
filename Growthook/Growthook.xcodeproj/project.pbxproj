@@ -355,6 +355,7 @@
 		586626232B4E996C0084468C /* FullCoverLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCoverLoadingView.swift; sourceTree = "<group>"; };
 		586626252B4EB06F0084468C /* MyPageUserInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserInformationViewController.swift; sourceTree = "<group>"; };
 		586626272B4EB10C0084468C /* MyPageUserInfoBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserInfoBlockView.swift; sourceTree = "<group>"; };
+		5880424C2B5B7FD200630EBA /* Growthook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Growthook.entitlements; sourceTree = "<group>"; };
 		5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveTableViewCell.swift; sourceTree = "<group>"; };
 		5880F46A2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveSheetViewController.swift; sourceTree = "<group>"; };
 		5880F46C2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectPeriodSheetViewController.swift; sourceTree = "<group>"; };
@@ -645,7 +646,6 @@
 				092A51892B52D2C100296B46 /* CreateCave */,
 				586626112B4E65590084468C /* Insights */,
 				5866260C2B4E65410084468C /* MyPage */,
-				03B9AC612AF5624D00A5751C /* DTO.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -791,7 +791,6 @@
 				586626172B4E65810084468C /* Insights */,
 				586626162B4E65780084468C /* MyPage */,
 				093C1DF82B4C311E00EF84AB /* CreateCave */,
-				03B9AC5F2AF561AD00A5751C /* API.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -886,6 +885,7 @@
 		03E480FE2AF2AFDC002F4CBC /* Growthook */ = {
 			isa = PBXGroup;
 			children = (
+				5880424C2B5B7FD200630EBA /* Growthook.entitlements */,
 				03B9AC472AF55CA000A5751C /* Application */,
 				03B9AC492AF55E3300A5751C /* Data */,
 				03B9AC482AF55E1E00A5751C /* Network */,
@@ -1093,13 +1093,6 @@
 			children = (
 			);
 			path = Auth;
-			sourceTree = "<group>";
-		};
-		259E7F882B4A755E00F3DC8F /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DTO;
 			sourceTree = "<group>";
 		};
 		259E7F9A2B4FCA7B00F3DC8F /* ActionList */ = {
@@ -1544,7 +1537,6 @@
 				032213822B17960700FF5CF1 /* NotificationAlertView.swift in Sources */,
 				584EDAD72B4A57E60094872A /* Observable+.swift in Sources */,
 				58EFF5DB2B445AB6003C3838 /* BaseTargetType.swift in Sources */,
-				03B9AC602AF561AD00A5751C /* API.swift in Sources */,
 				588E2B4F2B53BBAF0014E6D5 /* InsightsDetailActionPlanCollectionViewCell.swift in Sources */,
 				582F9C4A2B304B720000D161 /* TextViewBlockWithTitle.swift in Sources */,
 				2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */,
@@ -1750,9 +1742,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BASE_URL = "http://3.35.58.218:8080";
+				CODE_SIGN_ENTITLEMENTS = Growthook/Growthook.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DGT9BQA4KH;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Growthook/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Growthook;
@@ -1767,7 +1760,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.growthook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.growthook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1784,9 +1777,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BASE_URL = "http://3.35.58.218:8080";
+				CODE_SIGN_ENTITLEMENTS = Growthook/Growthook.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DGT9BQA4KH;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Growthook/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Growthook;
@@ -1801,7 +1795,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.growthook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.growthook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
