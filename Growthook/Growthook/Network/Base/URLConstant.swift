@@ -61,4 +61,7 @@ enum URLConstant {
     // MARK: - Review
     
     static let review = "/api/v1/actionplan/{actionPlanId}/review"
+    
+    
+    static let bearer = "Bearer "
 }
