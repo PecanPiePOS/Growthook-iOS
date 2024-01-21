@@ -38,23 +38,6 @@ final class SplashViewController: BaseViewController {
     override func setStyles() {
         view.backgroundColor = .gray700.withAlphaComponent(0.9)
         
-//        splashLottieView.animationSpeed = 0.8
-//        splashLottieView.play { _ in
-//            var mainViewController: UIViewController
-//        
-//            if self.isFirstLaunch() {
-//                mainViewController = OnboardingSelectViewController()
-//            } else {
-//                mainViewController = TabBarController()
-//                (mainViewController as? TabBarController)?.selectedIndex = 0
-//            }
-//            
-//            guard let sceneDeleagate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-//            
-//            sceneDeleagate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
-//            sceneDeleagate.window?.makeKeyAndVisible()
-//        }
-        
         splashLabel.do {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 4
@@ -107,4 +90,6 @@ final class SplashViewController: BaseViewController {
         }
         return !hasBeenLaunchedBefore
     }
+    
+    
 }
