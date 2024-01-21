@@ -38,6 +38,7 @@ final class InsightsDetailViewController: BaseViewController {
     private lazy var actionPlanCollectionView = UICollectionView(frame: .zero, collectionViewLayout: setFlowLayout())
     private var actionPlanButton: BottomCTAButton
     private let loadingView = FullCoverLoadingView()
+    private var seedId = 0
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -48,6 +49,7 @@ final class InsightsDetailViewController: BaseViewController {
     init(hasAnyActionPlan: Bool, seedId: Int) {
         self.viewModel = InsightsDetailViewModel(hasAnyActionPlan: hasAnyActionPlan, seedId: seedId)
         self.hasActionPlan = hasAnyActionPlan
+        self.seedId = seedId
         
         if hasAnyActionPlan != false {
             mainBlockHeight = 125
@@ -455,6 +457,8 @@ extension InsightsDetailViewController {
     
     private func showAddNewActionPlanView() {
         let vc = CreateActionViewControlller()
+        vc.seedId = self.seedId
+//        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
