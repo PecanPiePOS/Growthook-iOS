@@ -76,5 +76,24 @@ extension CaveCollectionViewCell {
     func configureCell(_ model: CaveListResponseDto) {
         caveTitle.text = model.caveName
         caveId = model.caveId
+        setCaveImage(model.caveImageIndex)
+    }
+    
+    
+    private func setCaveImage(_ index: Int) {
+        let image: UIImage
+        switch index {
+        case 0:
+            image = ImageLiterals.Home.img_cave_pink
+        case 1:
+            image = ImageLiterals.Home.img_cave_night
+        case 2:
+            image = ImageLiterals.Home.img_cave_sunrise
+        case 3:
+            image = ImageLiterals.Home.img_cave_sunset
+        default:
+            return
+        }
+        caveImageView.image = image
     }
 }
