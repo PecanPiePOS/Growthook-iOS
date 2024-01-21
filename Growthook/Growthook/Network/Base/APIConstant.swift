@@ -23,6 +23,7 @@ enum APIConstants {
     static var jwtToken: String = ""
     static var memberId: Int = 4
     static var accessToken: String = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDU2NTI4ODEsImV4cCI6MTcwNTkxMjA4MSwiaWQiOjd9.4U9IkvyFGXpJrdY4cj3IYLhpbTnqWwxtFhkDUyBVL7o"
+    static var refreshToken: String = ""
     
     //MARK: - Header
     
@@ -35,21 +36,21 @@ enum APIConstants {
     static var headerWithDeviceToken: [String: String] {
         [
             NetworkHeaderKey.contentType.rawValue: APIConstants.applicationJSON,
-            NetworkHeaderKey.authorization.rawValue: APIConstants.jwtToken
+            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.deviceToken
         ]
     }
     
     static var headerWithAuthorization: [String: String] {
         [
             NetworkHeaderKey.contentType.rawValue: APIConstants.applicationJSON,
-            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.accessToken
+            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.jwtToken
         ]
     }
     
     static var headerWithRefresh: [String: String] {
         [
             NetworkHeaderKey.contentType.rawValue: APIConstants.applicationJSON,
-            NetworkHeaderKey.authorization.rawValue: APIConstants.jwtToken
+            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.jwtToken
         ]
     }
 }

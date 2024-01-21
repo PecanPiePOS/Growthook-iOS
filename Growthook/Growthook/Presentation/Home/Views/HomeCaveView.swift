@@ -29,6 +29,10 @@ final class HomeCaveView: BaseView {
     private let underLineView = UIView()
     private let flowLayout = UICollectionViewFlowLayout()
     
+    // MARK: - Properties
+    
+    private let userName: String = UserDefaults.standard.string(forKey: I18N.Auth.nickname) ?? ""
+    
     // MARK: - UI Components Property
     
     override func setStyles() {
@@ -36,7 +40,7 @@ final class HomeCaveView: BaseView {
         backgroundColor = .clear
         
         userLabel.do {
-            $0.text = "EON\(I18N.Home.userCave)"
+            $0.text = "\(userName)\(I18N.Home.userCave)"
             $0.font = .fontGuide(.head1)
             $0.textColor = .white000
         }

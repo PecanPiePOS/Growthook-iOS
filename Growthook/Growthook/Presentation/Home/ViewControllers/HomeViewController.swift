@@ -38,6 +38,7 @@ final class HomeViewController: BaseViewController {
     private let viewModel = HomeViewModel()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     private var lockSeedId: Int?
+    private var lockActionPlan: Bool?
     
     // MARK: - View Life Cycle
     
@@ -183,9 +184,13 @@ final class HomeViewController: BaseViewController {
         
         viewModel.outputs.unLockSeed
             .subscribe(onNext: { [weak self] in
-                self?.unLockAlertView.removeFromSuperview()
-                // TODO: - 인사이트 뷰 이동
-                print("인사이트 잠금 해제 뷰 이동")
+                guard let self else { return }
+                self.unLockAlertView.removeFromSuperview()
+                guard let actionPlan = self.lockActionPlan else { return }
+                guard let seedId = self.lockSeedId else { return }
+                let vc = InsightsDetailViewController(hasAnyActionPlan: actionPlan, seedId: seedId)
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -362,6 +367,7 @@ extension HomeViewController {
                     $0.edges.equalToSuperview()
                 }
                 self.lockSeedId = cell.seedId
+                self.lockActionPlan = cell.hasActionPlan
             } else {
                 let vc = InsightsDetailViewController(hasAnyActionPlan: cell.hasActionPlan, seedId: cell.seedId)
                 vc.hidesBottomBarWhenPushed = true
