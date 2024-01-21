@@ -365,6 +365,7 @@
 		586626232B4E996C0084468C /* FullCoverLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCoverLoadingView.swift; sourceTree = "<group>"; };
 		586626252B4EB06F0084468C /* MyPageUserInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserInformationViewController.swift; sourceTree = "<group>"; };
 		586626272B4EB10C0084468C /* MyPageUserInfoBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserInfoBlockView.swift; sourceTree = "<group>"; };
+		5880424C2B5B7FD200630EBA /* Growthook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Growthook.entitlements; sourceTree = "<group>"; };
 		5880F4662B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveTableViewCell.swift; sourceTree = "<group>"; };
 		5880F46A2B342FF7004C1494 /* InsightSelectCaveSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectCaveSheetViewController.swift; sourceTree = "<group>"; };
 		5880F46C2B34300D004C1494 /* InsightSelectPeriodSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightSelectPeriodSheetViewController.swift; sourceTree = "<group>"; };
@@ -922,6 +923,7 @@
 		03E480FE2AF2AFDC002F4CBC /* Growthook */ = {
 			isa = PBXGroup;
 			children = (
+				5880424C2B5B7FD200630EBA /* Growthook.entitlements */,
 				03B9AC472AF55CA000A5751C /* Application */,
 				03B9AC492AF55E3300A5751C /* Data */,
 				03B9AC482AF55E1E00A5751C /* Network */,
@@ -1122,6 +1124,13 @@
 				259E7F902B4A7BCA00F3DC8F /* ActionListService.swift */,
 			);
 			path = ActionList;
+			sourceTree = "<group>";
+		};
+		259E7F872B4A6FAA00F3DC8F /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		259E7F9A2B4FCA7B00F3DC8F /* ActionList */ = {
@@ -1776,9 +1785,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BASE_URL = "http://3.35.58.218:8080";
+				CODE_SIGN_ENTITLEMENTS = Growthook/Growthook.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DGT9BQA4KH;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Growthook/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Growthook;
@@ -1793,7 +1803,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.growthook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.growthook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1810,9 +1820,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BASE_URL = "http://3.35.58.218:8080";
+				CODE_SIGN_ENTITLEMENTS = Growthook/Growthook.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DGT9BQA4KH;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Growthook/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Growthook;
@@ -1827,7 +1838,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.growthook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.growthook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
