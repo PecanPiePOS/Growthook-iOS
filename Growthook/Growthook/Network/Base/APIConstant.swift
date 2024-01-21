@@ -21,7 +21,7 @@ enum APIConstants {
     static let applicationJSON = "application/json"
     static var deviceToken: String = ""
     static var jwtToken: String = ""
-    static var memberId: Int = 4
+    static var refreshToken: String = ""
     
     //MARK: - Header
     
@@ -34,21 +34,21 @@ enum APIConstants {
     static var headerWithDeviceToken: [String: String] {
         [
             NetworkHeaderKey.contentType.rawValue: APIConstants.applicationJSON,
-            NetworkHeaderKey.authorization.rawValue: APIConstants.jwtToken
+            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.deviceToken
         ]
     }
     
     static var headerWithAuthorization: [String: String] {
         [
             NetworkHeaderKey.contentType.rawValue: APIConstants.applicationJSON,
-            NetworkHeaderKey.authorization.rawValue: APIConstants.jwtToken
+            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.jwtToken
         ]
     }
     
     static var headerWithRefresh: [String: String] {
         [
             NetworkHeaderKey.contentType.rawValue: APIConstants.applicationJSON,
-            NetworkHeaderKey.authorization.rawValue: APIConstants.jwtToken
+            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.jwtToken
         ]
     }
 }
