@@ -35,6 +35,7 @@ final class CaveDetailViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     private var lockSeedId: Int?
     private var caveId: Int
+    private var lockActionPlan: Bool?
     
     // MARK: - Initializer
 
@@ -146,8 +147,13 @@ final class CaveDetailViewController: BaseViewController {
         
         unLockCaveAlertView.checkButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.unLockCaveAlertView.removeFromSuperview()
-                // TODO: - 인사이트 디테일 이동
+                guard let self else { return }
+                self.unLockCaveAlertView.removeFromSuperview()
+                guard let actionPlan = self.lockActionPlan else { return }
+                guard let seedId = self.lockSeedId else { return }
+                let vc = InsightsDetailViewController(hasAnyActionPlan: actionPlan, seedId: seedId)
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -248,6 +254,7 @@ extension CaveDetailViewController {
                     $0.edges.equalToSuperview()
                 }
                 self.lockSeedId = cell.seedId
+                self.lockActionPlan = cell.hasActionPlan
             } else {
                 let vc = InsightsDetailViewController(hasAnyActionPlan: cell.hasActionPlan, seedId: cell.seedId)
                 vc.hidesBottomBarWhenPushed = true

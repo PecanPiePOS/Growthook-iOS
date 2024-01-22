@@ -44,7 +44,7 @@ extension SsukTarget: BaseTargetType {
     }
     
     var headers: [String : String]? {
-        return APIConstants.headerWithOutToken
+        return APIConstants.headerWithAuthorization
     }
 }
 

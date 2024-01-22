@@ -35,6 +35,11 @@
 		033E9C1B2AFE606E0051A9E8 /* CaveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C1A2AFE606E0051A9E8 /* CaveCollectionViewCell.swift */; };
 		033E9C1E2AFE63D40051A9E8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C1D2AFE63D40051A9E8 /* HomeViewModel.swift */; };
 		033E9C202AFE725D0051A9E8 /* CaveProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E9C1F2AFE725D0051A9E8 /* CaveProfile.swift */; };
+		034011352B58DCF200D1F371 /* AuthTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034011342B58DCF200D1F371 /* AuthTarget.swift */; };
+		034011382B58E03F00D1F371 /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034011372B58E03F00D1F371 /* LoginRequestDto.swift */; };
+		0340113B2B58E5C600D1F371 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0340113A2B58E5C600D1F371 /* AuthAPI.swift */; };
+		0340113D2B58E65400D1F371 /* LoginResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0340113C2B58E65400D1F371 /* LoginResponseDto.swift */; };
+		0340113F2B58E68000D1F371 /* RefreshTokenResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0340113E2B58E68000D1F371 /* RefreshTokenResponseDto.swift */; };
 		03431ACF2B3D51220017EA52 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03431ACE2B3D51220017EA52 /* Encodable+.swift */; };
 		034580822B2D628F002DDEBA /* CaveDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034580812B2D628F002DDEBA /* CaveDetailViewController.swift */; };
 		034580852B2D6354002DDEBA /* CaveDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034580842B2D6354002DDEBA /* CaveDetailView.swift */; };
@@ -226,6 +231,11 @@
 		033E9C1A2AFE606E0051A9E8 /* CaveCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveCollectionViewCell.swift; sourceTree = "<group>"; };
 		033E9C1D2AFE63D40051A9E8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		033E9C1F2AFE725D0051A9E8 /* CaveProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveProfile.swift; sourceTree = "<group>"; };
+		034011342B58DCF200D1F371 /* AuthTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTarget.swift; sourceTree = "<group>"; };
+		034011372B58E03F00D1F371 /* LoginRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDto.swift; sourceTree = "<group>"; };
+		0340113A2B58E5C600D1F371 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		0340113C2B58E65400D1F371 /* LoginResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseDto.swift; sourceTree = "<group>"; };
+		0340113E2B58E68000D1F371 /* RefreshTokenResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenResponseDto.swift; sourceTree = "<group>"; };
 		03431ACE2B3D51220017EA52 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		034580812B2D628F002DDEBA /* CaveDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailViewController.swift; sourceTree = "<group>"; };
 		034580842B2D6354002DDEBA /* CaveDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDetailView.swift; sourceTree = "<group>"; };
@@ -526,6 +536,32 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		034011332B58DCD100D1F371 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				034011342B58DCF200D1F371 /* AuthTarget.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		034011362B58E02000D1F371 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				034011372B58E03F00D1F371 /* LoginRequestDto.swift */,
+				0340113C2B58E65400D1F371 /* LoginResponseDto.swift */,
+				0340113E2B58E68000D1F371 /* RefreshTokenResponseDto.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		034011392B58E5AF00D1F371 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				0340113A2B58E5C600D1F371 /* AuthAPI.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		0345807F2B2D6260002DDEBA /* CaveDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,6 +627,7 @@
 		035701EE2B4EF35000A9E47A /* APIService */ = {
 			isa = PBXGroup;
 			children = (
+				034011332B58DCD100D1F371 /* Auth */,
 				0332A3962B5135D200720CD3 /* Home */,
 				0332A3972B5135DC00720CD3 /* Cave */,
 				0332A3982B5135E400720CD3 /* Ssuk */,
@@ -639,6 +676,7 @@
 		03B9AC492AF55E3300A5751C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				034011362B58E02000D1F371 /* Auth */,
 				259E7F9A2B4FCA7B00F3DC8F /* ActionList */,
 				0332A3932B51357E00720CD3 /* Ssuk */,
 				035701EB2B4EBED500A9E47A /* Insight */,
@@ -782,7 +820,7 @@
 		03B9AC5E2AF561A200A5751C /* API */ = {
 			isa = PBXGroup;
 			children = (
-				259E7F872B4A6FAA00F3DC8F /* Auth */,
+				034011392B58E5AF00D1F371 /* Auth */,
 				259E7F862B4A6FA100F3DC8F /* ActionList */,
 				0332A39B2B5136F400720CD3 /* SsukAPI */,
 				0332A38E2B5020BD00720CD3 /* CaveAPI */,
@@ -1468,6 +1506,7 @@
 				09A7D7002B00DED0005F8821 /* CreateCaveViewModel.swift in Sources */,
 				586626152B4E65720084468C /* InsightsModel.swift in Sources */,
 				581D22982B3356150068E58D /* SelectBlockWithTitle.swift in Sources */,
+				0340113D2B58E65400D1F371 /* LoginResponseDto.swift in Sources */,
 				0332A38B2B501D7000720CD3 /* CaveDetailResponseDto.swift in Sources */,
 				03B9AC842AF565A300A5751C /* ImageLiterals.swift in Sources */,
 				035701E32B4E7C6600A9E47A /* CaveDetailMenuBottomSheet.swift in Sources */,
@@ -1480,6 +1519,7 @@
 				250F7D752B14624300D9726F /* ActionListReviewViewController.swift in Sources */,
 				588E2B422B539EE50014E6D5 /* InsightsDetailService.swift in Sources */,
 				58E75F982B00B15A00512FE2 /* BaseViewController.swift in Sources */,
+				034011382B58E03F00D1F371 /* LoginRequestDto.swift in Sources */,
 				5880F4672B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift in Sources */,
 				09089A6A2B03B3E2006C07B8 /* AlertBuilder.swift in Sources */,
 				092AE2B52B53DA6300E9A20D /* Int+.swift in Sources */,
@@ -1487,6 +1527,7 @@
 				09CE00F52B0DB9CC00CB42C4 /* InsightModel.swift in Sources */,
 				09CE00F02B0DB1FB00CB42C4 /* CreateActionViewControlller.swift in Sources */,
 				03B9AC932AF566B300A5751C /* ButtonPress.swift in Sources */,
+				0340113F2B58E68000D1F371 /* RefreshTokenResponseDto.swift in Sources */,
 				092C816D2B334E13006B0F65 /* CreateSpecificPlanView .swift in Sources */,
 				586626242B4E996C0084468C /* FullCoverLoadingView.swift in Sources */,
 				034580822B2D628F002DDEBA /* CaveDetailViewController.swift in Sources */,
@@ -1494,6 +1535,7 @@
 				259E7F722B3E95F600F3DC8F /* LoginView.swift in Sources */,
 				03B9AC6E2AF563E200A5751C /* UIImage+.swift in Sources */,
 				03B9AC702AF563F300A5751C /* UIViewController+.swift in Sources */,
+				0340113B2B58E5C600D1F371 /* AuthAPI.swift in Sources */,
 				58AB70AC2B2C7CC50061C072 /* MyPageViewModel.swift in Sources */,
 				581D228E2B320C630068E58D /* CommonTextFieldWithBorder.swift in Sources */,
 				0332A39D2B51370000720CD3 /* SsukAPI.swift in Sources */,
@@ -1529,6 +1571,7 @@
 				03B9AC7C2AF5651600A5751C /* UITabBar+.swift in Sources */,
 				03B9AC862AF565BA00A5751C /* SizeLiterals.swift in Sources */,
 				035701E12B4E6DA700A9E47A /* CaveListEmptyView.swift in Sources */,
+				034011352B58DCF200D1F371 /* AuthTarget.swift in Sources */,
 				035701EA2B4EBA9600A9E47A /* CaveListResponseDto.swift in Sources */,
 				03B9ACA12AF7B25B00A5751C /* HomeViewController.swift in Sources */,
 				252DD8842B063A7900DBB1D1 /* ActionListViewModel.swift in Sources */,
