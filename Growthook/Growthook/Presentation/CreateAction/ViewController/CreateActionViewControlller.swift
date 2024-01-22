@@ -17,7 +17,7 @@ struct ActionplanModel {
 }
 
 final class CreateActionViewControlller: BaseViewController {
-    
+
     private let createActionView = CreateActionView()
     private var viewModel = CreateActionViewModel()
     private let disposeBag = DisposeBag()
@@ -40,6 +40,7 @@ final class CreateActionViewControlller: BaseViewController {
     }
     
     var newActionPlan: CreateActionRequest = CreateActionRequest(contents: [])
+    var seedId: Int = 0
     
     override func loadView() {
         self.view = createActionView
@@ -73,6 +74,9 @@ final class CreateActionViewControlller: BaseViewController {
     }
     
     override func bindViewModel() {
+        
+        viewModel.inputs.setSeedId(seedId: self.seedId)
+
         viewModel.outputs.insight
             .bind(onNext: { value in
                 self.createActionView.insightView.bindInsight(model: value)

@@ -46,17 +46,17 @@ final class CreateCaveViewModel: CreateCaveViewModelInputs, CreateCaveViewModelO
     func switchTapped() {
         print("switchTapped")
     }
+    
     private let createCaveService = CreateCaveService()
 
     func createButtonTapped() {
         caveModel.accept(CreateCaveModel(name: name.value, description: description.value))
-        print(name.value, description.value, switchStatus.value, "++++++++++++")
-        
     }
     
     func postCreateCave() {
+        let memberId = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
         let newCave = CreateCaveRequest(name: name.value, introduction: description.value, isShared: switchStatus.value)
-        CreateCaveService.postcave(memberId: 4, cave: newCave)
+        CreateCaveService.postcave(memberId: memberId, cave: newCave)
             .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
                 self.networkState.accept(.done)
