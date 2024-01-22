@@ -10,4 +10,6 @@ import Foundation
 struct LoginRequestDto: Codable {
     let socialPlatform: String
     let socialToken: String
+    let userName: String
 }
+
