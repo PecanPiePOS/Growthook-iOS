@@ -152,6 +152,11 @@ final class LoginViewController: BaseViewController {
             APIConstants.refreshToken = data.refreshToken
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
+            UserDefaults.standard.set(true ,forKey: "isLoggedIn")
+            /**
+             위는 사용자가 로그인을 했는지 안 했는지 확인하는
+             UserDefaults입니다.  SplashViewController의 96번 줄을 보세요
+             */
             self?.loginSuccess()
         }
     }
@@ -185,7 +190,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        //로그인 성공 여기에 이제 post API 연결
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             let userIdentifier = appleIDCredential.user
@@ -219,12 +223,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             print("UserName: \(fullName)")
             print(APIConstants.deviceToken)
             print("email: \(email)")
-            
             UserDefaults.standard.setValue(userIdentifier, forKey: "userIdentifier")
 
             
         case let passwordCredential as ASPasswordCredential:
-            // Sign in using an existing iCloud Keychain credential.
             let username = passwordCredential.user
             let password = passwordCredential.password
             
@@ -238,7 +240,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
     
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // 로그인 실패(유저의 취소도 포함)
         print("login failed - \(error.localizedDescription)")
     }
 }
