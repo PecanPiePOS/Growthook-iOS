@@ -18,7 +18,7 @@ final class ChangeCaveViewController: BaseViewController {
     // MARK: - UI Components
     
     private let changeCaveView = ChangeCaveView()
-    private let vieWModel = ChangeCaveViewModel()
+    private let viewModel = ChangeCaveViewModel()
     private let disposeBag = DisposeBag()
     private let homeViewModel: HomeViewModel
     
@@ -52,7 +52,7 @@ final class ChangeCaveViewController: BaseViewController {
             .distinctUntilChanged()
             .bind { [weak self] value in
                 guard let self else { return }
-                self.vieWModel.inputs.setName(value: value)
+                self.viewModel.inputs.setName(value: value)
             }
             .disposed(by: disposeBag)
         
@@ -88,11 +88,11 @@ final class ChangeCaveViewController: BaseViewController {
             .distinctUntilChanged()
             .bind { [weak self] value in
                 guard let self else { return }
-                self.vieWModel.inputs.setIntroduce(value: value)
+                self.viewModel.inputs.setIntroduce(value: value)
             }
             .disposed(by: disposeBag)
         
-        vieWModel.outputs.isValid
+        viewModel.outputs.isValid
             .map { $0 ? true : false }
             .bind(to: changeCaveView.navigationBar.rx.completionEnableStatus)
             .disposed(by: disposeBag)
@@ -106,15 +106,16 @@ final class ChangeCaveViewController: BaseViewController {
         changeCaveView.navigationBar.completionButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let caveId = self?.caveId else { return }
-                self?.vieWModel.inputs.completionButtonTap(caveId: caveId)
+                self?.viewModel.inputs.completionButtonTap(caveId: caveId)
             })
             .disposed(by: disposeBag)
         
-        vieWModel.outputs.changeCave
+        viewModel.outputs.changeCave
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 guard let caveId = self.caveId else { return }
                 self.homeViewModel.inputs.caveDetail(caveId: caveId)
+                self.homeViewModel.inputs.reloadCave()
                 self.popToCaveDetailVC()
             })
             .disposed(by: disposeBag)

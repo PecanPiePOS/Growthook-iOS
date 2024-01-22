@@ -15,6 +15,7 @@ protocol HomeViewModelInputs {
     func handleLongPress(at indexPath: IndexPath)
     func dismissInsightTap(at indexPath: IndexPath)
     func reloadInsight()
+    func reloadCave()
     func insightCellTap(at indexPath: IndexPath)
     func giveUpButtonTap()
     func caveListCellTap(at indexPath: IndexPath)
@@ -48,6 +49,7 @@ protocol HomeViewModelOutputs {
     var removeInsightAlertView: PublishSubject<Void> { get }
     var dismissToHome: PublishSubject<Void> { get }
     var removeInsight: PublishSubject<Void> { get }
+    var reloadCaves: PublishSubject<Void>  { get }
     var reloadInsights: PublishSubject<Void> { get }
     var insightScrapToggle: PublishSubject<Void> { get }
     var unLockSeed: PublishSubject<Void> { get }
@@ -71,6 +73,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var insightList: BehaviorRelay<[SeedListResponseDto]> = BehaviorRelay<[SeedListResponseDto]>(value: [])
     var insightLongTap: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var insightBackground: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
+    var reloadCaves: PublishSubject<Void> = PublishSubject<Void>()
     var reloadInsights: PublishSubject<Void> = PublishSubject<Void>()
     var pushToInsightDetail: PublishSubject<IndexPath> = PublishSubject<IndexPath>()
     var dismissToHomeVC: PublishSubject<Void> = PublishSubject<Void>()
@@ -132,6 +135,10 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     func dismissInsightTap(at indexPath: IndexPath) {
         self.insightBackground.onNext(indexPath)
+    }
+    
+    func reloadCave() {
+        self.getCaveList(memberId: memberId)
     }
     
     func reloadInsight() {
@@ -272,6 +279,7 @@ extension HomeViewModel {
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveDetail.accept(data)
+            print("🐸🐸🐸🐸🐸🐸🐸🐸")
         }
     }
     

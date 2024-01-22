@@ -41,7 +41,6 @@ final class ChangeCaveViewModel: ChangeCaveViewModelInputs, ChangeCaveViewModelO
     
     func completionButtonTap(caveId: Int) {
         patchCave(caveId: caveId)
-        changeCave.onNext(())
     }
     
     var name: BehaviorRelay<String> = BehaviorRelay(value: "")
@@ -65,7 +64,7 @@ extension ChangeCaveViewModel {
     func patchCave(caveId: Int) {
         let model: CavePatchRequestDto = CavePatchRequestDto(name: name.value, introduction: introduce.value, isShared: false)
         CaveAPI.shared.patch(caveId: caveId, param: model) { [weak self] response in
-            guard self != nil else { return }
+            self?.changeCave.onNext(())
         }
     }
 }
