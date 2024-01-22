@@ -260,7 +260,7 @@ final class HomeViewController: BaseViewController {
     
     override func setLayout() {
         
-        view.addSubviews(homeCaveView, insightListView, notificationView, insightEmptyView, seedPlusButton)
+        view.addSubviews(homeCaveView, insightListView, insightEmptyView, notificationView, seedPlusButton)
         
         homeCaveView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
