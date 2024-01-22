@@ -284,23 +284,7 @@ extension CaveDetailViewController {
     
     func presentToHalfModalViewController(_ indexPath: IndexPath) {
         let insightTapVC = InsightTapBottomSheet(viewModel: viewModel)
-        insightTapVC.modalPresentationStyle = .pageSheet
-        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.type)
-        let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
-            return SizeLiterals.Screen.screenHeight * 84 / 812
-        }
-        
-        if let sheet = insightTapVC.sheetPresentationController {
-            sheet.detents = [customDetent]
-            sheet.preferredCornerRadius = 0
-            sheet.delegate = self
-            sheet.delegate = insightTapVC as? any UISheetPresentationControllerDelegate
-        }
-        
-        insightTapVC.onDismiss = { [weak self] in
-            self?.viewModel.inputs.dismissInsightTap(at: indexPath)
-        }
-        
+        insightTapVC.modalPresentationStyle = .overFullScreen
         insightTapVC.indexPath = indexPath
         present(insightTapVC, animated: true)
     }
