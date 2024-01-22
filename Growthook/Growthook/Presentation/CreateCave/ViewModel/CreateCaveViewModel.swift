@@ -46,11 +46,11 @@ final class CreateCaveViewModel: CreateCaveViewModelInputs, CreateCaveViewModelO
     func switchTapped() {
         print("switchTapped")
     }
+    
     private let createCaveService = CreateCaveService()
 
     func createButtonTapped() {
         caveModel.accept(CreateCaveModel(name: name.value, description: description.value))
-        
     }
     
     func postCreateCave() {
