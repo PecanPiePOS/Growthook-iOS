@@ -104,6 +104,7 @@ final class MypageViewController: BaseViewController {
                 case 5:
                     // 로그아웃
                     inputs.logOutDidTap()
+                    self.logout()
                 default:
                     break
                 }
@@ -200,5 +201,20 @@ extension MypageViewController {
         let myInfoViewController = MyPageUserInformationViewController(viewModel: self.viewModel)
         myInfoViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(myInfoViewController, animated: true)
+    }
+    
+    private func logout() {
+        // 여기에 로그아웃 시 필요한 처리를 추가합니다.
+        // 예를 들어, 사용자 세션을 초기화하고 로그아웃 API 호출 등을 수행합니다.
+
+        // 모든 화면을 닫고 SplashViewController를 엽니다.
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let sceneDelegate = windowScene.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            let splashViewController = SplashViewController()
+            let rootViewController = UINavigationController(rootViewController: splashViewController)
+            window.rootViewController = rootViewController
+            window.makeKeyAndVisible()
+        }
     }
 }

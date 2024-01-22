@@ -94,6 +94,11 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
     
     func logOutDidTap() {
         print("LogOut Tapped")
+        APIConstants.jwtToken = ""
+        APIConstants.refreshToken = ""
+        UserDefaults.standard.removeObject(forKey: I18N.Auth.nickname)
+        UserDefaults.standard.removeObject(forKey: I18N.Auth.memberId)
+        UserDefaults.standard.set(false ,forKey: "isLoggedIn")
     }
 }
 
