@@ -279,7 +279,6 @@ extension HomeViewModel {
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveDetail.accept(data)
-            print("🐸🐸🐸🐸🐸🐸🐸🐸")
         }
     }
     
