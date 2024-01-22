@@ -116,18 +116,18 @@ final class CaveDetailViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        unLockInsightAlertView.useButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                guard let seedId = self?.lockSeedId else { return }
-                self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
-            })
-            .disposed(by: disposeBag)
+//        unLockInsightAlertView.useButton.rx.tap
+//            .subscribe(onNext: { [weak self] in
+//                guard let seedId = self?.lockSeedId else { return }
+//                self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
+//            })
+//            .disposed(by: disposeBag)
         
-        unLockInsightAlertView.giveUpButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.unLockInsightAlertView.removeFromSuperview()
-            })
-            .disposed(by: disposeBag)
+//        unLockInsightAlertView.giveUpButton.rx.tap
+//            .subscribe(onNext: { [weak self] in
+//                self?.unLockInsightAlertView.removeFromSuperview()
+//            })
+//            .disposed(by: disposeBag)
         
         caveDetailView.insightListView.scrapButton.rx.tap
             .subscribe(onNext: { [weak self] in
@@ -181,7 +181,8 @@ final class CaveDetailViewController: BaseViewController {
             .subscribe(onNext: { [weak self] in
                 guard let caveId = self?.caveId else { return }
                 guard let viewModel = self?.viewModel else { return }
-                self?.navigationController?.pushViewController(ChangeCaveViewController(caveId: caveId, homeViewModel: viewModel), animated: true)
+                let vc = ChangeCaveViewController(caveId: caveId, homeViewModel: viewModel)
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }
