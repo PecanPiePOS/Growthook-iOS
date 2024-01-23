@@ -111,5 +111,6 @@ enum I18N {
         static let jwtToken = "jwtToken"
         static let hasBeenLaunched = "hasBeenLaunchedBefore"
         static let isLoggedIn = "isLoggedIn"
+        static let loginType = "loginType"
     }
 }
