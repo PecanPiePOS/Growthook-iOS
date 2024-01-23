@@ -138,6 +138,7 @@ final class LoginViewController: BaseViewController {
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
             UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
+            UserDefaults.standard.set(true ,forKey: I18N.Auth.isLoggedIn)
             self?.loginSuccess()
         }
     }
@@ -153,7 +154,7 @@ final class LoginViewController: BaseViewController {
             APIConstants.refreshToken = data.refreshToken
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
-            UserDefaults.standard.set(true ,forKey: "isLoggedIn")
+            UserDefaults.standard.set(true ,forKey: I18N.Auth.isLoggedIn)
             /**
              위는 사용자가 로그인을 했는지 안 했는지 확인하는
              UserDefaults입니다.  SplashViewController의 96번 줄을 보세요
@@ -161,7 +162,7 @@ final class LoginViewController: BaseViewController {
             self?.loginSuccess()
         }
     }
-    // KJrnjswjd9470
+    
     private func getNewToken() {
         AuthAPI.shared.getRefreshToken() { [weak self] response in
             guard self != nil else { return }
