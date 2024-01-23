@@ -31,6 +31,7 @@ final class ActionListCompleteTableViewCell: UITableViewCell {
     
     var actionPlanId: Int = 0
     var seedId: Int = 0
+    var hasReview: Bool = false
     
     // MARK: - Initializer
     
@@ -145,6 +146,21 @@ extension ActionListCompleteTableViewCell {
             scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
         case true:
             scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        }
+        
+        switch model.hasReview {
+        case true:
+            reviewButton.do {
+                $0.setTitleColor(.white000, for: .normal)
+                $0.backgroundColor = .gray500
+                $0.isEnabled = true
+            }
+        case false:
+            reviewButton.do {
+                $0.setTitleColor(.gray300, for: .normal)
+                $0.backgroundColor = .gray600
+                $0.isEnabled = false
+            }
         }
         actionTitleLabel.text = model.content
         actionPlanId = model.actionPlanId

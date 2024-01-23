@@ -5,6 +5,8 @@
 //  Created by 천성우 on 11/16/23.
 //
 
+import UIKit
+
 import RxCocoa
 import RxSwift
 import Moya
@@ -49,13 +51,14 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     var titlePersent: BehaviorRelay<String> = BehaviorRelay(value: "")
     var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> = BehaviorRelay<ActionListReviewDetailResponse>(value: ActionListReviewDetailResponse.actionListReviewDetailDummy())
     private let disposeBag = DisposeBag()
+    var memberId: Int = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
         
     var inputs: ActionListViewModelInput { return self }
     var outputs: ActionListViewModelOutput { return self }
     
     
     var titleText: Driver<String> {
-        return .just("Action List")
+        return .just(UserDefaults.standard.string(forKey: I18N.Auth.nickname) ?? "")
     }
     
     var isReviewEntered: Driver<Bool> {
@@ -146,7 +149,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
 extension ActionListViewModel {
     
     private func getActionListPercent() {
-        ActionListService.getActionListPercent(with: 4)
+        ActionListService.getActionListPercent(with: memberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.titlePersent.accept("\(data)")
@@ -157,7 +160,7 @@ extension ActionListViewModel {
     }
     
     private func getDoingActionList() {
-        ActionListService.getDoingActionList(with: 4)
+        ActionListService.getDoingActionList(with: memberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.doingActionList.accept(data)
@@ -170,7 +173,7 @@ extension ActionListViewModel {
     
     private func getFinishedActionList() {
         print("getFinishedActionList가 호출됩니다")
-        ActionListService.getFinishedActionList(with: 4)
+        ActionListService.getFinishedActionList(with: memberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.finishedActionList.accept(data)

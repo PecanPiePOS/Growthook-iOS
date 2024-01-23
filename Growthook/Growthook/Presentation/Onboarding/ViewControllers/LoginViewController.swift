@@ -13,6 +13,7 @@ import RxSwift
 import RxCocoa
 import KakaoSDKAuth
 import KakaoSDKUser
+import AuthenticationServices
 
 final class LoginViewController: BaseViewController {
     
@@ -34,6 +35,12 @@ final class LoginViewController: BaseViewController {
                 self?.kakaoLogin()
             })
             .disposed(by: disposeBag)
+        
+        appleLoginButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.handleAuthorizationAppleIDButton()
+            })
+            .disposed(by: disposeBag)
     }
     
     override func setStyles() {
@@ -51,7 +58,7 @@ final class LoginViewController: BaseViewController {
     }
     
     override func setLayout() {
-    
+        
         self.view.addSubviews(loginView, kakaoLoginButton, appleLoginButton)
         
         loginView.snp.makeConstraints {
@@ -115,7 +122,7 @@ final class LoginViewController: BaseViewController {
     }
     
     private func postKakaoLogin() {
-        let model: LoginRequestDto = LoginRequestDto(socialPlatform: I18N.Auth.kakao, socialToken: APIConstants.deviceToken)
+        let model: LoginRequestDto = LoginRequestDto(socialPlatform: I18N.Auth.kakao, socialToken: APIConstants.deviceToken, userName: "")
         AuthAPI.shared.postKakaoLogin(param: model) { [weak self]
             response in
             guard let status = response?.status else { return }
@@ -135,6 +142,26 @@ final class LoginViewController: BaseViewController {
         }
     }
     
+    private func postAppleLogin() {
+        let loginUserName = UserDefaults.standard.string(forKey: I18N.Auth.nickname) ?? I18N.Auth.nickname
+        let model: LoginRequestDto = LoginRequestDto(socialPlatform: I18N.Auth.apple, socialToken: APIConstants.deviceToken, userName: loginUserName)
+        AuthAPI.shared.postKakaoLogin(param: model) { [weak self]
+            response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            APIConstants.jwtToken = data.accessToken
+            APIConstants.refreshToken = data.refreshToken
+            UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
+            UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
+            UserDefaults.standard.set(true ,forKey: "isLoggedIn")
+            /**
+             위는 사용자가 로그인을 했는지 안 했는지 확인하는
+             UserDefaults입니다.  SplashViewController의 96번 줄을 보세요
+             */
+            self?.loginSuccess()
+        }
+    }
+    // KJrnjswjd9470
     private func getNewToken() {
         AuthAPI.shared.getRefreshToken() { [weak self] response in
             guard self != nil else { return }
@@ -144,3 +171,77 @@ final class LoginViewController: BaseViewController {
         }
     }
 }
+
+
+extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
+    private func handleAuthorizationAppleIDButton() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email] //유저로 부터 알 수 있는 정보들(name, email)
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            
+            if let userName = fullName {
+                let nickname = "\(userName.familyName ?? "")\(userName.givenName ?? "")"
+                if !nickname.isEmpty {
+                    print("\(nickname)")
+                    UserDefaults.standard.setValue(nickname, forKey: I18N.Auth.nickname)
+                }
+                else {
+                    print("No userName")
+                }
+            }
+            
+            if  let authorizationCode = appleIDCredential.authorizationCode,
+                let identityToken = appleIDCredential.identityToken,
+                let authCodeString = String(data: authorizationCode, encoding: .utf8),
+                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+                print("authorizationCode: \(authorizationCode)")
+                print("identityToken: \(identityToken)")
+                print("authCodeString: \(authCodeString)")
+                print("identifyTokenString: \(identifyTokenString)")
+                APIConstants.deviceToken = URLConstant.bearer + identifyTokenString
+                self.postAppleLogin()
+            }
+            
+            print("useridentifier: \(userIdentifier)") // 유저 고유의 id 값으로 자동로그인 처리에 할 수 있다
+            print("UserName: \(fullName)")
+            print(APIConstants.deviceToken)
+            print("email: \(email)")
+            UserDefaults.standard.setValue(userIdentifier, forKey: "userIdentifier")
+
+            
+        case let passwordCredential as ASPasswordCredential:
+            let username = passwordCredential.user
+            let password = passwordCredential.password
+            
+            print("username: \(username)")
+            print("password: \(password)")
+            
+        default:
+            break
+        }
+    }
+    
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("login failed - \(error.localizedDescription)")
+    }
+}
+

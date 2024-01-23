@@ -150,8 +150,10 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isShowingScrappedData {
+            scrapButton.setImage(ImageLiterals.Scrap.btn_scrap_active, for: .normal)
             return getScrappedActionList().count
         } else {
+            scrapButton.setImage(ImageLiterals.Scrap.btn_scrap_default, for: .normal)
             return viewModel.outputs.doingActionList.value.count
         }
     }

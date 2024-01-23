@@ -20,12 +20,14 @@ final class SplashViewController: BaseViewController {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             var mainViewController: UIViewController
-            
-            if self.isFirstLaunch() {
-                mainViewController = OnboardingSelectViewController()
-            } else {
+
+            if self.isUserLoggedIn() {
                 mainViewController = TabBarController()
                 (mainViewController as? TabBarController)?.selectedIndex = 0
+            } else if self.isFirstLaunch() {
+                mainViewController = OnboardingSelectViewController()
+            } else {
+                mainViewController = OnboardingSelectViewController()
             }
 
             guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
@@ -37,23 +39,6 @@ final class SplashViewController: BaseViewController {
     
     override func setStyles() {
         view.backgroundColor = .gray700.withAlphaComponent(0.9)
-        
-//        splashLottieView.animationSpeed = 0.8
-//        splashLottieView.play { _ in
-//            var mainViewController: UIViewController
-//        
-//            if self.isFirstLaunch() {
-//                mainViewController = OnboardingSelectViewController()
-//            } else {
-//                mainViewController = TabBarController()
-//                (mainViewController as? TabBarController)?.selectedIndex = 0
-//            }
-//            
-//            guard let sceneDeleagate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-//            
-//            sceneDeleagate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
-//            sceneDeleagate.window?.makeKeyAndVisible()
-//        }
         
         splashLabel.do {
             let paragraphStyle = NSMutableParagraphStyle()
@@ -107,4 +92,17 @@ final class SplashViewController: BaseViewController {
         }
         return !hasBeenLaunchedBefore
     }
+    
+    /**
+     사용자가 로그인 되어 있는지 여부를 확인합니다
+     예를 들어, 사용자의 토큰이 있는지 확인할 수 있고.,., 네..
+     지금은 일단 로그인을 하고 로그아웃을 하지 않고 앱을 종료하면
+     아래의 값이 true이기 때문에 Onboarding으로 가지 않고 Tabbar로 갑니다
+     */
+    
+    private func isUserLoggedIn() -> Bool {
+        return UserDefaults.standard.bool(forKey: "isLoggedIn")
+    }
+    
+    
 }
