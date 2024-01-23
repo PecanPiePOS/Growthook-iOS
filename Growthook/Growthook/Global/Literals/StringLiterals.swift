@@ -108,5 +108,6 @@ enum I18N {
         static let apple = "APPLE"
         static let nickname = "nickname"
         static let memberId = "memberId"
+        static let jwtToken = "jwtToken"
     }
 }

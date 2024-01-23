@@ -36,6 +36,16 @@ final class InsightTapBottomSheet: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    // MARK: - View Life Cycle
+    
+    override func viewDidLoad() {
+        setTapScreen()
+        bindViewModel()
+        setStyles()
+        setLayout()
+        setDelegates()
+    }
+    
     override func bindViewModel() {
         moveButton.rx.tap
             .bind { [weak self] in
@@ -111,6 +121,22 @@ final class InsightTapBottomSheet: BaseViewController {
         self.presentationController?.delegate = self
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension InsightTapBottomSheet: UIAdaptivePresentationControllerDelegate {
+    
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        onDismiss?()
+    }
+}
+
+extension InsightTapBottomSheet {
+    
+    // MARK: - Methods
+    
     private func presentToCaveListVC() {
         let caveListVC = CaveListHalfModal(viewModel: viewModel)
         caveListVC.modalPresentationStyle = .pageSheet
@@ -136,14 +162,21 @@ final class InsightTapBottomSheet: BaseViewController {
         self.present(removeInsightAlertVC, animated: false, completion: nil)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private func setTapScreen() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
-}
-
-extension InsightTapBottomSheet: UIAdaptivePresentationControllerDelegate {
     
-    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        onDismiss?()
+    // MARK: - @objc Methods
+    
+    @objc
+    private func handleBackgroundTap(_ gesture: UITapGestureRecognizer) {
+        let touchLocation = gesture.location(in: self.view)
+        if !buttonView.frame.contains(touchLocation) {
+            guard let indexPath = self.indexPath else { return }
+            viewModel.inputs.dismissInsightTap(at: indexPath)
+            dismiss(animated: true)
+        }
     }
 }

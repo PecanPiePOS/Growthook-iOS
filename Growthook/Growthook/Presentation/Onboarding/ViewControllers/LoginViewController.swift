@@ -137,6 +137,7 @@ final class LoginViewController: BaseViewController {
             APIConstants.refreshToken = data.refreshToken
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
+            UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
             self?.loginSuccess()
         }
     }

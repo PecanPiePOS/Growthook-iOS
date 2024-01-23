@@ -17,6 +17,7 @@ protocol CreateActionViewModelInputs {
     func postActionPlan(data: [ActionplanModel])
     func getSeedDetail()
     func setPlans(with value: [String])
+    func setSeedId(seedId: Int)
 }
 
 protocol CreateActionViewModelOutputs {
@@ -34,6 +35,11 @@ protocol CreateActionViewModelType {
 
 final class CreateActionViewModel: CreateActionViewModelInputs, CreateActionViewModelOutputs, CreateActionViewModelType {
     
+    var seedId: Int = 0
+    func setSeedId(seedId: Int) {
+        self.seedId = seedId
+    }
+    
     var specificPlan: [String] = []
     func addActionPlan(with value: String) {
         specificPlan.append(value)
@@ -47,7 +53,7 @@ final class CreateActionViewModel: CreateActionViewModelInputs, CreateActionView
     func postActionPlan(data: [ActionplanModel]) {
         setActionplanData(data: data)
         print(newActionPlan, "NEWACTIONPLAN")
-        CreateActionService.postActionPlan(seedId: 107, actionPlan: newActionPlan)
+        CreateActionService.postActionPlan(seedId: seedId, actionPlan: newActionPlan)
             .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
                 self.networkState.accept(.done)
@@ -59,7 +65,7 @@ final class CreateActionViewModel: CreateActionViewModelInputs, CreateActionView
     }
     
     func getSeedDetail() {
-        CreateActionService.getSeedDetail(seedId: 107)
+        CreateActionService.getSeedDetail(seedId: seedId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.networkState.accept(.done)
@@ -97,9 +103,7 @@ final class CreateActionViewModel: CreateActionViewModelInputs, CreateActionView
     
     private let disposeBag = DisposeBag()
     
-    init() {
-//        insight.accept(InsightModel.dummy())
-    }
+    init() { }
     
     private func setCountPlan() {
         
