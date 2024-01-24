@@ -84,13 +84,13 @@ extension CaveCollectionViewCell {
         let image: UIImage
         switch index {
         case 0:
-            image = ImageLiterals.Home.img_cave_pink
-        case 1:
-            image = ImageLiterals.Home.img_cave_night
-        case 2:
             image = ImageLiterals.Home.img_cave_sunrise
-        case 3:
+        case 1:
             image = ImageLiterals.Home.img_cave_sunset
+        case 2:
+            image = ImageLiterals.Home.img_cave_pink
+        case 3:
+            image = ImageLiterals.Home.img_cave_night
         default:
             return
         }
