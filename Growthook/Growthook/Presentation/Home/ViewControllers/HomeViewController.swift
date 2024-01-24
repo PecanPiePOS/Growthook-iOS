@@ -80,6 +80,7 @@ final class HomeViewController: BaseViewController {
                 guard list.isEmpty else { return }
                 self?.insightEmptyView.isHidden = false
                 self?.insightListView.isHidden = true
+                self?.insightListEmptyView.isHidden = true
             })
             .map { [weak self] list in
                 guard let type = self?.insightListView.scrapType else { return list }
