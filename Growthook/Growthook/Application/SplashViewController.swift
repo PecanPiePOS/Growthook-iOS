@@ -19,21 +19,17 @@ final class SplashViewController: BaseViewController {
         super.viewDidAppear(animated)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            var mainViewController: UIViewController
 
             if self.isUserLoggedIn() {
-                mainViewController = TabBarController()
-                (mainViewController as? TabBarController)?.selectedIndex = 0
+                self.openTabBar()
+                APIConstants.jwtToken = UserDefaults.standard.string(forKey: I18N.Auth.jwtToken) ?? ""
+                APIConstants.refreshToken = UserDefaults.standard.string(forKey: I18N.Auth.refreshToken) ?? ""
             } else if self.isFirstLaunch() {
-                mainViewController = OnboardingSelectViewController()
+                self.openOnboarding()
             } else {
-                mainViewController = OnboardingSelectViewController()
+                self.openOnboarding()
             }
 
-            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-
-            sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
-            sceneDelegate.window?.makeKeyAndVisible()
         }
     }
     
@@ -104,5 +100,20 @@ final class SplashViewController: BaseViewController {
         return UserDefaults.standard.bool(forKey: "isLoggedIn")
     }
     
+    
+    private func openOnboarding() {
+        let mainViewController = OnboardingSelectViewController()
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+        sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+        sceneDelegate.window?.makeKeyAndVisible()
+    }
+    
+    private func openTabBar() {
+        let mainViewController = TabBarController()
+        mainViewController.selectedIndex = 0
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+        sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+        sceneDelegate.window?.makeKeyAndVisible()
+    }
     
 }
