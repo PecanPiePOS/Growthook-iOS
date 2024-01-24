@@ -20,7 +20,7 @@ protocol MyPageViewModelInputs {
 }
 
 protocol MyPageViewModelOutputs {
-    var userProfileImage: BehaviorRelay<String> { get }
+    var userProfileImageUrl: BehaviorRelay<String> { get }
     var userProfileName: BehaviorRelay<String> { get }
     var userEmail: BehaviorRelay<String> { get }
     var userEarnedThookCount: BehaviorRelay<Int> { get }
@@ -37,7 +37,7 @@ protocol MyPageViewModelType {
 
 final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPageViewModelType {
     
-    var userProfileImage: BehaviorRelay<String> = BehaviorRelay(value: "")
+    var userProfileImageUrl: BehaviorRelay<String> = BehaviorRelay(value: "")
     var userProfileName: BehaviorRelay<String> = BehaviorRelay(value: "")
     var userEmail: BehaviorRelay<String> = BehaviorRelay(value: "")
     var userEarnedThookCount: BehaviorRelay<Int> = BehaviorRelay(value: 0)
@@ -59,7 +59,6 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
     init() {
         myPageComponentsList.accept(myPageList)
         setVersionOfTheApp()
-        setDummyData()
         getUserInformation()
     }
     
@@ -105,7 +104,7 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
 extension MyPageViewModel {
     
     private func setDummyData() {
-        userProfileImage.accept("https://i.pravatar.cc/300")
+        userProfileImageUrl.accept("https://i.pravatar.cc/300")
     }
     
     private func setVersionOfTheApp() {
@@ -124,6 +123,7 @@ extension MyPageViewModel {
                 guard let self else { return }
                 self.userProfileName.accept(profile.nickname)
                 self.userEmail.accept(profile.email)
+                self.userProfileImageUrl.accept(profile.profileImage)
             }, onError: { [weak self] error in
                 guard let self else { return }
                 self.networkState.accept(.error(error))

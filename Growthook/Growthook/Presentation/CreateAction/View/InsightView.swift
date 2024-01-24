@@ -21,6 +21,17 @@ final class InsightView: BaseView, InsightBoxViewType {
     private let dDayLabel = UILabel()
     private let memoScrollView = UIScrollView()
     private let memoLabel = UILabel()
+    private let scrapButton = UIButton()
+    var isScrap = false {
+        didSet {
+            switch isScrap {
+            case true:
+                scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+            case false:
+                scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+            }
+        }
+    }
     
     override func setStyles() {
         self.do {
@@ -76,10 +87,15 @@ final class InsightView: BaseView, InsightBoxViewType {
             $0.numberOfLines = 0
             $0.isHidden = true
         }
+        
+        scrapButton.do {
+            $0.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+            $0.isHidden = true
+        }
     }
     
     override func setLayout() {
-        self.addSubviews(nameLabel, insightLabel, divisionLabel, dateLabel, verticalDivisionLabel, dDayLabel, memoScrollView, moreButton)
+        self.addSubviews(nameLabel, insightLabel, divisionLabel, dateLabel, verticalDivisionLabel, dDayLabel, memoScrollView, moreButton, scrapButton)
         memoScrollView.addSubview(memoLabel)
         
         nameLabel.snp.makeConstraints {
@@ -132,6 +148,12 @@ final class InsightView: BaseView, InsightBoxViewType {
             $0.edges.equalToSuperview()
             $0.width.equalTo(memoScrollView.snp.width)
         }
+        
+        scrapButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(8)
+            $0.size.equalTo(48)
+        }
     }
 }
 
@@ -148,6 +170,7 @@ extension InsightView {
         nameLabel.snp.updateConstraints {
             $0.width.equalTo(nameLabel.frame.width + 14)
         }
+        isScrap = model.isScraped
     }
     
     func showDetail() {
@@ -186,5 +209,9 @@ extension InsightView {
             self.dDayLabel.isHidden = true
             self.memoLabel.isHidden = true
         })
+    }
+    
+    func showScrapButton() {
+        scrapButton.isHidden = false
     }
 }
