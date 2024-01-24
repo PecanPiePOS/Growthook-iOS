@@ -95,6 +95,7 @@ struct ActionListService: Networkable {
     static func getActionListPercent(with memberId: Int) -> Observable<Int> {
         return provider.rx.request(.getActionListPercent(memberId: memberId))
             .asObservable()
+            .mapAuthError()
             .mapError()
             .decode(decodeType: Int.self)
     }
@@ -107,6 +108,7 @@ struct ActionListService: Networkable {
     static func getDoingActionList(with memberId: Int) -> Observable<[ActionListDoingResponse]> {
         return provider.rx.request(.getActionListDoing(memberId: memberId))
             .asObservable()
+            .mapAuthError()
             .mapError()
             .decode(decodeType: [ActionListDoingResponse].self)
     }
@@ -119,6 +121,7 @@ struct ActionListService: Networkable {
     static func getFinishedActionList(with memberId: Int) -> Observable<[ActionListFinishedResponse]> {
         return provider.rx.request(.getActionListFinished(memberId: memberId))
             .asObservable()
+            .mapAuthError()
             .mapError()
             .decode(decodeType: [ActionListFinishedResponse].self)
     }
@@ -131,6 +134,7 @@ struct ActionListService: Networkable {
     static func patchActionListCompletion(with actionPlanId: Int) -> Observable<ActionListCompletionResponse> {
         return provider.rx.request(.patchActionListCompletion(actionPlanId: actionPlanId))
             .asObservable()
+            .mapAuthError()
             .mapError()
             .decode(decodeType: ActionListCompletionResponse.self)
     }
@@ -144,6 +148,7 @@ struct ActionListService: Networkable {
     static func getActionListReview(with actionPlanId: Int) -> Observable<ActionListReviewDetailResponse> {
         return provider.rx.request(.getActionListReview(actionPlanId: actionPlanId))
             .asObservable()
+            .mapAuthError()
             .mapError()
             .decode(decodeType: ActionListReviewDetailResponse.self)
     }
@@ -156,6 +161,7 @@ struct ActionListService: Networkable {
     static func postActionListReview(actionPlanId: Int, review: ActionListReviewPostRequest) -> Observable<ActionListReviewPostResponse> {
         return provider.rx.request(.postActionListReview(actionPlanId: actionPlanId, parameter: review))
             .asObservable()
+            .mapAuthError()
             .mapError()
             .decode(decodeType: ActionListReviewPostResponse.self)
     }
