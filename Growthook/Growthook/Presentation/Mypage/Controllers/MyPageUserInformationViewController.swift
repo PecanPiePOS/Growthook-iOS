@@ -60,7 +60,9 @@ final class MyPageUserInformationViewController: BaseViewController {
                     guard self != nil else { return }
                     
                     // UserDefault 삭제
-                    
+                    _ = UserDefaults.standard.dictionaryRepresentation().map {
+                        UserDefaults.standard.removeObject(forKey: $0.key)
+                    }
                     
                     // 루트 뷰 변경
                         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -68,7 +70,6 @@ final class MyPageUserInformationViewController: BaseViewController {
                            let window = sceneDelegate.window {
                             let vc = SplashViewController()
                             let rootVC = UINavigationController(rootViewController: vc)
-                            rootVC.view.showToast(message: I18N.Component.ToastMessage.removeCave)
                             rootVC.navigationController?.isNavigationBarHidden = true
                             window.rootViewController = rootVC
                             window.makeKeyAndVisible()
