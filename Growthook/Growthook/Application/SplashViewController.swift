@@ -10,26 +10,48 @@ import UIKit
 import Lottie
 
 final class SplashViewController: BaseViewController {
-
+    
     private let splashLottieView: LottieAnimationView = LottieAnimationView(name: "grothooksplash", configuration: LottieConfiguration(renderingEngine: .mainThread))
     private let splashLabel = UILabel()
     private let splashImageView = UIImageView()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-
             if self.isUserLoggedIn() {
-                self.openTabBar()
-                APIConstants.jwtToken = UserDefaults.standard.string(forKey: I18N.Auth.jwtToken) ?? ""
-                APIConstants.refreshToken = UserDefaults.standard.string(forKey: I18N.Auth.refreshToken) ?? ""
+                APIConstants.jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
+                APIConstants.refreshToken = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
+                if let jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken), !jwtToken.isEmpty {
+                    AuthAPI.shared.getRefreshToken() { [weak self] response in
+                        guard let status = response?.status else { return }
+                        if status == 401 {
+                            print("아직 토큰이 유효합니다")
+                            APIConstants.jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
+                            APIConstants.refreshToken = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
+                            self?.openTabBar()
+                        } else {
+                            guard let data = response?.data else { return }
+                            APIConstants.jwtToken = data.accessToken
+                            APIConstants.refreshToken = data.refreshToken
+                            if let accessTokenData = data.accessToken.data(using: .utf8) {
+                                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
+                            }
+
+                            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
+                                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
+                            }
+//                            UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
+//                            UserDefaults.standard.set(data.refreshToken, forKey: I18N.Auth.refreshToken)
+                            self?.openTabBar()
+                        }
+                    }
+                }
             } else if self.isFirstLaunch() {
                 self.openOnboarding()
             } else {
                 self.openOnboarding()
             }
-
         }
     }
     
@@ -79,7 +101,7 @@ final class SplashViewController: BaseViewController {
     /**
      어플리케이션이 최초로 실행되었는지를 확인하는 메소드입니다
      로그인 기능이 아직 최종 구현이 되지 않았기에 아래처럼 구현 하였습니다
-    */
+     */
     
     private func isFirstLaunch() -> Bool {
         let hasBeenLaunchedBefore = UserDefaults.standard.bool(forKey: "hasBeenLaunchedBefore")

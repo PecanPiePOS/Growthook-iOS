@@ -96,8 +96,10 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
         print("LogOut Tapped")
         UserDefaults.standard.removeObject(forKey: I18N.Auth.nickname)
         UserDefaults.standard.removeObject(forKey: I18N.Auth.memberId)
-        UserDefaults.standard.removeObject(forKey: I18N.Auth.jwtToken)
-        UserDefaults.standard.removeObject(forKey: I18N.Auth.refreshToken)
+//        UserDefaults.standard.removeObject(forKey: I18N.Auth.jwtToken)
+//        UserDefaults.standard.removeObject(forKey: I18N.Auth.refreshToken)
+        KeychainHelper.delete(key: I18N.Auth.jwtToken)
+        KeychainHelper.delete(key: I18N.Auth.refreshToken)
         UserDefaults.standard.set(false ,forKey: "isLoggedIn")
     }
 }
