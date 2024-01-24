@@ -52,6 +52,14 @@ class KeychainHelper {
             return nil
         }
     }
+    
+    static func loadString(key: String) -> String? {
+        if let data = load(key: key) {
+            return String(data: data, encoding: .utf8)
+        } else {
+            return nil
+        }
+    }
 
     static func delete(key: String) {
         let query: [String: Any] = [
