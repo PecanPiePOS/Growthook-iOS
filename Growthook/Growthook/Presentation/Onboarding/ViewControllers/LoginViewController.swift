@@ -156,6 +156,8 @@ final class LoginViewController: BaseViewController {
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
             UserDefaults.standard.set(true ,forKey: "isLoggedIn")
+            
+            
             UserDefaults.standard.set(true ,forKey: "isAppleLogin")
             /**
              위는 사용자가 로그인을 했는지 안 했는지 확인하는

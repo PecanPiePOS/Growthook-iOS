@@ -49,7 +49,8 @@ extension Observable where Element == Response {
                             guard let data = response?.data else { return }
                             APIConstants.jwtToken = data.accessToken
                             APIConstants.refreshToken = data.refreshToken
-                            
+                            UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
+                            UserDefaults.standard.set(data.refreshToken, forKey: I18N.Auth.refreshToken)
                             self?.retryOriginalRequest(observer: observer)
                         }
                     default:
