@@ -12,6 +12,8 @@ import RxSwift
 
 extension Observable where Element == Response {
     
+    private static let disposeBag = DisposeBag()
+    
     /**
      Response 타입을 리턴하는 Observable 로써, statusCode 에 따라 구분합니다.
      */
@@ -36,6 +38,28 @@ extension Observable where Element == Response {
         }
     }
     
+    func mapAuthError() -> Observable<Response> {
+        flatMap { element -> Observable<Response> in
+                .create { observer in
+                    switch element.statusCode {
+                    case 401:
+                        print("Token Expired")
+                        AuthAPI.shared.getRefreshToken() { [weak self] response in
+                            guard self != nil else { return }
+                            guard let data = response?.data else { return }
+                            APIConstants.jwtToken = data.accessToken
+                            APIConstants.refreshToken = data.refreshToken
+                            
+                            self?.retryOriginalRequest(observer: observer)
+                        }
+                    default:
+                        break
+                    }
+                    return Disposables.create()
+                }
+        }
+    }
+    
     /**
      해당 타입을 명시하여, 해당 타입으로 디코딩합니다.
      */
@@ -52,5 +76,11 @@ extension Observable where Element == Response {
                 return Disposables.create()
             }
         }
+    }
+    
+    
+    private func retryOriginalRequest(observer: AnyObserver<Response>) {
+        self.subscribe(observer)
+            .disposed(by: Self.disposeBag)
     }
 }
