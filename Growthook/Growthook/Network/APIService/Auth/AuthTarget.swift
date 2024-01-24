@@ -12,6 +12,7 @@ import Moya
 enum AuthTarget {
     case login(param: LoginRequestDto)
     case tokenRefresh
+    case withdraw(memberId: Int)
 }
 
 extension AuthTarget: BaseTargetType {
@@ -22,6 +23,9 @@ extension AuthTarget: BaseTargetType {
             return URLConstant.socialLogin
         case .tokenRefresh:
             return URLConstant.tokenRefresh
+        case .withdraw(memberId: let memberId):
+            let path = URLConstant.memberWithdraw.replacingOccurrences(of: "{memberId}", with: String(memberId))
+            return path
         }
     }
     
@@ -31,6 +35,8 @@ extension AuthTarget: BaseTargetType {
             return .post
         case .tokenRefresh:
             return .get
+        case .withdraw:
+            return .delete
         }
     }
     
@@ -39,6 +45,8 @@ extension AuthTarget: BaseTargetType {
         case .login(let param):
             return .requestParameters(parameters: try! param.asParameter(), encoding: JSONEncoding.default)
         case .tokenRefresh:
+            return .requestPlain
+        case .withdraw:
             return .requestPlain
         }
     }
@@ -49,6 +57,8 @@ extension AuthTarget: BaseTargetType {
             return APIConstants.headerWithOutToken
         case .tokenRefresh:
             return APIConstants.headerWithRefresh
+        case .withdraw:
+            return APIConstants.headerWithAuthorization
         }
     }
 }

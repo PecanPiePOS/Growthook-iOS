@@ -54,7 +54,28 @@ final class MyPageUserInformationViewController: BaseViewController {
         withdrawalButton.rx.tap
             .bind { [weak self] in
                 let loginType = UserDefaults.standard.string(forKey: I18N.Auth.loginType)
-                print(loginType)
+                let memberId = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
+                AuthAPI.shared.deleteMemberWithdraw(memberId: memberId) {
+                    [weak self] response in
+                    guard self != nil else { return }
+                    
+                    // UserDefault 삭제
+                    
+                    
+                    // 루트 뷰 변경
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                           let window = sceneDelegate.window {
+                            let vc = SplashViewController()
+                            let rootVC = UINavigationController(rootViewController: vc)
+                            rootVC.view.showToast(message: I18N.Component.ToastMessage.removeCave)
+                            rootVC.navigationController?.isNavigationBarHidden = true
+                            window.rootViewController = rootVC
+                            window.makeKeyAndVisible()
+                        }
+                    
+                    print("회원탈퇴 완료")
+                }
             }
             .disposed(by: disposeBag)
     }
