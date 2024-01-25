@@ -195,7 +195,12 @@ final class HomeViewController: BaseViewController {
         unLockAlertView.useButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let seedId = self?.lockSeedId else { return }
-                self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
+                if self?.viewModel.ssukCount.value.gatheredSsuk == 0 {
+                    self?.unLockAlertView.removeFromSuperview()
+                    self?.view.showToastWithRed(message: "쑥이 없어 잠금을 해제할 수 없어요")
+                } else {
+                    self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
+                }
             })
             .disposed(by: disposeBag)
         
