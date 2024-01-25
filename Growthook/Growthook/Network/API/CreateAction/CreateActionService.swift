@@ -68,6 +68,7 @@ struct CreateActionService: Networkable {
         return provider.rx.request(.postActionPlan(seedId: seedId, parameter: actionPlan))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: CreateActionResponse.self)
     }
     
@@ -75,6 +76,7 @@ struct CreateActionService: Networkable {
         return provider.rx.request(.getSeedDetail(seedId: seedId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: ActionPlanResponse.self)
     }
 }

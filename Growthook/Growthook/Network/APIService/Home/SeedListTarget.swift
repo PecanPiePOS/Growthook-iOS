@@ -98,6 +98,7 @@ struct SeedListService: Networkable {
         return provider.rx.request(.getSeedList(memberId: memberId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: [SeedListResponseDto].self)
     }
 }
