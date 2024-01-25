@@ -453,7 +453,6 @@ extension HomeViewController {
     @objc func clearNotification(_ notification: Notification) {
         updateInsightList()
         if let info = notification.userInfo?[I18N.Component.Identifier.type] as? ClearInsightType {
-            print(info)
             switch info {
             case .move:
                 view.showToast(message: I18N.Component.ToastMessage.moveInsight)

@@ -159,7 +159,6 @@ extension InsightListCollectionViewCell {
     
     func configureCell(_ model: SeedListResponseDto) {
         titleLabel.text = model.insight
-        print(model.remainingDays)
         if model.remainingDays < 0 && model.isLocked == false {
             dueTimeLabel.text = "잠금 해제 완료!"
             isUnLock = true
