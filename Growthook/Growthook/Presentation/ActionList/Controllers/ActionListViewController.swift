@@ -240,7 +240,10 @@ extension ActionListViewController: ActionListSegmentDelegate , PushToActionList
     }
     
     func moveToCompletePageByCancelButton() {
-        viewModel.inputs.didTapCancelButtonInBottomSheet()
+        openAlert()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.viewModel.inputs.didTapCancelButtonInBottomSheet()
+        }
     }
     
     func moveToCompletePageBySaveButton() {
