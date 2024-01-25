@@ -28,6 +28,7 @@ class CaveListHalfModal: BaseViewController {
     var indexPath: IndexPath? = nil
     private let deSelectInsightNotification = Notification.Name(I18N.Component.Identifier.deSelectNoti)
     private var selectedCaveId: Int?
+    private var selectedCellIndex: IndexPath?
     
     // MARK: - Initializer
     
@@ -69,6 +70,7 @@ class CaveListHalfModal: BaseViewController {
                         guard let caveId = cell.caveId else { return }
                         self.updateSelectedCell(indexPath: indexPath, caveId: caveId)
                         self.selectedCaveId = caveId
+                        self.selectedCellIndex = indexPath
                     }
                 }
             })
@@ -85,6 +87,7 @@ class CaveListHalfModal: BaseViewController {
             .subscribe(onNext: { [weak self] in
                 self?.clearInsightMove()
                 self?.dismissToHomeVC()
+                self?.clearCaveList()
             })
             .disposed(by: disposeBag)
         
@@ -176,6 +179,11 @@ class CaveListHalfModal: BaseViewController {
             object: nil,
             userInfo: [I18N.Component.Identifier.type: ClearInsightType.none]
         )
+    }
+    
+    private func clearCaveList() {
+        viewModel.selectedCellIndex.accept(nil)
+        caveListTableView.reloadData()
     }
     
     required init?(coder: NSCoder) {
