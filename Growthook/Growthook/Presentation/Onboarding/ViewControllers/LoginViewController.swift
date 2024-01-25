@@ -153,6 +153,16 @@ final class LoginViewController: BaseViewController {
             guard let data = response?.data else { return }
             APIConstants.jwtToken = data.accessToken
             APIConstants.refreshToken = data.refreshToken
+//            UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
+//            UserDefaults.standard.set(data.refreshToken, forKey: I18N.Auth.refreshToken)
+            
+            if let accessTokenData = data.accessToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
+            }
+
+            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
+            }
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
             UserDefaults.standard.set(true ,forKey: I18N.Auth.isLoggedIn)
@@ -164,7 +174,7 @@ final class LoginViewController: BaseViewController {
             self?.loginSuccess()
         }
     }
-    
+
     private func getNewToken() {
         AuthAPI.shared.getRefreshToken() { [weak self] response in
             guard self != nil else { return }

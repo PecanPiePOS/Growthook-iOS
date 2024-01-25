@@ -10,6 +10,7 @@ import Foundation
 enum NetworkHeaderKey: String {
     case deviceToken = "deviceToken"
     case accessToken = "accesstoken"
+    case refreshToken = "refreshToken"
     case contentType = "Content-Type"
     case authorization = "Authorization"
 }
@@ -20,8 +21,8 @@ enum APIConstants {
     static let auth: String = "x-auth-token"
     static let applicationJSON = "application/json"
     static var deviceToken: String = ""
-    static var jwtToken: String = UserDefaults.standard.string(forKey: I18N.Auth.jwtToken) ?? ""
-    static var refreshToken: String = ""
+    static var jwtToken: String = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
+    static var refreshToken: String = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
     
     //MARK: - Header
     
@@ -48,7 +49,8 @@ enum APIConstants {
     static var headerWithRefresh: [String: String] {
         [
             NetworkHeaderKey.contentType.rawValue: APIConstants.applicationJSON,
-            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.jwtToken
+            NetworkHeaderKey.authorization.rawValue: URLConstant.bearer + APIConstants.jwtToken,
+            NetworkHeaderKey.refreshToken.rawValue: URLConstant.bearer + APIConstants.refreshToken
         ]
     }
 }
