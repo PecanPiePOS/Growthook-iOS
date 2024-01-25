@@ -12,7 +12,8 @@ import RxCocoa
 import RxSwift
 
 struct SeedEditModel {
-    let caveName, insight, memo, source, url: String
+    let caveName, insight, source: String
+    let memo, url: String?
 }
 
 final class InsightDetailEditSeedViewController: BaseViewController {
@@ -331,13 +332,13 @@ extension InsightDetailEditSeedViewController {
         creatingContentView.insightTextView.textViewBlock.text = existingData.insight
         creatingContentView.referenceTextField.textFieldBlock.text = existingData.source
         creatingContentView.goalPeriodSelectView.hideArrow()
-        let existingMemo: String? = existingData.memo.isEmpty ? nil: existingData.memo
-        let existingUrl: String? = existingData.url.isEmpty ? nil: existingData.url
-        if existingMemo != nil {
-            creatingContentView.memoTextView.textViewBlock.text = existingMemo
+        if let memoData = existingData.memo {
+            creatingContentView.memoTextView.textViewBlock.text = memoData
         }
-        if existingUrl != nil {
-            creatingContentView.referencURLTextField.textFieldBlock.text = existingUrl
+        
+        if let urlData = existingData.url {
+            creatingContentView.referencURLTextField.textFieldBlock.text = urlData
+
         }
     }
 }
