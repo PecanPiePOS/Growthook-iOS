@@ -26,7 +26,6 @@ final class AuthAPI {
             result in
             switch result {
             case .success(let response):
-                let status = response.statusCode
                     do {
                         self.authData = try response.map(GeneralResponse<LoginResponseDto>?.self)
                         guard let authData = self.authData else { return }
