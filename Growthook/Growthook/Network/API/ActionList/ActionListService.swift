@@ -96,6 +96,7 @@ struct ActionListService: Networkable {
         return provider.rx.request(.getActionListPercent(memberId: memberId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: Int.self)
     }
     
@@ -108,6 +109,7 @@ struct ActionListService: Networkable {
         return provider.rx.request(.getActionListDoing(memberId: memberId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: [ActionListDoingResponse].self)
     }
     
@@ -120,6 +122,7 @@ struct ActionListService: Networkable {
         return provider.rx.request(.getActionListFinished(memberId: memberId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: [ActionListFinishedResponse].self)
     }
     
@@ -132,6 +135,7 @@ struct ActionListService: Networkable {
         return provider.rx.request(.patchActionListCompletion(actionPlanId: actionPlanId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: ActionListCompletionResponse.self)
     }
     
@@ -145,6 +149,7 @@ struct ActionListService: Networkable {
         return provider.rx.request(.getActionListReview(actionPlanId: actionPlanId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: ActionListReviewDetailResponse.self)
     }
     
@@ -157,6 +162,7 @@ struct ActionListService: Networkable {
         return provider.rx.request(.postActionListReview(actionPlanId: actionPlanId, parameter: review))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: ActionListReviewPostResponse.self)
     }
 }

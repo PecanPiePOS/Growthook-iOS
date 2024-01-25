@@ -34,6 +34,7 @@ final class SplashViewController: BaseViewController {
                             guard let data = response?.data else { return }
                             APIConstants.jwtToken = data.accessToken
                             APIConstants.refreshToken = data.refreshToken
+
                             if let accessTokenData = data.accessToken.data(using: .utf8) {
                                 KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
                             }
@@ -41,13 +42,12 @@ final class SplashViewController: BaseViewController {
                             if let refreshTokenData = data.refreshToken.data(using: .utf8) {
                                 KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
                             }
-//                            UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
-//                            UserDefaults.standard.set(data.refreshToken, forKey: I18N.Auth.refreshToken)
                             self?.openTabBar()
                         }
                     }
                 }
             } else if self.isFirstLaunch() {
+                self.deleteAllRemainingKeyChains()
                 self.openOnboarding()
             } else {
                 self.openOnboarding()
@@ -138,4 +138,8 @@ final class SplashViewController: BaseViewController {
         sceneDelegate.window?.makeKeyAndVisible()
     }
     
+    private func deleteAllRemainingKeyChains() {
+        KeychainHelper.delete(key: I18N.Auth.jwtToken)
+        KeychainHelper.delete(key: I18N.Auth.refreshToken)
+    }
 }

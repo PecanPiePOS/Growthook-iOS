@@ -69,6 +69,7 @@ struct CreateCaveService: Networkable {
         return provider.rx.request(.postcave(memberId: memberId, parameter: cave))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: CreateCaveResponse.self)
     }
 }
