@@ -173,6 +173,12 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     
     func alarmButtonTap(memberId: Int) {
         SeedListAPI.shared.getSeedAlarm(memberId: memberId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.alarmButtonTap(memberId: memberId)
+                return
+            }
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.insightAlarm.accept(data.seedCount)
@@ -180,7 +186,15 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     }
     
     func insightScrap(seedId: Int, index: Int) {
+        let seedId = seedId
+        let index = index
         SeedListAPI.shared.patchSeedScrap(seedId: seedId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.insightScrap(seedId: seedId, index: index)
+                return
+            }
             guard self != nil else { return }
             guard let previousData = self?.insightList.value else { return }
             var newData:[SeedListResponseDto] = []
@@ -192,7 +206,14 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     }
     
     func unLockSeedAlert(seedId: Int) {
+        let seedId = seedId
         SeedListAPI.shared.patchSeedUnlock(seedId: seedId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.unLockSeedAlert(seedId: seedId)
+                return
+            }
             guard self != nil else { return }
             self?.unLockSeed.onNext(())
         }
@@ -229,6 +250,12 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     func removeButtonTap() {
         guard let seedId = selectedSeedId else { return }
         SeedListAPI.shared.deleteSeed(seedId: seedId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.removeButtonTap()
+                return
+            }
             guard self != nil else { return }
             guard let memberId = self?.memberId else { return }
             self?.removeInsight.onNext(())
@@ -240,7 +267,14 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     }
     
     func removeCaveButtonTap(caveId: Int) {
+        let caveId = caveId
         CaveAPI.shared.deleteCave(caveId: caveId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.removeCaveButtonTap(caveId: caveId)
+                return
+            }
             guard self != nil else { return }
             self?.removeCave.onNext(())
         }
@@ -268,6 +302,12 @@ extension HomeViewModel {
     
     func getCaveList(memberId: Int) {
         CaveAPI.shared.getCaveAll(memberId: memberId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.getCaveList(memberId: memberId)
+                return
+            }
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveProfile.accept(data)
@@ -275,7 +315,14 @@ extension HomeViewModel {
     }
     
     func getCaveDetail(memberId: Int, caveId: Int) {
+        let caveId = caveId
         CaveAPI.shared.getCaveDetail(memberId: memberId, caveId: caveId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.getCaveDetail(memberId: memberId, caveId: caveId)
+                return
+            }
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveDetail.accept(data)
@@ -283,7 +330,14 @@ extension HomeViewModel {
     }
     
     func getCaveSeedList(caveId: Int) {
+        let caveId = caveId
         SeedListAPI.shared.getCaveSeedList(caveId: caveId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.getCaveSeedList(caveId: caveId)
+                return
+            }
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.caveInsightList.accept(data)
@@ -292,9 +346,16 @@ extension HomeViewModel {
     }
     
     func postSeedMove(caveId: Int) {
+        let caveId = caveId
         let model: SeedMoveRequestDto = SeedMoveRequestDto(caveId: caveId)
         guard let seedId = selectedSeedId else { return }
         SeedListAPI.shared.postSeedMove(seedId: seedId, param: model) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.postSeedMove(caveId: caveId)
+                return
+            }
             guard self != nil else { return }
             guard let memberId = self?.memberId else { return }
             if let caveId = self?.caveId {
@@ -306,6 +367,12 @@ extension HomeViewModel {
     
     func getSsukCount(memberId: Int) {
         SsukAPI.shared.getGatheredSsuk(memberId: memberId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.getSsukCount(memberId: memberId)
+                return
+            }
             guard self != nil else { return }
             guard let data = response?.data else { return }
             self?.ssukCount.accept(data)

@@ -5,8 +5,9 @@
 //  Created by KJ on 1/18/24.
 //
 
+import UIKit
+
 import Moya
-import Foundation
 
 final class AuthAPI {
     static let shared: AuthAPI = AuthAPI()
@@ -25,7 +26,6 @@ final class AuthAPI {
             result in
             switch result {
             case .success(let response):
-                let status = response.statusCode
                     do {
                         self.authData = try response.map(GeneralResponse<LoginResponseDto>?.self)
                         guard let authData = self.authData else { return }
@@ -75,9 +75,18 @@ final class AuthAPI {
             result in
             switch result {
             case .success(let response):
+                let status = response.statusCode
                 do {
-                    let data = try response.map(GeneralResponse<VoidType>?.self)
-                    completion(data)
+                    if status == 401 {
+                        let mainViewController = LoginViewController()
+                        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                        sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+                        sceneDelegate.window?.makeKeyAndVisible()
+                        return
+                    } else {
+                        let data = try response.map(GeneralResponse<VoidType>?.self)
+                        completion(data)
+                    }
                 } catch let err {
                     print(err.localizedDescription, 500)
                 }
