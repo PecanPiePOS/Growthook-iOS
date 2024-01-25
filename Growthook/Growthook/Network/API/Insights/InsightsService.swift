@@ -96,4 +96,28 @@ struct InsightsService: Networkable {
             .retryOnTokenExpired()
             .decode(decodeType: InsightSuccessResponse.self)
     }
+    
+    static func deleteInsight(seedId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        provider.request(.deleteInsight(seedId: seedId)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    handler(true)
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            deleteInsight(seedId: seedId, handler: handler)
+                        } else {
+                            handler(false)
+                        }
+                    }
+                } else {
+                    handler(false)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(false)
+            }
+        }
+    }
 }

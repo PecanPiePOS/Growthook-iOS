@@ -84,6 +84,10 @@ extension CommonCustomNavigationBar {
         doneButton.isHidden = true
     }
     
+    func showDoneButton() {
+        doneButton.isHidden = false
+    }
+    
     func isButtonEnabled(_ isEnabled: Bool) {
         doneButton.isEnabled = isEnabled
         if isEnabled != false {

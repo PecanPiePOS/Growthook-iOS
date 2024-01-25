@@ -19,6 +19,7 @@ enum InsightsDetailTarget {
     case completeActionPlan(actionPlanId: Int)
     case postReviewToCompleteActionPlan(content: String, actionPlanId: Int)
     case postNewSingleActionPlan(seedId: Int, newActionPlan: InsightAddExtraActionPlanRequest)
+    case scrapSeed(seedId: Int)
     
     case moveSeed(seedId: Int, caveId: Int)
     case getAllCaves(memberId: Int)
@@ -64,6 +65,10 @@ extension InsightsDetailTarget: BaseTargetType {
         case .postReviewToCompleteActionPlan(_, let actionPlanId):
             let newPath = URLConstant.actionPlanReview.replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
             return newPath
+        case .scrapSeed(seedId: let seedId):
+            let newPath = URLConstant.toggleSeedScrapStatus
+                .replacingOccurrences(of: "{seedId}", with: String(seedId))
+            return newPath
         }
     }
         
@@ -87,6 +92,8 @@ extension InsightsDetailTarget: BaseTargetType {
             return .get
         case .postReviewToCompleteActionPlan:
             return .post
+        case .scrapSeed:
+            return .patch
         }
     }
     
@@ -114,6 +121,8 @@ extension InsightsDetailTarget: BaseTargetType {
         case .postReviewToCompleteActionPlan(let content, _):
             let newReview = ["content": content]
             return .requestParameters(parameters: newReview, encoding: JSONEncoding.default)
+        case .scrapSeed:
+            return .requestPlain
         }
     }
 }
@@ -136,6 +145,14 @@ struct InsightsDetailService: Networkable {
             case .success(let response):
                 if response.statusCode < 204 {
                     handler(true)
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            editActionPlan(actionPlanId: actionPlanId, editedActionPlan: editedActionPlan, handler: handler)
+                        } else {
+                            handler(false)
+                        }
+                    }
                 } else {
                     handler(false)
                 }
@@ -168,6 +185,14 @@ struct InsightsDetailService: Networkable {
             case .success(let response):
                 if response.statusCode < 204 {
                     handler(true)
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            deleteActionPlan(actionPlanId: actionPlanId, handler: handler)
+                        } else {
+                            handler(false)
+                        }
+                    }
                 } else {
                     handler(false)
                 }
@@ -200,6 +225,14 @@ struct InsightsDetailService: Networkable {
             case .success(let response):
                 if response.statusCode < 204 {
                     handler(true)
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            postSingleNewActionPlan(seedId: seedId, newActionPlan: newActionPlan, handler: handler)
+                        } else {
+                            handler(false)
+                        }
+                    }
                 } else {
                     handler(false)
                 }
@@ -216,6 +249,14 @@ struct InsightsDetailService: Networkable {
             case .success(let response):
                 if response.statusCode < 204 {
                     handler(true)
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            completeActionPlan(actionPlanId: actionPlanId, handler: handler)
+                        } else {
+                            handler(false)
+                        }
+                    }
                 } else {
                     handler(false)
                 }
@@ -232,6 +273,14 @@ struct InsightsDetailService: Networkable {
             case .success(let response):
                 if response.statusCode < 204 {
                     handler(true)
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            postReview(content: content, actionPlanId: actionPlanId, handler: handler)
+                        } else {
+                            handler(false)
+                        }
+                    }
                 } else {
                     handler(false)
                 }
@@ -272,6 +321,30 @@ struct InsightsDetailService: Networkable {
             .mapError()
             .retryOnTokenExpired()
             .decode(decodeType: InsightSuccessResponse.self)
+    }
+    
+    static func scrapSeed(seedId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        provider.request(.scrapSeed(seedId: seedId)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    handler(true)
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            scrapSeed(seedId: seedId, handler: handler)
+                        } else {
+                            handler(false)
+                        }
+                    }
+                } else {
+                    handler(false)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(false)
+            }
+        }
     }
 }
 

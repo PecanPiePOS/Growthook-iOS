@@ -21,6 +21,11 @@ final class MypageViewController: BaseViewController {
     private let earnedThookView = MyPageThookBoxView(type: .earned)
     private let spentThookView = MyPageThookBoxView(type: .spent)
     private let myPageListTableView = UITableView()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("-----------")
+    }
 
     override func bindViewModel() {
         // TODO: 유저 프로필 이미지를 받을 때까지 주석 처리합니다.

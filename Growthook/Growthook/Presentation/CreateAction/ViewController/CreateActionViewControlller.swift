@@ -11,6 +11,10 @@ import RxCocoa
 import RxSwift
 import Then
 
+protocol InsightDetailReloadDelegate: AnyObject {
+    func reloadAfterPost()
+}
+
 struct ActionplanModel {
     var index: Int
     var content: String?
@@ -18,6 +22,8 @@ struct ActionplanModel {
 
 final class CreateActionViewControlller: BaseViewController {
 
+    weak var delegate: InsightDetailReloadDelegate?
+    
     private let createActionView = CreateActionView()
     private var viewModel = CreateActionViewModel()
     private let disposeBag = DisposeBag()
@@ -115,6 +121,7 @@ final class CreateActionViewControlller: BaseViewController {
                 }
                 self.viewModel.inputs.postActionPlan(data: newdata)
                 self.navigationController?.popViewController(animated: true)
+                self.delegate?.reloadAfterPost()
             }
             .disposed(by: disposeBag)
         

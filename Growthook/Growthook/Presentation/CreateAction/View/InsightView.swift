@@ -21,21 +21,12 @@ final class InsightView: BaseView, InsightBoxViewType {
     private let dDayLabel = UILabel()
     private let memoScrollView = UIScrollView()
     private let memoLabel = UILabel()
-    private let scrapButton = UIButton()
+    let scrapButton = UIButton()
     private let emptyMemoView = UIView()
     private let emptyMemoImageView = UIImageView()
     private let emptyMemoLabel = UILabel()
-    
-    var isScrap = false {
-        didSet {
-            switch isScrap {
-            case true:
-                scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
-            case false:
-                scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
-            }
-        }
-    }
+        
+    private var isScrap = false
     
     override func setStyles() {
         self.do {
@@ -200,6 +191,14 @@ extension InsightView {
         nameLabel.sizeToFit()
         insightLabel.text = model.insight
         dateLabel.text = model.lockDate
+        switch model.isScraped {
+        case true:
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+            isScrap = true
+        case false:
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+            isScrap = false
+        }
         if model.remainingDays > 0 {
             dDayLabel.text = "D-\(model.remainingDays)"
             self.addSubviews(dDayLabel, verticalDividerView)
@@ -238,7 +237,6 @@ extension InsightView {
                 $0.width.equalTo(nameLabel.frame.width + 14)
             }
         }
-        isScrap = model.isScraped
     }
     
     func showDetail() {
@@ -286,5 +284,25 @@ extension InsightView {
     
     func showScrapButton() {
         scrapButton.isHidden = false
+    }
+    
+    func successScrap() {
+        self.isScrap.toggle()
+        switch isScrap {
+        case true:
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        case false:
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+        }
+    }
+    
+    func setScrap(isScraped: Bool) {
+        self.isScrap = isScraped
+        switch isScraped {
+        case true:
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        case false:
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+        }
     }
 }

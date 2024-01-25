@@ -13,12 +13,35 @@ import RxSwift
 protocol InsightBoxViewType: AnyObject {
     func bindInsight(model: ActionPlanResponse)
     func showDetail()
-    func fold() 
+    func fold()
     var moreButton: UIButton { get }
 }
 
-final class InsightsDetailViewController: BaseViewController {
+enum HasAnyActionPlan {
+    case yes
+    case no
+    
+    var height: CGFloat {
+        switch self {
+        case .yes:
+            135
+        case .no:
+            113
+        }
+    }
+    
+    var color: UIColor {
+        switch self {
+        case .yes:
+            return .gray600
+        case .no:
+            return .gray700
+        }
+    }
+}
 
+final class InsightsDetailViewController: BaseViewController {
+    
     private let disposeBag = DisposeBag()
     private var viewModel: InsightsDetailViewModel
     private var mainBlockHeight: CGFloat
@@ -31,19 +54,32 @@ final class InsightsDetailViewController: BaseViewController {
     
     private let uselessBoxView = UIView()
     private let customNavigationView = CommonCustomNavigationBar()
-    private var mainInsightBlock: InsightBoxViewType
+    
+    private var mainBlockWithMemoView = InsightsDetailMainBlockView()
+    private var mainBlockWithActionPlanView = InsightView()
+    
     private let memoView = InsightsDetailMemoView()
-    private let deleteAlertView = RemoveAlertView()
-    private let deleteActionPlanView = RemoveAlertView()
+    private let deleteAlertView = RemoveAlertView2()
+    private let deleteActionPlanView = RemoveAlertView2()
     private lazy var actionPlanCollectionView = UICollectionView(frame: .zero, collectionViewLayout: setFlowLayout())
-    private var actionPlanButton: BottomCTAButton
+    private var actionPlanButton: BottomCTAButton = .init(type: .createAction)
+    private let decoyScrapButton = UIButton()
+    
     private let loadingView = FullCoverLoadingView()
     private var seedId = 0
+    private var isFirstOpened = true
+    private var isScraped = false
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isFolded = true
         navigationController?.navigationBar.isHidden = true
+//        
+//        if isFirstOpened != false {
+//            isFirstOpened = false
+//        } else {
+//            // Reload 하는 뷰 만들기.
+//        }
     }
     
     init(hasAnyActionPlan: Bool, seedId: Int) {
@@ -52,15 +88,18 @@ final class InsightsDetailViewController: BaseViewController {
         self.seedId = seedId
         
         if hasAnyActionPlan != false {
-            mainBlockHeight = 125
-            mainBlockColor = .gray600
+            mainBlockHeight = HasAnyActionPlan.yes.height
+            mainBlockColor = HasAnyActionPlan.yes.color
             actionPlanButton = BottomCTAButton(type: .addAction)
-            mainInsightBlock = InsightView()
+            mainBlockWithMemoView.isHidden = true
+            mainBlockWithActionPlanView.isHidden = false
         } else {
-            mainBlockHeight = 113
-            mainBlockColor = .gray700
+            mainBlockHeight = HasAnyActionPlan.no.height
+            mainBlockColor = HasAnyActionPlan.no.color
             actionPlanButton = BottomCTAButton(type: .createAction)
-            mainInsightBlock = InsightsDetailMainBlockView()
+            mainBlockWithMemoView.isHidden = false
+            mainBlockWithActionPlanView.isHidden = true
+            decoyScrapButton.isHidden = true
         }
         super.init(nibName: nil, bundle: nil)
     }
@@ -74,9 +113,16 @@ final class InsightsDetailViewController: BaseViewController {
                 guard let self else { return }
                 let model: ActionPlanResponse =
                     .init(caveName: data.caveName, insight: data.insight, memo: data.memo, source: data.source, url: data.url, isScraped: data.isScraped, lockDate: data.lockDate, remainingDays: data.remainingDays)
-                mainInsightBlock.bindInsight(model: model)
+                mainBlockWithActionPlanView.bindInsight(model: model)
+                mainBlockWithMemoView.bindInsight(model: model)
                 memoView.setMemoContent(with: model.memo)
                 memoView.setReferenceContent(reference: data.source, url: data.url)
+                self.isScraped = data.isScraped
+                if data.isScraped != false {
+                    decoyScrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+                } else {
+                    decoyScrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -103,6 +149,28 @@ final class InsightsDetailViewController: BaseViewController {
             .bind { [weak self] shouldHide in
                 guard let self else { return }
                 self.memoView.isHidden = shouldHide
+                
+                if shouldHide != false {
+                    self.actionPlanButton = BottomCTAButton(type: .addAction)
+                    self.customNavigationView.hideDoneButton()
+                    self.uselessBoxView.backgroundColor = HasAnyActionPlan.yes.color
+                    self.actionPlanButton.setTitleIfNeeded(with: "액션 더하기")
+                    self.mainBlockWithMemoView.isHidden = true
+                    self.mainBlockWithActionPlanView.isHidden = false
+                    self.customNavigationView.setBackgroundColor(HasAnyActionPlan.yes.color)
+                    self.hasActionPlan = true
+                    self.decoyScrapButton.isHidden = false
+                } else {
+                    self.actionPlanButton = BottomCTAButton(type: .createAction)
+                    self.customNavigationView.showDoneButton()
+                    self.uselessBoxView.backgroundColor = HasAnyActionPlan.no.color
+                    self.actionPlanButton.setTitleIfNeeded(with: "액션 만들기")
+                    self.mainBlockWithMemoView.isHidden = false
+                    self.mainBlockWithActionPlanView.isHidden = true
+                    self.customNavigationView.setBackgroundColor(HasAnyActionPlan.no.color)
+                    self.hasActionPlan = false
+                    self.decoyScrapButton.isHidden = true
+                }
             }
             .disposed(by: disposeBag)
         
@@ -123,9 +191,13 @@ final class InsightsDetailViewController: BaseViewController {
                     case .deleteSeedToast:
                         self.view.showToast(message: status.toastMessage, success: false)
                     case .createActionPlan(let success):
-                        self.view.showToast(message: status.toastMessage, success: success)
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            self.view.showToast(message: status.toastMessage, success: success)
+                        }
                     case .editActionPlan(let success):
-                        self.view.showToast(message: status.toastMessage, success: success)
+                        DispatchQueue.main.asyncAfter(deadline: .now()+0.2) {
+                            self.view.showToast(message: status.toastMessage, success: success)
+                        }
                     case .deleteActionPlan(let success):
                         self.view.showToast(message: status.toastMessage, success: success)
                     default:
@@ -149,8 +221,21 @@ final class InsightsDetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        viewModel.outputs.scrapedStatus
+            .bind { [weak self] isScraped in
+                guard let self else { return }
+                switch isScraped {
+                case true:
+                    self.mainBlockWithMemoView.scrapButton
+                        .setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+                case false:
+                    self.mainBlockWithMemoView.scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         // MARK: - Button Actions - Present/Navigation
-        mainInsightBlock.moreButton.rx.tap
+        mainBlockWithActionPlanView.moreButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
                 if isFolded != false {
@@ -158,6 +243,14 @@ final class InsightsDetailViewController: BaseViewController {
                 } else {
                     self.setUpAnimation()
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        mainBlockWithMemoView.scrapButton.rx.tap
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.asyncInstance)
+            .bind { [weak self] in
+                guard let self else { return }
+                
             }
             .disposed(by: disposeBag)
         
@@ -189,7 +282,7 @@ final class InsightsDetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        actionPlanButton.rx.tap
+        actionPlanButton.rx.tap.throttle(.seconds(1), latest: false, scheduler: MainScheduler.asyncInstance)
             .bind { [weak self] in
                 guard let self else { return }
                 switch self.hasActionPlan {
@@ -211,7 +304,6 @@ final class InsightsDetailViewController: BaseViewController {
         deleteAlertView.removeButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                // MARK: 이거도 아마 안될걸 ? 바꿔
                 self.viewModel.deleteSeedDidTap { success in
                     if success != false {
                         self.navigationController?.popViewController(animated: true)
@@ -219,7 +311,23 @@ final class InsightsDetailViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
-                
+        
+        decoyScrapButton.rx.tap
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.asyncInstance)
+            .bind { [weak self] in
+                guard let self else { return }
+                self.viewModel.inputs.insightScrap { success in
+                    if success && self.isScraped == true {
+                        self.decoyScrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+                        self.isScraped = false
+                    } else if success && self.isScraped == false {
+                        self.decoyScrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+                        self.isScraped = true
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
         deleteActionPlanView.keepButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
@@ -235,7 +343,7 @@ final class InsightsDetailViewController: BaseViewController {
                     case true:
                         self.deleteActionPlanView.isHidden = true
                     case false:
-                        break
+                        self.deleteActionPlanView.isHidden = true
                     }
                 }
             }
@@ -285,14 +393,14 @@ final class InsightsDetailViewController: BaseViewController {
     
     // MARK: - Layout
     override func setLayout() {
-        let mainBlock = mainInsightBlock as! UIView
         let removeMenuTap = UITapGestureRecognizer(target: self, action: #selector(hidemenu))
         view.addGestureRecognizer(removeMenuTap)
         
         view.addSubviews(
-            uselessBoxView, customNavigationView, mainBlock,
+            uselessBoxView, customNavigationView, mainBlockWithMemoView, mainBlockWithActionPlanView,
             memoView, actionPlanButton, actionPlanCollectionView,
-            deleteAlertView, deleteActionPlanView, loadingView
+            deleteAlertView, deleteActionPlanView, loadingView,
+            decoyScrapButton
         )
         
         uselessBoxView.snp.makeConstraints {
@@ -306,14 +414,20 @@ final class InsightsDetailViewController: BaseViewController {
             $0.height.equalTo(SizeLiterals.Screen.screenHeight * 48 / 812)
         }
         
-        mainBlock.snp.makeConstraints {
-            $0.height.equalTo(mainBlockHeight)
+        mainBlockWithMemoView.snp.makeConstraints {
+            $0.height.equalTo(HasAnyActionPlan.no.height)
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalTo(customNavigationView.snp.bottom)
+        }
+        
+        mainBlockWithActionPlanView.snp.makeConstraints {
+            $0.height.equalTo(HasAnyActionPlan.yes.height)
             $0.horizontalEdges.equalToSuperview()
             $0.top.equalTo(customNavigationView.snp.bottom)
         }
         
         memoView.snp.makeConstraints {
-            $0.top.equalTo(mainBlock.snp.bottom)
+            $0.top.equalTo(customNavigationView.snp.bottom).offset(HasAnyActionPlan.no.height)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.lessThanOrEqualTo(500)
         }
@@ -325,25 +439,31 @@ final class InsightsDetailViewController: BaseViewController {
         }
         
         actionPlanCollectionView.snp.makeConstraints {
-            $0.top.equalTo(mainBlock.snp.bottom).offset(20)
+            $0.top.equalTo(customNavigationView.snp.bottom).offset(HasAnyActionPlan.yes.height + 28)
             $0.bottom.equalTo(actionPlanButton.snp.top).offset(-5)
             $0.horizontalEdges.equalToSuperview()
         }
         
         deleteAlertView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(173)
+            $0.top.equalToSuperview()
             $0.bottom.horizontalEdges.equalToSuperview()
         }
         
         deleteActionPlanView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(173)
+            $0.top.equalToSuperview()
             $0.bottom.horizontalEdges.equalToSuperview()
         }
         
         loadingView.snp.makeConstraints {
-            $0.top.equalTo(mainBlock.snp.bottom)
+            $0.top.equalTo(actionPlanCollectionView)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(actionPlanCollectionView)
+        }
+        
+        decoyScrapButton.snp.makeConstraints {
+            $0.top.equalTo(mainBlockWithActionPlanView.snp.top).inset(10)
+            $0.trailing.equalToSuperview().inset(8)
+            $0.size.equalTo(48)
         }
     }
     
@@ -442,6 +562,7 @@ extension InsightsDetailViewController {
     
     private func showAddNewActionPlanView() {
         let vc = CreateActionViewControlller()
+        vc.delegate = self
         vc.seedId = self.seedId
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -460,21 +581,17 @@ extension InsightsDetailViewController {
     }
     
     private func setUpAnimation() {
-        let mainBlock = mainInsightBlock as! InsightView
-
         UIView.animate(withDuration: 0.4, animations: { [self] in
-            mainBlock.frame.size.height = 125
-            mainInsightBlock.fold()
+            mainBlockWithActionPlanView.frame.size.height = 125
+            mainBlockWithActionPlanView.fold()
         })
         setFoldingLayout()
     }
     
     private func setDownAnimation() {
-        let mainBlock = mainInsightBlock as! InsightView
-
         UIView.animate(withDuration: 0.4, animations: { [self] in
-            mainBlock.frame.size.height = 153 + 125
-            mainInsightBlock.showDetail()
+            mainBlockWithActionPlanView.frame.size.height = 153 + 125
+            mainBlockWithActionPlanView.showDetail()
         })
         setShowingLayout()
     }
@@ -496,24 +613,30 @@ extension InsightsDetailViewController {
     }
     
     private func setFoldingLayout() {
-        let mainBlock = mainInsightBlock as! InsightView
-
-        mainBlock.snp.remakeConstraints {
+        mainBlockWithActionPlanView.snp.remakeConstraints {
             $0.top.equalTo(customNavigationView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(125)
+            $0.height.equalTo(135)
         }
+        
+        actionPlanCollectionView.snp.updateConstraints {
+            $0.top.equalTo(customNavigationView.snp.bottom).offset(HasAnyActionPlan.yes.height + 28)
+        }
+        
         isFolded = true
     }
     
     private func setShowingLayout() {
-        let mainBlock = mainInsightBlock as! InsightView
-
-        mainBlock.snp.remakeConstraints {
+        mainBlockWithActionPlanView.snp.remakeConstraints {
             $0.top.equalTo(customNavigationView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(278)
         }
+        
+        actionPlanCollectionView.snp.updateConstraints {
+            $0.top.equalTo(customNavigationView.snp.bottom).offset(HasAnyActionPlan.yes.height + 28 + 143)
+        }
+        
         isFolded = false
     }
     
@@ -550,6 +673,16 @@ extension InsightsDetailViewController: InsightMenuDelegate, CompleteReviewDeleg
         finishedAlertView.modalPresentationStyle = .overFullScreen
         DispatchQueue.main.asyncAfter(deadline: .now()+0.4) {
             self.present(finishedAlertView, animated: false)
+        }
+    }
+}
+
+extension InsightsDetailViewController: InsightDetailReloadDelegate {
+    func reloadAfterPost() {
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.2) {
+            self.viewModel.inputs.reloadActionPlan()
+            self.actionPlanButton = .init(type: .addAction)
+            self.viewModel.toastStatus.accept(.createActionPlan(success: true))
         }
     }
 }
