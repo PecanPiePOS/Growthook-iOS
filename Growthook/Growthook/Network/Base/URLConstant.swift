@@ -67,4 +67,5 @@ enum URLConstant {
     static let socialLogin = "/api/v1/auth"
     static let tokenRefresh = "/api/v1/auth/token"
     static let bearer = "Bearer "
+    static let memberWithdraw = "/api/v1/member/{memberId}"
 }
