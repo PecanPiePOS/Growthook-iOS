@@ -114,4 +114,14 @@ enum I18N {
         static let loginType = "loginType"
         static let refreshToken = "refreshToken"
     }
+    
+    enum Mypage {
+        static let deleteTitle = "정말 탈퇴 하시겠어요?"
+        static let deleteDescription = "탈퇴 시, 수집한 인사이트와\n달성한 액션플랜에 대한 정보가\n모두 없어져요."
+        static let maintain = "남아있기"
+        static let withdraw = "탈퇴하기"
+        static let logoutTitle = "로그아웃 하시겠습니까?"
+        static let cancel = "취소"
+        static let logout = "로그아웃"
+    }
 }
