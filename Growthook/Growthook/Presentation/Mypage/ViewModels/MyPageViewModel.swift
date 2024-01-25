@@ -46,6 +46,7 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
     var versionNumber = BehaviorRelay(value: "0.0.0")
     var networkState = BehaviorRelay<SomeNetworkStatus>(value: .normal)
     
+    private let memberId = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
     private let myPageList: [String] = [
         "growthook 사용법", "공지사항", "자주 묻는 질문",
         "약관 및 정책", "버전 정보", "로그아웃"
@@ -78,9 +79,8 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
         }
     }
     
-    // TODO: 자주하는 질문의 URL 추가 되어야 함!
     func frequentQuestionsDidTap() {
-        if let url = URL(string: "SOME URL") {
+        if let url = URL(string: "https://groovy-need-069.notion.site/6cdc4f9f7f38490084a89da1bfa083ab?pvs=4") {
             UIApplication.shared.open(url)
         }
     }
@@ -120,7 +120,7 @@ extension MyPageViewModel {
 extension MyPageViewModel {
     
     private func getUserInformation() {
-        MyPageService.getUserInfo(with: 3)
+        MyPageService.getUserInfo(with: memberId)
             .subscribe(onNext: { [weak self] profile in
                 guard let self else { return }
                 self.userProfileName.accept(profile.nickname)
@@ -132,7 +132,7 @@ extension MyPageViewModel {
             })
             .disposed(by: disposeBag)
         
-        MyPageService.getEarnedSsuck(with: 3)
+        MyPageService.getEarnedSsuck(with: memberId)
             .subscribe(onNext: { [weak self] ssuk in
                 guard let self else { return }
                 self.userEarnedThookCount.accept(ssuk.gatheredSsuk)
@@ -142,7 +142,7 @@ extension MyPageViewModel {
             })
             .disposed(by: disposeBag)
         
-        MyPageService.getSpentSsuk(with: 3)
+        MyPageService.getSpentSsuk(with: memberId)
             .subscribe(onNext: { [weak self] ssuk in
                 guard let self else { return }
                 self.userSpentThookCount.accept(ssuk.usedSsuk)

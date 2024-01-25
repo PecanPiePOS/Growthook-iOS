@@ -105,10 +105,9 @@ final class InsightDetailMenuViewController: BaseViewController {
 }
 
 extension InsightDetailMenuViewController: CaveDismissDelegate {
-    
-    // TODO: memberId 어디서 받아옴... 임시로 4로 찍어놓음
+
     private func showCaveSheetView() {
-        viewModel.inputs.getAllCaves(memberId: 4)
+        viewModel.inputs.getAllCaves()
         let caveBottomSheetViewController = InsightDetailCaveViewController(viewModel: self.viewModel)
         caveBottomSheetViewController.modalPresentationStyle = .pageSheet
         caveBottomSheetViewController.delegate = self

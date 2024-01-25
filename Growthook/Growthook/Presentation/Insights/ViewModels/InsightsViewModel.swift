@@ -80,6 +80,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     private let isNewReferenceValid = BehaviorRelay(value: false)
     private let isPeriodValid = BehaviorRelay(value: false)
     
+    private let memberId = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
     private let disposeBag = DisposeBag()
     
     var inputs: InsightsViewModelInput { return self }
@@ -87,9 +88,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     
     // MARK: - Life Cycle
     init() {
-        // TODO: memberId 여기서 찍어야함 - 임시로 4로 찍어놓음
-        
-        InsightsDetailService.getAllCaves(memberId: 4)
+        InsightsDetailService.getAllCaves(memberId: memberId)
             .subscribe(onNext: { [weak self] caves in
                 guard let self else { return }
                 let caveModel: [InsightCaveModel] = caves.map { .init(caveId: $0.caveId, caveTitle: $0.caveName) }
@@ -105,8 +104,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     
     init(isEditing: Bool = true, seedEditModel: SeedEditModel) {
         self.existingData = seedEditModel
-        // TODO: memberId 여기서 찍어야함 - 임시로 4로 찍어놓음
-        InsightsDetailService.getAllCaves(memberId: 4)
+        InsightsDetailService.getAllCaves(memberId: memberId)
             .subscribe(onNext: { [weak self] caves in
                 guard let self else { return }
                 let caveModel: [InsightCaveModel] = caves.map { .init(caveId: $0.caveId, caveTitle: $0.caveName) }
