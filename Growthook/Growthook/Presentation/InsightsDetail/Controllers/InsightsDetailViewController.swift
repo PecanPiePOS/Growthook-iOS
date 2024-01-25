@@ -64,24 +64,10 @@ final class InsightsDetailViewController: BaseViewController {
         }
         super.init(nibName: nil, bundle: nil)
     }
-
-    
-    /**
-     struct ActionPlanResponse: Codable {
-         let caveName: String
-         let insight: String
-         let memo: String
-         let source: String
-         let url: String
-         let isScraped: Bool
-         let lockDate: String
-         let remainingDays: Int
-     }
-     */
-    
     
     // MARK: - Bind
     override func bindViewModel() {
+        
         // MARK: - Bind UI With Data
         viewModel.outputs.seedDetail
             .bind { [weak self] data in

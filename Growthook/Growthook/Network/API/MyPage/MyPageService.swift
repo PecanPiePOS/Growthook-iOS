@@ -72,6 +72,7 @@ struct MyPageService: Networkable {
         return provider.rx.request(.getUserProfile(memberId: memberId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: MyPageUserInfoResponse.self)
     }
     
@@ -83,6 +84,7 @@ struct MyPageService: Networkable {
         return provider.rx.request(.getEarnedSsuk(memberId: memberId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: MyPageEarnedSsukResponse.self)
     }
     
@@ -94,6 +96,7 @@ struct MyPageService: Networkable {
         return provider.rx.request(.getSpentSsuk(memberId: memberId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: MyPageSpentSsukResponse.self)
     }
 }

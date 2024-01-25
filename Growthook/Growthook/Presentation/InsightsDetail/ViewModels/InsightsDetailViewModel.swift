@@ -313,7 +313,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     
     func fetchSeedModel() -> SeedEditModel {
         guard let seedEditData else {
-            return SeedEditModel(caveName: "", insight: "", memo: "", source: "", url: "")
+            return SeedEditModel(caveName: "", insight: "", source: "", memo: "", url: "")
         }
         return seedEditData
     }
@@ -338,7 +338,7 @@ extension InsightsDetailViewModel {
             .subscribe(onNext: { [weak self] seedDetail in
                 guard let self else { return }
                 self.seedDetail.onNext(seedDetail)
-                self.seedEditData = .init(caveName: seedDetail.caveName, insight: seedDetail.insight, memo: seedDetail.memo, source: seedDetail.source, url: seedDetail.url)
+                self.seedEditData = .init(caveName: seedDetail.caveName, insight: seedDetail.insight, source: seedDetail.source, memo: seedDetail.memo, url: seedDetail.url)
             }, onError: { error in
                 print(error)
                 self.networkStatus.accept(.error(of: error))

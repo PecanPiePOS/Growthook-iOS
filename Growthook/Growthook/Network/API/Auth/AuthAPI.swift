@@ -50,7 +50,34 @@ final class AuthAPI {
                 do {
                     self.refreshTokenData = try response.map(GeneralResponse<RefreshTokenResponseDto>?.self)
                     guard let refreshTokenData = self.refreshTokenData else { return }
+                    if let accessToken = refreshTokenData.data?.accessToken.data(using: .utf8) {
+                        KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessToken)
+                    }
+                    if let refreshToken = refreshTokenData.data?.refreshToken.data(using: .utf8) {
+                        KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshToken)
+                    }
                     completion(refreshTokenData)
+                    print("-----000------")
+                } catch let err {
+                    print(err.localizedDescription, 500)
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+                completion(nil)
+            }
+        }
+    }
+    
+    // MARK: - DELETE
+    /// 회원 탈퇴
+    func deleteMemberWithdraw(memberId: Int, completion: @escaping (GeneralResponse<VoidType>?) -> Void) {
+        authProvider.request(.withdraw(memberId: memberId)) {
+            result in
+            switch result {
+            case .success(let response):
+                do {
+                    let data = try response.map(GeneralResponse<VoidType>?.self)
+                    completion(data)
                 } catch let err {
                     print(err.localizedDescription, 500)
                 }

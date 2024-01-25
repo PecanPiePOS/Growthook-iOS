@@ -25,6 +25,10 @@ final class MyPageUserInformationViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
     // TODO: 로그아웃 및 회원탈퇴 로직 구현해야함 API 도! -
     
     override func bindViewModel() {
@@ -54,7 +58,29 @@ final class MyPageUserInformationViewController: BaseViewController {
         withdrawalButton.rx.tap
             .bind { [weak self] in
                 let loginType = UserDefaults.standard.string(forKey: I18N.Auth.loginType)
-                print(loginType)
+                let memberId = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
+                AuthAPI.shared.deleteMemberWithdraw(memberId: memberId) {
+                    [weak self] response in
+                    guard self != nil else { return }
+                    
+                    // UserDefault 삭제
+                    _ = UserDefaults.standard.dictionaryRepresentation().map {
+                        UserDefaults.standard.removeObject(forKey: $0.key)
+                    }
+                    
+                    // 루트 뷰 변경
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let sceneDelegate = windowScene.delegate as? SceneDelegate,
+                           let window = sceneDelegate.window {
+                            let vc = SplashViewController()
+                            let rootVC = UINavigationController(rootViewController: vc)
+                            rootVC.navigationController?.isNavigationBarHidden = true
+                            window.rootViewController = rootVC
+                            window.makeKeyAndVisible()
+                        }
+                    
+                    print("회원탈퇴 완료")
+                }
             }
             .disposed(by: disposeBag)
     }

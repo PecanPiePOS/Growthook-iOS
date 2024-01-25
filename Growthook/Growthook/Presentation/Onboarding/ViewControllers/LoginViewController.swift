@@ -135,11 +135,18 @@ final class LoginViewController: BaseViewController {
             guard let data = response?.data else { return }
             APIConstants.jwtToken = data.accessToken
             APIConstants.refreshToken = data.refreshToken
+            if let accessTokenData = data.accessToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
+            }
+
+            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
+            }
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
-            UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
             UserDefaults.standard.set(true ,forKey: I18N.Auth.isLoggedIn)
             UserDefaults.standard.set(I18N.Auth.kakao, forKey: I18N.Auth.loginType)
+            
             self?.loginSuccess()
         }
     }
@@ -147,15 +154,13 @@ final class LoginViewController: BaseViewController {
     private func postAppleLogin() {
         let loginUserName = UserDefaults.standard.string(forKey: I18N.Auth.nickname) ?? I18N.Auth.nickname
         let model: LoginRequestDto = LoginRequestDto(socialPlatform: I18N.Auth.apple, socialToken: APIConstants.deviceToken, userName: loginUserName)
+        
         AuthAPI.shared.postKakaoLogin(param: model) { [weak self]
             response in
             guard self != nil else { return }
             guard let data = response?.data else { return }
             APIConstants.jwtToken = data.accessToken
             APIConstants.refreshToken = data.refreshToken
-//            UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
-//            UserDefaults.standard.set(data.refreshToken, forKey: I18N.Auth.refreshToken)
-            
             if let accessTokenData = data.accessToken.data(using: .utf8) {
                 KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
             }
@@ -181,10 +186,16 @@ final class LoginViewController: BaseViewController {
             guard let data = response?.data else { return }
             APIConstants.jwtToken = data.accessToken
             APIConstants.refreshToken = data.refreshToken
+            if let accessTokenData = data.accessToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
+            }
+
+            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
+            }
         }
     }
 }
-
 
 extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     
@@ -251,7 +262,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             break
         }
     }
-    
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("login failed - \(error.localizedDescription)")
