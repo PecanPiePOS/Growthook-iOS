@@ -62,7 +62,6 @@ final class CommonTextFieldWithBorder: UITextField, CommonTextComponentType {
      */
     private lazy var modifiedText: Driver<String?> = self.rx.changedText
         .orEmpty
-        .distinctUntilChanged()
         .scan(self.text) { [weak self] (previousValue, newValue) -> String? in
             guard let self else { return previousValue }
             guard let previousValue else { return previousValue }
