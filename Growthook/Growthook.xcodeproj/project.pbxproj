@@ -112,6 +112,8 @@
 		03E481242AF2B1DA002F4CBC /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 03E481232AF2B1DA002F4CBC /* RxMoya */; };
 		09089A6A2B03B3E2006C07B8 /* AlertBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09089A692B03B3E2006C07B8 /* AlertBuilder.swift */; };
 		09089A6C2B03B41B006C07B8 /* CustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09089A6B2B03B41B006C07B8 /* CustomAlertViewController.swift */; };
+		090C496F2B62BC7100FD063C /* MyPageAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090C496E2B62BC7100FD063C /* MyPageAlertView.swift */; };
+		090C49772B62CEFA00FD063C /* LogoutAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090C49762B62CEFA00FD063C /* LogoutAlertViewController.swift */; };
 		092A518B2B52D2D100296B46 /* CaveDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092A518A2B52D2D100296B46 /* CaveDTO.swift */; };
 		092A518D2B52DEBD00296B46 /* CaveInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092A518C2B52DEBD00296B46 /* CaveInfoView.swift */; };
 		092A518F2B52E01700296B46 /* CaveEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092A518E2B52E01700296B46 /* CaveEmptyView.swift */; };
@@ -307,6 +309,8 @@
 		03E4810D2AF2AFDD002F4CBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09089A692B03B3E2006C07B8 /* AlertBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertBuilder.swift; sourceTree = "<group>"; };
 		09089A6B2B03B41B006C07B8 /* CustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertViewController.swift; sourceTree = "<group>"; };
+		090C496E2B62BC7100FD063C /* MyPageAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAlertView.swift; sourceTree = "<group>"; };
+		090C49762B62CEFA00FD063C /* LogoutAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutAlertViewController.swift; sourceTree = "<group>"; };
 		092A518A2B52D2D100296B46 /* CaveDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveDTO.swift; sourceTree = "<group>"; };
 		092A518C2B52DEBD00296B46 /* CaveInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveInfoView.swift; sourceTree = "<group>"; };
 		092A518E2B52E01700296B46 /* CaveEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaveEmptyView.swift; sourceTree = "<group>"; };
@@ -1272,6 +1276,7 @@
 			children = (
 				03B9ACA82AF7B2B000A5751C /* MypageViewController.swift */,
 				586626252B4EB06F0084468C /* MyPageUserInformationViewController.swift */,
+				090C49762B62CEFA00FD063C /* LogoutAlertViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1281,6 +1286,7 @@
 			children = (
 				58AB70AD2B2C88570061C072 /* MyPageThookBoxView.swift */,
 				586626272B4EB10C0084468C /* MyPageUserInfoBlockView.swift */,
+				090C496E2B62BC7100FD063C /* MyPageAlertView.swift */,
 				58AB70AF2B2C903D0061C072 /* Components */,
 			);
 			path = Views;
@@ -1583,12 +1589,14 @@
 				03B9ACA12AF7B25B00A5751C /* HomeViewController.swift in Sources */,
 				252DD8842B063A7900DBB1D1 /* ActionListViewModel.swift in Sources */,
 				03B9AC912AF5669600A5751C /* MakeAlert.swift in Sources */,
+				090C496F2B62BC7100FD063C /* MyPageAlertView.swift in Sources */,
 				03B9AC9B2AF7A96000A5751C /* TabBarController.swift in Sources */,
 				037EAB132B61301B00024F22 /* InsightListEmptyView.swift in Sources */,
 				032213822B17960700FF5CF1 /* NotificationAlertView.swift in Sources */,
 				584EDAD72B4A57E60094872A /* Observable+.swift in Sources */,
 				58EFF5DB2B445AB6003C3838 /* BaseTargetType.swift in Sources */,
 				588E2B4F2B53BBAF0014E6D5 /* InsightsDetailActionPlanCollectionViewCell.swift in Sources */,
+				090C49772B62CEFA00FD063C /* LogoutAlertViewController.swift in Sources */,
 				582F9C4A2B304B720000D161 /* TextViewBlockWithTitle.swift in Sources */,
 				2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */,
 				25BD951D2B08F6F600E72ADC /* InprogressViewController.swift in Sources */,

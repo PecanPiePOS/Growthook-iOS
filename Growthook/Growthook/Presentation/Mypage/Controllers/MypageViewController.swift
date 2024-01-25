@@ -108,13 +108,13 @@ final class MypageViewController: BaseViewController {
                     break
                 case 5:
                     // 로그아웃
-                    inputs.logOutDidTap()
-                    self.logout()
+                    alertLogout()
                 default:
                     break
                 }
             }
             .disposed(by: disposeBag)
+        
     }
 
     override func setStyles() {
@@ -124,7 +124,7 @@ final class MypageViewController: BaseViewController {
             $0.contentMode = .scaleAspectFill
             $0.backgroundColor = .gray900
             $0.makeCornerRound(radius: 41)
-            $0.image = UIImage(named: "DefaultUserImage")
+            $0.image = ImageLiterals.Home.profile_default
         }
         
         profileNameLabel.do {
@@ -146,7 +146,7 @@ final class MypageViewController: BaseViewController {
             $0.bounces = true
             $0.backgroundColor = .gray600
             $0.separatorColor = .gray400
-            $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0   )
+            $0.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
     }
     
@@ -208,18 +208,9 @@ extension MypageViewController {
         self.navigationController?.pushViewController(myInfoViewController, animated: true)
     }
     
-    private func logout() {
-        // 여기에 로그아웃 시 필요한 처리를 추가합니다.
-        // 예를 들어, 사용자 세션을 초기화하고 로그아웃 API 호출 등을 수행합니다.
-
-        // 모든 화면을 닫고 SplashViewController를 엽니다.
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let sceneDelegate = windowScene.delegate as? SceneDelegate,
-           let window = sceneDelegate.window {
-            let splashViewController = SplashViewController()
-            let rootViewController = UINavigationController(rootViewController: splashViewController)
-            window.rootViewController = rootViewController
-            window.makeKeyAndVisible()
-        }
+    private func alertLogout() {
+        let vc = LogoutAlertViewController()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false)
     }
 }

@@ -20,6 +20,8 @@ final class MyPageUserInformationViewController: BaseViewController {
     private let signedAccountBlock = MyPageUserInfoBlockView()
     private let withdrawalButton = UIButton()
     
+    private let withdrawalAlertView = MyPageAlertView(type: .delete)
+    
     init(viewModel: MyPageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -57,34 +59,25 @@ final class MyPageUserInformationViewController: BaseViewController {
         
         withdrawalButton.rx.tap
             .bind { [weak self] in
-                let loginType = UserDefaults.standard.string(forKey: I18N.Auth.loginType)
-                let memberId = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
-                AuthAPI.shared.deleteMemberWithdraw(memberId: memberId) {
-                    [weak self] response in
-                    guard self != nil else { return }
-                    
-                    // UserDefault 삭제
-                    _ = UserDefaults.standard.dictionaryRepresentation().map {
-                        UserDefaults.standard.removeObject(forKey: $0.key)
-                    }
-                    
-                    // 키체인 삭제
-                    KeychainHelper.delete(key: I18N.Auth.jwtToken)
-                    KeychainHelper.delete(key: I18N.Auth.refreshToken)
-                    
-                    // 루트 뷰 변경
-                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                           let sceneDelegate = windowScene.delegate as? SceneDelegate,
-                           let window = sceneDelegate.window {
-                            let vc = SplashViewController()
-                            let rootVC = UINavigationController(rootViewController: vc)
-                            rootVC.navigationController?.isNavigationBarHidden = true
-                            window.rootViewController = rootVC
-                            window.makeKeyAndVisible()
-                        }
-                    
-                    print("회원탈퇴 완료")
+                guard let self else { return }
+                self.view.addSubview(self.withdrawalAlertView)
+                self.withdrawalAlertView.snp.makeConstraints {
+                   $0.edges.equalToSuperview()
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        withdrawalAlertView.keepButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.withdrawalAlertView.removeFromSuperview()
+            }
+            .disposed(by: disposeBag)
+        
+        withdrawalAlertView.removeButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.withdrawal()
             }
             .disposed(by: disposeBag)
     }
@@ -160,5 +153,40 @@ final class MyPageUserInformationViewController: BaseViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension MyPageUserInformationViewController {
+    
+    private func withdrawal() {
+        
+        let loginType = UserDefaults.standard.string(forKey: I18N.Auth.loginType)
+        let memberId = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
+        AuthAPI.shared.deleteMemberWithdraw(memberId: memberId) {
+            [weak self] response in
+            guard self != nil else { return }
+            
+            // UserDefault 삭제
+            _ = UserDefaults.standard.dictionaryRepresentation().map {
+                UserDefaults.standard.removeObject(forKey: $0.key)
+            }
+            
+            // 키체인 삭제
+            KeychainHelper.delete(key: I18N.Auth.jwtToken)
+            KeychainHelper.delete(key: I18N.Auth.refreshToken)
+            
+            // 루트 뷰 변경
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let sceneDelegate = windowScene.delegate as? SceneDelegate,
+               let window = sceneDelegate.window {
+                let vc = SplashViewController()
+                let rootVC = UINavigationController(rootViewController: vc)
+                rootVC.navigationController?.isNavigationBarHidden = true
+                window.rootViewController = rootVC
+                window.makeKeyAndVisible()
+            }
+            
+            print("회원탈퇴 완료")
+        }
     }
 }
