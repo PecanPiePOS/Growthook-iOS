@@ -25,7 +25,7 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
     private let selectedImageView = UIImageView()
     
     // MARK: - Properties
-
+    
     var disposeBag = DisposeBag()
     var scrapButtonTapHandler: (() -> Void)?
     var isScrapButtonTapped: Bool = false {
@@ -45,6 +45,7 @@ final class InsightListCollectionViewCell: UICollectionViewCell {
         }
     }
     var seedId: Int = 0
+    var isUnLock: Bool = false
     
     // MARK: - View Life Cycle
     
@@ -153,6 +154,7 @@ extension InsightListCollectionViewCell {
         super.prepareForReuse()
         lockView.isHidden = true
         makeBorder(width: 0, color: .gray200)
+        isUnLock = false
     }
     
     func configureCell(_ model: SeedListResponseDto) {
@@ -160,6 +162,7 @@ extension InsightListCollectionViewCell {
         print(model.remainingDays)
         if model.remainingDays < 0 && model.isLocked == false {
             dueTimeLabel.text = "잠금 해제 완료!"
+            isUnLock = true
         } else if model.isLocked == true {
             dueTimeLabel.text = "잠금"
         } else {
@@ -177,17 +180,17 @@ extension InsightListCollectionViewCell {
         if isLock {
             lockCellStyle()
             isLock = true
-        }
-        if hasActionPlan {
-            darkCellStyle()
         } else {
             lightCellStyle()
+        }
+        if isUnLock {
+            darkCellStyle()
         }
     }
     
     func scrapButtonTapped() {
         let buttonImage: UIImage
-        if hasActionPlan {
+        if isUnLock {
             buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_dark_on : ImageLiterals.Home.btn_scrap_dark_off
         } else {
             buttonImage = isScrapButtonTapped ? ImageLiterals.Home.btn_scrap_light_on : ImageLiterals.Home.btn_scrap_light_off
