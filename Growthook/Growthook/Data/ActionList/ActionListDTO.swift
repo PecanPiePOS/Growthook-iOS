@@ -31,6 +31,10 @@ struct ActionListCompletionResponse: Codable {
     
 }
 
+struct ActionListScrapResponse: Codable {
+    
+}
+
 struct ActionListReviewDetailResponse: Codable {
     let actionPlan: String
     let isScraped: Bool
