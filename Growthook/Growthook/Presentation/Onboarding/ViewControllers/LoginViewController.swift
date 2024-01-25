@@ -138,6 +138,8 @@ final class LoginViewController: BaseViewController {
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
             UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
+            UserDefaults.standard.set(true ,forKey: I18N.Auth.isLoggedIn)
+            UserDefaults.standard.set(I18N.Auth.kakao, forKey: I18N.Auth.loginType)
             self?.loginSuccess()
         }
     }
@@ -163,10 +165,8 @@ final class LoginViewController: BaseViewController {
             }
             UserDefaults.standard.set(data.nickname, forKey: I18N.Auth.nickname)
             UserDefaults.standard.set(data.memberId, forKey: I18N.Auth.memberId)
-            UserDefaults.standard.set(true ,forKey: "isLoggedIn")
-            
-            
-            UserDefaults.standard.set(true ,forKey: "isAppleLogin")
+            UserDefaults.standard.set(true ,forKey: I18N.Auth.isLoggedIn)
+            UserDefaults.standard.set(I18N.Auth.apple, forKey: I18N.Auth.loginType)
             /**
              위는 사용자가 로그인을 했는지 안 했는지 확인하는
              UserDefaults입니다.  SplashViewController의 96번 줄을 보세요

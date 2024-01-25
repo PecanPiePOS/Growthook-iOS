@@ -140,7 +140,7 @@ final class HomeCaveView: BaseView {
         }
         
         addCaveButton.snp.makeConstraints {
-            $0.top.equalTo(seedView.snp.bottom).offset(18)
+            $0.top.equalTo(seedView.snp.bottom).offset(28)
             $0.trailing.equalToSuperview().inset(12)
             $0.size.equalTo(62)
         }

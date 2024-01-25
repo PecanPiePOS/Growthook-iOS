@@ -157,7 +157,14 @@ extension InsightListCollectionViewCell {
     
     func configureCell(_ model: SeedListResponseDto) {
         titleLabel.text = model.insight
-        dueTimeLabel.text = "\(model.remainingDays)\(I18N.InsightList.lockInsight)"
+        print(model.remainingDays)
+        if model.remainingDays < 0 && model.isLocked == false {
+            dueTimeLabel.text = "잠금 해제 완료!"
+        } else if model.isLocked == true {
+            dueTimeLabel.text = "잠금"
+        } else {
+            dueTimeLabel.text = "\(model.remainingDays)\(I18N.InsightList.lockInsight)"
+        }
         isLock = model.isLocked
         isScrapButtonTapped = model.isScraped
         hasActionPlan = model.hasActionPlan
@@ -171,7 +178,6 @@ extension InsightListCollectionViewCell {
             lockCellStyle()
             isLock = true
         }
-        
         if hasActionPlan {
             darkCellStyle()
         } else {
@@ -195,6 +201,7 @@ extension InsightListCollectionViewCell {
         makeBorder(width: 0.5, color: .gray200)
         titleLabel.textColor = .gray200
         dueTimeLabel.textColor = .gray200
+        dueTimeLabel.text = "잠금"
         lockView.isHidden = false
     }
     
