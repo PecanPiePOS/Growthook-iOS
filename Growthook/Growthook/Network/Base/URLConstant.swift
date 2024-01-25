@@ -27,6 +27,7 @@ enum URLConstant {
     static let actionPlanEdit = "/api/v1/actionplan/{actionPlanId}"
     static let actionPlanReview = "/api/v1/actionplan/{actionPlanId}/review"
     static let actionPlan = "/api/v1/actionplan/{actionplanId}"
+    static let actionPlanScrap = "/api/v1/actionplan/{actionPlanId}/scrap"
     
     // MARK: - Cave
     

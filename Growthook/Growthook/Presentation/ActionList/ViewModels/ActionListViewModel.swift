@@ -14,8 +14,10 @@ import Moya
 protocol ActionListViewModelInput {
     func didTapInProgressButton()
     func didTapCompletedButton()
-    func didTapInprogressScrapButton()
-    func didTapCompleteScrapButton()
+    func didTapInprogressOnlyScrapButton()
+    func didTapInprogressScrapButton(with actionPlanId: Int)
+    func didTapCompleteOnlyScrapButton()
+    func didTapCompleteScrapButton(with actionPlanId: Int)
     func didTapSeedButton()
     func didTapReviewButton(with actionPlanId: Int)
     func setReviewText(with value: String)
@@ -94,12 +96,32 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         getActionListPercent(mamberId: memberId)
     }
     
-    func didTapInprogressScrapButton() {
+    func didTapInprogressOnlyScrapButton() {
         print("진행중 탭 에서스크랩만 보기 버튼이 탭 되었습니다")
+        getDoingActionList(mamberId: memberId)
     }
     
-    func didTapCompleteScrapButton() {
+    func didTapCompleteOnlyScrapButton() {
         print("완료 탭 에서 스크랩만 보기 버튼이 탭 되었습니다")
+        getFinishedActionList(mamberId: memberId)
+    }
+    
+    func didTapInprogressScrapButton(with actionPlanId: Int) {
+        print("진행중 탭에서 스크랩 버튼이 탭 되었습니다")
+        patchACtionListScrap(actionPlanId: actionPlanId)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.getDoingActionList(mamberId: self.memberId)
+            self.getActionListPercent(mamberId: self.memberId)
+        }
+    }
+    
+    func didTapCompleteScrapButton(with actionPlanId: Int) {
+        print("완료 탭에서 스크랩 버튼이 탭 되었습니다")
+        patchACtionListScrap(actionPlanId: actionPlanId)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.getFinishedActionList(mamberId: self.memberId)
+            self.getActionListPercent(mamberId: self.memberId)
+        }
     }
     
     func didTapSeedButton() {
@@ -215,6 +237,17 @@ extension ActionListViewModel {
                 guard let self else { return }
                 self.reviewDetail.accept(data)
                 print(data)
+            }, onError: { error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    
+    private func patchACtionListScrap(actionPlanId: Int) {
+        ActionListService.patchACtionListScrap(with: actionPlanId)
+            .subscribe(onNext: { _ in
+                print("patchACtionListScrap가 호출됩니다")
             }, onError: { error in
                 print(error)
             })
