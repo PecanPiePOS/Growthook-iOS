@@ -80,7 +80,6 @@ final class InsightsDetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        
         viewModel.outputs.actionPlans
             .bind(to: actionPlanCollectionView.rx.items(cellIdentifier: InsightsDetailActionPlanCollectionViewCell.className, cellType: InsightsDetailActionPlanCollectionViewCell.self)) { [weak self] item, data, cell in
                 guard let self else { return }
@@ -559,6 +558,6 @@ extension InsightsDetailViewController: InsightMenuDelegate, CompleteReviewDeleg
 extension InsightsDetailViewController: CreateActionProtocol {
     func createAction() {
         print("됐당")
-        
+        self.viewModel = InsightsDetailViewModel(hasAnyActionPlan: true, seedId: seedId)
     }
 }

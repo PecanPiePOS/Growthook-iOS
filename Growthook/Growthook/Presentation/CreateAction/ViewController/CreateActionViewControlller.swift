@@ -131,7 +131,19 @@ final class CreateActionViewControlller: BaseViewController {
                 self.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
-    }
+        
+        viewModel.outputs.networkState
+            .bind { [weak self] status in
+                guard let self else { return }
+                switch status {
+                case .done:
+                    delegate?.createAction()
+                    self.navigationController?.popViewController(animated: true)
+                default:
+                    break
+                }
+            }
+            .disposed(by: disposeBag)    }
 }
 
 extension CreateActionViewControlller: UICollectionViewDelegateFlowLayout {
