@@ -40,11 +40,17 @@ final class HomeViewController: BaseViewController {
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     private var lockSeedId: Int?
     private var lockActionPlan: Bool?
+    private var isFirstLaunched: Bool = true
     
     // MARK: - View Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        let memberId = viewModel.memberId
+        if !isFirstLaunched {
+            viewModel.getCaveList(memberId: memberId)
+            viewModel.getSeedList(memberId: memberId)
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -56,6 +62,7 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         addGesture()
         setNotification()
+        isFirstLaunched = false
     }
     
     override func bindViewModel() {

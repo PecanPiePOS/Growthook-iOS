@@ -25,6 +25,12 @@ final class CaveDetailViewController: BaseViewController {
     
     // MARK: - View Life Cycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        if !isFirstLaunched {
+            viewModel.getCaveSeedList(caveId: caveId)
+        }
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self)
@@ -37,6 +43,7 @@ final class CaveDetailViewController: BaseViewController {
     private var lockSeedId: Int?
     private var caveId: Int
     private var lockActionPlan: Bool?
+    private var isFirstLaunched: Bool = true
     
     // MARK: - Initializer
 
