@@ -50,6 +50,13 @@ final class MyPageUserInformationViewController: BaseViewController {
                 self.signedAccountBlock.setInformation(with: account)
             }
             .disposed(by: disposeBag)
+        
+        withdrawalButton.rx.tap
+            .bind { [weak self] in
+                let loginType = UserDefaults.standard.string(forKey: I18N.Auth.loginType)
+                print(loginType)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setStyles() {

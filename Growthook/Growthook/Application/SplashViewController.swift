@@ -104,9 +104,9 @@ final class SplashViewController: BaseViewController {
      */
     
     private func isFirstLaunch() -> Bool {
-        let hasBeenLaunchedBefore = UserDefaults.standard.bool(forKey: "hasBeenLaunchedBefore")
+        let hasBeenLaunchedBefore = UserDefaults.standard.bool(forKey: I18N.Auth.hasBeenLaunched)
         if !hasBeenLaunchedBefore {
-            UserDefaults.standard.set(true, forKey: "hasBeenLaunchedBefore")
+            UserDefaults.standard.set(true, forKey: I18N.Auth.hasBeenLaunched)
         }
         return !hasBeenLaunchedBefore
     }
@@ -119,7 +119,7 @@ final class SplashViewController: BaseViewController {
      */
     
     private func isUserLoggedIn() -> Bool {
-        return UserDefaults.standard.bool(forKey: "isLoggedIn")
+        return UserDefaults.standard.bool(forKey: I18N.Auth.isLoggedIn)
     }
     
     

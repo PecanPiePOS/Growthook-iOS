@@ -60,6 +60,7 @@
 		035701FD2B4F1AF700A9E47A /* PatchSeedRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035701FC2B4F1AF700A9E47A /* PatchSeedRequestDto.swift */; };
 		035DB2A72B00E6F200161872 /* InsightListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2A62B00E6F200161872 /* InsightListView.swift */; };
 		035DB2AB2B00FF2400161872 /* InsightListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */; };
+		037EAB132B61301B00024F22 /* InsightListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037EAB122B61301B00024F22 /* InsightListEmptyView.swift */; };
 		03B9AC542AF55FF900A5751C /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC532AF55FF900A5751C /* GeneralResponse.swift */; };
 		03B9AC562AF5608900A5751C /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC552AF5608900A5751C /* NetworkLoggerPlugin.swift */; };
 		03B9AC592AF560D800A5751C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B9AC582AF560D800A5751C /* Config.swift */; };
@@ -257,6 +258,7 @@
 		035701FC2B4F1AF700A9E47A /* PatchSeedRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchSeedRequestDto.swift; sourceTree = "<group>"; };
 		035DB2A62B00E6F200161872 /* InsightListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListView.swift; sourceTree = "<group>"; };
 		035DB2AA2B00FF2400161872 /* InsightListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListCollectionViewCell.swift; sourceTree = "<group>"; };
+		037EAB122B61301B00024F22 /* InsightListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightListEmptyView.swift; sourceTree = "<group>"; };
 		03B9AC532AF55FF900A5751C /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		03B9AC552AF5608900A5751C /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		03B9AC582AF560D800A5751C /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				035DB2A62B00E6F200161872 /* InsightListView.swift */,
 				032213812B17960700FF5CF1 /* NotificationAlertView.swift */,
 				035701E02B4E6DA700A9E47A /* CaveListEmptyView.swift */,
+				037EAB122B61301B00024F22 /* InsightListEmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1573,6 +1576,7 @@
 				252DD8842B063A7900DBB1D1 /* ActionListViewModel.swift in Sources */,
 				03B9AC912AF5669600A5751C /* MakeAlert.swift in Sources */,
 				03B9AC9B2AF7A96000A5751C /* TabBarController.swift in Sources */,
+				037EAB132B61301B00024F22 /* InsightListEmptyView.swift in Sources */,
 				032213822B17960700FF5CF1 /* NotificationAlertView.swift in Sources */,
 				584EDAD72B4A57E60094872A /* Observable+.swift in Sources */,
 				58EFF5DB2B445AB6003C3838 /* BaseTargetType.swift in Sources */,

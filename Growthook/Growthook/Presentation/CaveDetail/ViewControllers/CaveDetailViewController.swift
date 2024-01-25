@@ -21,6 +21,7 @@ final class CaveDetailViewController: BaseViewController {
     private lazy var unLockInsightAlertView = UnLockInsightAlertView()
     private lazy var unLockCaveAlertView = UnLockCaveAlertView()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+    private lazy var insightListEmptyView = InsightListEmptyView()
     
     // MARK: - View Life Cycle
     
@@ -61,14 +62,22 @@ final class CaveDetailViewController: BaseViewController {
                 guard list.isEmpty else { return }
                 self?.caveDetailView.emptyInsightView.isHidden = false
                 self?.caveDetailView.insightListView.isHidden = true
+                self?.insightListEmptyView.isHidden = true
             })
             .map { [weak self] list in
                 guard let type = self?.caveDetailView.insightListView.scrapType else { return list }
-                return type ? list.filter { $0.isScraped } : list
+                let scrapType = type ? list.filter { $0.isScraped } : list
+                if scrapType.count == 0 {
+                    self?.insightListEmptyView.isHidden = false
+                } else {
+                    self?.insightListEmptyView.isHidden = true
+                }
+                return scrapType
             }
             .bind(to: caveDetailView.insightListView.insightCollectionView.rx.items(cellIdentifier: InsightListCollectionViewCell.className, cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
                 self.caveDetailView.emptyInsightView.isHidden = true
                 self.caveDetailView.insightListView.isHidden = false
+                self.insightListEmptyView.isHidden = true
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
@@ -200,17 +209,28 @@ final class CaveDetailViewController: BaseViewController {
     override func setStyles() {
         
         self.view.backgroundColor = .gray900
+        
+        insightListEmptyView.do {
+            $0.isHidden = true
+        }
     }
     
     // MARK: - Layout Helper
     
     override func setLayout() {
         
-        self.view.addSubviews(caveDetailView)
+        self.view.addSubviews(caveDetailView, insightListEmptyView)
         
         caveDetailView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        insightListEmptyView.snp.makeConstraints {
+            $0.top.equalTo(caveDetailView.insightListView.scrapButton).offset(124)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(165)
+            $0.height.equalTo(180)
         }
     }
     

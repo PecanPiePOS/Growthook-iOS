@@ -31,6 +31,7 @@ final class HomeViewController: BaseViewController {
     private let unLockAlertView = UnLockInsightAlertView()
     private let notificationView = NotificationAlertView()
     private lazy var insightEmptyView = EmptySeedView()
+    private lazy var insightListEmptyView = InsightListEmptyView()
     
     // MARK: - Properties
     
@@ -79,16 +80,25 @@ final class HomeViewController: BaseViewController {
                 guard list.isEmpty else { return }
                 self?.insightEmptyView.isHidden = false
                 self?.insightListView.isHidden = true
+                self?.insightListEmptyView.isHidden = true
             })
             .map { [weak self] list in
                 guard let type = self?.insightListView.scrapType else { return list }
-                return type ? list.filter { $0.isScraped } : list
+                let scrapType = type ? list.filter { $0.isScraped } : list
+                if scrapType.count == 0 {
+                    self?.insightListEmptyView.isHidden = false
+                } else {
+                    self?.insightListEmptyView.isHidden = true
+                }
+                return scrapType
             }
+        
             .bind(to: insightListView.insightCollectionView.rx
                 .items(cellIdentifier: InsightListCollectionViewCell.className,
                        cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
                 self.insightEmptyView.isHidden = true
                 self.insightListView.isHidden = false
+                self.insightListEmptyView.isHidden = true
                 cell.configureCell(model)
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
@@ -254,13 +264,17 @@ final class HomeViewController: BaseViewController {
         notificationView.do {
             $0.isHidden = true
         }
+        
+        insightListEmptyView.do {
+            $0.isHidden = true
+        }
     }
     
     // MARK: - Layout Helper
     
     override func setLayout() {
         
-        view.addSubviews(homeCaveView, insightListView, insightEmptyView, notificationView, seedPlusButton)
+        view.addSubviews(homeCaveView, insightListView, insightEmptyView, notificationView, seedPlusButton, insightListEmptyView)
         
         homeCaveView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -290,6 +304,13 @@ final class HomeViewController: BaseViewController {
             $0.top.equalTo(homeCaveView.snp.bottom)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
+        }
+        
+        insightListEmptyView.snp.makeConstraints {
+            $0.top.equalTo(insightListView.scrapButton.snp.bottom).offset(80)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(165)
+            $0.height.equalTo(180)
         }
     }
     
