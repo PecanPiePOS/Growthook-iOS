@@ -61,7 +61,7 @@ protocol InsightsDetailViewModelInput {
     func editSeed(editedSeed :InsightEditRequest)
     func deleteSeedDidTap(handler: @escaping (Bool) -> Void)
     func moveSeedToOtherCave(of selectedCave: InsightCaveModel)
-    func getAllCaves(memberId: Int)
+    func getAllCaves()
     func reloadActionPlan()
     func reloadSeedData()
     func completeActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void)
@@ -109,7 +109,8 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     private let disposeBag = DisposeBag()
     private let seedId: Int
     private var seedEditData: SeedEditModel?
-    
+    private let memberId = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
+
     var inputs: InsightsDetailViewModelInput { return self }
     var outputs: InsightsDetailViewModelOutput { return self }
  
@@ -297,7 +298,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
         networkStatus.accept(.normal)
     }
     
-    func getAllCaves(memberId: Int) {
+    func getAllCaves() {
         InsightsDetailService.getAllCaves(memberId: memberId)
             .subscribe(onNext: { [weak self] caves in
                 guard let self else { return }
