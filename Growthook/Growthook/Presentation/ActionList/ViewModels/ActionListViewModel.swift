@@ -98,10 +98,12 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     func didTapInprogressOnlyScrapButton() {
         print("진행중 탭 에서스크랩만 보기 버튼이 탭 되었습니다")
+        getDoingActionList(mamberId: memberId)
     }
     
     func didTapCompleteOnlyScrapButton() {
         print("완료 탭 에서 스크랩만 보기 버튼이 탭 되었습니다")
+        getFinishedActionList(mamberId: memberId)
     }
     
     func didTapInprogressScrapButton(with actionPlanId: Int) {
