@@ -53,7 +53,7 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
         scrapButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.viewModel.inputs.didTapInprogressScrapButton()
+                self.viewModel.inputs.didTapInprogressOnlyScrapButton()
                 self.isShowingScrappedData.toggle()
                 self.tableView.reloadData()
             }
@@ -169,6 +169,14 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.configure(model)
         cell.disposeBag = DisposeBag()
+        
+        cell.scrapButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                print("버튼 눌림")
+                self.viewModel.inputs.didTapInprogressScrapButton(with: cell.actionPlanId)
+            }
+            .disposed(by: cell.disposeBag)
         
         cell.seedButton.rx.tap
             .bind { [weak self] in

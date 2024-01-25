@@ -46,7 +46,7 @@ final class CompleteViewController: BaseViewController {
         scrapButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.viewModel.inputs.didTapCompleteScrapButton()
+                self.viewModel.inputs.didTapCompleteOnlyScrapButton()
                 self.isShowingScrappedData.toggle()
                 self.tableView.reloadData()
             }
@@ -144,6 +144,14 @@ extension CompleteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(model)
         cell.disposeBag = DisposeBag()
         
+        
+        cell.scrapButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.viewModel.inputs.didTapCompleteScrapButton(with: cell.actionPlanId)
+            }
+            .disposed(by: cell.disposeBag)
+
         cell.seedButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }

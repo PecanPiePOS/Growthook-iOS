@@ -20,8 +20,8 @@ final class ActionListCompleteTableViewCell: UITableViewCell {
     
     // MARK: - UI Components
     
-    private let scrapButton = UIButton()
-    private let actionTitleLabel = UILabel()
+    let scrapButton = UIButton()
+    let actionTitleLabel = UILabel()
     let seedButton = UIButton()
     let reviewButton = UIButton()
     private let topBorder = UIView()
