@@ -82,7 +82,7 @@ final class CreateActionViewControlller: BaseViewController {
     override func bindViewModel() {
         
         viewModel.inputs.setSeedId(seedId: self.seedId)
-
+        
         viewModel.outputs.insight
             .bind(onNext: { value in
                 self.createActionView.insightView.bindInsight(model: value)
@@ -132,18 +132,18 @@ final class CreateActionViewControlller: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.outputs.networkState
-            .bind { [weak self] status in
-                guard let self else { return }
-                switch status {
-                case .done:
-                    delegate?.createAction()
-                    self.navigationController?.popViewController(animated: true)
-                default:
-                    break
-                }
-            }
-            .disposed(by: disposeBag)    }
+                viewModel.outputs.networkState
+                    .bind { [weak self] status in
+                        guard let self else { return }
+                        switch status {
+                        case .done:
+                            delegate?.createAction()
+                            self.navigationController?.popViewController(animated: true)
+                        default:
+                            break
+                        }
+                    }
+                    .disposed(by: disposeBag)    }
 }
 
 extension CreateActionViewControlller: UICollectionViewDelegateFlowLayout {

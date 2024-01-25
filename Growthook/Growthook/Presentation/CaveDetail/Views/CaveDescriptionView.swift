@@ -40,7 +40,8 @@ final class CaveDescriptionView: BaseView {
         }
         
         userImageView.do {
-            $0.image = ImageLiterals.Home.img_cave
+            $0.image = ImageLiterals.Home.profile_default
+            $0.makeCornerRound(radius: 4)
         }
         
         nicknameLabel.do {
