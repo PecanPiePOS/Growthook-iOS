@@ -99,7 +99,13 @@ extension InsightsDetailMainBlockView: InsightBoxViewType {
         nameLabel.text = "" + model.caveName + "   "
         insightLabel.text = model.insight
         dateLabel.text = model.lockDate
-        remainingDateLabel.text = "D-" + String(model.remainingDays)
+        if model.remainingDays > 0 {
+            remainingDateLabel.text = "D-" + String(model.remainingDays)
+            self.addSubviews(remainingDateLabel, verticalDividerView)
+        } else {
+            remainingDateLabel.removeFromSuperview()
+            verticalDividerView.removeFromSuperview()
+        }
     }
     
     var moreButton: UIButton { return UIButton() }

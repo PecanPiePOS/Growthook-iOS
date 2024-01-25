@@ -181,8 +181,6 @@ final class OnboardingSelectViewController: BaseViewController {
     private func switchView() {
         view.subviews.forEach { $0.removeFromSuperview() }
         
-
-
         titleLabel.do {
             $0.text = "이제 그로쑥이\n성장의 거름을 만들어 줄게요!"
         }
@@ -223,7 +221,6 @@ final class OnboardingSelectViewController: BaseViewController {
             $0.width.equalTo(339)
             $0.height.equalTo(50)
         }
-        
     }
     
     @objc
@@ -231,12 +228,10 @@ final class OnboardingSelectViewController: BaseViewController {
         let vc = OnboardingViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
 }
 
 extension OnboardingSelectViewController: OnboardingButtonViewDelegate {
     func onboardingButtonTapped(_ buttonView: OnboardingButtonView) {
         updateSolveButtonState()
     }
-
 }

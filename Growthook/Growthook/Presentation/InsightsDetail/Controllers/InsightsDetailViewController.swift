@@ -80,7 +80,6 @@ final class InsightsDetailViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        
         viewModel.outputs.actionPlans
             .bind(to: actionPlanCollectionView.rx.items(cellIdentifier: InsightsDetailActionPlanCollectionViewCell.className, cellType: InsightsDetailActionPlanCollectionViewCell.self)) { [weak self] item, data, cell in
                 guard let self else { return }
@@ -444,7 +443,7 @@ extension InsightsDetailViewController {
     private func showAddNewActionPlanView() {
         let vc = CreateActionViewControlller()
         vc.seedId = self.seedId
-//        vc.delegate = self
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -553,5 +552,12 @@ extension InsightsDetailViewController: InsightMenuDelegate, CompleteReviewDeleg
         DispatchQueue.main.asyncAfter(deadline: .now()+0.4) {
             self.present(finishedAlertView, animated: false)
         }
+    }
+}
+
+extension InsightsDetailViewController: CreateActionProtocol {
+    func createAction() {
+        print("됐당")
+        self.viewModel = InsightsDetailViewModel(hasAnyActionPlan: true, seedId: seedId)
     }
 }
