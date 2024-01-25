@@ -91,9 +91,9 @@ struct CreateActionResponse: Codable {
 struct ActionPlanResponse: Codable {
     let caveName: String
     let insight: String
-    let memo: String
+    let memo: String?
     let source: String
-    let url: String
+    let url: String?
     let isScraped: Bool
     let lockDate: String
     let remainingDays: Int

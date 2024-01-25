@@ -22,10 +22,10 @@ enum SomeNetworkStatus {
 protocol InsightsViewModelInput {
     // MARK: 값 입력
     func addInsight(content: String)
-    func addMemo(content: String)
+    func addMemo(content: String?)
     func selectCaveToAdd(of cave: InsightCaveModel)
     func addReference(content: String)
-    func addReferenceUrl(content: String)
+    func addReferenceUrl(content: String?)
     func selectGoalPeriodToAdd(of period: InsightPeriodModel)
     // MARK: 네트워크 호출
     func postNewInsight()
@@ -73,7 +73,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     private let newMemoContent = BehaviorRelay<MemoContent>(value: nil)
     private let newReferenceContent = BehaviorRelay<ReferenceContent>(value: nil)
     private let newReferenceUrlContent = BehaviorRelay<ReferenceUrlContent>(value: nil)
-    private var existingData = SeedEditModel(caveName: "", insight: "", memo: "", source: "", url: "")
+    private var existingData = SeedEditModel(caveName: "", insight: "", source: "", memo: "", url: "")
     
     private let isNewInsightValid = BehaviorRelay(value: false)
     private let isCaveSelectedValid = BehaviorRelay(value: false)
@@ -164,14 +164,19 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
         }
     }
         
-    func addMemo(content: String) {
-        let isEditCancelledWithNoneInput: Bool = content == I18N.CreateInsight.memoTextViewPlaceholder
+    func addMemo(content: String?) {
+        guard let memo = content else {
+            newMemoContent.accept(nil)
+            return
+        }
+        
+        let isEditCancelledWithNoneInput: Bool = memo == I18N.CreateInsight.memoTextViewPlaceholder
 
         if isEditCancelledWithNoneInput != false {
             newMemoContent.accept(nil)
             return
         }
-        let modifiedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        let modifiedContent = memo.trimmingCharacters(in: .whitespacesAndNewlines)
         if !modifiedContent.isEmpty {
             newMemoContent.accept(modifiedContent)
         } else {
@@ -192,8 +197,12 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
         }
     }
     
-    func addReferenceUrl(content: String) {
-        let modifiedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+    func addReferenceUrl(content: String?) {
+        guard let url = content else {
+            newReferenceUrlContent.accept(nil)
+            return
+        }
+        let modifiedContent = url.trimmingCharacters(in: .whitespacesAndNewlines)
         if !modifiedContent.isEmpty {
             newReferenceUrlContent.accept(modifiedContent)
         } else {
@@ -219,13 +228,8 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
         addInsight(content: existingData.insight)
         addReference(content: existingData.source)
         selectGoalPeriodToAdd(of: .init(periodMonthAsInteger: 1, periodTitle: "수정 불가"))
-        if !existingData.memo.isEmpty {
-            addMemo(content: existingData.memo)
-        }
-        
-        if !existingData.url.isEmpty {
-            addReferenceUrl(content: existingData.url)
-        }
+        addMemo(content: existingData.memo)
+        addReferenceUrl(content: existingData.url)
         
         if let existingCave = myOwnCaves.value.first(where: {
             $0.caveTitle == existingData.caveName
