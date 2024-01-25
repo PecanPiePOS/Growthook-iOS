@@ -42,12 +42,17 @@ struct InsightActionPlanResponse: Codable {
 }
 
 struct SeedDetailResponsse: Codable {
-    let caveName, insight, memo, source: String
-    let url: String
+    let caveName, insight, source: String
+    let memo: String?
+    let url: String?
     let isScraped: Bool
     let lockDate: String
     let remainingDays: Int
 }
+
+//extension SeedDetailResponsse {
+//    static let initData = Self.init(caveName: "", insight: "", memo: "", source: nil, url: "", isScraped: false, lockDate: "", remainingDays: 0)
+//}
 
 struct CaveSuccessResponse: Codable {
     let caveId: Int
