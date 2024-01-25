@@ -52,7 +52,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> = BehaviorRelay<ActionListReviewDetailResponse>(value: ActionListReviewDetailResponse.actionListReviewDetailDummy())
     private let disposeBag = DisposeBag()
     var memberId: Int = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
-        
+    
     var inputs: ActionListViewModelInput { return self }
     var outputs: ActionListViewModelOutput { return self }
     
@@ -76,21 +76,22 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     
     init() {
-        self.getActionListPercent()
-        self.getFinishedActionList()
-        self.getDoingActionList()
+        self.getActionListPercent(mamberId: memberId)
+        self.getFinishedActionList(mamberId: memberId)
+        self.getDoingActionList(mamberId: memberId)
+
     }
     
     func didTapInProgressButton() {
         selectedIndex.accept(1)
-        getDoingActionList()
-        getActionListPercent()
+        getDoingActionList(mamberId: memberId)
+        getActionListPercent(mamberId: memberId)
     }
     
     func didTapCompletedButton() {
         selectedIndex.accept(0)
-        getFinishedActionList()
-        getActionListPercent()
+        getFinishedActionList(mamberId: memberId)
+        getActionListPercent(mamberId: memberId)
     }
     
     func didTapInprogressScrapButton() {
@@ -107,7 +108,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     }
     
     func didTapReviewButton(with actionPlanId: Int) {
-        getpostActionListReview(actionPlanId: actionPlanId)
+        getActionListReview(actionPlanId: actionPlanId)
     }
     
     func setReviewText(with value: String) {
@@ -116,40 +117,40 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     
     func didTapCancelButtonInBottomSheet() {
         selectedIndex.accept(0)
-        getActionListPercent()
+        getActionListPercent(mamberId: memberId)
     }
     
     func didTapSaveButtonInBottomSheet() {
         selectedIndex.accept(0)
-        getActionListPercent()
+        getActionListPercent(mamberId: memberId)
     }
     
     func didTapCheckButtonInAcertView() {
-        getFinishedActionList()
-        getActionListPercent()
+        getFinishedActionList(mamberId: memberId)
+        getActionListPercent(mamberId: memberId)
     }
     
     func didTapCancelButtonWithPatch(with actionPlanId: Int) {
         patchActionPlanCompletion(actionPlanId: actionPlanId)
-        getFinishedActionList()
-        getActionListPercent()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.getFinishedActionList(mamberId: self.memberId)
+            self.getActionListPercent(mamberId: self.memberId)
+        }
     }
+
     
     func didTapCancelButtonInBottomSheetWithPost(with actionPlanId: Int) {
         postActionListReview(actionPlanId: actionPlanId)
         patchActionPlanCompletion(actionPlanId: actionPlanId)
-        getFinishedActionList()
-        getActionListPercent()
+        getFinishedActionList(mamberId: memberId)
+        getActionListPercent(mamberId: memberId)
     }
 }
 
-// memberID 값 받아와야함. 언제? ActionList 탭을 터치할 때 한 마디로 init 이 될 때
-
-
 extension ActionListViewModel {
     
-    private func getActionListPercent() {
-        ActionListService.getActionListPercent(with: memberId)
+    private func getActionListPercent(mamberId: Int) {
+        ActionListService.getActionListPercent(with: mamberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.titlePersent.accept("\(data)")
@@ -159,8 +160,8 @@ extension ActionListViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getDoingActionList() {
-        ActionListService.getDoingActionList(with: memberId)
+    private func getDoingActionList(mamberId: Int) {
+        ActionListService.getDoingActionList(with: mamberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.doingActionList.accept(data)
@@ -171,9 +172,9 @@ extension ActionListViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getFinishedActionList() {
+    private func getFinishedActionList(mamberId: Int) {
         print("getFinishedActionList가 호출됩니다")
-        ActionListService.getFinishedActionList(with: memberId)
+        ActionListService.getFinishedActionList(with: mamberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
                 self.finishedActionList.accept(data)
@@ -195,7 +196,6 @@ extension ActionListViewModel {
     
     private func postActionListReview(actionPlanId: Int) {
         let newReview = ActionListReviewPostRequest(content: reviewText.value)
-        
         ActionListService.postActionListReview(actionPlanId: actionPlanId, review: newReview)
             .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
@@ -208,8 +208,8 @@ extension ActionListViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getpostActionListReview(actionPlanId: Int) {
-        print("getpostActionListReview가 호출됩니다")
+    private func getActionListReview(actionPlanId: Int) {
+        print("getActionListReview가 호출됩니다")
         ActionListService.getActionListReview(with: actionPlanId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }

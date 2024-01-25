@@ -112,5 +112,6 @@ enum I18N {
         static let hasBeenLaunched = "hasBeenLaunchedBefore"
         static let isLoggedIn = "isLoggedIn"
         static let loginType = "loginType"
+        static let refreshToken = "refreshToken"
     }
 }
