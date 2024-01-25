@@ -30,6 +30,7 @@ final class ActionListTableViewCell: UITableViewCell {
     
     var actionPlanId: Int = 0
     var seedId: Int = 0
+    var isScraped: Bool = false
     
     
     // MARK: - Initializer
@@ -144,5 +145,6 @@ extension ActionListTableViewCell {
         actionTitleLabel.text = model.content
         actionPlanId = model.actionPlanId
         seedId = model.seedId
+        isScraped = model.isScraped
     }
 }

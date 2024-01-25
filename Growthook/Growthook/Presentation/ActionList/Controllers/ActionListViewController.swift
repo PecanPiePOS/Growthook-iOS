@@ -84,7 +84,7 @@ final class ActionListViewController: BaseViewController {
                 self.viewModel.inputs.didTapCompletedButton()
             }
             .disposed(by: disposeBag)
-        
+                
         viewModel.outputs.titleText
             .drive(onNext: { [weak self] title in
                 self?.titleBarView.setTitleText(title)
@@ -99,7 +99,11 @@ final class ActionListViewController: BaseViewController {
         
         viewModel.outputs.selectedIndex
             .bind(onNext: { [weak self] index in
-                self?.segmentedView.moveToPage(index: index)
+                if index == 2 {
+                    self?.showToast()
+                } else {
+                    self?.segmentedView.moveToPage(index: index)
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -155,6 +159,10 @@ final class ActionListViewController: BaseViewController {
             pageViewController.setViewControllers([firstViewController], direction: .forward, animated: false)
             currentPage = firstViewController
         }
+    }
+    
+    private func showToast() {
+        view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
     }
     
     func didTapReviewButtonInCompleteViewController() {

@@ -173,8 +173,7 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
         cell.scrapButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                print("버튼 눌림")
-                self.viewModel.inputs.didTapInprogressScrapButton(with: cell.actionPlanId)
+                    self.viewModel.inputs.didTapInprogressScrapButton(with: cell.actionPlanId, with: cell.isScraped)
             }
             .disposed(by: cell.disposeBag)
         
@@ -185,14 +184,14 @@ extension InprogressViewController: UITableViewDelegate, UITableViewDataSource {
                 self.pushToInsightsDetailViewControllerInInprogressViewController(seedId: cell.seedId)
             }
             .disposed(by: cell.disposeBag)
-
+        
         cell.completButton.rx.tap
             .bind { [weak self]  in
                 guard let self else { return }
                 self.presentToBottomSheet(actionPlanId: cell.actionPlanId)
             }
             .disposed(by: cell.disposeBag)
-
+        
         return cell
     }
 }
