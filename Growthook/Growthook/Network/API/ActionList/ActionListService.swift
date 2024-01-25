@@ -19,6 +19,7 @@ enum ActionListTarget {
     case patchActionListCompletion(actionPlanId: Int)
     case getActionListReview(actionPlanId: Int)
     case postActionListReview(actionPlanId: Int, parameter: ActionListReviewPostRequest)
+    case patchACtionListScrap(actionPlanId: Int)
 }
 
 extension ActionListTarget: BaseTargetType {
@@ -57,6 +58,10 @@ extension ActionListTarget: BaseTargetType {
             let newPath = URLConstant.review
                 .replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
             return newPath
+        case .patchACtionListScrap(let actionPlanId):
+            let newPath = URLConstant.actionPlanScrap
+                .replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
+            return newPath
         }
     }
     
@@ -64,7 +69,7 @@ extension ActionListTarget: BaseTargetType {
         switch self {
         case .getActionListPercent, .getActionListDoing, .getActionListFinished, .getActionListReview:
             return .get
-        case .patchActionListCompletion:
+        case .patchActionListCompletion, .patchACtionListScrap:
             return .patch
         case .postActionListReview:
             return .post
@@ -73,7 +78,7 @@ extension ActionListTarget: BaseTargetType {
     
     var task: Moya.Task {
         switch self {
-        case .getActionListPercent, .getActionListDoing, .getActionListFinished, .patchActionListCompletion, .getActionListReview:
+        case .getActionListPercent, .getActionListDoing, .getActionListFinished, .patchActionListCompletion, .patchACtionListScrap, .getActionListReview:
             return .requestPlain
         case .postActionListReview(_, let parameter):
             let parameters = try! parameter.asParameter()
@@ -165,4 +170,18 @@ struct ActionListService: Networkable {
             .retryOnTokenExpired()
             .decode(decodeType: ActionListReviewPostResponse.self)
     }
+    
+    /**
+     액션리스트를 스크랩 합니다
+     - parameter actionPlanId: Int
+     */
+    
+    static func patchACtionListScrap(with actionPlanId: Int) -> Observable<ActionListScrapResponse> {
+        return provider.rx.request(.patchACtionListScrap(actionPlanId: actionPlanId))
+            .asObservable()
+            .mapError()
+            .retryOnTokenExpired()
+            .decode(decodeType: ActionListScrapResponse.self)
+    }
+    
 }
