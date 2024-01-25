@@ -138,6 +138,7 @@
 		250F7D772B16D01500D9726F /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250F7D762B16D01500D9726F /* AlertViewController.swift */; };
 		252DD8842B063A7900DBB1D1 /* ActionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252DD8832B063A7900DBB1D1 /* ActionListViewModel.swift */; };
 		2568FA182B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568FA172B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift */; };
+		259B5A152B60D1CC00B15204 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259B5A142B60D1CC00B15204 /* KeychainHelper.swift */; };
 		259E7F702B3E95E600F3DC8F /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F6F2B3E95E600F3DC8F /* OnboardingViewModel.swift */; };
 		259E7F722B3E95F600F3DC8F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F712B3E95F600F3DC8F /* LoginView.swift */; };
 		259E7F752B405D3800F3DC8F /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E7F742B405D3800F3DC8F /* OnboardingViewController.swift */; };
@@ -329,6 +330,7 @@
 		250F7D762B16D01500D9726F /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		252DD8832B063A7900DBB1D1 /* ActionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListViewModel.swift; sourceTree = "<group>"; };
 		2568FA172B0DD47E00CAD12A /* ActionListBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListBottomSheetViewController.swift; sourceTree = "<group>"; };
+		259B5A142B60D1CC00B15204 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		259E7F6F2B3E95E600F3DC8F /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		259E7F712B3E95F600F3DC8F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		259E7F742B405D3800F3DC8F /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -657,6 +659,7 @@
 				03E480FF2AF2AFDC002F4CBC /* AppDelegate.swift */,
 				03E481012AF2AFDC002F4CBC /* SceneDelegate.swift */,
 				58E75F9C2B00B63C00512FE2 /* SplashViewController.swift */,
+				259B5A142B60D1CC00B15204 /* KeychainHelper.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1588,6 +1591,7 @@
 				03B9AC682AF5635800A5751C /* String+.swift in Sources */,
 				0332A3902B5020CC00720CD3 /* CaveAPI.swift in Sources */,
 				033E9C202AFE725D0051A9E8 /* CaveProfile.swift in Sources */,
+				259B5A152B60D1CC00B15204 /* KeychainHelper.swift in Sources */,
 				03B9AC7A2AF564FC00A5751C /* UITableView+.swift in Sources */,
 				032213A52B1C54EB00FF5CF1 /* ScrapOnlyButton.swift in Sources */,
 				03C3565F2B0B702900750758 /* InsightTapBottomSheet.swift in Sources */,
