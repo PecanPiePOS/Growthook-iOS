@@ -80,8 +80,7 @@ final class AuthAPI {
                 } catch let err {
                     print(err.localizedDescription, 500)
                 }
-            case .failure(let err)
-                :
+            case .failure(let err):
                 print(err.localizedDescription)
                 completion(nil)
             }
