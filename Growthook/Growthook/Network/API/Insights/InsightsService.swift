@@ -77,6 +77,7 @@ struct InsightsService: Networkable {
         return provider.rx.request(.postNewInsight(caveId: caveId, insightParameter: insight))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: InsightPostResponse.self)
     }
     
@@ -84,6 +85,7 @@ struct InsightsService: Networkable {
         return provider.rx.request(.editInsight(seedId: seedId, insightParameter: insight))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: InsightSuccessResponse.self)
     }
     
@@ -91,6 +93,7 @@ struct InsightsService: Networkable {
         return provider.rx.request(.deleteInsight(seedId: seedId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: InsightSuccessResponse.self)
     }
 }

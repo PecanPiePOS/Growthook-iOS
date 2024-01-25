@@ -20,14 +20,20 @@ final class SplashViewController: BaseViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             if self.isUserLoggedIn() {
+                APIConstants.jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
+                APIConstants.refreshToken = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
                 if let jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken), !jwtToken.isEmpty {
                     AuthAPI.shared.getRefreshToken() { [weak self] response in
                         guard let status = response?.status else { return }
                         if status == 401 {
                             print("아직 토큰이 유효합니다")
+                            APIConstants.jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
+                            APIConstants.refreshToken = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
                             self?.openTabBar()
                         } else {
                             guard let data = response?.data else { return }
+                            APIConstants.jwtToken = data.accessToken
+                            APIConstants.refreshToken = data.refreshToken
 
                             if let accessTokenData = data.accessToken.data(using: .utf8) {
                                 KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
@@ -41,6 +47,7 @@ final class SplashViewController: BaseViewController {
                     }
                 }
             } else if self.isFirstLaunch() {
+                self.deleteAllRemainingKeyChains()
                 self.openOnboarding()
             } else {
                 self.openOnboarding()
@@ -131,4 +138,8 @@ final class SplashViewController: BaseViewController {
         sceneDelegate.window?.makeKeyAndVisible()
     }
     
+    private func deleteAllRemainingKeyChains() {
+        KeychainHelper.delete(key: I18N.Auth.jwtToken)
+        KeychainHelper.delete(key: I18N.Auth.refreshToken)
+    }
 }

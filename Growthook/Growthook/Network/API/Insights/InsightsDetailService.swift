@@ -126,6 +126,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.getAllActionPlans(seedId: seedId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: [InsightActionPlanResponse].self)
     }
     
@@ -149,6 +150,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.editActionPlan(actionPlanId: actionPlanId, editedActionPlan: editedActionPlan))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: GeneralResponse<InsightSuccessResponse>.self)
     }
     
@@ -156,6 +158,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.deleteActionPlan(actionPlanId: actionPlanId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: InsightSuccessResponse.self)
     }
     
@@ -179,6 +182,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.completeActionPlan(actionPlanId: actionPlanId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: InsightSuccessResponse.self)
     }
     
@@ -186,6 +190,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.postNewSingleActionPlan(seedId: seedId, newActionPlan: newActionPlan))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: InsightSuccessResponse.self)
     }
     
@@ -241,6 +246,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.moveSeed(seedId: seedId, caveId: caveId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: CaveSuccessResponse.self)
     }
     
@@ -248,6 +254,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.getAllCaves(memberId: memberId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: [CaveSuccessResponse].self)
     }
     
@@ -255,6 +262,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.getSeedDetail(seedId: seedId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: SeedDetailResponsse.self)
     }
     
@@ -262,6 +270,7 @@ struct InsightsDetailService: Networkable {
         return provider.rx.request(.postReviewToCompleteActionPlan(content: content, actionPlanId: actionPlanId))
             .asObservable()
             .mapError()
+            .retryOnTokenExpired()
             .decode(decodeType: InsightSuccessResponse.self)
     }
 }
