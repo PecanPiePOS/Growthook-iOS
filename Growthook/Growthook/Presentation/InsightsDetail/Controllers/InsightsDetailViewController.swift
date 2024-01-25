@@ -443,7 +443,6 @@ extension InsightsDetailViewController {
     private func showAddNewActionPlanView() {
         let vc = CreateActionViewControlller()
         vc.seedId = self.seedId
-        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -552,13 +551,5 @@ extension InsightsDetailViewController: InsightMenuDelegate, CompleteReviewDeleg
         DispatchQueue.main.asyncAfter(deadline: .now()+0.4) {
             self.present(finishedAlertView, animated: false)
         }
-    }
-}
-
-extension InsightsDetailViewController: CreateActionProtocol {
-    func createAction() {
-        print("됐당")
-//        viewModel = InsightsDetailViewModel(hasAnyActionPlan: true, seedId: seedId)
-//        bindViewModel()
     }
 }

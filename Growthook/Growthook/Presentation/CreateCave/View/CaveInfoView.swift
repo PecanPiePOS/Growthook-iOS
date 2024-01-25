@@ -92,7 +92,7 @@ final class CaveInfoView: BaseView {
         }
         
         nicknameLabel.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(17)
+            $0.centerY.equalTo(profileImageView.snp.centerY)
             $0.leading.equalTo(profileImageView.snp.trailing).offset(10)
             $0.trailing.equalToSuperview().inset(100)
         }

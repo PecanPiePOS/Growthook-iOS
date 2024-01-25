@@ -16,10 +16,6 @@ struct ActionplanModel {
     var content: String?
 }
 
-protocol CreateActionProtocol: AnyObject {
-    func createAction()
-}
-
 final class CreateActionViewControlller: BaseViewController {
 
     private let createActionView = CreateActionView()
@@ -45,9 +41,7 @@ final class CreateActionViewControlller: BaseViewController {
     
     var newActionPlan: CreateActionRequest = CreateActionRequest(contents: [])
     var seedId: Int = 0
-    
-    weak var delegate: CreateActionProtocol?
-    
+        
     override func loadView() {
         self.view = createActionView
     }
@@ -121,7 +115,6 @@ final class CreateActionViewControlller: BaseViewController {
                 }
                 self.viewModel.inputs.postActionPlan(data: newdata)
                 self.navigationController?.popViewController(animated: true)
-                delegate?.createAction()
             }
             .disposed(by: disposeBag)
         
