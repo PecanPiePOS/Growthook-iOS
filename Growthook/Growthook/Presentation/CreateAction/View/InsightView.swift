@@ -164,7 +164,12 @@ extension InsightView {
         nameLabel.sizeToFit()
         insightLabel.text = model.insight
         dateLabel.text = model.lockDate
-        dDayLabel.text = "D\(model.remainingDays)"
+        if model.remainingDays > 0 {
+            dDayLabel.text = "D-\(model.remainingDays)"
+        } else {
+            dDayLabel.removeFromSuperview()
+            verticalDivisionLabel.removeFromSuperview()
+        }
         memoLabel.text = model.memo
         memoLabel.setLineSpacing(lineSpacing: 4)
         nameLabel.snp.updateConstraints {
