@@ -171,7 +171,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
 
 extension ActionListViewModel {
     
-    private func getActionListPercent(mamberId: Int) {
+    func getActionListPercent(mamberId: Int) {
         ActionListService.getActionListPercent(with: mamberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
@@ -182,7 +182,7 @@ extension ActionListViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getDoingActionList(mamberId: Int) {
+    func getDoingActionList(mamberId: Int) {
         ActionListService.getDoingActionList(with: mamberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }

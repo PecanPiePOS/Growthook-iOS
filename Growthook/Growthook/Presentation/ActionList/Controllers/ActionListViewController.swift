@@ -41,6 +41,8 @@ final class ActionListViewController: BaseViewController {
     // MARK: - Properties
     
     private var actionListReviewViewController: ActionListReviewViewController?
+    var memberId: Int = UserDefaults.standard.integer(forKey: I18N.Auth.memberId)
+    private var isFirstLaunched: Bool = true
     
     
     // MARK: - Initializer
@@ -57,6 +59,15 @@ final class ActionListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setPage()
+        isFirstLaunched = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
+        if !isFirstLaunched {
+            viewModel.getActionListPercent(mamberId: memberId)
+            viewModel.getDoingActionList(mamberId: memberId)
+        }
     }
     
     override func bindViewModel() {
