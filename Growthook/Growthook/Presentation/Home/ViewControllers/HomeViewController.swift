@@ -50,6 +50,7 @@ final class HomeViewController: BaseViewController {
         if !isFirstLaunched {
             viewModel.getCaveList(memberId: memberId)
             viewModel.getSeedList(memberId: memberId)
+            viewModel.getSsukCount(memberId: memberId)
         }
     }
     
