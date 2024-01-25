@@ -9,6 +9,8 @@ import Foundation
 import Security
 
 import Moya
+import RxSwift
+import RxMoya
 
 final class TokenManager {
     
@@ -17,17 +19,23 @@ final class TokenManager {
     
     private init() {}
     
-    func refreshNewToken() {
-        AuthAPI.shared.getRefreshToken() { response in
-            guard let data = response?.data else { return }
-            print("New Token is now valid.")
-            if let accessTokenData = data.accessToken.data(using: .utf8) {
-                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
-            }
+    func refreshNewToken() -> Observable<Void> {
+        return authProvider.rx.request(.tokenRefresh)
+            .asObservable()
+            .decode(decodeType: RefreshTokenResponseDto.self)
+            .do(onNext: { data in
+                print("🔥")
+                print("New Token is now valid.")
+                APIConstants.jwtToken = data.accessToken
+                APIConstants.refreshToken = data.refreshToken
+                if let accessTokenData = data.accessToken.data(using: .utf8) {
+                    KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
+                }
 
-            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
-                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
-            }
-        }
+                if let refreshTokenData = data.refreshToken.data(using: .utf8) {
+                    KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
+                }
+            })
+            .map {_ in}
     }
 }
