@@ -53,6 +53,15 @@ final class CaveDetailViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    // MARK: - View Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addGesture()
+        setNotification()
+        isFirstLaunched = false
+    }
+    
     override func bindViewModel() {
         
         viewModel.inputs.caveDetail(caveId: caveId)
@@ -201,14 +210,6 @@ final class CaveDetailViewController: BaseViewController {
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
-    }
-    
-    // MARK: - View Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        addGesture()
-        setNotification()
     }
     
     // MARK: - UI Components Property

@@ -68,6 +68,10 @@ final class MyPageUserInformationViewController: BaseViewController {
                         UserDefaults.standard.removeObject(forKey: $0.key)
                     }
                     
+                    // 키체인 삭제
+                    KeychainHelper.delete(key: I18N.Auth.jwtToken)
+                    KeychainHelper.delete(key: I18N.Auth.refreshToken)
+                    
                     // 루트 뷰 변경
                         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                            let sceneDelegate = windowScene.delegate as? SceneDelegate,
