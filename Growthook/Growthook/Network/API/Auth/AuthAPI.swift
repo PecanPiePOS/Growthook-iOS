@@ -50,6 +50,12 @@ final class AuthAPI {
                 do {
                     self.refreshTokenData = try response.map(GeneralResponse<RefreshTokenResponseDto>?.self)
                     guard let refreshTokenData = self.refreshTokenData else { return }
+                    if let accessToken = refreshTokenData.data?.accessToken.data(using: .utf8) {
+                        KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessToken)
+                    }
+                    if let refreshToken = refreshTokenData.data?.refreshToken.data(using: .utf8) {
+                        KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshToken)
+                    }
                     completion(refreshTokenData)
                 } catch let err {
                     print(err.localizedDescription, 500)
