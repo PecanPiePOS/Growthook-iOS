@@ -24,7 +24,7 @@ final class MypageViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("-----------")
+        viewModel.inputs.reloadSsuk()
     }
 
     override func bindViewModel() {

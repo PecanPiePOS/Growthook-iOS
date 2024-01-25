@@ -44,7 +44,7 @@ final class MyPageAlertView: BaseView {
     
     override func setStyles() {
         
-        self.backgroundColor = .black000.withAlphaComponent(0.5)
+        self.backgroundColor = .black000.withAlphaComponent(0.6)
         
         contentView.do {
             $0.backgroundColor = .gray400

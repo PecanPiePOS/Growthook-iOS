@@ -103,6 +103,10 @@ extension CommonCustomNavigationBar {
         disabledColor = disabled
     }
     
+    func hideBackButton() {
+        backButton.isHidden = true
+    }
+    
     func modifyActionButtonConfigurationWithSymbol(of systemName: String) {
         let configuration = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium)
         doneButton.setImage(UIImage(systemName: systemName, withConfiguration: configuration), for: .normal)

@@ -81,6 +81,35 @@ struct InsightsService: Networkable {
             .decode(decodeType: InsightPostResponse.self)
     }
     
+    static func postNewInsight(caveId: Int, of insight: InsightPostRequest, handler: @escaping (_ seedId: Int?) -> Void) {
+        provider.request(.postNewInsight(caveId: caveId, insightParameter: insight)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    do {
+                        let data = try response.map(GeneralResponse<InsightPostResponse>.self)
+                        handler(data.data?.seedId)
+                    } catch let error {
+                        handler(nil)
+                    }
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            postNewInsight(caveId: caveId, of: insight, handler: handler)
+                        } else {
+                            handler(nil)
+                        }
+                    }
+                } else {
+                    handler(nil)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(nil)
+            }
+        }
+    }
+    
     static func editInsight(seedId: Int, of insight: InsightEditRequest) -> Observable<InsightSuccessResponse> {
         return provider.rx.request(.editInsight(seedId: seedId, insightParameter: insight))
             .asObservable()

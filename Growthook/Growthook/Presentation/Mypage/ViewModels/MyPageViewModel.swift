@@ -17,6 +17,8 @@ protocol MyPageViewModelInputs {
     func frequentQuestionsDidTap()
     func termsAndPoliciesDidTap()
     func logOutDidTap()
+    
+    func reloadSsuk()
 }
 
 protocol MyPageViewModelOutputs {
@@ -100,6 +102,10 @@ final class MyPageViewModel: MyPageViewModelInputs, MyPageViewModelOutputs, MyPa
         KeychainHelper.delete(key: I18N.Auth.jwtToken)
         KeychainHelper.delete(key: I18N.Auth.refreshToken)
         UserDefaults.standard.set(false ,forKey: "isLoggedIn")
+    }
+    
+    func reloadSsuk() {
+        getUserInformation()
     }
 }
 

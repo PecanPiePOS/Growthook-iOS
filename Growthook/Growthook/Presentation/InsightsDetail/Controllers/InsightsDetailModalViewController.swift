@@ -1,8 +1,8 @@
 //
-//  InsightsDetailViewController.swift
+//  InsightsDetailModalViewController.swift
 //  Growthook
 //
-//  Created by KYUBO A. SHIM on 1/14/24.
+//  Created by KYUBO A. SHIM on 1/26/24.
 //
 
 import UIKit
@@ -10,37 +10,8 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-protocol InsightBoxViewType: AnyObject {
-    func bindInsight(model: ActionPlanResponse)
-    func showDetail()
-    func fold()
-    var moreButton: UIButton { get }
-}
 
-enum HasAnyActionPlan {
-    case yes
-    case no
-    
-    var height: CGFloat {
-        switch self {
-        case .yes:
-            135
-        case .no:
-            113
-        }
-    }
-    
-    var color: UIColor {
-        switch self {
-        case .yes:
-            return .gray600
-        case .no:
-            return .gray700
-        }
-    }
-}
-
-final class InsightsDetailViewController: BaseViewController {
+final class InsightsDetailModalViewController: BaseViewController {
     
     private let disposeBag = DisposeBag()
     private var viewModel: InsightsDetailViewModel
@@ -65,6 +36,10 @@ final class InsightsDetailViewController: BaseViewController {
     private var actionPlanButton: BottomCTAButton = .init(type: .createAction)
     private let decoyScrapButton = UIButton()
     
+    private let alertBackground = UIView()
+    private let alertImageView = UIImageView()
+    private let dismissButton = UIButton()
+    
     private let loadingView = FullCoverLoadingView()
     private var seedId = 0
     private var isFirstOpened = true
@@ -74,6 +49,12 @@ final class InsightsDetailViewController: BaseViewController {
         super.viewWillAppear(animated)
         isFolded = true
         navigationController?.navigationBar.isHidden = true
+//
+//        if isFirstOpened != false {
+//            isFirstOpened = false
+//        } else {
+//            // Reload 하는 뷰 만들기.
+//        }
     }
     
     init(hasAnyActionPlan: Bool, seedId: Int) {
@@ -152,7 +133,6 @@ final class InsightsDetailViewController: BaseViewController {
                 
                 if shouldHide != false {
                     self.actionPlanButton = BottomCTAButton(type: .addAction)
-                    self.customNavigationView.hideDoneButton()
                     self.uselessBoxView.backgroundColor = HasAnyActionPlan.yes.color
                     self.actionPlanButton.setTitleIfNeeded(with: "액션 더하기")
                     self.mainBlockWithMemoView.isHidden = true
@@ -171,6 +151,8 @@ final class InsightsDetailViewController: BaseViewController {
                     self.hasActionPlan = false
                     self.decoyScrapButton.isHidden = true
                 }
+                
+                self.customNavigationView.showDoneButton()
             }
             .disposed(by: disposeBag)
         
@@ -204,6 +186,7 @@ final class InsightsDetailViewController: BaseViewController {
                         // 나머지는 따로 CallBack 으로 toast 띄움
                         break
                     }
+                    self.customNavigationView.showDoneButton()
                 }
             }
             .disposed(by: disposeBag)
@@ -269,15 +252,8 @@ final class InsightsDetailViewController: BaseViewController {
         customNavigationView.rxDoneButtonTapControl
             .bind { [weak self] in
                 guard let self else { return }
-                self.viewModel.inputs.navigationBarMenuDidTap()
-                self.presentMenuView()
-            }
-            .disposed(by: disposeBag)
-        
-        customNavigationView.rxBackButtonTapControl
-            .bind { [weak self] in
-                guard let self else { return }
-                self.navigationController?.popViewController(animated: true)
+                self.dismiss(animated: true)
+                self.goBackToRootView()
             }
             .disposed(by: disposeBag)
         
@@ -360,6 +336,15 @@ final class InsightsDetailViewController: BaseViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        dismissButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.alertBackground.removeFromSuperview()
+                self.alertImageView.removeFromSuperview()
+                self.dismissButton.isHidden = true
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Register
@@ -374,11 +359,12 @@ final class InsightsDetailViewController: BaseViewController {
         uselessBoxView.backgroundColor = mainBlockColor
         
         customNavigationView.do {
-            $0.modifyActionButtonConfigurationWithSymbol(of: "ellipsis")
+            $0.modifyActionButtonConfigurationWithSymbol(of: "xmark")
             $0.isButtonEnabled(true)
             $0.setTitle(with: "씨앗 정보")
             $0.setBackgroundColor(mainBlockColor)
             $0.setButtonColorForWhen(enabled: .white000, disabled: .white000)
+            $0.hideBackButton()
         }
         
         memoView.do {
@@ -401,6 +387,15 @@ final class InsightsDetailViewController: BaseViewController {
         deleteActionPlanView.isHidden = true
         cellMenuView.isHidden = true
         loadingView.isHidden = true
+        
+        alertBackground.do {
+            $0.backgroundColor = .black000.withAlphaComponent(0.6)
+        }
+        
+        alertImageView.do {
+            $0.contentMode = .scaleAspectFit
+            $0.image = UIImage(named: "newSeedAlert")
+        }
     }
     
     // MARK: - Layout
@@ -412,7 +407,8 @@ final class InsightsDetailViewController: BaseViewController {
             uselessBoxView, customNavigationView, mainBlockWithMemoView, mainBlockWithActionPlanView,
             memoView, actionPlanButton, actionPlanCollectionView,
             deleteAlertView, deleteActionPlanView, loadingView,
-            decoyScrapButton
+            decoyScrapButton, alertBackground, alertImageView,
+            dismissButton
         )
         
         uselessBoxView.snp.makeConstraints {
@@ -477,6 +473,22 @@ final class InsightsDetailViewController: BaseViewController {
             $0.trailing.equalToSuperview().inset(8)
             $0.size.equalTo(48)
         }
+        
+        alertBackground.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        alertImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.height.equalToSuperview().dividedBy(3.34)
+            $0.width.equalToSuperview().dividedBy(1.29)
+        }
+        
+        dismissButton.snp.makeConstraints {
+            $0.width.equalTo(alertImageView)
+            $0.height.equalTo(50)
+            $0.bottom.equalTo(alertImageView.snp.bottom)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -484,7 +496,7 @@ final class InsightsDetailViewController: BaseViewController {
     }
 }
 
-extension InsightsDetailViewController {
+extension InsightsDetailModalViewController {
     
     private func setFlowLayout() -> UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
@@ -666,9 +678,17 @@ extension InsightsDetailViewController {
     private func hidemenu() {
         cellMenuView.isHidden = true
     }
+    
+    private func goBackToRootView() {
+        let mainViewController = TabBarController()
+        mainViewController.selectedIndex = 0
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+        sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+        sceneDelegate.window?.makeKeyAndVisible()
+    }
 }
 
-extension InsightsDetailViewController: InsightMenuDelegate, CompleteReviewDelegate {
+extension InsightsDetailModalViewController: InsightMenuDelegate, CompleteReviewDelegate {
     
     func pushToEditView() {
         let existingData = viewModel.inputs.fetchSeedModel()
@@ -689,7 +709,7 @@ extension InsightsDetailViewController: InsightMenuDelegate, CompleteReviewDeleg
     }
 }
 
-extension InsightsDetailViewController: InsightDetailReloadDelegate {
+extension InsightsDetailModalViewController: InsightDetailReloadDelegate {
     func reloadAfterPost() {
         DispatchQueue.main.asyncAfter(deadline: .now()+1.2) {
             self.viewModel.inputs.reloadActionPlan()

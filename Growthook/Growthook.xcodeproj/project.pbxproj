@@ -194,6 +194,7 @@
 		588E2BA02B544E240014E6D5 /* InsightDetailEditSeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588E2B9F2B544E240014E6D5 /* InsightDetailEditSeedViewController.swift */; };
 		58A65D922B621D8900FB92CC /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A65D912B621D8900FB92CC /* TokenManager.swift */; };
 		58A65D942B62DF5C00FB92CC /* RemoveAlertView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A65D932B62DF5C00FB92CC /* RemoveAlertView2.swift */; };
+		58A65D962B63077100FB92CC /* InsightsDetailModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A65D952B63077100FB92CC /* InsightsDetailModalViewController.swift */; };
 		58AB70AC2B2C7CC50061C072 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70AB2B2C7CC50061C072 /* MyPageViewModel.swift */; };
 		58AB70AE2B2C88570061C072 /* MyPageThookBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70AD2B2C88570061C072 /* MyPageThookBoxView.swift */; };
 		58AB70B12B2C90560061C072 /* MyPageListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AB70B02B2C90560061C072 /* MyPageListTableViewCell.swift */; };
@@ -392,6 +393,7 @@
 		588E2B9F2B544E240014E6D5 /* InsightDetailEditSeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightDetailEditSeedViewController.swift; sourceTree = "<group>"; };
 		58A65D912B621D8900FB92CC /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		58A65D932B62DF5C00FB92CC /* RemoveAlertView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAlertView2.swift; sourceTree = "<group>"; };
+		58A65D952B63077100FB92CC /* InsightsDetailModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsDetailModalViewController.swift; sourceTree = "<group>"; };
 		58AB70AB2B2C7CC50061C072 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		58AB70AD2B2C88570061C072 /* MyPageThookBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageThookBoxView.swift; sourceTree = "<group>"; };
 		58AB70B02B2C90560061C072 /* MyPageListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageListTableViewCell.swift; sourceTree = "<group>"; };
@@ -1240,6 +1242,7 @@
 				588E2B992B541FCE0014E6D5 /* InsigthDetailActionPlanReviewSheetViewController.swift */,
 				588E2B9D2B5449D80014E6D5 /* InsightDetailCaveViewController.swift */,
 				588E2B9F2B544E240014E6D5 /* InsightDetailEditSeedViewController.swift */,
+				58A65D952B63077100FB92CC /* InsightsDetailModalViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1477,6 +1480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				586626282B4EB10C0084468C /* MyPageUserInfoBlockView.swift in Sources */,
+				58A65D962B63077100FB92CC /* InsightsDetailModalViewController.swift in Sources */,
 				58EFF5DE2B445AE2003C3838 /* ServiceError.swift in Sources */,
 				034580872B2D6B98002DDEBA /* CaveDescriptionView.swift in Sources */,
 				03B9AC822AF5658F00A5751C /* FontLiterals.swift in Sources */,

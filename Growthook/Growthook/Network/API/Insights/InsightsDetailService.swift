@@ -20,6 +20,7 @@ enum InsightsDetailTarget {
     case postReviewToCompleteActionPlan(content: String, actionPlanId: Int)
     case postNewSingleActionPlan(seedId: Int, newActionPlan: InsightAddExtraActionPlanRequest)
     case scrapSeed(seedId: Int)
+    case scrapActionPlan(actionPlanId: Int)
     
     case moveSeed(seedId: Int, caveId: Int)
     case getAllCaves(memberId: Int)
@@ -65,9 +66,13 @@ extension InsightsDetailTarget: BaseTargetType {
         case .postReviewToCompleteActionPlan(_, let actionPlanId):
             let newPath = URLConstant.actionPlanReview.replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
             return newPath
-        case .scrapSeed(seedId: let seedId):
+        case .scrapSeed(let seedId):
             let newPath = URLConstant.toggleSeedScrapStatus
                 .replacingOccurrences(of: "{seedId}", with: String(seedId))
+            return newPath
+        case .scrapActionPlan(let actionPlanId):
+            let newPath = URLConstant.actionPlanScrap
+                .replacingOccurrences(of: "{actionPlanId}", with: String(actionPlanId))
             return newPath
         }
     }
@@ -93,6 +98,8 @@ extension InsightsDetailTarget: BaseTargetType {
         case .postReviewToCompleteActionPlan:
             return .post
         case .scrapSeed:
+            return .patch
+        case .scrapActionPlan:
             return .patch
         }
     }
@@ -122,6 +129,8 @@ extension InsightsDetailTarget: BaseTargetType {
             let newReview = ["content": content]
             return .requestParameters(parameters: newReview, encoding: JSONEncoding.default)
         case .scrapSeed:
+            return .requestPlain
+        case .scrapActionPlan:
             return .requestPlain
         }
     }
@@ -333,6 +342,30 @@ struct InsightsDetailService: Networkable {
                     TokenManager.shared.refreshNewToken { success in
                         if success {
                             scrapSeed(seedId: seedId, handler: handler)
+                        } else {
+                            handler(false)
+                        }
+                    }
+                } else {
+                    handler(false)
+                }
+            case .failure(let error):
+                print(error, "📌")
+                handler(false)
+            }
+        }
+    }
+    
+    static func scrapActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void) {
+        provider.request(.scrapActionPlan(actionPlanId: actionPlanId)) { result in
+            switch result {
+            case .success(let response):
+                if response.statusCode < 204 {
+                    handler(true)
+                } else if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        if success {
+                            scrapActionPlan(actionPlanId: actionPlanId, handler: handler)
                         } else {
                             handler(false)
                         }

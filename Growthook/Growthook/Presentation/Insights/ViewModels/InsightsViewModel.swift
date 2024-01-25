@@ -28,7 +28,7 @@ protocol InsightsViewModelInput {
     func addReferenceUrl(content: String?)
     func selectGoalPeriodToAdd(of period: InsightPeriodModel)
     // MARK: 네트워크 호출
-    func postNewInsight()
+    func postNewInsight(completion: @escaping (_ seedId: Int?) -> Void)
     // MARK: Lazy 값 주입
     func setPeriodDataWhenSheetIsPresented()
     // MARK: 네트워크 Error 처리
@@ -119,7 +119,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     }
     
     // MARK: - Inputs
-    func postNewInsight() {
+    func postNewInsight(completion: @escaping (_ seedId: Int?) -> Void) {
         /// Network 가 끊어졌을 때
         if NetworkManager.isNetworkConnected() == false {
             networkState.accept(.networkLost)
@@ -133,15 +133,16 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
         {
             networkState.accept(.loading)
             let newInsight = InsightPostRequest(insight: insight, source: source, memo: newMemoContent.value, url: newReferenceUrlContent.value, goalMonth: period)
-            InsightsService.postNewInsight(caveId: selectedCaveId, of: newInsight)
-                .subscribe(onNext: { [weak self] _ in
-                    guard let self else { return }
+            InsightsService.postNewInsight(caveId: selectedCaveId, of: newInsight) { [weak self] seedId in
+                guard let self else { return }
+                if let seedId {
                     self.networkState.accept(.done)
-                }, onError: { [weak self] error in
-                    guard let self else { return }
-                    self.networkState.accept(.error(error))
-                })
-                .disposed(by: disposeBag)
+                    completion(seedId)
+                } else {
+                    self.networkState.accept(.networkLost)
+                    completion(nil)
+                }
+            }
         } else {
             /// 보내는 모델의 문제가 있을 때
             // 여기는 나중에 필요하면 추가하겠습니다.

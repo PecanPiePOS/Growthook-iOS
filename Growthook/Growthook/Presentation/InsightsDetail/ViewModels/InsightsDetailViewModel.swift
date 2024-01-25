@@ -67,6 +67,7 @@ protocol InsightsDetailViewModelInput {
     func completeActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void)
     func postReviewToComplete(review: String, actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void)
     func insightScrap(handler: @escaping (_ success:Bool) -> Void)
+    func actionPlanScrap(actionPlanId: Int, handler: @escaping (_ success:Bool) -> Void)
     
     func readMoreDidTap()
     func actionPlanMenuDidTap()
@@ -307,6 +308,22 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
             case true:
                 var isScraped = self.scrapedStatus.value
                 self.scrapedStatus.accept(!isScraped)
+                self.toastStatus.accept(.scrapToast(success: true))
+                handler(true)
+                self.resetToastStatus()
+            case false:
+                self.toastStatus.accept(.scrapToast(success: false))
+                handler(false)
+                self.resetToastStatus()
+            }
+        }
+    }
+    
+    func actionPlanScrap(actionPlanId: Int, handler: @escaping (_ success:Bool) -> Void) {
+        InsightsDetailService.scrapActionPlan(actionPlanId: actionPlanId)  { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
                 self.toastStatus.accept(.scrapToast(success: true))
                 handler(true)
                 self.resetToastStatus()
