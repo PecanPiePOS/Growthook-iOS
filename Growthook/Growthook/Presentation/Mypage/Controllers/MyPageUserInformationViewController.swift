@@ -25,6 +25,10 @@ final class MyPageUserInformationViewController: BaseViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
     // TODO: 로그아웃 및 회원탈퇴 로직 구현해야함 API 도! -
     
     override func bindViewModel() {

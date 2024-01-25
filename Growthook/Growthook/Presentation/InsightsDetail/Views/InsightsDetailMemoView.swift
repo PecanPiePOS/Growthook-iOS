@@ -28,7 +28,7 @@ final class InsightsDetailMemoView: BaseView {
             $0.font = .fontGuide(.detail2_bold)
             $0.textColor = .gray200
             $0.backgroundColor = .gray500
-            $0.roundCorners(cornerRadius: 5, maskedCorners: [.bottomLeft, .topLeft])
+            $0.makeCornerRound(radius: 5)
         }
         
         referenceUrlTitle.do {
@@ -41,6 +41,7 @@ final class InsightsDetailMemoView: BaseView {
         
         dividerView.do {
             $0.backgroundColor = .gray200
+            $0.makeCornerRound(radius: 5)
         }
     }
  
@@ -80,14 +81,14 @@ final class InsightsDetailMemoView: BaseView {
 
 extension InsightsDetailMemoView {
     
-    func setMemoContent(with content: String) {
+    func setMemoContent(with content: String?) {
         memoContent.text = content
     }
     
     func setReferenceContent(reference: String, url: String?) {
-        if let url {
-            referenceTitle.text = "   " + reference + "   "
-            referenceUrlTitle.text = "   " + url + "   "
+        referenceTitle.text = "   " + reference + "   "
+        if let urlData = url {
+            referenceUrlTitle.text = "   " + urlData + "   "
         } else {
             dividerView.removeFromSuperview()
         }
