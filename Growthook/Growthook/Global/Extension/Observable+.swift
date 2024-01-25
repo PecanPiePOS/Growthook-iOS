@@ -12,7 +12,6 @@ import RxSwift
 
 extension Observable where Element == Response {
     
-    
     /**
      Response 타입을 리턴하는 Observable 로써, statusCode 에 따라 구분합니다.
      */
@@ -25,8 +24,13 @@ extension Observable where Element == Response {
                 case 300...399:
                     print("👉🏻 Redirecting is Possible.")
                     observer.onNext(element)
-                case 400...499:
-                    /// 이 400 대 에러에 대해서는 추후에 백엔드분들께서 에러 케이스를 정리해주시면 그에 따라 어떤 error 를 방출할지 정하면 됩니다.
+                case 400:
+                    observer.onError(ServiceError.invalidResponse(responseCode: element.statusCode, message: element.description))
+                case 401:
+                    observer.onError(ServiceError.tokenExpired)
+                    TokenManager.shared.refreshNewToken()
+                case 403...499:
+                    // TODO: 여기서 지금 에러 메세지가 400 과 401 을 제외한 에러에 대한 정리본을 받지 못해 이렇게 퉁쳐놉니다.
                     observer.onError(ServiceError.invalidResponse(responseCode: element.statusCode, message: element.description))
                     print("❗️ Error Occurred.")
                 default:

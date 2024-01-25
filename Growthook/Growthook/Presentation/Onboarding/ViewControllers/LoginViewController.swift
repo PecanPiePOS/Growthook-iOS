@@ -151,10 +151,6 @@ final class LoginViewController: BaseViewController {
             response in
             guard self != nil else { return }
             guard let data = response?.data else { return }
-            APIConstants.jwtToken = data.accessToken
-            APIConstants.refreshToken = data.refreshToken
-//            UserDefaults.standard.set(data.accessToken, forKey: I18N.Auth.jwtToken)
-//            UserDefaults.standard.set(data.refreshToken, forKey: I18N.Auth.refreshToken)
             
             if let accessTokenData = data.accessToken.data(using: .utf8) {
                 KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
@@ -179,8 +175,13 @@ final class LoginViewController: BaseViewController {
         AuthAPI.shared.getRefreshToken() { [weak self] response in
             guard self != nil else { return }
             guard let data = response?.data else { return }
-            APIConstants.jwtToken = data.accessToken
-            APIConstants.refreshToken = data.refreshToken
+            if let accessTokenData = data.accessToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
+            }
+
+            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
+            }
         }
     }
 }
