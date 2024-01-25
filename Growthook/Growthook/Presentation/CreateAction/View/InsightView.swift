@@ -17,11 +17,15 @@ final class InsightView: BaseView, InsightBoxViewType {
     private let divisionLabel = UILabel()
     let moreButton = UIButton()
     private let dateLabel = UILabel()
-    private let verticalDivisionLabel = UILabel()
+    private let verticalDividerView = UILabel()
     private let dDayLabel = UILabel()
     private let memoScrollView = UIScrollView()
     private let memoLabel = UILabel()
     private let scrapButton = UIButton()
+    private let emptyMemoView = UIView()
+    private let emptyMemoImageView = UIImageView()
+    private let emptyMemoLabel = UILabel()
+    
     var isScrap = false {
         didSet {
             switch isScrap {
@@ -66,7 +70,7 @@ final class InsightView: BaseView, InsightBoxViewType {
             $0.isHidden = true
         }
         
-        verticalDivisionLabel.do {
+        verticalDividerView.do {
             $0.backgroundColor = .gray300
             $0.isHidden = true
         }
@@ -92,11 +96,26 @@ final class InsightView: BaseView, InsightBoxViewType {
             $0.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
             $0.isHidden = true
         }
+        
+        emptyMemoView.do {
+            $0.isHidden = true
+        }
+        
+        emptyMemoImageView.do {
+            $0.image = ImageLiterals.Component.ic_largethook_mono
+        }
+        
+        emptyMemoLabel.do {
+            $0.text = "작성된 메모가 없어요"
+            $0.font = .fontGuide(.detail1_reg)
+            $0.textColor = .gray200
+        }
     }
     
     override func setLayout() {
-        self.addSubviews(nameLabel, insightLabel, divisionLabel, dateLabel, verticalDivisionLabel, dDayLabel, memoScrollView, moreButton, scrapButton)
+        self.addSubviews(nameLabel, insightLabel, divisionLabel, dateLabel, verticalDividerView, dDayLabel, memoScrollView, moreButton, scrapButton, emptyMemoView)
         memoScrollView.addSubview(memoLabel)
+        emptyMemoView.addSubviews(emptyMemoImageView, emptyMemoLabel)
         
         nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(18)
@@ -126,7 +145,7 @@ final class InsightView: BaseView, InsightBoxViewType {
             $0.leading.equalToSuperview().inset(18)
         }
         
-        verticalDivisionLabel.snp.makeConstraints {
+        verticalDividerView.snp.makeConstraints {
             $0.centerY.equalTo(dateLabel.snp.centerY)
             $0.leading.equalTo(dateLabel.snp.trailing).offset(10)
             $0.width.equalTo(2)
@@ -135,7 +154,7 @@ final class InsightView: BaseView, InsightBoxViewType {
         
         dDayLabel.snp.makeConstraints {
             $0.centerY.equalTo(dateLabel.snp.centerY)
-            $0.leading.equalTo(verticalDivisionLabel.snp.trailing).offset(10)
+            $0.leading.equalTo(verticalDividerView.snp.trailing).offset(10)
         }
         
         memoScrollView.snp.makeConstraints {
@@ -154,6 +173,23 @@ final class InsightView: BaseView, InsightBoxViewType {
             $0.trailing.equalToSuperview().inset(8)
             $0.size.equalTo(48)
         }
+        
+        emptyMemoView.snp.makeConstraints {
+            $0.top.equalTo(dateLabel.snp.bottom).offset(18)
+            $0.horizontalEdges.equalToSuperview().inset(18)
+            $0.height.equalTo(135)
+        }
+        
+        emptyMemoImageView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(82)
+        }
+        
+        emptyMemoLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyMemoImageView.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
+        }
     }
 }
 
@@ -166,30 +202,60 @@ extension InsightView {
         dateLabel.text = model.lockDate
         if model.remainingDays > 0 {
             dDayLabel.text = "D-\(model.remainingDays)"
+            self.addSubviews(dDayLabel, verticalDividerView)
+            
+            verticalDividerView.snp.remakeConstraints {
+                $0.centerY.equalTo(dateLabel.snp.centerY)
+                $0.leading.equalTo(dateLabel.snp.trailing).offset(10)
+                $0.width.equalTo(2)
+                $0.height.equalTo(14)
+            }
+            
+            dDayLabel.snp.remakeConstraints {
+                $0.centerY.equalTo(dateLabel.snp.centerY)
+                $0.leading.equalTo(verticalDividerView.snp.trailing).offset(10)
+            }
         } else {
             dDayLabel.removeFromSuperview()
-            verticalDivisionLabel.removeFromSuperview()
+            verticalDividerView.removeFromSuperview()
         }
-        memoLabel.text = model.memo
-        memoLabel.setLineSpacing(lineSpacing: 4)
-        nameLabel.snp.updateConstraints {
-            $0.width.equalTo(nameLabel.frame.width + 14)
+        if model.memo == nil || model.memo == "" || model.memo == "\n" {
+            print("?????")
+            memoScrollView.removeFromSuperview()
+            self.addSubview(emptyMemoView)
+        } else {
+            print("/////")
+            emptyMemoView.removeFromSuperview()
+            self.addSubview(memoScrollView)
+            memoScrollView.snp.remakeConstraints {
+                $0.top.equalTo(dateLabel.snp.bottom).offset(18)
+                $0.horizontalEdges.equalToSuperview().inset(18)
+                $0.height.equalTo(135)
+            }
+            memoLabel.text = model.memo
+            memoLabel.setLineSpacing(lineSpacing: 4)
+            nameLabel.snp.updateConstraints {
+                $0.width.equalTo(nameLabel.frame.width + 14)
+            }
         }
         isScrap = model.isScraped
     }
     
     func showDetail() {
+        self.emptyMemoView.isHidden = false
         self.dateLabel.isHidden = false
-        self.verticalDivisionLabel.isHidden = false
+        self.verticalDividerView.isHidden = false
         self.dDayLabel.isHidden = false
         self.memoLabel.isHidden = false
+        self.emptyMemoView.alpha = 0.0
         self.dateLabel.alpha = 0.0
-        self.verticalDivisionLabel.alpha = 0.0
+        self.verticalDividerView.alpha = 0.0
         self.dDayLabel.alpha = 0.0
         self.memoLabel.alpha = 0.0
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            self.emptyMemoView.alpha = 1.0
             self.dateLabel.alpha = 1.0
-            self.verticalDivisionLabel.alpha = 1.0
+            self.verticalDividerView.alpha = 1.0
             self.dDayLabel.alpha = 1.0
             self.memoLabel.alpha = 1.0
             self.divisionLabel.frame.origin.y += 153
@@ -201,16 +267,18 @@ extension InsightView {
     
     func fold() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            self.emptyMemoView.alpha = 0.0
             self.dateLabel.alpha = 0.0
-            self.verticalDivisionLabel.alpha = 0.0
+            self.verticalDividerView.alpha = 0.0
             self.dDayLabel.alpha = 0.0
             self.memoLabel.alpha = 0.0
             self.divisionLabel.frame.origin.y -= 153
             self.moreButton.frame.origin.y -= 153
         }, completion: {(isCompleted) in
+            self.emptyMemoView.isHidden = true
             self.moreButton.setImage(ImageLiterals.ActionPlan.btn_more, for: .normal)
             self.dateLabel.isHidden = true
-            self.verticalDivisionLabel.isHidden = true
+            self.verticalDividerView.isHidden = true
             self.dDayLabel.isHidden = true
             self.memoLabel.isHidden = true
         })

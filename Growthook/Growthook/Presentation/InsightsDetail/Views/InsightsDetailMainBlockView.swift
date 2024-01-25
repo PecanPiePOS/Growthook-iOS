@@ -101,6 +101,7 @@ extension InsightsDetailMainBlockView: InsightBoxViewType {
         dateLabel.text = model.lockDate
         if model.remainingDays > 0 {
             remainingDateLabel.text = "D-" + String(model.remainingDays)
+            self.addSubviews(remainingDateLabel, verticalDividerView)
         } else {
             remainingDateLabel.removeFromSuperview()
             verticalDividerView.removeFromSuperview()
