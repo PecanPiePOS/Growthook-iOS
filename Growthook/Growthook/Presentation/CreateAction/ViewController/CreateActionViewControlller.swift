@@ -120,8 +120,8 @@ final class CreateActionViewControlller: BaseViewController {
                     newdata.append(ActionplanModel(index: key, content: value))
                 }
                 self.viewModel.inputs.postActionPlan(data: newdata)
-                delegate?.createAction()
                 self.navigationController?.popViewController(animated: true)
+                delegate?.createAction()
             }
             .disposed(by: disposeBag)
         

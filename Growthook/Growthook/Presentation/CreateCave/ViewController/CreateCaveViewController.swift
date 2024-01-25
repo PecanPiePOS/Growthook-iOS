@@ -79,7 +79,11 @@ extension CreateCaveViewController {
             .bind { [weak self] value in
                 guard let self else { return }
                 self.viewModel.inputs.setDescription(with: value)
-                self.createCaveView.introduceCountLabel.text = "\(value.count.toTwoDigitsString())/20"
+                if value == "동굴을 간략히 소개해주세요" {
+                    self.createCaveView.introduceCountLabel.text = "00/20"
+                } else {
+                    self.createCaveView.introduceCountLabel.text = "\(value.count.toTwoDigitsString())/20"
+                }
             }
             .disposed(by: disposeBag)
         
@@ -172,10 +176,11 @@ extension CreateCaveViewController {
     }
     
     private func pushToEmptyViewController() {
-        let emptyVC = EmptyViewController()
+        let emptyVC = CreateCaveEmptyViewController()
         emptyVC.name = viewModel.outputs.name.value
         emptyVC.introduction = viewModel.outputs.description.value
-        emptyVC.nickname = "쑥쑥이"
+        let nickname = UserDefaults.standard.string(forKey: I18N.Auth.nickname) ?? ""
+        emptyVC.nickname = nickname
         let vc = UINavigationController(rootViewController: emptyVC)
         vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         self.present(vc, animated: true)

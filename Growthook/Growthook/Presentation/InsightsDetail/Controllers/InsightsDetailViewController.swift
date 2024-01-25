@@ -558,6 +558,7 @@ extension InsightsDetailViewController: InsightMenuDelegate, CompleteReviewDeleg
 extension InsightsDetailViewController: CreateActionProtocol {
     func createAction() {
         print("됐당")
-        self.viewModel = InsightsDetailViewModel(hasAnyActionPlan: true, seedId: seedId)
+//        viewModel = InsightsDetailViewModel(hasAnyActionPlan: true, seedId: seedId)
+//        bindViewModel()
     }
 }
