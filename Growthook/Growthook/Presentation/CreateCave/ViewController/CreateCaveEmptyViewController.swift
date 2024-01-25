@@ -1,5 +1,5 @@
 //
-//  EmptyViewController.swift
+//  CreateCaveEmptyViewController.swift
 //  Growthook
 //
 //  Created by Minjoo Kim on 11/15/23.
@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 import Then
 
-final class EmptyViewController: BaseViewController {
+final class CreateCaveEmptyViewController: BaseViewController {
 
     private let emptyView = CaveEmptyView()
     private let viewModel = CreateCaveViewModel()
@@ -33,10 +33,6 @@ final class EmptyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindModel()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         setToast()
     }
     
@@ -54,10 +50,17 @@ final class EmptyViewController: BaseViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
+        
+        emptyView.caveInfoView.sharedButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.setAlert()
+            }
+            .disposed(by: disposeBag)
     }
 }
 
-extension EmptyViewController {
+extension CreateCaveEmptyViewController {
     
     private func setToast() {
         view.showToast(message: "새 동굴을 만들었어요!")
@@ -73,5 +76,15 @@ extension EmptyViewController {
     
     private func bindModel() {
         emptyView.bindModel(model: CaveDetailModel(caveName: self.name, introduction: self.introduction, nickname: self.nickname, isShared: false))
+    }
+    
+    private func setAlert() {
+        AlertBuilder(viewController: self)
+            .setTitle("내 동굴에 친구를 초대해\n인사이트를 공유해보세요")
+            .setMessage("해당 기능은 추후 업데이트 예정이에요:)")
+            .addActionConfirm("확인") {
+                print("확인!!")
+            }
+            .show()
     }
 }

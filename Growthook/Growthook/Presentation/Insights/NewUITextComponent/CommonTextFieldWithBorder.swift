@@ -65,7 +65,6 @@ final class CommonTextFieldWithBorder: UITextField, CommonTextComponentType {
         .scan(self.text) { [weak self] (previousValue, newValue) -> String? in
             guard let self else { return previousValue }
             guard let previousValue else { return previousValue }
-            
             if newValue.count > self.maxLength {
                 return previousValue
             } else {

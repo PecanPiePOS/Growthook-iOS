@@ -16,8 +16,9 @@ final class CaveInfoView: BaseView {
     
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
+    private let profileImageView = UIImageView()
     private let nicknameLabel = UILabel()
-    private let isSharedImageView = UIImageView()
+    let sharedButton = UIButton()
     private let noSeedLabel = UILabel()
     private let scrapView = UIButton()
     private let mugwortView = UIImageView()
@@ -38,13 +39,18 @@ final class CaveInfoView: BaseView {
             $0.textColor = .gray100
         }
         
+        profileImageView.do {
+            $0.image = ImageLiterals.Home.profile_default
+            $0.makeCornerRound(radius: 4)
+        }
+        
         nicknameLabel.do {
             $0.font = .fontGuide(.detail2_reg)
             $0.textColor = .gray200
         }
         
-        isSharedImageView.do {
-            $0.image = ImageLiterals.CaveDetail.btn_close
+        sharedButton.do {
+            $0.setImage(ImageLiterals.CaveDetail.btn_close, for: .normal)
         }
         
         noSeedLabel.do {
@@ -65,7 +71,7 @@ final class CaveInfoView: BaseView {
     // MARK: - Layout Helper
     
     override func setLayout() {
-        self.addSubviews(titleLabel, descriptionLabel, nicknameLabel, isSharedImageView)
+        self.addSubviews(titleLabel, descriptionLabel, profileImageView, nicknameLabel, sharedButton)
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(28)
@@ -79,13 +85,19 @@ final class CaveInfoView: BaseView {
             $0.trailing.equalToSuperview().inset(100)
         }
         
-        nicknameLabel.snp.makeConstraints {
-            $0.top.equalTo(descriptionLabel.snp.bottom).offset(17)
+        profileImageView.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(16)
             $0.leading.equalToSuperview().inset(18)
+            $0.size.equalTo(20)
+        }
+        
+        nicknameLabel.snp.makeConstraints {
+            $0.centerY.equalTo(profileImageView.snp.centerY)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(10)
             $0.trailing.equalToSuperview().inset(100)
         }
         
-        isSharedImageView.snp.makeConstraints {
+        sharedButton.snp.makeConstraints {
             $0.top.equalTo(nicknameLabel.snp.bottom).offset(18)
             $0.leading.equalToSuperview().inset(6)
             $0.width.equalTo(90)

@@ -15,7 +15,7 @@ final class CreateCaveView: BaseView {
     let customNavigationBar = CustomNavigationBar()
     let containerView = UIView()
     private let titleLabel = UILabel()
-    private let descriptionLabel = UILabel()
+    let descriptionLabel = UILabel()
     private let nameLabel = UILabel()
     let nameTextField = CommonTextFieldWithBorder(placeholder: "동굴의 이름을 알려주세요", maxLength: 7)
     let nameCountLabel = UILabel()

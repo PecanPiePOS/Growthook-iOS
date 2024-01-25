@@ -133,7 +133,7 @@
 		09CE00F72B0DBAE800CB42C4 /* InsightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE00F62B0DBAE800CB42C4 /* InsightView.swift */; };
 		09CE00F92B0DD3E300CB42C4 /* ActionPlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CE00F82B0DD3E300CB42C4 /* ActionPlanModel.swift */; };
 		09DE08002B04FAEE00D7DF3D /* EmptySeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DE07FF2B04FAEE00D7DF3D /* EmptySeedView.swift */; };
-		09DE08022B04FDF800D7DF3D /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DE08012B04FDF800D7DF3D /* EmptyViewController.swift */; };
+		09DE08022B04FDF800D7DF3D /* CreateCaveEmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DE08012B04FDF800D7DF3D /* CreateCaveEmptyViewController.swift */; };
 		250F7D732B145F4C00D9726F /* ActionListCompleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250F7D722B145F4C00D9726F /* ActionListCompleteTableViewCell.swift */; };
 		250F7D752B14624300D9726F /* ActionListReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250F7D742B14624300D9726F /* ActionListReviewViewController.swift */; };
 		250F7D772B16D01500D9726F /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250F7D762B16D01500D9726F /* AlertViewController.swift */; };
@@ -327,7 +327,7 @@
 		09CE00F62B0DBAE800CB42C4 /* InsightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightView.swift; sourceTree = "<group>"; };
 		09CE00F82B0DD3E300CB42C4 /* ActionPlanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPlanModel.swift; sourceTree = "<group>"; };
 		09DE07FF2B04FAEE00D7DF3D /* EmptySeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySeedView.swift; sourceTree = "<group>"; };
-		09DE08012B04FDF800D7DF3D /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
+		09DE08012B04FDF800D7DF3D /* CreateCaveEmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCaveEmptyViewController.swift; sourceTree = "<group>"; };
 		250F7D722B145F4C00D9726F /* ActionListCompleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListCompleteTableViewCell.swift; sourceTree = "<group>"; };
 		250F7D742B14624300D9726F /* ActionListReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListReviewViewController.swift; sourceTree = "<group>"; };
 		250F7D762B16D01500D9726F /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
@@ -999,7 +999,7 @@
 			children = (
 				09A7D6FC2B00DE9C005F8821 /* CreateCaveViewController.swift */,
 				09089A6B2B03B41B006C07B8 /* CustomAlertViewController.swift */,
-				09DE08012B04FDF800D7DF3D /* EmptyViewController.swift */,
+				09DE08012B04FDF800D7DF3D /* CreateCaveEmptyViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1624,7 +1624,7 @@
 				588E2B9E2B5449D80014E6D5 /* InsightDetailCaveViewController.swift in Sources */,
 				588E2B9C2B543B3C0014E6D5 /* InsightsDetailMainBlockView.swift in Sources */,
 				0332A39A2B5135F900720CD3 /* SsukTarget.swift in Sources */,
-				09DE08022B04FDF800D7DF3D /* EmptyViewController.swift in Sources */,
+				09DE08022B04FDF800D7DF3D /* CreateCaveEmptyViewController.swift in Sources */,
 				03B9AC722AF5646000A5751C /* UITextField+.swift in Sources */,
 				033E9C1B2AFE606E0051A9E8 /* CaveCollectionViewCell.swift in Sources */,
 				03B9AC782AF564C400A5751C /* UILabel+.swift in Sources */,
