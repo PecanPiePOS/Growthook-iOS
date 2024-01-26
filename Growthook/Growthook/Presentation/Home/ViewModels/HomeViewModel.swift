@@ -26,7 +26,8 @@ protocol HomeViewModelInputs {
     func removeMenuTap()
     func keepButtonTap()
     func removeButtonTap()
-    func insightScrap(seedId: Int, index: Int)
+    func insightScrap(seedId: Int)
+    func insightCaveScrap(seedId: Int, caveId: Int)
     func unLockSeedAlert(seedId: Int)
     func unLockSeedAlertInCave(seedId: Int)
     func caveInsightList(caveId: Int)
@@ -188,23 +189,26 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         }
     }
     
-    func insightScrap(seedId: Int, index: Int) {
+    func insightScrap(seedId: Int) {
         let seedId = seedId
-        let index = index
         SeedListAPI.shared.patchSeedScrap(seedId: seedId) { [weak self] response in
             guard let status = response?.status else { return }
-            if status == 401 {
-                self?.getNewToken()
-                self?.insightScrap(seedId: seedId, index: index)
-                return
-            }
             guard self != nil else { return }
-            guard let previousData = self?.insightList.value else { return }
-            var newData:[SeedListResponseDto] = []
-            newData = previousData
-            newData[index].isScraped.toggle()
-            self?.insightList.accept(newData)
-            self?.insightScrapToggle.onNext(())
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.getSeedList(memberId: self.memberId)
+        }
+    }
+    
+    func insightCaveScrap(seedId: Int, caveId: Int) {
+        let seedId = seedId
+        let caveId = caveId
+        SeedListAPI.shared.patchSeedScrap(seedId: seedId) { [weak self] response in
+            guard let status = response?.status else { return }
+            guard self != nil else { return }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.getCaveSeedList(caveId: caveId)
         }
     }
     

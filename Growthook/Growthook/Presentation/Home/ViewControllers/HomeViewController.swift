@@ -115,7 +115,7 @@ final class HomeViewController: BaseViewController {
                         self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
                     }
                     cell.isScrapButtonTapped.toggle()
-                    self.viewModel.inputs.insightScrap(seedId: model.seedId, index: index)
+                    self.viewModel.inputs.insightScrap(seedId: model.seedId)
                 }
             }
             .disposed(by: disposeBag)

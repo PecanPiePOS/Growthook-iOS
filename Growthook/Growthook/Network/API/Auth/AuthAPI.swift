@@ -62,7 +62,6 @@ final class AuthAPI {
                 do {
                     let status = response.statusCode
                     if status == 401 {
-                        print("♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️")
                         let mainViewController = LoginViewController()
                         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
                         sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)

@@ -90,6 +90,7 @@ final class CaveDetailViewController: BaseViewController {
                 }
                 return scrapType
             }
+        
             .bind(to: caveDetailView.insightListView.insightCollectionView.rx.items(cellIdentifier: InsightListCollectionViewCell.className, cellType: InsightListCollectionViewCell.self)) { (index, model, cell) in
                 self.caveDetailView.emptyInsightView.isHidden = true
                 self.caveDetailView.insightListView.isHidden = false
@@ -102,7 +103,7 @@ final class CaveDetailViewController: BaseViewController {
                         self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
                     }
                     cell.isScrapButtonTapped.toggle()
-                    self.viewModel.inputs.insightScrap(seedId: model.seedId, index: index)
+                    self.viewModel.inputs.insightCaveScrap(seedId: model.seedId, caveId: self.caveId)
                 }
             }
             .disposed(by: disposeBag)
