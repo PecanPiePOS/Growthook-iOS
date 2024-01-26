@@ -53,6 +53,7 @@ final class InsightsDetailMemoView: BaseView {
         
         memoContent.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
+            $0.height.lessThanOrEqualTo(240)
         }
         
         referenceUrlTitle.snp.makeConstraints {

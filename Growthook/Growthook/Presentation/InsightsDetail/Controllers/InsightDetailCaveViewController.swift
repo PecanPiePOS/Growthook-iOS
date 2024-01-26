@@ -25,7 +25,8 @@ final class InsightDetailCaveViewController: BaseViewController {
     // MARK: - UI Properties
     private let caveTableView = UITableView()
     private let selectCaveButton = UIButton()
-    
+    private let emptyImageView = UIImageView()
+
     // MARK: - Life Cycles
     init(viewModel: InsightsDetailViewModel) {
         self.viewModel = viewModel
@@ -65,6 +66,13 @@ final class InsightDetailCaveViewController: BaseViewController {
                 cell.configure(with: caveModelData)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.caveData
+            .bind { [weak self] data in
+                guard let self else { return }
+                self.emptyImageView.isHidden = !data.isEmpty
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Register Cell
@@ -92,11 +100,16 @@ final class InsightDetailCaveViewController: BaseViewController {
             $0.setTitleColor(.white000, for: .normal)
             $0.titleLabel?.font = .fontGuide(.body1_bold)
         }
+        
+        emptyImageView.do {
+            $0.contentMode = .scaleAspectFit
+            $0.image = UIImage(named: "emptyCaveBackgroundImage")
+        }
     }
     
     // MARK: - Layout
     override func setLayout() {
-        view.addSubviews(caveTableView, selectCaveButton)
+        view.addSubviews(caveTableView, selectCaveButton, emptyImageView)
         
         caveTableView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(50)
@@ -108,6 +121,11 @@ final class InsightDetailCaveViewController: BaseViewController {
             $0.bottom.equalToSuperview().inset(50)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(50)
+        }
+        
+        emptyImageView.snp.makeConstraints {
+            $0.size.equalTo(160)
+            $0.center.equalToSuperview()
         }
     }
 

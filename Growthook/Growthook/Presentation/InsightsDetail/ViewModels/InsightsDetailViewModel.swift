@@ -88,7 +88,7 @@ protocol InsightsDetailViewModelOutput {
     var networkStatus: BehaviorRelay<InsightDetailNetworkState> { get }
     
     var seedDetail: PublishSubject<SeedDetailResponsse> { get }
-    var caveData: PublishSubject<[InsightCaveModel]> { get }
+    var caveData: BehaviorRelay<[InsightCaveModel]> { get }
     var actionPlans: BehaviorRelay<[InsightActionPlanResponse]> { get }
     var actionPlanPatchStatus: BehaviorRelay<PostSuccessState> { get }
     var scrapedStatus: BehaviorRelay<Bool> { get }
@@ -106,7 +106,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     var toastStatus = BehaviorRelay<InsightsDetailToastType>(value: .none)
     var shouldHideMemoView = PublishSubject<Bool>()
     var seedDetail = PublishSubject<SeedDetailResponsse>()
-    var caveData = PublishSubject<[InsightCaveModel]>()
+    var caveData = BehaviorRelay<[InsightCaveModel]>(value: [])
     var actionPlans = BehaviorRelay<[InsightActionPlanResponse]>(value: [])
     var scrapedStatus = BehaviorRelay<Bool>(value: false)
     
@@ -233,7 +233,6 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     
     func postReviewToComplete(review: String, actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void) {
         InsightsDetailService.postReview(content: review, actionPlanId: actionPlanId) { [weak self] success in
-            guard let self else { return }
             switch success {
             case true:
                 handler(true)
@@ -306,7 +305,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
             guard let self else { return }
             switch success {
             case true:
-                var isScraped = self.scrapedStatus.value
+                let isScraped = self.scrapedStatus.value
                 self.scrapedStatus.accept(!isScraped)
                 self.toastStatus.accept(.scrapToast(success: true))
                 handler(true)
@@ -348,10 +347,10 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
             .subscribe(onNext: { [weak self] caves in
                 guard let self else { return }
                 let caveModel: [InsightCaveModel] = caves.map { .init(caveId: $0.caveId, caveTitle: $0.caveName) }
-                self.caveData.onNext(caveModel)
+                self.caveData.accept(caveModel)
             }, onError: { error in
                 print(error)
-                self.caveData.onNext([])
+                self.caveData.accept([])
             })
             .disposed(by: disposeBag)
     }
