@@ -27,8 +27,7 @@ final class SplashViewController: BaseViewController {
                         guard let status = response?.status else { return }
                         if status == 401 {
                             print("아직 토큰이 유효합니다")
-                            APIConstants.jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
-                            APIConstants.refreshToken = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
+                            self?.getNewToken()
                             self?.openTabBar()
                         } else {
                             guard let data = response?.data else { return }
@@ -141,5 +140,22 @@ final class SplashViewController: BaseViewController {
     private func deleteAllRemainingKeyChains() {
         KeychainHelper.delete(key: I18N.Auth.jwtToken)
         KeychainHelper.delete(key: I18N.Auth.refreshToken)
+    }
+    
+    private func getNewToken() {
+        AuthAPI.shared.getRefreshToken() { [weak self] response in
+            guard self != nil else { return }
+            guard let data = response?.data else { return }
+            guard let status = response?.status else { return }
+            if let accessTokenData = data.accessToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
+            }
+
+            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
+            }
+            APIConstants.jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
+            APIConstants.refreshToken = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
+        }
     }
 }
