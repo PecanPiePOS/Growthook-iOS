@@ -148,7 +148,7 @@ extension CompleteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.scrapButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.viewModel.inputs.didTapCompleteScrapButton(with: cell.actionPlanId)
+                self.viewModel.inputs.didTapCompleteScrapButton(with: cell.actionPlanId, with: cell.isScraped)
             }
             .disposed(by: cell.disposeBag)
 
