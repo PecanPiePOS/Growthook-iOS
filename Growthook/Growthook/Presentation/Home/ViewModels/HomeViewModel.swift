@@ -400,6 +400,13 @@ extension HomeViewModel {
         AuthAPI.shared.getRefreshToken() { [weak self] response in
             guard self != nil else { return }
             guard let data = response?.data else { return }
+            if let accessTokenData = data.accessToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
+            }
+
+            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
+                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
+            }
             APIConstants.jwtToken = data.accessToken
             APIConstants.refreshToken = data.refreshToken
         }

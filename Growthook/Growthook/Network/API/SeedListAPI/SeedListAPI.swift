@@ -31,13 +31,24 @@ final class SeedListAPI {
         seedListProvider.request(.getSeedList(memberId: memberId)) { result in
             switch result {
             case .success(let response):
-                do {
-                    self.seedListData = try response.map(GeneralResponse<[SeedListResponseDto]>?.self)
-                    guard let seedListData = self.seedListData else { return }
-                    completion(seedListData)
-                    dump(seedListData)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.getSeedList(memberId: memberId, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        self.seedListData = try response.map(GeneralResponse<[SeedListResponseDto]>?.self)
+                        guard let seedListData = self.seedListData else { return }
+                        completion(seedListData)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)
@@ -52,12 +63,24 @@ final class SeedListAPI {
         seedListProvider.request(.getSeedListByCave(caveId: caveId)) { result in
             switch result {
             case .success(let response):
-                do {
-                    self.caveSeedListData = try response.map(GeneralResponse<[SeedListResponseDto]>?.self)
-                    guard let caveSeedListData = self.caveSeedListData else { return }
-                    completion(caveSeedListData)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.getCaveSeedList(caveId: caveId, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        self.caveSeedListData = try response.map(GeneralResponse<[SeedListResponseDto]>?.self)
+                        guard let caveSeedListData = self.caveSeedListData else { return }
+                        completion(caveSeedListData)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)
@@ -72,12 +95,24 @@ final class SeedListAPI {
         seedListProvider.request(.getSeedAlarm(memberId: memberId)) { result in
             switch result {
             case .success(let response):
-                do {
-                    self.seedAlarmData = try response.map(GeneralResponse<SeedAlarmResponseDto>?.self)
-                    guard let seedAlarmData = self.seedAlarmData else { return }
-                    completion(seedAlarmData)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.getSeedAlarm(memberId: memberId, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        self.seedAlarmData = try response.map(GeneralResponse<SeedAlarmResponseDto>?.self)
+                        guard let seedAlarmData = self.seedAlarmData else { return }
+                        completion(seedAlarmData)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)
@@ -91,15 +126,26 @@ final class SeedListAPI {
     func postSeedMove(seedId: Int, param: SeedMoveRequestDto,
                       completion: @escaping (GeneralResponse<SeedMoveResponsetDto>?) -> Void) {
         seedListProvider.request(.postSeedMove(seedId: seedId, param: param)) { result in
-            print("😊😊😊😊😊😊😊😊")
             switch result {
             case .success(let response):
-                do {
-                    self.seedMoveData = try response.map(GeneralResponse<SeedMoveResponsetDto>?.self)
-                    guard let seedMoveData = self.seedMoveData else { return }
-                    completion(seedMoveData)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.postSeedMove(seedId: seedId, param: param, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        self.seedMoveData = try response.map(GeneralResponse<SeedMoveResponsetDto>?.self)
+                        guard let seedMoveData = self.seedMoveData else { return }
+                        completion(seedMoveData)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)
@@ -115,12 +161,24 @@ final class SeedListAPI {
         seedListProvider.request(.deleteSeed(seedId: seedId)) { result in
             switch result {
             case .success(let response):
-                do {
-                    let data = try response.map(GeneralResponse<VoidType>?.self)
-                    print("😰😰😰😰😰😰😰")
-                    completion(data)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.deleteSeed(seedId: seedId, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        let data = try response.map(GeneralResponse<VoidType>?.self)
+                        print("😰😰😰😰😰😰😰")
+                        completion(data)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)
@@ -136,12 +194,24 @@ final class SeedListAPI {
         seedListProvider.request(.patchSeed(seedId: seedId)) { result in
             switch result {
             case .success(let response):
-                do {
-                    self.patchSeedData = try response.map(GeneralResponse<PatchSeedRequestDto>?.self)
-                    guard let patchSeedData = self.patchSeedData else { return }
-                    completion(patchSeedData)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.patchSeedDetail(seedId: seedId, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        self.patchSeedData = try response.map(GeneralResponse<PatchSeedRequestDto>?.self)
+                        guard let patchSeedData = self.patchSeedData else { return }
+                        completion(patchSeedData)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)
@@ -156,11 +226,23 @@ final class SeedListAPI {
         seedListProvider.request(.patchUnlockSeed(seedId: seedId)) { result in
             switch result {
             case .success(let response):
-                do {
-                    let data = try response.map(GeneralResponse<VoidType>?.self)
-                    completion(data)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.patchSeedUnlock(seedId: seedId, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        let data = try response.map(GeneralResponse<VoidType>?.self)
+                        completion(data)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)
@@ -175,11 +257,23 @@ final class SeedListAPI {
         seedListProvider.request(.patchSeedScrap(seedId: seedId)) { result in
             switch result {
             case .success(let response):
-                do {
-                    let data = try response.map(GeneralResponse<VoidType>?.self)
-                    completion(data)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.patchSeedScrap(seedId: seedId, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        let data = try response.map(GeneralResponse<VoidType>?.self)
+                        completion(data)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)

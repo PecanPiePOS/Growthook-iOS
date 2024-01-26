@@ -36,7 +36,7 @@ final class CreateActionView: BaseView {
             $0.setTitle("완료", for: .normal)
             $0.setTitleColor(.gray300, for: .normal)
             $0.titleLabel?.font = .fontGuide(.body1_bold)
-            $0.isEnabled = true
+            $0.isEnabled = false
         }
     }
     

@@ -5,6 +5,8 @@
 //  Created by KJ on 1/12/24.
 //
 
+import Foundation
+
 import Moya
 
 final class SsukAPI {
@@ -21,15 +23,28 @@ final class SsukAPI {
     /// 수확한 쑥 조회
     func getGatheredSsuk(memberId: Int,
                          completion: @escaping(GeneralResponse<SsukResponseDto>?) -> Void) {
-        ssukProvider.request(.getSsuk(memberId: memberId)) { result in
+        ssukProvider.request(.getSsuk(memberId: memberId)) { [weak self] result in
+            guard let self else { return }
             switch result {
             case .success(let response):
-                do {
-                    self.ssukData = try response.map(GeneralResponse<SsukResponseDto>?.self)
-                    guard let ssukData = self.ssukData else { return }
-                    completion(ssukData)
-                } catch let err {
-                    print(err.localizedDescription, 500)
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.getGatheredSsuk(memberId: memberId, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
+                    do {
+                        self.ssukData = try response.map(GeneralResponse<SsukResponseDto>?.self)
+                        guard let ssukData = self.ssukData else { return }
+                        completion(ssukData)
+                    } catch let err {
+                        print(err.localizedDescription, 500)
+                    }
                 }
             case .failure(let err):
                 print(err.localizedDescription)

@@ -26,6 +26,17 @@ final class AuthAPI {
             result in
             switch result {
             case .success(let response):
+                if response.statusCode == 401 {
+                    TokenManager.shared.refreshNewToken { success in
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            if success {
+                                self.postKakaoLogin(param: param, completion: completion)
+                            } else {
+                                completion(nil)
+                            }
+                        }
+                    }
+                } else {
                     do {
                         self.authData = try response.map(GeneralResponse<LoginResponseDto>?.self)
                         guard let authData = self.authData else { return }
@@ -33,6 +44,7 @@ final class AuthAPI {
                     } catch let err {
                         print(err.localizedDescription, 500)
                     }
+                }
             case .failure(let err):
                 print(err.localizedDescription)
                 completion(nil)
@@ -50,6 +62,7 @@ final class AuthAPI {
                 do {
                     let status = response.statusCode
                     if status == 401 {
+                        print("♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️♥️")
                         let mainViewController = LoginViewController()
                         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
                         sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
