@@ -93,13 +93,11 @@ final class InsightsDetailViewController: BaseViewController {
         if hasAnyActionPlan != false {
             mainBlockHeight = HasAnyActionPlan.yes.height
             mainBlockColor = HasAnyActionPlan.yes.color
-//            setTitleOfButton(type: .yes)
             mainBlockWithMemoView.isHidden = true
             mainBlockWithActionPlanView.isHidden = false
         } else {
             mainBlockHeight = HasAnyActionPlan.no.height
             mainBlockColor = HasAnyActionPlan.no.color
-//            setTitleOfButton(type: .no)
             mainBlockWithMemoView.isHidden = false
             mainBlockWithActionPlanView.isHidden = true
             decoyScrapButton.isHidden = true
