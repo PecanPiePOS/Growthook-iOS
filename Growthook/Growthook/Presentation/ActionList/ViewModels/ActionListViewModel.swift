@@ -15,9 +15,9 @@ protocol ActionListViewModelInput {
     func didTapInProgressButton()
     func didTapCompletedButton()
     func didTapInprogressOnlyScrapButton()
-    func didTapInprogressScrapButton(with actionPlanId: Int)
+    func didTapInprogressScrapButton(with actionPlanId: Int, with isScraped: Bool)
     func didTapCompleteOnlyScrapButton()
-    func didTapCompleteScrapButton(with actionPlanId: Int)
+    func didTapCompleteScrapButton(with actionPlanId: Int, with isScraped: Bool)
     func didTapSeedButton()
     func didTapReviewButton(with actionPlanId: Int)
     func setReviewText(with value: String)
@@ -106,8 +106,11 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         getFinishedActionList(mamberId: memberId)
     }
     
-    func didTapInprogressScrapButton(with actionPlanId: Int) {
+    func didTapInprogressScrapButton(with actionPlanId: Int, with isScraped: Bool) {
         print("진행중 탭에서 스크랩 버튼이 탭 되었습니다")
+        if !isScraped {
+            selectedIndex.accept(2)
+        }
         patchACtionListScrap(actionPlanId: actionPlanId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.getDoingActionList(mamberId: self.memberId)
@@ -115,8 +118,11 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         }
     }
     
-    func didTapCompleteScrapButton(with actionPlanId: Int) {
+    func didTapCompleteScrapButton(with actionPlanId: Int, with isScraped: Bool) {
         print("완료 탭에서 스크랩 버튼이 탭 되었습니다")
+        if !isScraped {
+            selectedIndex.accept(2)
+        }
         patchACtionListScrap(actionPlanId: actionPlanId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.getFinishedActionList(mamberId: self.memberId)
@@ -171,7 +177,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
 
 extension ActionListViewModel {
     
-    private func getActionListPercent(mamberId: Int) {
+    func getActionListPercent(mamberId: Int) {
         ActionListService.getActionListPercent(with: mamberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }
@@ -182,7 +188,7 @@ extension ActionListViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getDoingActionList(mamberId: Int) {
+    func getDoingActionList(mamberId: Int) {
         ActionListService.getDoingActionList(with: mamberId)
             .subscribe(onNext: { [weak self] data in
                 guard let self else { return }

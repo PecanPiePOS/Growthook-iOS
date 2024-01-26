@@ -111,47 +111,47 @@ final class AlertViewController: BaseViewController {
         
         alertView.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
-            $0.width.equalTo(290)
-            $0.height.equalTo(311)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.7733)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.3827)
         }
         
         growthookImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
-            $0.height.equalTo(94)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.1158)
         }
         
         mainView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(48)
+            $0.top.equalToSuperview().offset(SizeLiterals.Screen.screenHeight * 0.0591)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(243)
-            $0.width.equalTo(290)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.299)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.7733)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(growthookImage.snp.bottom).offset(12)
+            $0.top.equalTo(growthookImage.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0148)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(221)
-            $0.height.equalTo(54)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.5893)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.0665)
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(4)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0049)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(183)
-            $0.height.equalTo(63)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.488)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.0776)
         }
         
         separatorView.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel.snp.bottom).offset(34)
+            $0.top.equalTo(subTitleLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0419)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(0.5)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.0006)
         }
         
         checkButton.snp.makeConstraints {
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.width.equalTo(290)
-            $0.height.equalTo(49)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.7733)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.0603)
         }
     }
     
