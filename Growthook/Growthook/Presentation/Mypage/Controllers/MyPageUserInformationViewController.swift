@@ -30,6 +30,7 @@ final class MyPageUserInformationViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        self.nicknameBlock.setInformation(with: UserDefaults.standard.string(forKey: I18N.Auth.nickname) ?? "") 
     }
     // TODO: 로그아웃 및 회원탈퇴 로직 구현해야함 API 도! -
     
@@ -38,15 +39,6 @@ final class MyPageUserInformationViewController: BaseViewController {
             .bind { [weak self] in
                 guard let self else { return }
                 self.navigationController?.popViewController(animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        // TODO: 탈퇴 팝업 뷰 만들기
-        
-        viewModel.outputs.userProfileName
-            .bind { [weak self] name in
-                guard let self else { return }
-                self.nicknameBlock.setInformation(with: name)
             }
             .disposed(by: disposeBag)
         
