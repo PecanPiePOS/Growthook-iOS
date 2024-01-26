@@ -57,7 +57,6 @@ final class AuthAPI {
                         KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshToken)
                     }
                     completion(refreshTokenData)
-                    print("-----000------")
                 } catch let err {
                     print(err.localizedDescription, 500)
                 }

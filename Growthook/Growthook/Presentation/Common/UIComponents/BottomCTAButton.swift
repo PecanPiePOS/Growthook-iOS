@@ -91,4 +91,8 @@ extension BottomCTAButton {
             $0.isEnabled = false
         }
     }
+    
+    func setTitleIfNeeded(with title: String) {
+        self.setTitle(title, for: .normal)
+    }
 }

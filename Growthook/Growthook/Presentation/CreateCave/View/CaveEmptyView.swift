@@ -15,7 +15,7 @@ final class CaveEmptyView: BaseView {
     // MARK: - UI Components
     
     let navigationBar = CustomNavigationBar()
-    private let caveInfoView = CaveInfoView()
+    let caveInfoView = CaveInfoView()
     private let emptySeedView = EmptySeedView()
     let plantSeedButton = BottomCTAButton(type: .plantSeed)
     

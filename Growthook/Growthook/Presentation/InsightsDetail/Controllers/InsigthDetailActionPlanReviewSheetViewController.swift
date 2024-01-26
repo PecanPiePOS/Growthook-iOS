@@ -138,7 +138,6 @@ extension InsigthDetailActionPlanReviewSheetViewController {
                 guard let self else { return }
                 guard let text else { return }
                 self.newContentText = text
-                print(self.newContentText)
                 if text == I18N.ActionList.insightDetailReviewPlaceholder {
                     self.isButtonEnabled.accept(false)
                 } else if text.isEmpty {

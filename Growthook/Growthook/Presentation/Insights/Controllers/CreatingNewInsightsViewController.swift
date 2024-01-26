@@ -10,9 +10,14 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+protocol NewInsightMadeDelegate: AnyObject {
+    func presentDetailView(seedIdOf: Int)
+}
+
 final class CreatingNewInsightsViewController: BaseViewController {
 
     // MARK: - Properties
+    weak var delegate: NewInsightMadeDelegate?
     private let disposeBag = DisposeBag()
     private let viewModel = InsightsViewModel()
     private var previousFocusCoordinates: CGPoint = .zero
@@ -194,7 +199,15 @@ final class CreatingNewInsightsViewController: BaseViewController {
         customNavigationView.rxDoneButtonTapControl
             .bind { [weak self] in
                 guard let self else { return }
-                self.viewModel.inputs.postNewInsight()
+                self.viewModel.inputs.postNewInsight { seedId in
+                    if let seedId {
+                        let vc = UINavigationController(rootViewController: InsightsDetailModalViewController(hasAnyActionPlan: false, seedId: seedId))
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    } else {
+                        self.showAlertWithError(alertText: "다시 시도해주세요.", alertMessage: "에러가 발생했어요.")
+                    }
+                }
             }
             .disposed(by: disposeBag)
         

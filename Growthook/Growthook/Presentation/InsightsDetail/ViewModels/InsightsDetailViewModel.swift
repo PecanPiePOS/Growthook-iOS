@@ -56,7 +56,7 @@ enum InsightDetailNetworkState {
 }
 
 protocol InsightsDetailViewModelInput {
-    func navigationBarMenuDidTap() //
+    func navigationBarMenuDidTap()
     func relocateSeed(to newCaveId: Int)
     func editSeed(editedSeed :InsightEditRequest)
     func deleteSeedDidTap(handler: @escaping (Bool) -> Void)
@@ -66,6 +66,8 @@ protocol InsightsDetailViewModelInput {
     func reloadSeedData()
     func completeActionPlan(actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void)
     func postReviewToComplete(review: String, actionPlanId: Int, handler: @escaping (_ success: Bool) -> Void)
+    func insightScrap(handler: @escaping (_ success:Bool) -> Void)
+    func actionPlanScrap(actionPlanId: Int, handler: @escaping (_ success:Bool) -> Void)
     
     func readMoreDidTap()
     func actionPlanMenuDidTap()
@@ -89,6 +91,7 @@ protocol InsightsDetailViewModelOutput {
     var caveData: PublishSubject<[InsightCaveModel]> { get }
     var actionPlans: BehaviorRelay<[InsightActionPlanResponse]> { get }
     var actionPlanPatchStatus: BehaviorRelay<PostSuccessState> { get }
+    var scrapedStatus: BehaviorRelay<Bool> { get }
 }
 
 protocol InsightsDetailViewModelType {
@@ -105,6 +108,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     var seedDetail = PublishSubject<SeedDetailResponsse>()
     var caveData = PublishSubject<[InsightCaveModel]>()
     var actionPlans = BehaviorRelay<[InsightActionPlanResponse]>(value: [])
+    var scrapedStatus = BehaviorRelay<Bool>(value: false)
     
     private let disposeBag = DisposeBag()
     private let seedId: Int
@@ -158,16 +162,17 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     /// 실패했을 때만, 해당 씨앗 조회 화면에서 toast 를 띄웁니다.
     /// 성공시에 toast 를 띄우는 것은 다른 화면입니다.
     func deleteSeedDidTap(handler: @escaping (Bool) -> Void) {
-        InsightsService.deleteInsight(seedId: seedId)
-            .subscribe(onNext: { response in
+        InsightsService.deleteInsight(seedId: seedId) { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
                 handler(true)
-            }, onError: { error in
-                print(error)
-                self.toastStatus.accept(.deleteSeedToast(success: false))
-                self.resetToastStatus()
+            case false:
                 handler(false)
-            })
-            .disposed(by: disposeBag)
+                self.toastStatus.accept(.deleteActionPlan(success: false))
+                self.resetToastStatus()
+            }
+        }
     }
     
     func moveSeedToOtherCave(of selectedCave: InsightCaveModel) {
@@ -247,6 +252,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
                 handler(true)
                 self.toastStatus.accept(.createActionPlan(success: true))
                 self.resetToastStatus()
+                self.shouldHideMemoView.onNext(true)
             case false:
                 handler(false)
                 self.toastStatus.accept(.createActionPlan(success: false))
@@ -282,9 +288,48 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
                 self.toastStatus.accept(.deleteActionPlan(success: true))
                 self.resetToastStatus()
                 self.reloadActionPlan()
+                if self.actionPlans.value.isEmpty {
+                    self.shouldHideMemoView.onNext(false)
+                } else {
+                    self.shouldHideMemoView.onNext(true)
+                }
             case false:
                 handler(false)
                 self.toastStatus.accept(.deleteSeedToast(success: false))
+                self.resetToastStatus()
+            }
+        }
+    }
+    
+    func insightScrap(handler: @escaping (_ success:Bool) -> Void) {
+        InsightsDetailService.scrapSeed(seedId: seedId) { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
+                var isScraped = self.scrapedStatus.value
+                self.scrapedStatus.accept(!isScraped)
+                self.toastStatus.accept(.scrapToast(success: true))
+                handler(true)
+                self.resetToastStatus()
+            case false:
+                self.toastStatus.accept(.scrapToast(success: false))
+                handler(false)
+                self.resetToastStatus()
+            }
+        }
+    }
+    
+    func actionPlanScrap(actionPlanId: Int, handler: @escaping (_ success:Bool) -> Void) {
+        InsightsDetailService.scrapActionPlan(actionPlanId: actionPlanId)  { [weak self] success in
+            guard let self else { return }
+            switch success {
+            case true:
+                self.toastStatus.accept(.scrapToast(success: true))
+                handler(true)
+                self.resetToastStatus()
+            case false:
+                self.toastStatus.accept(.scrapToast(success: false))
+                handler(false)
                 self.resetToastStatus()
             }
         }
@@ -338,6 +383,7 @@ extension InsightsDetailViewModel {
             .subscribe(onNext: { [weak self] seedDetail in
                 guard let self else { return }
                 self.seedDetail.onNext(seedDetail)
+                self.scrapedStatus.accept(seedDetail.isScraped)
                 self.seedEditData = .init(caveName: seedDetail.caveName, insight: seedDetail.insight, source: seedDetail.source, memo: seedDetail.memo, url: seedDetail.url)
             }, onError: { error in
                 print(error)
@@ -351,6 +397,11 @@ extension InsightsDetailViewModel {
             .subscribe(onNext: { [weak self] actionPlans in
                 guard let self else { return }
                 self.actionPlans.accept(actionPlans)
+                if actionPlans.isEmpty != false {
+                    shouldHideMemoView.onNext(false)
+                } else {
+                    shouldHideMemoView.onNext(true)
+                }
             }, onError: { error in
                 print(error)
                 self.networkStatus.accept(.error(of: error))

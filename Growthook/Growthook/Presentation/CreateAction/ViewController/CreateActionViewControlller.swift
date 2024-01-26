@@ -11,17 +11,19 @@ import RxCocoa
 import RxSwift
 import Then
 
+protocol InsightDetailReloadDelegate: AnyObject {
+    func reloadAfterPost()
+}
+
 struct ActionplanModel {
     var index: Int
     var content: String?
 }
 
-protocol CreateActionProtocol: AnyObject {
-    func createAction()
-}
-
 final class CreateActionViewControlller: BaseViewController {
 
+    weak var delegate: InsightDetailReloadDelegate?
+    
     private let createActionView = CreateActionView()
     private var viewModel = CreateActionViewModel()
     private let disposeBag = DisposeBag()
@@ -45,9 +47,7 @@ final class CreateActionViewControlller: BaseViewController {
     
     var newActionPlan: CreateActionRequest = CreateActionRequest(contents: [])
     var seedId: Int = 0
-    
-    weak var delegate: CreateActionProtocol?
-    
+        
     override func loadView() {
         self.view = createActionView
     }
@@ -120,8 +120,8 @@ final class CreateActionViewControlller: BaseViewController {
                     newdata.append(ActionplanModel(index: key, content: value))
                 }
                 self.viewModel.inputs.postActionPlan(data: newdata)
-                delegate?.createAction()
                 self.navigationController?.popViewController(animated: true)
+                self.delegate?.reloadAfterPost()
             }
             .disposed(by: disposeBag)
         
@@ -131,19 +131,7 @@ final class CreateActionViewControlller: BaseViewController {
                 self.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
-        
-                viewModel.outputs.networkState
-                    .bind { [weak self] status in
-                        guard let self else { return }
-                        switch status {
-                        case .done:
-                            delegate?.createAction()
-                            self.navigationController?.popViewController(animated: true)
-                        default:
-                            break
-                        }
-                    }
-                    .disposed(by: disposeBag)    }
+    }
 }
 
 extension CreateActionViewControlller: UICollectionViewDelegateFlowLayout {
