@@ -5,7 +5,7 @@
 //  Created by KYUBO A. SHIM on 1/25/24.
 //
 
-import Foundation
+import UIKit
 import Security
 
 import Moya
@@ -42,6 +42,14 @@ final class TokenManager {
     func refreshNewToken() -> Observable<Void> {
         return authProvider.rx.request(.tokenRefresh)
             .asObservable()
+            .do(onNext: { response in
+                if response.statusCode == 401 {
+                    let mainViewController = LoginViewController()
+                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                    sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+                    sceneDelegate.window?.makeKeyAndVisible()
+                }
+            })
             .decode(decodeType: RefreshTokenResponseDto.self)
             .do(onNext: { data in
                 print("🔥")
