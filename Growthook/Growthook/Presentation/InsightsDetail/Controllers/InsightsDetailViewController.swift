@@ -38,6 +38,15 @@ enum HasAnyActionPlan {
             return .gray700
         }
     }
+    
+    var buttonTitle: String {
+        switch self {
+        case .yes:
+            return "액션 더하기"
+        case .no:
+            return "액션 만들기"
+        }
+    }
 }
 
 final class InsightsDetailViewController: BaseViewController {
@@ -62,7 +71,7 @@ final class InsightsDetailViewController: BaseViewController {
     private let deleteAlertView = RemoveAlertView2()
     private let deleteActionPlanView = RemoveAlertView2()
     private lazy var actionPlanCollectionView = UICollectionView(frame: .zero, collectionViewLayout: setFlowLayout())
-    private var actionPlanButton: BottomCTAButton = .init(type: .createAction)
+    private var actionPlanButton = UIButton()
     private let decoyScrapButton = UIButton()
     
     private let loadingView = FullCoverLoadingView()
@@ -84,13 +93,13 @@ final class InsightsDetailViewController: BaseViewController {
         if hasAnyActionPlan != false {
             mainBlockHeight = HasAnyActionPlan.yes.height
             mainBlockColor = HasAnyActionPlan.yes.color
-            actionPlanButton = BottomCTAButton(type: .addAction)
+//            setTitleOfButton(type: .yes)
             mainBlockWithMemoView.isHidden = true
             mainBlockWithActionPlanView.isHidden = false
         } else {
             mainBlockHeight = HasAnyActionPlan.no.height
             mainBlockColor = HasAnyActionPlan.no.color
-            actionPlanButton = BottomCTAButton(type: .createAction)
+//            setTitleOfButton(type: .no)
             mainBlockWithMemoView.isHidden = false
             mainBlockWithActionPlanView.isHidden = true
             decoyScrapButton.isHidden = true
@@ -151,20 +160,18 @@ final class InsightsDetailViewController: BaseViewController {
                 self.memoView.isHidden = shouldHide
                 
                 if shouldHide != false {
-                    self.actionPlanButton = BottomCTAButton(type: .addAction)
+                    self.setTitleOfButton(type: .yes)
                     self.customNavigationView.hideDoneButton()
                     self.uselessBoxView.backgroundColor = HasAnyActionPlan.yes.color
-                    self.actionPlanButton.setTitleIfNeeded(with: "액션 더하기")
                     self.mainBlockWithMemoView.isHidden = true
                     self.mainBlockWithActionPlanView.isHidden = false
                     self.customNavigationView.setBackgroundColor(HasAnyActionPlan.yes.color)
                     self.hasActionPlan = true
                     self.decoyScrapButton.isHidden = false
                 } else {
-                    self.actionPlanButton = BottomCTAButton(type: .createAction)
+                    self.setTitleOfButton(type: .no)
                     self.customNavigationView.showDoneButton()
                     self.uselessBoxView.backgroundColor = HasAnyActionPlan.no.color
-                    self.actionPlanButton.setTitleIfNeeded(with: "액션 만들기")
                     self.mainBlockWithMemoView.isHidden = false
                     self.mainBlockWithActionPlanView.isHidden = true
                     self.customNavigationView.setBackgroundColor(HasAnyActionPlan.no.color)
@@ -393,6 +400,13 @@ final class InsightsDetailViewController: BaseViewController {
         
         refreshControl.do {
             $0.tintColor = .green400
+        }
+        
+        actionPlanButton.do {
+            $0.setBackgroundColor(.green400, for: .normal)
+            $0.titleLabel?.font = .fontGuide(.body1_bold)
+            $0.setTitleColor(.white000, for: .normal)
+            $0.makeCornerRound(radius: 10)
         }
         
         deleteAlertView.descriptionLabel.text = I18N.Component.RemoveAlert.removeInsight
@@ -662,6 +676,10 @@ extension InsightsDetailViewController {
         }
     }
     
+    private func setTitleOfButton(type: HasAnyActionPlan) {
+        actionPlanButton.setTitle(type.buttonTitle, for: .normal)
+    }
+    
     @objc
     private func hidemenu() {
         cellMenuView.isHidden = true
@@ -693,7 +711,7 @@ extension InsightsDetailViewController: InsightDetailReloadDelegate {
     func reloadAfterPost() {
         DispatchQueue.main.asyncAfter(deadline: .now()+1.2) {
             self.viewModel.inputs.reloadActionPlan()
-            self.actionPlanButton = .init(type: .addAction)
+            self.setTitleOfButton(type: .yes)
             self.viewModel.toastStatus.accept(.createActionPlan(success: true))
         }
     }
