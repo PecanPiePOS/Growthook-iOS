@@ -19,37 +19,23 @@ final class SplashViewController: BaseViewController {
         super.viewDidAppear(animated)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if self.isUserLoggedIn() {
-                APIConstants.jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
-                APIConstants.refreshToken = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
-                if let jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken), !jwtToken.isEmpty {
-                    AuthAPI.shared.getRefreshToken() { [weak self] response in
-                        guard let status = response?.status else { return }
-                        if status == 401 {
-                            print("아직 토큰이 유효합니다")
-                            self?.getNewToken()
-                            self?.openTabBar()
-                        } else {
-                            guard let data = response?.data else { return }
-                            APIConstants.jwtToken = data.accessToken
-                            APIConstants.refreshToken = data.refreshToken
-
-                            if let accessTokenData = data.accessToken.data(using: .utf8) {
-                                KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
-                            }
-
-                            if let refreshTokenData = data.refreshToken.data(using: .utf8) {
-                                KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshTokenData)
-                            }
-                            self?.openTabBar()
-                        }
-                    }
-                }
-            } else if self.isFirstLaunch() {
+            if self.isFirstLaunch() {
                 self.deleteAllRemainingKeyChains()
                 self.openOnboarding()
             } else {
-                self.openOnboarding()
+                if self.isUserLoggedIn() {
+                    APIConstants.jwtToken = KeychainHelper.loadString(key: I18N.Auth.jwtToken) ?? ""
+                    APIConstants.refreshToken = KeychainHelper.loadString(key: I18N.Auth.refreshToken) ?? ""
+                    
+                    if !APIConstants.jwtToken.isEmpty && !APIConstants.refreshToken.isEmpty {
+                        self.openTabBar()
+                    } else {
+                        self.openLoginView()
+                    }
+                }
+                else {
+                    self.openLoginView()
+                }
             }
         }
     }
@@ -132,6 +118,13 @@ final class SplashViewController: BaseViewController {
     private func openTabBar() {
         let mainViewController = TabBarController()
         mainViewController.selectedIndex = 0
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+        sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+        sceneDelegate.window?.makeKeyAndVisible()
+    }
+    
+    private func openLoginView() {
+        let mainViewController = LoginViewController()
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
         sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
         sceneDelegate.window?.makeKeyAndVisible()
