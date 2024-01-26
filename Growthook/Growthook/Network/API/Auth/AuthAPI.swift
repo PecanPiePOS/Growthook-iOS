@@ -48,15 +48,24 @@ final class AuthAPI {
             switch result {
             case .success(let response):
                 do {
-                    self.refreshTokenData = try response.map(GeneralResponse<RefreshTokenResponseDto>?.self)
-                    guard let refreshTokenData = self.refreshTokenData else { return }
-                    if let accessToken = refreshTokenData.data?.accessToken.data(using: .utf8) {
-                        KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessToken)
+                    let status = response.statusCode
+                    if status == 401 {
+                        let mainViewController = LoginViewController()
+                        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+                        sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: mainViewController)
+                        sceneDelegate.window?.makeKeyAndVisible()
+                        return
+                    } else {
+                        self.refreshTokenData = try response.map(GeneralResponse<RefreshTokenResponseDto>?.self)
+                        guard let refreshTokenData = self.refreshTokenData else { return }
+                        if let accessToken = refreshTokenData.data?.accessToken.data(using: .utf8) {
+                            KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessToken)
+                        }
+                        if let refreshToken = refreshTokenData.data?.refreshToken.data(using: .utf8) {
+                            KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshToken)
+                            completion(refreshTokenData)
+                        }
                     }
-                    if let refreshToken = refreshTokenData.data?.refreshToken.data(using: .utf8) {
-                        KeychainHelper.save(key: I18N.Auth.refreshToken, data: refreshToken)
-                    }
-                    completion(refreshTokenData)
                 } catch let err {
                     print(err.localizedDescription, 500)
                 }

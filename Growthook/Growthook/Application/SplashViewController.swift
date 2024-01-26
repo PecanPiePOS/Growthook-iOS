@@ -146,6 +146,7 @@ final class SplashViewController: BaseViewController {
         AuthAPI.shared.getRefreshToken() { [weak self] response in
             guard self != nil else { return }
             guard let data = response?.data else { return }
+            guard let status = response?.status else { return }
             if let accessTokenData = data.accessToken.data(using: .utf8) {
                 KeychainHelper.save(key: I18N.Auth.jwtToken, data: accessTokenData)
             }
