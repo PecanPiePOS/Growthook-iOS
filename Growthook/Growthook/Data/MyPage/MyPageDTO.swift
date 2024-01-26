@@ -10,7 +10,7 @@ import Foundation
 struct MyPageUserInfoResponse: Codable {
     let nickname: String
     let email: String
-    let profileImage: String
+    let profileImage: String?
 }
 
 struct MyPageEarnedSsukResponse: Codable {

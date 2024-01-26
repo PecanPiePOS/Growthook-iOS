@@ -131,7 +131,7 @@ extension MyPageViewModel {
                 guard let self else { return }
                 self.userProfileName.accept(profile.nickname)
                 self.userEmail.accept(profile.email)
-                self.userProfileImageUrl.accept(profile.profileImage)
+                self.userProfileImageUrl.accept(profile.profileImage ?? "")
             }, onError: { [weak self] error in
                 guard let self else { return }
                 self.networkState.accept(.error(error))

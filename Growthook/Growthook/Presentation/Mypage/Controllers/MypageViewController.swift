@@ -25,6 +25,7 @@ final class MypageViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.inputs.reloadSsuk()
+        self.profileNameLabel.text = UserDefaults.standard.string(forKey: I18N.Auth.nickname)
     }
 
     override func bindViewModel() {
@@ -44,13 +45,6 @@ final class MypageViewController: BaseViewController {
             .bind { [weak self] in
                 guard let self else { return }
                 self.pushToMyInfoView()
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.outputs.userProfileName
-            .bind { [weak self] name in
-                guard let self else { return }
-                self.profileNameLabel.text = name
             }
             .disposed(by: disposeBag)
         
