@@ -22,7 +22,7 @@ final class ActionListReviewViewController: BaseViewController {
     
     private let navigationBar = CustomNavigationBar()
     private let titleLabel = UILabel()
-    private let scrapButton = UIButton()
+//    private let scrapButton = UIButton()
     private let reviewTextView = UITextViewWithTintedWhenEdited(placeholder: "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요", maxLength: 300)
     private let writtenDateLabel = UILabel()
     
@@ -82,9 +82,9 @@ final class ActionListReviewViewController: BaseViewController {
             $0.textColor = .white000
         }
         
-        scrapButton.do {
-            $0.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
-        }
+//        scrapButton.do {
+//            $0.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+//        }
         
         writtenDateLabel.do {
             $0.text = "0000.00.00"
@@ -96,7 +96,7 @@ final class ActionListReviewViewController: BaseViewController {
     // MARK: - Layout Helper
     
     override func setLayout() {
-        view.addSubviews(navigationBar, titleLabel, scrapButton, reviewTextView, writtenDateLabel)
+        view.addSubviews(navigationBar, titleLabel, reviewTextView, writtenDateLabel)
         
         navigationBar.snp.makeConstraints {
             $0.top.equalTo(safeAreaTopInset())
@@ -109,11 +109,11 @@ final class ActionListReviewViewController: BaseViewController {
             $0.leading.equalToSuperview().offset(18)
         }
         
-        scrapButton.snp.makeConstraints {
-            $0.centerY.equalTo(titleLabel.snp.centerY)
-            $0.trailing.equalToSuperview().inset(8)
-            $0.width.height.equalTo(48)
-        }
+//        scrapButton.snp.makeConstraints {
+//            $0.centerY.equalTo(titleLabel.snp.centerY)
+//            $0.trailing.equalToSuperview().inset(8)
+//            $0.width.height.equalTo(48)
+//        }
         
         reviewTextView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(30)
@@ -134,12 +134,12 @@ final class ActionListReviewViewController: BaseViewController {
         titleLabel.text = reviewData.actionPlan
         reviewTextView.text = reviewData.content
         writtenDateLabel.text = reviewData.reviewDate
-        switch reviewData.isScraped {
-        case false:
-            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
-        case true:
-            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
-        }
+//        switch reviewData.isScraped {
+//        case false:
+//            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+//        case true:
+//            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+//        }
     }
     
     // MARK: - @objc Methods

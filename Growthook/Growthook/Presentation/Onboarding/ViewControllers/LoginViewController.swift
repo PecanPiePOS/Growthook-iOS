@@ -62,13 +62,13 @@ final class LoginViewController: BaseViewController {
         self.view.addSubviews(loginView, kakaoLoginButton, appleLoginButton)
         
         loginView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(77)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(SizeLiterals.Screen.screenHeight * 0.0948)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(388)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.4729)
         }
         
         kakaoLoginButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(85)
+            $0.bottom.equalToSuperview().inset(SizeLiterals.Screen.screenHeight * 0.1047)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(50)
             $0.width.equalTo(343)

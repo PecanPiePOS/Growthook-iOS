@@ -85,31 +85,31 @@ class PageContentsViewController: UIViewController {
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0196)
             $0.centerX.equalToSuperview()
         }
         
         switch pageType {
         case .oneLines:
             imageView.snp.makeConstraints {
-                $0.top.equalTo(subTitleLabel.snp.bottom).offset(22)
+                $0.top.equalTo(subTitleLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0272)
                 $0.bottom.equalTo(contentView.snp.bottom)
-                $0.width.equalTo(375)
-                $0.height.equalTo(378)
+                $0.width.equalTo(SizeLiterals.Screen.screenWidth)
+                $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.4657)
             }
         case .twoLines:
             imageView.snp.makeConstraints {
                 $0.top.equalTo(subTitleLabel.snp.bottom).offset(1)
                 $0.bottom.equalTo(contentView.snp.bottom)
-                $0.width.equalTo(375)
-                $0.height.equalTo(378)
+                $0.width.equalTo(SizeLiterals.Screen.screenWidth)
+                $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.4657)
             }
         }
         
         contentView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(128)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(SizeLiterals.Screen.screenHeight * 0.1576)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(455)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.5604)
         }
         
     }
