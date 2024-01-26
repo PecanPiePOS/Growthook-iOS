@@ -74,13 +74,13 @@ final class InsightView: BaseView, InsightBoxViewType {
         
         memoScrollView.do {
             $0.contentInsetAdjustmentBehavior = .never
+            $0.isHidden = true
         }
         
         memoLabel.do {
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .white000
             $0.numberOfLines = 0
-            $0.isHidden = true
         }
         
         scrapButton.do {
@@ -219,11 +219,9 @@ extension InsightView {
             verticalDividerView.removeFromSuperview()
         }
         if model.memo == nil || model.memo == "" || model.memo == "\n" {
-            print("?????")
             memoScrollView.removeFromSuperview()
             self.addSubview(emptyMemoView)
         } else {
-            print("/////")
             emptyMemoView.removeFromSuperview()
             self.addSubview(memoScrollView)
             memoScrollView.snp.remakeConstraints {
@@ -244,18 +242,18 @@ extension InsightView {
         self.dateLabel.isHidden = false
         self.verticalDividerView.isHidden = false
         self.dDayLabel.isHidden = false
-        self.memoLabel.isHidden = false
+        self.memoScrollView.isHidden = false
         self.emptyMemoView.alpha = 0.0
         self.dateLabel.alpha = 0.0
         self.verticalDividerView.alpha = 0.0
         self.dDayLabel.alpha = 0.0
-        self.memoLabel.alpha = 0.0
+        self.memoScrollView.alpha = 0.0
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
             self.emptyMemoView.alpha = 1.0
             self.dateLabel.alpha = 1.0
             self.verticalDividerView.alpha = 1.0
             self.dDayLabel.alpha = 1.0
-            self.memoLabel.alpha = 1.0
+            self.memoScrollView.alpha = 1.0
             self.divisionLabel.frame.origin.y += 153
             self.moreButton.frame.origin.y += 153
         }, completion: {(isCompleted) in
@@ -269,7 +267,7 @@ extension InsightView {
             self.dateLabel.alpha = 0.0
             self.verticalDividerView.alpha = 0.0
             self.dDayLabel.alpha = 0.0
-            self.memoLabel.alpha = 0.0
+            self.memoScrollView.alpha = 0.0
             self.divisionLabel.frame.origin.y -= 153
             self.moreButton.frame.origin.y -= 153
         }, completion: {(isCompleted) in
@@ -278,7 +276,7 @@ extension InsightView {
             self.dateLabel.isHidden = true
             self.verticalDividerView.isHidden = true
             self.dDayLabel.isHidden = true
-            self.memoLabel.isHidden = true
+            self.memoScrollView.isHidden = true
         })
     }
     

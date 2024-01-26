@@ -24,7 +24,7 @@ enum HasAnyActionPlan {
     var height: CGFloat {
         switch self {
         case .yes:
-            135
+            125
         case .no:
             113
         }
