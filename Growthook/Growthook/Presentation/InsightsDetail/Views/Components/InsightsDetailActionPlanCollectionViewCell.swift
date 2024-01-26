@@ -12,14 +12,15 @@ import RxSwift
 
 final class InsightsDetailActionPlanCollectionViewCell: UICollectionViewCell {
     
-    private let seedImageView = UIImageView()
-    private let contentLabel = UILabel()
-    let menuButton = UIButton()
     private let completeButton = UIButton()
+    private let contentLabel = UILabel()
+    let scrapButton = UIButton()
+    let menuButton = UIButton()
     
     var disposeBag = DisposeBag()
     lazy var rxMenuButtonTapControl: ControlEvent<Void> = menuButton.rx.tap
     lazy var rxCompleteButtonTapControl: ControlEvent<Void> = completeButton.rx.tap
+    private var isScraped = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,9 +45,8 @@ extension InsightsDetailActionPlanCollectionViewCell {
         makeCornerRound(radius: 12)
         makeBorder(width: 1, color: .gray300)
         
-        seedImageView.do {
-            $0.image = ImageLiterals.Home.btn_scrap_light_off
-            $0.contentMode = .scaleAspectFit
+        scrapButton.do {
+            $0.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
         }
         
         contentLabel.do {
@@ -71,17 +71,17 @@ extension InsightsDetailActionPlanCollectionViewCell {
     
     private func setLayout() {
         addSubviews(
-            seedImageView, contentLabel, menuButton,
+            scrapButton, contentLabel, menuButton,
             completeButton
         )
         
-        seedImageView.snp.makeConstraints {
+        scrapButton.snp.makeConstraints {
             $0.size.equalTo(48)
             $0.top.leading.equalToSuperview()
         }
         
         contentLabel.snp.makeConstraints {
-            $0.leading.equalTo(seedImageView.snp.trailing)
+            $0.leading.equalTo(scrapButton.snp.trailing)
             $0.top.equalToSuperview().inset(14)
             $0.trailing.equalToSuperview().inset(85)
         }
@@ -108,5 +108,23 @@ extension InsightsDetailActionPlanCollectionViewCell {
     func setIsCompleted(_ completed: Bool) {
         completeButton.isEnabled = !completed
         completeButton.setBackgroundColor(completed ? .gray400: .green400, for: .normal)
+    }
+    
+    func setScrap(isScraped: Bool) {
+        self.isScraped = isScraped
+        if self.isScraped == true {
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        } else {
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+        }
+    }
+    
+    func toggleScrap() {
+        self.isScraped.toggle()
+        if self.isScraped == true {
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        } else {
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+        }
     }
 }

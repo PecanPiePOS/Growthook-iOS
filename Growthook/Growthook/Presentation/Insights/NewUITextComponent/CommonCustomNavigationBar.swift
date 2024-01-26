@@ -84,6 +84,10 @@ extension CommonCustomNavigationBar {
         doneButton.isHidden = true
     }
     
+    func showDoneButton() {
+        doneButton.isHidden = false
+    }
+    
     func isButtonEnabled(_ isEnabled: Bool) {
         doneButton.isEnabled = isEnabled
         if isEnabled != false {
@@ -97,6 +101,10 @@ extension CommonCustomNavigationBar {
     func setButtonColorForWhen(enabled: UIColor, disabled: UIColor) {
         enabledColor = enabled
         disabledColor = disabled
+    }
+    
+    func hideBackButton() {
+        backButton.isHidden = true
     }
     
     func modifyActionButtonConfigurationWithSymbol(of systemName: String) {

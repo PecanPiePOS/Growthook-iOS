@@ -15,6 +15,7 @@ final class InsightsDetailMainBlockView: BaseView {
     private let verticalDividerView = UIView()
     private let remainingDateLabel = UILabel()
     private let dividerView = UILabel()
+    let scrapButton = UIButton()
 
     override func setStyles() {
         backgroundColor = .gray700
@@ -50,12 +51,17 @@ final class InsightsDetailMainBlockView: BaseView {
         dividerView.do {
             $0.backgroundColor = .gray400
         }
+        
+        scrapButton.do {
+            $0.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+        }
     }
     
     override func setLayout() {
         addSubviews(
             nameLabel, insightLabel, dateLabel,
-            verticalDividerView, remainingDateLabel, dividerView
+            verticalDividerView, remainingDateLabel, dividerView,
+            scrapButton
         )
         
         nameLabel.snp.makeConstraints {
@@ -91,6 +97,12 @@ final class InsightsDetailMainBlockView: BaseView {
             $0.top.equalTo(dateLabel.snp.bottom).offset(12)
             $0.height.equalTo(2)
         }
+        
+        scrapButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(8)
+            $0.size.equalTo(48)
+        }
     }
 }
 
@@ -99,6 +111,11 @@ extension InsightsDetailMainBlockView: InsightBoxViewType {
         nameLabel.text = "" + model.caveName + "   "
         insightLabel.text = model.insight
         dateLabel.text = model.lockDate
+        if model.isScraped != false {
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        } else {
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
+        }
         if model.remainingDays > 0 {
             remainingDateLabel.text = "D-" + String(model.remainingDays)
             self.addSubviews(remainingDateLabel, verticalDividerView)

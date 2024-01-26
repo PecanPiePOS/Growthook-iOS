@@ -26,7 +26,6 @@ final class CommonTextViewWithBorder: UITextView, CommonTextComponentType {
     lazy var rxNextButtonTapControl: ControlEvent<Void> = moveToNextButton.rx.tap
     lazy var modifiedText: Driver<String?> = self.rx.text
         .orEmpty
-        .distinctUntilChanged()
         .scan(self.text) { [weak self] (previousValue, newValue) -> String? in
             guard let self else { return previousValue }
             guard let previousValue else { return previousValue }
