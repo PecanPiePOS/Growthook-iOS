@@ -45,6 +45,7 @@ final class RemoveCaveAlertViewController: BaseViewController {
             .subscribe(onNext: { [weak self] in
                 guard let caveId = self?.caveId else { return }
                 self?.viewModel.removeCaveButtonTap(caveId: caveId)
+                self?.viewModel.inputs.reloadCave()
             })
             .disposed(by: disposeBag)
         
