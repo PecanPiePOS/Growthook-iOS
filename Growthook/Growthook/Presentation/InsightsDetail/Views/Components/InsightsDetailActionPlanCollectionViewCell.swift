@@ -52,7 +52,7 @@ extension InsightsDetailActionPlanCollectionViewCell {
         contentLabel.do {
             $0.font = .fontGuide(.body3_bold)
             $0.textColor = .white000
-            $0.numberOfLines = 2
+            $0.numberOfLines = 3
         }
         
         menuButton.do {
