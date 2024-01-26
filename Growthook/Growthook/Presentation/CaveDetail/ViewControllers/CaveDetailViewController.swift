@@ -135,6 +135,12 @@ final class CaveDetailViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
+        viewModel.outputs.pushToInsightDetail
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.pushToInsightDetail(at: indexPath )
+            })
+            .disposed(by: disposeBag)
+        
         caveDetailView.insightListView.insightCollectionView.rx.itemSelected
             .subscribe(onNext: { index in
                 print(index)
