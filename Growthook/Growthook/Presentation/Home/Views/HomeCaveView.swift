@@ -173,7 +173,7 @@ final class HomeCaveView: BaseView {
         }
         
         caveEmptyTextLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(32)
+            $0.centerY.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
     }
