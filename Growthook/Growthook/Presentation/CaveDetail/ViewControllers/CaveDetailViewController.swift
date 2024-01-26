@@ -141,12 +141,12 @@ final class CaveDetailViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-//        unLockInsightAlertView.useButton.rx.tap
-//            .subscribe(onNext: { [weak self] in
-//                guard let seedId = self?.lockSeedId else { return }
-//                self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
-//            })
-//            .disposed(by: disposeBag)
+        caveDetailView.insightListView.insightCollectionView.rx.itemSelected
+            .subscribe(onNext: { index in
+                print(index)
+                self.pushToInsightDetail(at: index)
+            })
+                .disposed(by: disposeBag)
         
 //        unLockInsightAlertView.giveUpButton.rx.tap
 //            .subscribe(onNext: { [weak self] in
@@ -245,7 +245,6 @@ final class CaveDetailViewController: BaseViewController {
     // MARK: - Methods
     
     override func setDelegates() {
-        caveDetailView.insightListView.insightCollectionView.delegate = self
         longPressGesture.delegate = self
     }
     
@@ -381,13 +380,6 @@ extension CaveDetailViewController {
                 view.showToast(message: I18N.Component.ToastMessage.removeCave)
             }
         }
-    }
-}
-
-extension CaveDetailViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.inputs.insightCellTap(at: indexPath)
     }
 }
 

@@ -17,7 +17,17 @@ final class InsightsDetailModalViewController: BaseViewController {
     private var viewModel: InsightsDetailViewModel
     private var mainBlockHeight: CGFloat
     private var mainBlockColor: UIColor
-    private var hasActionPlan: Bool
+    private var hasActionPlan: Bool {
+        didSet {
+            switch self.hasActionPlan {
+            case true:
+                self.actionPlanButton.setTitleIfNeeded(with: "액션 더하기")
+            case false:
+                self.actionPlanButton.setTitleIfNeeded(with: "액션 만들기")
+
+            }
+        }
+    }
     private var isFolded = true
     private let refreshControl = UIRefreshControl()
     private lazy var cellMenuView = ActionPlanCellMenuView()
@@ -715,6 +725,7 @@ extension InsightsDetailModalViewController: InsightDetailReloadDelegate {
             self.viewModel.inputs.reloadActionPlan()
             self.actionPlanButton = .init(type: .addAction)
             self.viewModel.toastStatus.accept(.createActionPlan(success: true))
+            self.hasActionPlan = true
         }
     }
 }
