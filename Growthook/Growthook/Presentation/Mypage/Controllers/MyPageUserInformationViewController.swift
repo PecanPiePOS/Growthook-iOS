@@ -98,7 +98,7 @@ final class MyPageUserInformationViewController: BaseViewController {
         }
         
         profileImageView.do {
-            $0.image = UIImage(named: "DefaultUserImage")
+            $0.image = ImageLiterals.Home.profile_default
             $0.contentMode = .scaleAspectFill
             $0.makeCornerRound(radius: 41)
         }

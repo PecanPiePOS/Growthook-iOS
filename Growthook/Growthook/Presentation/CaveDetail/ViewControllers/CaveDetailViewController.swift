@@ -245,7 +245,6 @@ final class CaveDetailViewController: BaseViewController {
     // MARK: - Methods
     
     override func setDelegates() {
-        caveDetailView.insightListView.insightCollectionView.delegate = self
         longPressGesture.delegate = self
     }
     
@@ -381,13 +380,6 @@ extension CaveDetailViewController {
                 view.showToast(message: I18N.Component.ToastMessage.removeCave)
             }
         }
-    }
-}
-
-extension CaveDetailViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.inputs.insightCellTap(at: indexPath)
     }
 }
 
