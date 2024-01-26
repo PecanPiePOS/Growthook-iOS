@@ -28,6 +28,7 @@ protocol HomeViewModelInputs {
     func removeButtonTap()
     func insightScrap(seedId: Int, index: Int)
     func unLockSeedAlert(seedId: Int)
+    func unLockSeedAlertInCave(seedId: Int)
     func caveInsightList(caveId: Int)
     func caveListMove(caveId: Int)
     func removeCaveButtonTap(caveId: Int)
@@ -53,6 +54,7 @@ protocol HomeViewModelOutputs {
     var reloadInsights: PublishSubject<Void> { get }
     var insightScrapToggle: PublishSubject<Void> { get }
     var unLockSeed: PublishSubject<Void> { get }
+    var unLockSeedInCave: PublishSubject<Void> { get }
     var caveDetail: BehaviorRelay<CaveDetailResponseDto> { get }
     var caveInsightList: BehaviorRelay<[SeedListResponseDto]> { get }
     var removeCave: PublishSubject<Void> { get }
@@ -81,6 +83,7 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
     var insightAlarm: BehaviorRelay<Int> = BehaviorRelay<Int>(value: 0)
     var insightScrapToggle: PublishSubject<Void> = PublishSubject<Void>()
     var unLockSeed: PublishSubject<Void> = PublishSubject<Void>()
+    var unLockSeedInCave: PublishSubject<Void> = PublishSubject<Void>()
     var caveDetail: BehaviorRelay<CaveDetailResponseDto> = BehaviorRelay<CaveDetailResponseDto>(value: CaveDetailResponseDto.caveDetailInitValue())
     var caveInsightList: BehaviorRelay<[SeedListResponseDto]> = BehaviorRelay<[SeedListResponseDto]>(value: [])
     
@@ -216,6 +219,20 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
             }
             guard self != nil else { return }
             self?.unLockSeed.onNext(())
+        }
+    }
+    
+    func unLockSeedAlertInCave(seedId: Int) {
+        let seedId = seedId
+        SeedListAPI.shared.patchSeedUnlock(seedId: seedId) { [weak self] response in
+            guard let status = response?.status else { return }
+            if status == 401 {
+                self?.getNewToken()
+                self?.unLockSeedAlert(seedId: seedId)
+                return
+            }
+            guard self != nil else { return }
+            self?.unLockSeedInCave.onNext(())
         }
     }
     

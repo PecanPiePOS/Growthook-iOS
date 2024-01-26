@@ -135,24 +135,42 @@ final class CaveDetailViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.outputs.pushToInsightDetail
-            .subscribe(onNext: { [weak self] indexPath in
-                self?.pushToInsightDetail(at: indexPath )
+        caveDetailView.insightListView.insightCollectionView.rx.itemSelected
+            .subscribe(onNext: { index in
+                print(index)
+                self.pushToInsightDetail(at: index)
             })
             .disposed(by: disposeBag)
         
-//        unLockInsightAlertView.useButton.rx.tap
-//            .subscribe(onNext: { [weak self] in
-//                guard let seedId = self?.lockSeedId else { return }
-//                self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
-//            })
-//            .disposed(by: disposeBag)
+        unLockInsightAlertView.useButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let seedId = self?.lockSeedId else { return }
+                if self?.viewModel.ssukCount.value.gatheredSsuk == 0 {
+                    self?.unLockInsightAlertView.removeFromSuperview()
+                    self?.view.showToastWithRed(message: "쑥이 없어 잠금을 해제할 수 없어요")
+                } else {
+                    self?.viewModel.inputs.unLockSeedAlertInCave(seedId: seedId)
+                }
+            })
+            .disposed(by: disposeBag)
         
-//        unLockInsightAlertView.giveUpButton.rx.tap
-//            .subscribe(onNext: { [weak self] in
-//                self?.unLockInsightAlertView.removeFromSuperview()
-//            })
-//            .disposed(by: disposeBag)
+        unLockInsightAlertView.giveUpButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.unLockInsightAlertView.removeFromSuperview()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.unLockSeedInCave
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.unLockInsightAlertView.removeFromSuperview()
+                guard let actionPlan = self.lockActionPlan else { return }
+                guard let seedId = self.lockSeedId else { return }
+                let vc = InsightsDetailViewController(hasAnyActionPlan: actionPlan, seedId: seedId)
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
         
         caveDetailView.insightListView.scrapButton.rx.tap
             .subscribe(onNext: { [weak self] in
@@ -210,6 +228,12 @@ final class CaveDetailViewController: BaseViewController {
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.ssukCount
+            .subscribe(onNext: { [weak self] model in
+                self?.unLockInsightAlertView.mugwortCount.text = "\(model.gatheredSsuk)"
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
@@ -245,7 +269,6 @@ final class CaveDetailViewController: BaseViewController {
     // MARK: - Methods
     
     override func setDelegates() {
-        caveDetailView.insightListView.insightCollectionView.delegate = self
         longPressGesture.delegate = self
     }
     
@@ -381,13 +404,6 @@ extension CaveDetailViewController {
                 view.showToast(message: I18N.Component.ToastMessage.removeCave)
             }
         }
-    }
-}
-
-extension CaveDetailViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.inputs.insightCellTap(at: indexPath)
     }
 }
 
