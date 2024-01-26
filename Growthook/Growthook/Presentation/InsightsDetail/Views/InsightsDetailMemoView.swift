@@ -8,7 +8,8 @@
 import UIKit
 
 final class InsightsDetailMemoView: BaseView {
-
+    
+    private let backgroundBoxView = UIView()
     private let memoContent = UILabel()
     private let referenceTitle = UILabel()
     private let referenceUrlTitle = UILabel()
@@ -43,12 +44,16 @@ final class InsightsDetailMemoView: BaseView {
             $0.backgroundColor = .gray200
             $0.makeCornerRound(radius: 5)
         }
+        
+        backgroundBoxView.do {
+            $0.backgroundColor = .gray500
+        }
     }
  
     override func setLayout() {
         self.addSubviews(
-            memoContent, referenceUrlTitle, referenceTitle,
-            dividerView
+            memoContent, backgroundBoxView, referenceUrlTitle,
+            referenceTitle, dividerView
         )
         
         memoContent.snp.makeConstraints {
@@ -73,9 +78,15 @@ final class InsightsDetailMemoView: BaseView {
     
         dividerView.snp.makeConstraints {
             $0.width.equalTo(1)
-            $0.height.equalTo(14)
+            $0.height.equalTo(16)
             $0.centerY.equalTo(referenceTitle)
             $0.centerX.equalTo(referenceTitle.snp.trailing)
+        }
+        
+        backgroundBoxView.snp.makeConstraints {
+            $0.width.equalTo(10)
+            $0.height.equalTo(26)
+            $0.center.equalTo(dividerView)
         }
     }
 }
@@ -92,6 +103,7 @@ extension InsightsDetailMemoView {
             referenceUrlTitle.text = "   " + urlData + "   "
         } else {
             dividerView.removeFromSuperview()
+            backgroundBoxView.removeFromSuperview()
         }
     }
 }
