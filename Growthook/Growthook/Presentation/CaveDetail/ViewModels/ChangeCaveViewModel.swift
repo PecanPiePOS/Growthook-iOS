@@ -66,11 +66,6 @@ extension ChangeCaveViewModel {
         let model: CavePatchRequestDto = CavePatchRequestDto(name: name.value, introduction: introduce.value, isShared: false)
         CaveAPI.shared.patch(caveId: caveId, param: model) { [weak self] response in
             guard let status = response?.status else { return }
-            if status == 401 {
-                self?.getNewToken()
-                self?.patchCave(caveId: caveId)
-                return
-            }
             self?.changeCave.onNext(())
         }
     }
