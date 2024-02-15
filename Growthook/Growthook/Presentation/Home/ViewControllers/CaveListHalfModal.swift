@@ -91,7 +91,7 @@ class CaveListHalfModal: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        caveEmptyView.checkButton.rx.tap
+        caveEmptyView.newCaveButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.clearInsight()
                 self?.dismissToHomeVC()

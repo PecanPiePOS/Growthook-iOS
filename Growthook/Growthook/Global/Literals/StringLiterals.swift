@@ -56,6 +56,7 @@ enum I18N {
         
         enum Button {
             static let check = "확인"
+            static let newCave = "새 동굴 짓기"
         }
     }
     

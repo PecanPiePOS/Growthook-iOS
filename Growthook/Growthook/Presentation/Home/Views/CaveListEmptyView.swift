@@ -16,7 +16,7 @@ final class CaveListEmptyView: BaseView {
     
     private lazy var emptyImage = UIImageView()
     private lazy var emptyCaveLabel = UILabel()
-    lazy var checkButton = UIButton()
+    lazy var newCaveButton = UIButton()
     
     // MARK: - UI Components Property
     
@@ -34,11 +34,13 @@ final class CaveListEmptyView: BaseView {
             $0.textColor = .gray200
         }
         
-        checkButton.do {
-            $0.setTitle(I18N.Component.Button.check, for: .normal)
+        newCaveButton.do {
+            $0.setTitle(I18N.Component.Button.newCave, for: .normal)
+            $0.setImage(ImageLiterals.Component.btn_circle_plus, for: .normal)
             $0.backgroundColor = .green400
             $0.setTitleColor(.white000, for: .normal)
             $0.titleLabel?.font = .fontGuide(.body1_bold)
+            $0.alignTextBelow(spacing: 4)
             $0.makeCornerRound(radius: 10)
         }
     }
@@ -47,7 +49,7 @@ final class CaveListEmptyView: BaseView {
     
     override func setLayout() {
         
-        self.addSubviews(emptyImage, emptyCaveLabel, checkButton)
+        self.addSubviews(emptyImage, emptyCaveLabel, newCaveButton)
         
         emptyImage.snp.makeConstraints {
             $0.top.equalToSuperview().inset(SizeLiterals.Screen.screenHeight * 80 / 812)
@@ -59,7 +61,7 @@ final class CaveListEmptyView: BaseView {
             $0.centerX.equalToSuperview()
         }
         
-        checkButton.snp.makeConstraints {
+        newCaveButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(20)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(50)
