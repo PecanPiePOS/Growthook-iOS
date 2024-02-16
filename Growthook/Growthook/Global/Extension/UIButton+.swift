@@ -72,7 +72,7 @@ extension UIButton {
             return
         }
         
-        let titleSize = titleText.size(withAttributes: [
+        _ = titleText.size(withAttributes: [
             NSAttributedString.Key.font: titleLabel.font as Any
         ])
         
