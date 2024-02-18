@@ -19,7 +19,7 @@ enum I18N {
         enum UnLockInsight {
             static let title = "잠금 해제하기"
             static let description = "씨앗의 잠금을 해제하기 위해\n쑥 1개를 사용합니다."
-            static let insightTip = "Tip. 인사이트의 액션 플랜을 만들고 이를 달성하면,\n쑥을 얻을 수 있어요!"
+            static let insightTip = "Tip. 씨앗에서 할 일을 기록하고,\n이를 달성하면 새로운 쑥을 얻을 수 있어요!"
             static let tip = "Tip."
             static let leftover = "현재 남은 쑥"
             static let giveUp = "포기하기"
