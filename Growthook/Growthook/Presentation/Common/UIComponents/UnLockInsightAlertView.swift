@@ -48,6 +48,7 @@ final class UnLockInsightAlertView: BaseView {
             $0.text = I18N.Component.UnLockInsight.description
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .gray100
+            $0.setLineSpacing(lineSpacing: 4)
             $0.textAlignment = .center
             $0.numberOfLines = 2
         }
@@ -61,6 +62,7 @@ final class UnLockInsightAlertView: BaseView {
             $0.text = I18N.Component.UnLockInsight.insightTip
             $0.font = .fontGuide(.detail3_reg)
             $0.textColor = .gray200
+            $0.setLineSpacing(lineSpacing: 4)
             $0.textAlignment = .center
             $0.numberOfLines = 2
             $0.partColorChange(targetString: I18N.Component.UnLockInsight.tip, textColor: .green400)
