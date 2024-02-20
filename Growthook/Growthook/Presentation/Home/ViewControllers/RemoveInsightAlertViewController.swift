@@ -60,6 +60,8 @@ final class RemoveInsightAlertViewController: BaseViewController {
         view.backgroundColor = .clear
         
         removeInsightView.descriptionLabel.text = I18N.Component.RemoveAlert.removeInsight
+        removeInsightView.descriptionLabel.setLineSpacing(lineSpacing: 5)
+        removeInsightView.descriptionLabel.textAlignment = .center
         
     }
     
