@@ -198,7 +198,7 @@ final class HomeViewController: BaseViewController {
                 guard let seedId = self?.lockSeedId else { return }
                 if self?.viewModel.ssukCount.value.gatheredSsuk == 0 {
                     self?.unLockAlertView.removeFromSuperview()
-                    self?.view.showToastWithRed(message: "쑥이 없어 잠금을 해제할 수 없어요")
+                    self?.view.showToastWithRed(message: I18N.Component.ToastMessage.unLockFail)
                 } else {
                     self?.viewModel.inputs.unLockSeedAlert(seedId: seedId)
                 }
@@ -213,6 +213,7 @@ final class HomeViewController: BaseViewController {
                 guard let seedId = self.lockSeedId else { return }
                 let vc = InsightsDetailViewController(hasAnyActionPlan: actionPlan, seedId: seedId)
                 vc.hidesBottomBarWhenPushed = true
+                vc.view.showToast(message: I18N.Component.ToastMessage.unLockSuccess)
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
