@@ -131,12 +131,13 @@ final class HomeCaveView: BaseView {
         seedImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(11)
-            $0.size.equalTo(19)
+            $0.width.equalTo(19)
+            $0.height.equalTo(24)
         }
         
         seedCountLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(seedImage.snp.trailing).offset(4)
+            $0.trailing.equalToSuperview().inset(11)
         }
         
         addCaveButton.snp.makeConstraints {

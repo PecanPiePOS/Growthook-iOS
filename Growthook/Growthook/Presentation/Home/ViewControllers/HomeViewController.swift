@@ -128,7 +128,7 @@ final class HomeViewController: BaseViewController {
         
         viewModel.outputs.ssukCount
             .subscribe(onNext: { [weak self] model in
-                self?.homeCaveView.seedCountLabel.text = "\(model.gatheredSsuk)"
+                self?.homeCaveView.seedCountLabel.text = (model.gatheredSsuk == 0) ? "00" : "\(model.gatheredSsuk)"
                 self?.unLockAlertView.mugwortCount.text = "\(model.gatheredSsuk)"
             })
             .disposed(by: disposeBag)
