@@ -51,7 +51,7 @@ final class HomeCaveView: BaseView {
         }
         
         seedImage.do {
-            $0.image = ImageLiterals.Component.icn_seed_light
+            $0.image = ImageLiterals.Component.ic_thook
         }
         
         seedCountLabel.do {
