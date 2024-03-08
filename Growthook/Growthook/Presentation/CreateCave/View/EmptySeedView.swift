@@ -25,7 +25,7 @@ final class EmptySeedView: BaseView {
         self.roundCorners(cornerRadius: 20, maskedCorners: [.topLeft, .topRight])
         
         noSeedLabel.do {
-            $0.text = "아직 심겨진 씨앗이 없어요"
+            $0.text = I18N.Home.emptySeedList
             $0.font = .fontGuide(.body1_reg)
             $0.textColor = .gray200
         }

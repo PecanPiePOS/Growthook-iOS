@@ -64,6 +64,8 @@ final class RemoveCaveAlertViewController: BaseViewController {
         view.backgroundColor = .clear
         
         removeInsightView.descriptionLabel.text = I18N.Component.RemoveAlert.removeCave
+        removeInsightView.descriptionLabel.setLineSpacing(lineSpacing: 4)
+        removeInsightView.descriptionLabel.textAlignment = .center
         
     }
     

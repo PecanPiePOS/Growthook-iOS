@@ -48,6 +48,7 @@ final class UnLockInsightAlertView: BaseView {
             $0.text = I18N.Component.UnLockInsight.description
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .gray100
+            $0.setLineSpacing(lineSpacing: 4)
             $0.textAlignment = .center
             $0.numberOfLines = 2
         }
@@ -61,6 +62,7 @@ final class UnLockInsightAlertView: BaseView {
             $0.text = I18N.Component.UnLockInsight.insightTip
             $0.font = .fontGuide(.detail3_reg)
             $0.textColor = .gray200
+            $0.setLineSpacing(lineSpacing: 4)
             $0.textAlignment = .center
             $0.numberOfLines = 2
             $0.partColorChange(targetString: I18N.Component.UnLockInsight.tip, textColor: .green400)
@@ -78,7 +80,7 @@ final class UnLockInsightAlertView: BaseView {
         }
         
         mugwortImage.do {
-            $0.image = ImageLiterals.Component.ic_thook
+            $0.image = ImageLiterals.Component.ic_small_ssuk
         }
         
         mugwortCount.do {
@@ -151,18 +153,18 @@ final class UnLockInsightAlertView: BaseView {
         
         mugwortLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().inset(14)
+            $0.leading.equalToSuperview().inset(15)
         }
         
         mugwortImage.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(mugwortLabel.snp.trailing).offset(4)
-            $0.size.equalTo(17)
+            $0.leading.equalTo(mugwortLabel.snp.trailing).offset(2)
+            $0.size.equalTo(12)
         }
         
         mugwortCount.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(mugwortImage.snp.trailing).offset(4)
+            $0.trailing.equalToSuperview().inset(14)
         }
         
         underLineView.snp.makeConstraints {

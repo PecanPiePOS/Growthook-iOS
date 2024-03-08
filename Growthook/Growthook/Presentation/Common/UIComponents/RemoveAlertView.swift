@@ -41,6 +41,7 @@ final class RemoveAlertView: BaseView {
         descriptionLabel.do {
             $0.font = .fontGuide(.body3_reg)
             $0.textColor = .gray100
+            $0.setLineSpacing(lineSpacing: 4)
             $0.textAlignment = .center
             $0.numberOfLines = 2
         }

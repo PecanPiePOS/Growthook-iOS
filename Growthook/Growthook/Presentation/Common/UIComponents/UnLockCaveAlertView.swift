@@ -35,6 +35,7 @@ final class UnLockCaveAlertView: BaseView {
             $0.text = I18N.Component.UnLockCave.title
             $0.font = .fontGuide(.head4)
             $0.textColor = .white000
+            $0.setLineSpacing(lineSpacing: 5)
             $0.textAlignment = .center
             $0.numberOfLines = 2
         }

@@ -19,7 +19,7 @@ enum I18N {
         enum UnLockInsight {
             static let title = "잠금 해제하기"
             static let description = "씨앗의 잠금을 해제하기 위해\n쑥 1개를 사용합니다."
-            static let insightTip = "Tip. 인사이트의 액션 플랜을 만들고 이를 달성하면,\n쑥을 얻을 수 있어요!"
+            static let insightTip = "Tip. 씨앗에서 할 일을 기록하고,\n이를 달성하면 새로운 쑥을 얻을 수 있어요!"
             static let tip = "Tip."
             static let leftover = "현재 남은 쑥"
             static let giveUp = "포기하기"
@@ -28,8 +28,8 @@ enum I18N {
         
         enum RemoveAlert {
             static let title = "정말로 삭제할까요?"
-            static let removeInsight = "삭제한 인사이트는 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
-            static let removeCave = "삭제한 보관함은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
+            static let removeInsight = "삭제한 씨앗은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
+            static let removeCave = "삭제한 동굴은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
             static let keep = "유지하기"
             static let remove = "삭제하기"
             static let removeActionPlan = "삭제한 액션플랜은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
@@ -46,6 +46,8 @@ enum I18N {
             static let removeInsight = "씨앗이 삭제되었어요"
             static let removeCave = "동굴이 삭제되었어요"
             static let scrap = "스크랩 완료!"
+            static let unLockFail = "쑥이 없어 잠금을 해제할 수 없어요"
+            static let unLockSuccess = "잠금이 영구적으로 해제되었어요!"
         }
         
         enum Identifier {
@@ -56,6 +58,7 @@ enum I18N {
         
         enum Button {
             static let check = "확인"
+            static let newCave = "새 동굴 짓기"
         }
     }
     
@@ -69,10 +72,11 @@ enum I18N {
         static let notNotiDescription1 = "씨앗의 잠금이 3일"
         static let notNotiDescription2 = "남았을 때 알려드릴게요!"
         static let caveName = "동굴 이름"
-        static let emptyCaveList = "아직 만들어진 동굴이 없어요"
-        static let emptyCave = "오른쪽의 +를 눌러 동굴을 추가해보세요!"
+        static let emptyCaveList = "아직 지어진 동굴이 없어요"
+        static let emptyCave = "오른쪽의 +를 눌러 동굴을 지어보세요!"
         static let count = "개"
         static let userCave = "님의 동굴 속"
+        static let emptySeedList = "아직 심겨진 씨앗이 없어요"
     }
     
     enum CaveDetail {
