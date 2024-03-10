@@ -93,7 +93,7 @@ final class ActionListViewController: BaseViewController {
         
         viewModel.outputs.titlePersent
             .subscribe(onNext: { [weak self] persent in
-                self?.titleBarView.setPersentText(persent)
+                self?.titleBarView.setPercentText(persent)
             })
             .disposed(by: disposeBag)
         
@@ -126,7 +126,7 @@ final class ActionListViewController: BaseViewController {
         
         titleBarView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(107)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.2266)
             $0.top.equalTo(view.safeAreaLayoutGuide)
         }
         
