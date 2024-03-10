@@ -157,6 +157,7 @@
 		25BD951F2B08F73700E72ADC /* CompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BD951E2B08F73700E72ADC /* CompleteViewController.swift */; };
 		25EAFA5B2B0255BB00283CD8 /* MainTitleBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EAFA5A2B0255BB00283CD8 /* MainTitleBarView.swift */; };
 		25EAFA5D2B02597800283CD8 /* ActionListSegmentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EAFA5C2B02597800283CD8 /* ActionListSegmentedView.swift */; };
+		25F672532B9DB45900B1E73C /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F672522B9DB45900B1E73C /* EmptyView.swift */; };
 		58026D992B55264B00176D12 /* ActionPlanCellMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58026D982B55264B00176D12 /* ActionPlanCellMenuView.swift */; };
 		581D228E2B320C630068E58D /* CommonTextFieldWithBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D228D2B320C630068E58D /* CommonTextFieldWithBorder.swift */; };
 		581D22902B32A9240068E58D /* Reactive+UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581D228F2B32A9240068E58D /* Reactive+UITextField.swift */; };
@@ -355,6 +356,7 @@
 		25BD951E2B08F73700E72ADC /* CompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteViewController.swift; sourceTree = "<group>"; };
 		25EAFA5A2B0255BB00283CD8 /* MainTitleBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTitleBarView.swift; sourceTree = "<group>"; };
 		25EAFA5C2B02597800283CD8 /* ActionListSegmentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListSegmentedView.swift; sourceTree = "<group>"; };
+		25F672522B9DB45900B1E73C /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		58026D982B55264B00176D12 /* ActionPlanCellMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPlanCellMenuView.swift; sourceTree = "<group>"; };
 		581D228D2B320C630068E58D /* CommonTextFieldWithBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextFieldWithBorder.swift; sourceTree = "<group>"; };
 		581D228F2B32A9240068E58D /* Reactive+UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UITextField.swift"; sourceTree = "<group>"; };
@@ -1094,6 +1096,7 @@
 			children = (
 				25EAFA5A2B0255BB00283CD8 /* MainTitleBarView.swift */,
 				25EAFA5C2B02597800283CD8 /* ActionListSegmentedView.swift */,
+				25F672522B9DB45900B1E73C /* EmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1507,6 +1510,7 @@
 				03B9AC662AF5630200A5751C /* NSObject+.swift in Sources */,
 				034580852B2D6354002DDEBA /* CaveDetailView.swift in Sources */,
 				58A65D922B621D8900FB92CC /* TokenManager.swift in Sources */,
+				25F672532B9DB45900B1E73C /* EmptyView.swift in Sources */,
 				033E9C132AFD2F630051A9E8 /* CustomNavigationBar.swift in Sources */,
 				092A518D2B52DEBD00296B46 /* CaveInfoView.swift in Sources */,
 				5866260E2B4E654E0084468C /* MyPageDTO.swift in Sources */,
