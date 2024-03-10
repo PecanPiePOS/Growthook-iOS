@@ -27,6 +27,7 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
     
     private let scrapButton = UIButton()
     private let tableView = UITableView(frame: .zero, style: .plain)
+    private let emptyView = EmptyView(frame: .zero, emptyType: .inprogress)
     
     // MARK: - Properties
     
@@ -62,7 +63,13 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
         viewModel.outputs.doingActionList
             .subscribe(onNext: { [weak self] data in
                 guard let self = self else { return }
-                self.tableView.reloadData()
+                if data.isEmpty {
+                    self.tableView.backgroundView?.isHidden = false
+                    self.tableView.reloadData()
+                } else {
+                    self.tableView.backgroundView?.isHidden = true
+                    self.tableView.reloadData()
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -83,6 +90,7 @@ final class InprogressViewController: BaseViewController, NotificationDismissBot
             $0.delegate = self
             $0.dataSource = self
             $0.backgroundColor = .gray700
+            $0.backgroundView = emptyView
         }
     }
     
