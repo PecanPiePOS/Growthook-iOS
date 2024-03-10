@@ -73,7 +73,7 @@ extension ActionListTableViewCell {
         }
         
         completButton.do {
-            $0.setTitle("완료하기", for: .normal)
+            $0.setTitle("수확하기", for: .normal)
             $0.setTitleColor(.white000, for: .normal)
             $0.titleLabel?.font = .fontGuide(.detail1_bold)
             $0.backgroundColor = .green400
