@@ -101,7 +101,10 @@ final class ActionListViewController: BaseViewController {
             .bind(onNext: { [weak self] index in
                 if index == 2 {
                     self?.showToast()
-                } else {
+                } else if index == 4 {
+                    self?.showCancelToast()
+                }
+                else {
                     self?.segmentedView.moveToPage(index: index)
                 }
             })
@@ -163,6 +166,10 @@ final class ActionListViewController: BaseViewController {
     
     private func showToast() {
         view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
+    }
+    
+    private func showCancelToast() {
+        view.showScrapToast(message: I18N.Component.ToastMessage.unScrap)
     }
     
     func didTapReviewButtonInCompleteViewController() {

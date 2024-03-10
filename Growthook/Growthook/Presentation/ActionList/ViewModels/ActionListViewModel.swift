@@ -110,6 +110,8 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         print("진행중 탭에서 스크랩 버튼이 탭 되었습니다")
         if !isScraped {
             selectedIndex.accept(2)
+        } else {
+            selectedIndex.accept(4)
         }
         patchACtionListScrap(actionPlanId: actionPlanId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -122,6 +124,8 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         print("완료 탭에서 스크랩 버튼이 탭 되었습니다")
         if !isScraped {
             selectedIndex.accept(2)
+        } else {
+            selectedIndex.accept(4)
         }
         patchACtionListScrap(actionPlanId: actionPlanId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

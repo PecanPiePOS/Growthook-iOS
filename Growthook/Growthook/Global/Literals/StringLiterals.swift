@@ -46,6 +46,7 @@ enum I18N {
             static let removeInsight = "씨앗이 삭제되었어요"
             static let removeCave = "동굴이 삭제되었어요"
             static let scrap = "스크랩 완료!"
+            static let unScrap = "스크랩 취소"
             static let unLockFail = "쑥이 없어 잠금을 해제할 수 없어요"
             static let unLockSuccess = "잠금이 영구적으로 해제되었어요!"
         }
