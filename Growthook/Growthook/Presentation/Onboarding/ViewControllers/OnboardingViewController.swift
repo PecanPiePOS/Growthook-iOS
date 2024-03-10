@@ -92,17 +92,17 @@ final class OnboardingViewController: UIPageViewController {
     
     private func setupPage() {
         let page1 = PageContentsViewController(imageName:  ImageLiterals.Onboarding.onboardingPage1,
-                                               title: "인사이트 기록",
-                                               subTitle: "내가 얻은 인사이트를 한 줄로 표현해요.", pageType: .oneLines)
+                                               title: "동굴 짓기",
+                                               subTitle: "나만의 인사이트를 보관할 동굴을 만들어요.", pageType: .oneLines)
         let page2 = PageContentsViewController(imageName: ImageLiterals.Onboarding.onboardingPage2,
-                                               title: "보관함 아카이빙",
-                                               subTitle: "인사이트를 보관할 나만의 동굴을 만들고,\n씨앗을 심어요.", pageType: .twoLines)
+                                               title: "씨앗 심기",
+                                               subTitle: "내가 얻은 일상 속 영감, 인사이트를\n한줄로 표현해요.", pageType: .twoLines)
         let page3 = PageContentsViewController(imageName: ImageLiterals.Onboarding.onboardingPage3,
-                                               title: "액션 플랜 생성",
-                                               subTitle: "인사이트와 관련된 도전을 계획하고 달성해요.", pageType: .oneLines)
+                                               title: "할 일 계획하기",
+                                               subTitle: "인사이트를 바탕으로 앞으로의 할 일을 기록해요.", pageType: .oneLines)
         let page4 = PageContentsViewController(imageName: ImageLiterals.Onboarding.onboardingPage4,
-                                               title: "인사이트 잠금 해제",
-                                               subTitle: "기간이 지나 잠긴 인사이트는\n액션 플랜을 달성해 얻은 '쑥'으로 잠금을 해제해요.", pageType: .twoLines)
+                                               title: "씨앗 잠금 해제",
+                                               subTitle: "기간이 지나 잠긴 씨앗은\n할일을 달성해 얻은 '쑥'으로 잠금을 해제해요.", pageType: .twoLines)
         pages.append(page1)
         pages.append(page2)
         pages.append(page3)
