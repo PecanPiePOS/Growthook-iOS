@@ -103,7 +103,7 @@ enum I18N {
         static let insightTextViewPlaceholder = "찾아낸 새로운 가치를 한 줄로 표현해주세요"
         static let memoTextViewPlaceholder = "찾아낸 가치에 대한 생각을 적어보세요 (선택)"
         static let caveTitle = "어떤 동굴에 저장할까요?"
-        static let referencePlaceholder = "출처의 정보를 입력해주세요"
+        static let referencePlaceholder = "출처의 정보를 입력해주세요 (선택)"
         static let referenceUrlPlaceholder = "참고한 url을 적어주세요 (선택)"
     }
     

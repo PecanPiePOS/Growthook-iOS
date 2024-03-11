@@ -357,7 +357,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     
     func fetchSeedModel() -> SeedEditModel {
         guard let seedEditData else {
-            return SeedEditModel(caveName: "", insight: "", source: "", memo: "", url: "")
+            return SeedEditModel(caveName: "", insight: "", source: "", memo: "", url: "", remainingDays: "")
         }
         return seedEditData
     }
@@ -383,7 +383,7 @@ extension InsightsDetailViewModel {
                 guard let self else { return }
                 self.seedDetail.onNext(seedDetail)
                 self.scrapedStatus.accept(seedDetail.isScraped)
-                self.seedEditData = .init(caveName: seedDetail.caveName, insight: seedDetail.insight, source: seedDetail.source, memo: seedDetail.memo, url: seedDetail.url)
+                self.seedEditData = .init(caveName: seedDetail.caveName, insight: seedDetail.insight, source: seedDetail.source, memo: seedDetail.memo, url: seedDetail.url, remainingDays: "\(seedDetail.remainingDays)일")
             }, onError: { error in
                 print(error)
                 self.networkStatus.accept(.error(of: error))

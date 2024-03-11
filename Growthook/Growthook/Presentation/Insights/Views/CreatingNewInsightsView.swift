@@ -65,6 +65,8 @@ final class CreatingNewInsightsView: BaseView {
         placeholder: I18N.CreateInsight.referenceUrlPlaceholder,
         maxLength: 200
     )
+    let urlValidLabel = UILabel()
+    
     let dividerLine = UIView()
     let goalPeriodSelectView = SelectBlockWithTitle(placeholder: "선택")
     let warningImageView = UIImageView()
@@ -93,14 +95,19 @@ final class CreatingNewInsightsView: BaseView {
             $0.setNoTitleAndNoCount()
         }
         
+        urlValidLabel.do {
+            $0.font = .fontGuide(.body1_reg)
+            $0.textColor = .red400
+        }
+        
         dividerLine.do {
             $0.backgroundColor = .gray400
         }
         
         goalPeriodSelectView.do {
             $0.setTitles(title: "목표 기간", subtitle: "씨앗을 저장할 기간을 설정해주세요.")
+            $0.setSelectedBlockText(with: "1개월")
         }
-        
         warningImageView.do {
             $0.contentMode = .scaleAspectFit
             $0.image = ImageLiterals.Insight.img_warning_wholeText
@@ -111,7 +118,7 @@ final class CreatingNewInsightsView: BaseView {
     override func setLayout() {
         addSubviews(
             insightTextView, memoTextView, selectCaveView,
-            referenceTextField, referencURLTextField, dividerLine,
+            referenceTextField, referencURLTextField, urlValidLabel, dividerLine,
             goalPeriodSelectView, warningImageView
         )
         
@@ -145,9 +152,15 @@ final class CreatingNewInsightsView: BaseView {
             $0.height.equalTo(NewInsightItems.referenceURL.height)
         }
         
+        urlValidLabel.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.top.equalTo(referencURLTextField.snp.bottom).offset(4)
+            $0.height.equalTo(15)
+        }
+        
         dividerLine.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(18)
-            $0.top.equalTo(referencURLTextField.snp.bottom).offset(24)
+            $0.top.equalTo(urlValidLabel.snp.bottom).offset(24)
             $0.height.equalTo(1)
         }
         
@@ -161,6 +174,18 @@ final class CreatingNewInsightsView: BaseView {
             $0.top.equalTo(goalPeriodSelectView.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview().inset(18)
             $0.height.equalTo(warningImageView.snp.width).dividedBy(4.8)
+        }
+    }
+}
+
+extension CreatingNewInsightsView {
+    
+    func setUrlValidLabel(valid: Bool) {
+        switch valid {
+        case true:
+            urlValidLabel.text = ""
+        case false:
+            urlValidLabel.text = "유효하지 않은 url입니다."
         }
     }
 }
