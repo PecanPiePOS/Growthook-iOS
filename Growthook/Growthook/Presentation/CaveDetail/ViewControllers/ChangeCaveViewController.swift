@@ -18,6 +18,7 @@ final class ChangeCaveViewController: BaseViewController {
     // MARK: - UI Components
     
     private let changeCaveView = ChangeCaveView()
+    private lazy var unLockCaveAlertView = UnLockCaveAlertView()
     private let viewModel = ChangeCaveViewModel()
     private let disposeBag = DisposeBag()
     private let homeViewModel: HomeViewModel
@@ -27,7 +28,7 @@ final class ChangeCaveViewController: BaseViewController {
     private let caveId: Int?
     
     // MARK: - Initializer
-
+    
     init(caveId: Int, homeViewModel: HomeViewModel) {
         self.homeViewModel = homeViewModel
         self.caveId = caveId
@@ -119,6 +120,18 @@ final class ChangeCaveViewController: BaseViewController {
                 self.popToCaveDetailVC()
             })
             .disposed(by: disposeBag)
+        
+        changeCaveView.isSharedButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.addUnLockCaveAlert()
+            })
+            .disposed(by: disposeBag)
+        
+        unLockCaveAlertView.checkButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.unLockCaveAlertView.removeFromSuperview()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - UI Components Property
@@ -146,10 +159,26 @@ final class ChangeCaveViewController: BaseViewController {
 
 extension ChangeCaveViewController {
     
+    // MARK: - Methods
+    
+    private func addUnLockCaveAlert() {
+        view.addSubview(unLockCaveAlertView)
+        unLockCaveAlertView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
+    private func unLockCaveAlertButtonTap() {
+        
+    }
+}
+
+extension ChangeCaveViewController {
+    
     private func setNextTextView() {
         changeCaveView.introduceTextView.becomeFirstResponder()
     }
-
+    
     private func popToCaveDetailVC() {
         self.navigationController?.popViewController(animated: true)
     }
