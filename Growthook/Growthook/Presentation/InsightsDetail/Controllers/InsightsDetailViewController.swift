@@ -42,9 +42,9 @@ enum HasAnyActionPlan {
     var buttonTitle: String {
         switch self {
         case .yes:
-            return "액션 더하기"
+            return "할 일 더하기"
         case .no:
-            return "액션 만들기"
+            return "할 일 적기"
         }
     }
 }

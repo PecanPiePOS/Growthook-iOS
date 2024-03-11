@@ -23,7 +23,7 @@ final class ActionListReviewViewController: BaseViewController {
     private let navigationBar = CustomNavigationBar()
     private let titleLabel = UILabel()
 //    private let scrapButton = UIButton()
-    private let reviewTextView = UITextViewWithTintedWhenEdited(placeholder: "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요", maxLength: 300)
+    private let reviewTextView = UITextViewWithTintedWhenEdited(placeholder: "할 일을 달성하며 어떤 것을 느꼈는지 작성해보세요", maxLength: 300)
     private let writtenDateLabel = UILabel()
     
     // MARK: - Properties

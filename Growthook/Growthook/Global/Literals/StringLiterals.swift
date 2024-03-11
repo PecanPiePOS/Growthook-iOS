@@ -32,7 +32,7 @@ enum I18N {
             static let removeCave = "삭제한 동굴은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
             static let keep = "유지하기"
             static let remove = "삭제하기"
-            static let removeActionPlan = "삭제한 액션플랜은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
+            static let removeActionPlan = "삭제한 할 일은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
         }
         
         enum UnLockCave {
@@ -94,9 +94,9 @@ enum I18N {
     }
     
     enum ActionList {
-        static let reviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
+        static let reviewPlaceholder = "할 일을 달성하며 어떤 것을 느꼈는지 작성해보세요"
         static let insightDetailPlaceholder = "할 일을 구체적으로 계획해보세요"
-        static let insightDetailReviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
+        static let insightDetailReviewPlaceholder = "할 일을 달성하며 어떤 것을 느꼈는지 작성해보세요"
     }
     
     enum CreateInsight {
@@ -121,7 +121,7 @@ enum I18N {
     
     enum Mypage {
         static let deleteTitle = "정말 탈퇴 하시겠어요?"
-        static let deleteDescription = "탈퇴 시, 수집한 인사이트와\n달성한 액션플랜에 대한 정보가\n모두 없어져요."
+        static let deleteDescription = "탈퇴 시, 수집한 새싹과\n달성한 할 일에 대한 정보가\n모두 없어져요."
         static let maintain = "남아있기"
         static let withdraw = "탈퇴하기"
         static let logoutTitle = "로그아웃 하시겠습니까?"
