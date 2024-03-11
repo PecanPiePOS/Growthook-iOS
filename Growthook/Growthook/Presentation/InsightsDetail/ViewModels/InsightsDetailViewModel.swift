@@ -39,7 +39,7 @@ enum InsightsDetailToastType {
         case .editActionPlan(let success):
             if success != false { return "액션이 수정되었어요" } else { return "실패했어요" }
         case .createActionPlan(let success):
-            if success != false { return "액션을 만들었어요" } else { return "실패했어요" }
+            if success != false { return "할 일을 계획했어요!" } else { return "실패했어요" }
         }
     }
 }

@@ -63,7 +63,7 @@ final class CreateCaveEmptyViewController: BaseViewController {
 extension CreateCaveEmptyViewController {
     
     private func setToast() {
-        view.showToast(message: "새 동굴을 만들었어요!")
+        view.showToast(message: "새 동굴을 지었어요!")
     }
     
     private func tapCloseButton(_ sender: Any) {
@@ -80,7 +80,7 @@ extension CreateCaveEmptyViewController {
     
     private func setAlert() {
         AlertBuilder(viewController: self)
-            .setTitle("내 동굴에 친구를 초대해\n인사이트를 공유해보세요")
+            .setTitle("내 동굴에 친구를 초대해\n씨앗을 공유해요!")
             .setMessage("해당 기능은 추후 업데이트 예정이에요:)")
             .addActionConfirm("확인") {
                 print("확인!!")
