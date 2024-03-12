@@ -78,17 +78,8 @@ final class InsightsDetailMemoView: BaseView {
             $0.width.lessThanOrEqualTo(SizeLiterals.Screen.screenWidth - 44)
             $0.height.equalTo(26)
         }
-//        
-//        referenceUrlTitle.snp.makeConstraints {
-//            $0.top.equalTo(memoContent.snp.bottom).offset(16)
-//            $0.trailing.equalToSuperview()
-//            $0.bottom.equalToSuperview()
-//            $0.width.lessThanOrEqualTo(SizeLiterals.Screen.screenWidth - 44)
-//            $0.height.equalTo(26)
-//        }
-//        
+        
         referenceTitle.snp.makeConstraints {
-//            $0.trailing.equalTo(referenceUrlTitle.snp.leading)
             $0.width.lessThanOrEqualTo(120)
             $0.height.equalTo(26)
         }
@@ -96,10 +87,8 @@ final class InsightsDetailMemoView: BaseView {
         dividerView.snp.makeConstraints {
             $0.width.equalTo(1)
             $0.height.equalTo(16)
-//            $0.centerY.equalTo(referenceTitle)
-//            $0.centerX.equalTo(referenceTitle.snp.trailing)
         }
-//        
+        
         backgroundBoxView.snp.makeConstraints {
             $0.width.equalTo(10)
             $0.height.equalTo(26)
