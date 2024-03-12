@@ -312,4 +312,3 @@ extension InsightsViewModel {
         return false
     }
 }
-

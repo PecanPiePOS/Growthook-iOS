@@ -11,6 +11,7 @@ final class InsightsDetailMemoView: BaseView {
     
     private let backgroundBoxView = UIView()
     private let memoContent = UILabel()
+    private let refernceStackView = UIStackView()
     private let referenceTitle = UILabel()
     private let referenceUrlTitle = UILabel()
     private let dividerView = UIView()
@@ -23,21 +24,26 @@ final class InsightsDetailMemoView: BaseView {
             $0.textColor = .white000
             $0.font = .fontGuide(.body3_reg)
         }
+    
+        refernceStackView.do {
+            $0.spacing = 10
+            $0.isLayoutMarginsRelativeArrangement = true
+            $0.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+            $0.backgroundColor = .gray500
+            $0.makeCornerRound(radius: 5)
+
+        }
         
         referenceTitle.do {
             $0.numberOfLines = 1
             $0.font = .fontGuide(.detail2_bold)
             $0.textColor = .gray200
-            $0.backgroundColor = .gray500
-            $0.makeCornerRound(radius: 5)
         }
         
         referenceUrlTitle.do {
             $0.numberOfLines = 1
             $0.font = .fontGuide(.detail2_reg)
             $0.textColor = .gray200
-            $0.backgroundColor = .gray500
-            $0.roundCorners(cornerRadius: 5, maskedCorners: [.bottomRight, .topRight])
         }
         
         dividerView.do {
@@ -48,30 +54,41 @@ final class InsightsDetailMemoView: BaseView {
         backgroundBoxView.do {
             $0.backgroundColor = .gray500
         }
+        
+        prepareStackView()
     }
  
     override func setLayout() {
         self.addSubviews(
-            memoContent, backgroundBoxView, referenceUrlTitle,
-            referenceTitle, dividerView
-        )
+            memoContent, backgroundBoxView, refernceStackView)
+        
+        [referenceTitle, dividerView, referenceUrlTitle].forEach {
+            refernceStackView.addArrangedSubview($0)
+        }
         
         memoContent.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.height.lessThanOrEqualTo(240)
         }
         
-        referenceUrlTitle.snp.makeConstraints {
+        refernceStackView.snp.makeConstraints {
             $0.top.equalTo(memoContent.snp.bottom).offset(16)
             $0.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
-            $0.width.lessThanOrEqualTo(100)
+            $0.width.lessThanOrEqualTo(SizeLiterals.Screen.screenWidth - 44)
             $0.height.equalTo(26)
         }
-        
+//        
+//        referenceUrlTitle.snp.makeConstraints {
+//            $0.top.equalTo(memoContent.snp.bottom).offset(16)
+//            $0.trailing.equalToSuperview()
+//            $0.bottom.equalToSuperview()
+//            $0.width.lessThanOrEqualTo(SizeLiterals.Screen.screenWidth - 44)
+//            $0.height.equalTo(26)
+//        }
+//        
         referenceTitle.snp.makeConstraints {
-            $0.trailing.equalTo(referenceUrlTitle.snp.leading)
-            $0.centerY.equalTo(referenceUrlTitle)
+//            $0.trailing.equalTo(referenceUrlTitle.snp.leading)
             $0.width.lessThanOrEqualTo(120)
             $0.height.equalTo(26)
         }
@@ -79,10 +96,10 @@ final class InsightsDetailMemoView: BaseView {
         dividerView.snp.makeConstraints {
             $0.width.equalTo(1)
             $0.height.equalTo(16)
-            $0.centerY.equalTo(referenceTitle)
-            $0.centerX.equalTo(referenceTitle.snp.trailing)
+//            $0.centerY.equalTo(referenceTitle)
+//            $0.centerX.equalTo(referenceTitle.snp.trailing)
         }
-        
+//        
         backgroundBoxView.snp.makeConstraints {
             $0.width.equalTo(10)
             $0.height.equalTo(26)
@@ -98,12 +115,21 @@ extension InsightsDetailMemoView {
     }
     
     func setReferenceContent(reference: String, url: String?) {
-        referenceTitle.text = "   " + reference + "   "
+        referenceTitle.text = reference
         if let urlData = url {
-            referenceUrlTitle.text = "   " + urlData + "   "
+            referenceUrlTitle.text = urlData
         } else {
             dividerView.removeFromSuperview()
             backgroundBoxView.removeFromSuperview()
         }
+    }
+    
+    func prepareStackView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
+        refernceStackView.addGestureRecognizer(tap)
+    }
+    
+    @objc func stackViewTapped() {
+        UIPasteboard.general.string = referenceUrlTitle.text
     }
 }
