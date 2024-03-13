@@ -20,6 +20,7 @@ final class CustomNavigationBar: UIView {
     lazy var closeButton = UIButton()
     lazy var menuButton = UIButton()
     lazy var completionButton = UIButton()
+    lazy var leftCloseButton = UIButton()
     
     // MARK: - Properties
     
@@ -122,6 +123,12 @@ extension CustomNavigationBar {
             $0.backgroundColor = .clear
             $0.isHidden = true
         }
+        
+        leftCloseButton.do {
+            $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+            $0.tintColor = .gray500
+            $0.isEnabled = true
+        }
     }
     
     // MARK: - Layout Helper
@@ -190,6 +197,20 @@ extension CustomNavigationBar {
         completionButton.do {
             $0.setTitleColor(.gray300, for: .normal)
             $0.isEnabled = false
+        }
+    }
+    
+    func setWebView() {
+        self.isBackgroundColor = .white000
+        self.titleLabel.textColor = .gray500
+        self.isTitleViewIncluded = true
+
+        self.addSubviews(leftCloseButton)
+        
+        leftCloseButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(15)
+            $0.size.equalTo(24)
+            $0.top.equalToSuperview()
         }
     }
 }

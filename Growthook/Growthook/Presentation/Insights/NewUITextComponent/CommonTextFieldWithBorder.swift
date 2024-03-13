@@ -186,4 +186,8 @@ extension CommonTextFieldWithBorder {
     func changeMaximumLimitIfNeeded(with newLimitCount: Int) {
         self.maxLength = newLimitCount
     }
+    
+    func setColorRed() {
+        modifyBorderLine(with: .red200)
+    }
 }

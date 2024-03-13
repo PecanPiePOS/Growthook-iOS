@@ -96,8 +96,8 @@ final class CreatingNewInsightsView: BaseView {
         }
         
         urlValidLabel.do {
-            $0.font = .fontGuide(.body1_reg)
-            $0.textColor = .red400
+            $0.font = .fontGuide(.detail1_reg)
+            $0.textColor = .red200
         }
         
         dividerLine.do {
@@ -153,14 +153,14 @@ final class CreatingNewInsightsView: BaseView {
         }
         
         urlValidLabel.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.horizontalEdges.equalToSuperview().inset(24)
             $0.top.equalTo(referencURLTextField.snp.bottom).offset(4)
-            $0.height.equalTo(15)
+            $0.height.equalTo(20)
         }
         
         dividerLine.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(18)
-            $0.top.equalTo(urlValidLabel.snp.bottom).offset(24)
+            $0.top.equalTo(urlValidLabel.snp.bottom).offset(20)
             $0.height.equalTo(1)
         }
         
@@ -184,8 +184,11 @@ extension CreatingNewInsightsView {
         switch valid {
         case true:
             urlValidLabel.text = ""
+            referencURLTextField.textFieldBlock.textColor = .white000
         case false:
-            urlValidLabel.text = "유효하지 않은 url입니다."
+            urlValidLabel.text = "유효하지 않은 URL이에요"
+            referencURLTextField.textFieldBlock.setColorRed()
+            referencURLTextField.textFieldBlock.textColor = .red200
         }
     }
 }

@@ -11,9 +11,9 @@ final class InsightsDetailMemoView: BaseView {
     
     private let backgroundBoxView = UIView()
     private let memoContent = UILabel()
-    private let refernceStackView = UIStackView()
+    let refernceStackView = UIStackView()
     private let referenceTitle = UILabel()
-    private let referenceUrlTitle = UILabel()
+    let referenceUrlTitle = UILabel()
     private let dividerView = UIView()
 
     override func setStyles() {
@@ -54,8 +54,6 @@ final class InsightsDetailMemoView: BaseView {
         backgroundBoxView.do {
             $0.backgroundColor = .gray500
         }
-        
-        prepareStackView()
     }
  
     override func setLayout() {
@@ -111,14 +109,5 @@ extension InsightsDetailMemoView {
             dividerView.removeFromSuperview()
             backgroundBoxView.removeFromSuperview()
         }
-    }
-    
-    func prepareStackView() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
-        refernceStackView.addGestureRecognizer(tap)
-    }
-    
-    @objc func stackViewTapped() {
-        UIPasteboard.general.string = referenceUrlTitle.text
     }
 }
