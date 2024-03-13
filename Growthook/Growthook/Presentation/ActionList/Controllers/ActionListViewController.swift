@@ -22,7 +22,6 @@ protocol PushInsightsDetailViewController: AnyObject {
     func didTapSeedButtonInInprogressViewController(seedId: Int)
 }
 
-
 final class ActionListViewController: BaseViewController {
     
     private var viewModel = ActionListViewModel()
@@ -67,6 +66,7 @@ final class ActionListViewController: BaseViewController {
         if !isFirstLaunched {
             viewModel.getActionListPercent(mamberId: memberId)
             viewModel.getDoingActionList(mamberId: memberId)
+            viewModel.getFinishedActionList(mamberId: memberId)
         }
     }
     

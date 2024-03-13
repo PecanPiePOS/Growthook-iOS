@@ -222,7 +222,7 @@ extension ActionListViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getFinishedActionList(mamberId: Int) {
+    func getFinishedActionList(mamberId: Int) {
         print("getFinishedActionList가 호출됩니다")
         ActionListService.getFinishedActionList(with: mamberId)
             .subscribe(onNext: { [weak self] data in
