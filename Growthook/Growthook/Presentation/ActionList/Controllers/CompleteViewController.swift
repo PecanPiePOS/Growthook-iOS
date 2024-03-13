@@ -110,8 +110,8 @@ final class CompleteViewController: BaseViewController {
         return viewModel.outputs.finishedActionList.value.filter { $0.isScraped == true }
     }
     
-    private func pushToReviewViewController() {
-        delegate?.didTapReviewButtonInCompleteViewController()
+    private func pushToReviewViewController(with actionPlanId: Int, with actionPlanisScraped: Bool) {
+        delegate?.didTapReviewButtonInCompleteViewController(with: actionPlanId, with: actionPlanisScraped)
     }
     
     private func pushToInsightsDetailViewControllerInCompleteViewController(seedId: Int) {
@@ -172,7 +172,7 @@ extension CompleteViewController: UITableViewDelegate, UITableViewDataSource {
             .bind { [weak self]  in
                 guard let self else { return }
                 self.viewModel.inputs.didTapReviewButton(with: cell.actionPlanId)
-                self.pushToReviewViewController()
+                self.pushToReviewViewController(with: cell.actionPlanId, with: cell.isScraped)
             }
             .disposed(by: cell.disposeBag)
 

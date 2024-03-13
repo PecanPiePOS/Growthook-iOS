@@ -28,11 +28,16 @@ final class ActionListReviewViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private var actionPlanId: Int = 0
+    private var actionPlanisScraped: Bool = true
+    
     
     // MARK: - Initializer
     
-    init(viewModel: ActionListViewModel){
+    init(viewModel: ActionListViewModel, actionPlanId: Int, actionPlanisScraped: Bool){
         self.viewModel = viewModel
+        self.actionPlanId = actionPlanId
+        self.actionPlanisScraped = actionPlanisScraped
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,13 +57,25 @@ final class ActionListReviewViewController: BaseViewController {
         scrapButton.rx.tap
             .bind { [weak self] in
                 guard let self else { return }
-                self.viewModel.inputs.didTapInprogressOnlyScrapButton()
+                self.viewModel.inputs.didTapReviewScrapButton(with: self.actionPlanId, with: self.actionPlanisScraped)
             }
             .disposed(by: disposeBag)
         
         viewModel.outputs.reviewDetail
             .subscribe(onNext: { [weak self] data in
                 self?.setReviewDetail(reviewData: data)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.showToastToggle
+            .bind(onNext: { [weak self] index in
+                if index == 1 {
+                    self?.showToast()
+                    self?.toggleScrapImage(binary: 1)
+                } else if index == 0 {
+                    self?.showCancelToast()
+                    self?.toggleScrapImage(binary: 0)
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -71,7 +88,7 @@ final class ActionListReviewViewController: BaseViewController {
         navigationBar.do {
             $0.backgroundColor = .gray600
             $0.isTitleViewIncluded = true
-            $0.isTitleLabelIncluded = "리뷰 조회"
+            $0.isTitleLabelIncluded = "느낀점 조회"
             $0.isBackButtonIncluded = true
             $0.setupBackButtonTarget()
             $0.backButtonAction = { [weak self] in
@@ -146,6 +163,22 @@ final class ActionListReviewViewController: BaseViewController {
             scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
         case true:
             scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        }
+    }
+    
+    private func showToast() {
+        view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
+    }
+    
+    private func showCancelToast() {
+        view.showScrapToast(message: I18N.Component.ToastMessage.unScrap)
+    }
+    
+    private func toggleScrapImage(binary: Int) {
+        if binary == 1 {
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_on, for: .normal)
+        } else {
+            scrapButton.setImage(ImageLiterals.Home.btn_scrap_light_off, for: .normal)
         }
     }
     

@@ -14,7 +14,7 @@ import SnapKit
 import Then
 
 protocol PushToActionListReviewViewController: AnyObject {
-    func didTapReviewButtonInCompleteViewController()
+    func didTapReviewButtonInCompleteViewController(with actionPlanId:Int, with actionPlanisScraped: Bool)
     func didTapSeedButtonInCompleteViewController(seedId: Int)
 }
 
@@ -172,8 +172,8 @@ final class ActionListViewController: BaseViewController {
         view.showScrapToast(message: I18N.Component.ToastMessage.unScrap)
     }
     
-    func didTapReviewButtonInCompleteViewController() {
-        let vc = ActionListReviewViewController(viewModel: viewModel)
+    func didTapReviewButtonInCompleteViewController(with actionPlanId: Int, with actionPlanisScraped: Bool) {
+        let vc = ActionListReviewViewController(viewModel: viewModel, actionPlanId: actionPlanId, actionPlanisScraped: actionPlanisScraped)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
