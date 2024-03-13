@@ -28,7 +28,7 @@ final class SpecificPlanCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Components
     
-    var planTextView = ActionplanTextView(placeholder: "구체적인 계획을 설정해보세요", maxLength: 40)
+    var planTextView = ActionplanTextView(placeholder: "할 일을 구체적으로 계획해보세요", maxLength: 40)
     let countLabel = UILabel()
     
     // MARK: - View Life Cycle
@@ -66,11 +66,11 @@ extension SpecificPlanCollectionViewCell {
             $0.font = .fontGuide(.detail1_reg)
         }
         
-        planTextView.rx.didEndEditing
-            .bind { [weak self] _ in
+        planTextView.rx.text
+            .bind { [weak self] value in
                 guard let self else { return }
                 guard let index = cellIndexForId else { return }
-                self.contents = self.planTextView.text
+                self.contents = value
                 delegate?.sendText(index: index, text: contents)
             }
             .disposed(by: disposeBag)

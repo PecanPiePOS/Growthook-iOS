@@ -28,7 +28,7 @@ final class CreateActionView: BaseView {
         navigationBar.do {
             $0.backgroundColor = .gray600
             $0.isTitleViewIncluded = true
-            $0.isTitleLabelIncluded = "액션 만들기"
+            $0.isTitleLabelIncluded = "할 일 적기"
             $0.isBackButtonIncluded = true
         }
         

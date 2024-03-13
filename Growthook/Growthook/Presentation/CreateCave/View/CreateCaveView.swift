@@ -43,13 +43,13 @@ final class CreateCaveView: BaseView {
         }
         
         titleLabel.do {
-            $0.text = "새 동굴 파기"
+            $0.text = "새 동굴 짓기"
             $0.font = .fontGuide(.head1)
             $0.textColor = .white000
         }
         
         descriptionLabel.do {
-            $0.text = "새로운 동굴을 만들어,\n나만의 인사이트를 마음껏 담아보세요."
+            $0.text = "새로운 동굴을 지어,\n나만의 인사이트를 마음껏 담아보세요."
             $0.font = .fontGuide(.body2_reg)
             $0.textColor = .white000
             $0.numberOfLines = 2

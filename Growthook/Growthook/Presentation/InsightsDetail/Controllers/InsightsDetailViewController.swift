@@ -42,9 +42,9 @@ enum HasAnyActionPlan {
     var buttonTitle: String {
         switch self {
         case .yes:
-            return "액션 더하기"
+            return "할 일 더하기"
         case .no:
-            return "액션 만들기"
+            return "할 일 적기"
         }
     }
 }
@@ -78,6 +78,12 @@ final class InsightsDetailViewController: BaseViewController {
     private var seedId = 0
     private var isFirstOpened = true
     private var isScraped = false
+    private var source = ""
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        prepareStackView()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -119,6 +125,7 @@ final class InsightsDetailViewController: BaseViewController {
                 memoView.setMemoContent(with: model.memo)
                 memoView.setReferenceContent(reference: data.source, url: data.url)
                 self.isScraped = data.isScraped
+                self.source = data.source
             }
             .disposed(by: disposeBag)
         
@@ -712,5 +719,20 @@ extension InsightsDetailViewController: InsightDetailReloadDelegate {
             self.setTitleOfButton(type: .yes)
             self.viewModel.toastStatus.accept(.createActionPlan(success: true))
         }
+    }
+}
+
+extension InsightsDetailViewController {
+    
+    func prepareStackView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
+        memoView.refernceStackView.addGestureRecognizer(tap)
+    }
+    
+    @objc func stackViewTapped() {
+        UIPasteboard.general.string = memoView.referenceUrlTitle.text
+        guard let url = URL(string: memoView.referenceUrlTitle.text ?? "") else { return }
+        let vc = WebViewController(url: url, title: "\(source)")
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

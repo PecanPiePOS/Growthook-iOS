@@ -69,7 +69,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     var isReviewEntered: Driver<Bool> {
         return reviewText.asDriver()
             .map { text in
-                return !(text.isEmpty || text == "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요")
+                return !(text.isEmpty || text == "할 일을 달성하며 어떤 것을 느꼈는지 작성해보세요")
             }
     }
     
