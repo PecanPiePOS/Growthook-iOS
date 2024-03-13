@@ -24,7 +24,7 @@ protocol InsightsViewModelInput {
     func addInsight(content: String)
     func addMemo(content: String?)
     func selectCaveToAdd(of cave: InsightCaveModel)
-    func addReference(content: String)
+    func addReference(content: String?)
     func addReferenceUrl(content: String?)
     func selectGoalPeriodToAdd(of period: InsightPeriodModel)
     // MARK: 네트워크 호출
@@ -44,6 +44,7 @@ protocol InsightsViewModelOutput {
     var availablePeriodList: [InsightPeriodModel] { get }
     var selectedPeriod: BehaviorRelay<InsightPeriodModel?> { get }
     var isPostingValid: BehaviorRelay<Bool> { get }
+    var isUrlValid: BehaviorRelay<Bool> { get }
 }
 
 protocol InsightsViewModelType {
@@ -66,6 +67,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     var selectedCave = BehaviorRelay<InsightCaveModel?>(value: nil)
     var selectedPeriod = BehaviorRelay<InsightPeriodModel?>(value: nil)
     var isPostingValid = BehaviorRelay<Bool>(value: false)
+    var isUrlValid = BehaviorRelay<Bool>(value: true)
     var isKeyboardShown = BehaviorRelay(value: false)
     
     // MARK: - 내부 로직을 위한 프로퍼티
@@ -73,7 +75,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     private let newMemoContent = BehaviorRelay<MemoContent>(value: nil)
     private let newReferenceContent = BehaviorRelay<ReferenceContent>(value: nil)
     private let newReferenceUrlContent = BehaviorRelay<ReferenceUrlContent>(value: nil)
-    private var existingData = SeedEditModel(caveName: "", insight: "", source: "", memo: "", url: "")
+    private var existingData = SeedEditModel(caveName: "", insight: "", source: "", memo: "", url: "", remainingDays: "")
     
     private let isNewInsightValid = BehaviorRelay(value: false)
     private let isCaveSelectedValid = BehaviorRelay(value: false)
@@ -100,6 +102,8 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
             .disposed(by: disposeBag)
 
         bindValidation()
+        selectGoalPeriodToAdd(of: InsightPeriodModel(periodMonthAsInteger: 1, periodTitle: "1개월"))
+        
     }
     
     init(isEditing: Bool = true, seedEditModel: SeedEditModel) {
@@ -189,8 +193,12 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
         selectedCave.accept(cave)
     }
     
-    func addReference(content: String) {
-        let modifiedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+    func addReference(content: String?) {
+        guard let reference = content else {
+            newReferenceContent.accept(nil)
+            return
+        }
+        let modifiedContent = reference.trimmingCharacters(in: .whitespacesAndNewlines)
         if !modifiedContent.isEmpty {
             newReferenceContent.accept(modifiedContent)
         } else {
@@ -201,13 +209,18 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     func addReferenceUrl(content: String?) {
         guard let url = content else {
             newReferenceUrlContent.accept(nil)
+            isUrlValid.accept(true)
             return
         }
         let modifiedContent = url.trimmingCharacters(in: .whitespacesAndNewlines)
+        var verify = verifyUrl(urlString: url)
+        isUrlValid.accept(verify)
+        
         if !modifiedContent.isEmpty {
             newReferenceUrlContent.accept(modifiedContent)
         } else {
             newReferenceUrlContent.accept(nil)
+            isUrlValid.accept(true)
         }
     }
     
@@ -228,7 +241,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     func viewWillAppearWhenEditing() {
         addInsight(content: existingData.insight)
         addReference(content: existingData.source)
-        selectGoalPeriodToAdd(of: .init(periodMonthAsInteger: 1, periodTitle: "수정 불가"))
+        selectGoalPeriodToAdd(of: .init(periodMonthAsInteger: 1, periodTitle: self.existingData.remainingDays))
         addMemo(content: existingData.memo)
         addReferenceUrl(content: existingData.url)
         
@@ -264,10 +277,10 @@ extension InsightsViewModel {
             .bind(to: isPeriodValid)
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(isNewInsightValid, isCaveSelectedValid, isNewReferenceValid, isPeriodValid)
-            .map { isInsightValid, isCaveValid, isReferenceValid, isPeriodValid in
+        Observable.combineLatest(isNewInsightValid, isCaveSelectedValid, isNewReferenceValid, isUrlValid, isPeriodValid)
+            .map { isInsightValid, isCaveValid, isReferenceValid,isUrlValid, isPeriodValid in
                 print("000", isInsightValid, isCaveValid, isReferenceValid, isPeriodValid)
-                return isInsightValid && isCaveValid && isReferenceValid && isPeriodValid
+                return isInsightValid && isCaveValid && isUrlValid && isPeriodValid
             }
             .bind(to: isPostingValid)
             .disposed(by: disposeBag)
@@ -288,5 +301,14 @@ extension InsightsViewModel {
     
     func setKeyboardSetting(isShown: Bool) {
         isKeyboardShown.accept(isShown)
+    }
+    
+    func verifyUrl(urlString: String?) -> Bool {
+        if let urlString = urlString {
+            if let url = NSURL(string: urlString) {
+                return UIApplication.shared.canOpenURL(url as URL)
+            }
+        }
+        return false
     }
 }

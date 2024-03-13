@@ -1,0 +1,197 @@
+//
+//  WebViewViewController.swift
+//  Growthook
+//
+//  Created by Minjoo Kim on 3/13/24.
+//
+
+import UIKit
+import WebKit
+
+import SnapKit
+import Then
+
+enum WebAction: String {
+    case changeStatusBarColor
+    case goBack
+}
+
+protocol WebViewDelegate: AnyObject {
+
+}
+
+class WebViewController: WebViewBaseViewController {
+    weak var delegate: WebViewDelegate?
+    var url: URL
+    var titleString: String
+
+    private var webView: WKWebView!
+
+    private var headers: [String: String] {
+        let bundleVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        var header = ["Content-Type": "application/json"]
+        header["device-uuid"] = UUID().uuidString
+        header["device-os-version"] = UIDevice.current.systemVersion
+        header["device-device-manufacturer"] = "apple"
+        header["version"] = bundleVersion
+        return header
+    }
+
+    private var authCookie: HTTPCookie? {
+        let cookie = HTTPCookie(properties: [
+            .domain: "https://ios-development.tistory.com/",
+            .path: "748",
+            .name: "CID_AUTH",
+            .value: "test-access-token",
+            .maximumAge: 7200, // Cookie의 유효한 지속시간
+            .secure: "TRUE"
+        ])
+        return cookie
+    }
+    
+    private var navigationBar = CustomNavigationBar()
+
+    init(url: URL, title: String) {
+        self.url = url
+        self.titleString = title
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("required init?(coder: NSCoder) is not supported")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupWebView()
+        loadWebPage()
+        addSubviews()
+        setStyle()
+        addBottomToolBar()
+        setNavigationBar()
+        setAddTarget()
+    }
+    
+    private func setupWebView() {
+        let configuration = WKWebViewConfiguration()
+
+        // Cookie
+        if let authCookie = authCookie {
+            let dataStore = WKWebsiteDataStore.nonPersistent()
+            dataStore.httpCookieStore.setCookie(authCookie)
+            configuration.websiteDataStore = dataStore
+        }
+
+        // Swift가 Javascript에게 testJavascriptMethod() 호출 요청
+        let userScript = WKUserScript(source: "testJavascriptMethod()", injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+        let contentController = WKUserContentController()
+        contentController.addUserScript(userScript)
+
+        // Swift에 JavaScript 인터페이스 연결
+        contentController.add(self, name: "MyJavaScriptInterfaces") // delegate 할당
+
+        configuration.userContentController = contentController
+        webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.allowsBackForwardNavigationGestures = true
+        webView.navigationDelegate = self
+    }
+
+    private func loadWebPage() {
+        var urlRequest = URLRequest(url: url)
+        headers.forEach { urlRequest.setValue($0.value, forHTTPHeaderField: $0.key) }
+        webView.load(urlRequest)
+    }
+
+    private func addSubviews() {
+        view.addSubviews(navigationBar, webView)
+    }
+
+    private func setStyle() {
+        
+        navigationBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(24)
+        }
+        
+        webView.snp.makeConstraints {
+            $0.top.equalTo(navigationBar.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+
+    override func didTapToolBarBackButton() {
+        webView.goBack()
+    }
+
+    override func didTapToolBarForwardButton() {
+        webView.goForward()
+    }
+    
+    private func setNavigationBar() {
+        navigationBar.setWebView()
+        navigationBar.isTitleLabelIncluded = self.titleString
+    }
+    
+    private func setAddTarget() {
+        navigationBar.leftCloseButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func closeButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+// 페이지의 화면 전환 이벤트 수신
+extension WebViewController: WKNavigationDelegate {
+    /// WKWebView에서 다른곳으로 이동할때마다 호출되는 메소드 (didFinish와 짝꿍)
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        print("show loading indicator ...")
+        // didFinish에 하지 않고 didCommit에 해야 페이지에 들어가면서 자연스럽게 활성화
+        barBackButtonItem.isEnabled = webView.canGoBack
+        barForwardButtonItem.isEnabled = webView.canGoForward
+    }
+
+    /// WKWebView에서 다른곳으로 이동된 후에 호출되는 메소드 (didCommit와 짝꿍)
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("hide loading indicator ...")
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        if let url = navigationAction.request.url, url.scheme == "mailto" || url.scheme == "tel" {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            // url이 mailto, tel인 경우, webView에서 열리지 않도록 .cancel
+            decisionHandler(.cancel)
+            return
+        }
+
+        // url이 네이티브에서 여는작업이 아닌 경우, webView에서 열리도록 .allow
+        decisionHandler(.allow)
+    }
+}
+
+// JavaScript > Swift
+extension WebViewController: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard message.name == "MyJavaScriptInterfaces",
+              let messages = message.body as? [String: Any],
+              let action = messages["action"] as? String else { return }
+
+        let webAction = WebAction(rawValue: action)
+        switch webAction {
+        case .changeStatusBarColor:
+            if let color = messages["bgColor"] as? String {
+                print("change status bar color = \(color)")
+            }
+        case .goBack:
+            print("goBack")
+        default:
+            print("undefined action")
+        }
+    }
+}

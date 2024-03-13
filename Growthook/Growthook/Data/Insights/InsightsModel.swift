@@ -32,8 +32,8 @@ struct PeriodModel {
     
     static var periodSetToSelect: [InsightPeriodModel] {
         var periodSet: [InsightPeriodModel] = []
-        let defaultCase = InsightPeriodModel(periodMonthAsInteger: nil, periodTitle: "선택")
-        periodSet.append(defaultCase)
+//        let defaultCase = InsightPeriodModel(periodMonthAsInteger: nil, periodTitle: "1개월")
+//        periodSet.append(defaultCase)
         
         for month in 1...maximumPeriodMonthCount {
             let bodyPeriodModel = InsightPeriodModel(periodMonthAsInteger: month, periodTitle: "\(month)개월")

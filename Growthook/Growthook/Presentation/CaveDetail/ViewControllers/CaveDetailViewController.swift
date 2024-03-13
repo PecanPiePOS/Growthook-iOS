@@ -22,6 +22,7 @@ final class CaveDetailViewController: BaseViewController {
     private lazy var unLockCaveAlertView = UnLockCaveAlertView()
     lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     private lazy var insightListEmptyView = InsightListEmptyView()
+    private var caveTitle: String = ""
     
     // MARK: - View Life Cycle
     
@@ -69,6 +70,7 @@ final class CaveDetailViewController: BaseViewController {
         viewModel.outputs.caveDetail
             .bind(onNext: { [weak self] model in
                 guard let self = self else { return }
+                self.caveTitle = model.caveName
                 caveDetailView.caveDescriptionView.configureView(model)
             })
             .disposed(by: disposeBag)
@@ -205,6 +207,7 @@ final class CaveDetailViewController: BaseViewController {
             .bind { [weak self] in
                 let vc = CreatingNewInsightsViewController()
                 vc.hidesBottomBarWhenPushed = true
+                vc.setCave(caveId: self?.caveId ?? 0, caveTitle: self?.caveTitle ?? "")
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)

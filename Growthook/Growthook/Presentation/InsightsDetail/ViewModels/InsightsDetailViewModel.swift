@@ -35,11 +35,11 @@ enum InsightsDetailToastType {
         case .editSeedToast(let success):
             if success != false { return "씨앗이 수정되었어요" } else { return "실패했어요" }
         case .deleteActionPlan(let success):
-            if success != false { return "액션이 삭제되었어요" } else { return "실패했어요" }
+            if success != false { return "할 일이 삭제되었어요" } else { return "실패했어요" }
         case .editActionPlan(let success):
-            if success != false { return "액션이 수정되었어요" } else { return "실패했어요" }
+            if success != false { return "할 일이 수정되었어요" } else { return "실패했어요" }
         case .createActionPlan(let success):
-            if success != false { return "액션을 만들었어요" } else { return "실패했어요" }
+            if success != false { return "할 일을 계획했어요!" } else { return "실패했어요" }
         }
     }
 }
@@ -357,7 +357,7 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
     
     func fetchSeedModel() -> SeedEditModel {
         guard let seedEditData else {
-            return SeedEditModel(caveName: "", insight: "", source: "", memo: "", url: "")
+            return SeedEditModel(caveName: "", insight: "", source: "", memo: "", url: "", remainingDays: "")
         }
         return seedEditData
     }
@@ -383,7 +383,7 @@ extension InsightsDetailViewModel {
                 guard let self else { return }
                 self.seedDetail.onNext(seedDetail)
                 self.scrapedStatus.accept(seedDetail.isScraped)
-                self.seedEditData = .init(caveName: seedDetail.caveName, insight: seedDetail.insight, source: seedDetail.source, memo: seedDetail.memo, url: seedDetail.url)
+                self.seedEditData = .init(caveName: seedDetail.caveName, insight: seedDetail.insight, source: seedDetail.source, memo: seedDetail.memo, url: seedDetail.url, remainingDays: "\(seedDetail.remainingDays)일")
             }, onError: { error in
                 print(error)
                 self.networkStatus.accept(.error(of: error))

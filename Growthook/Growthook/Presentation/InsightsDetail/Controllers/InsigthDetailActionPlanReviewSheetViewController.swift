@@ -61,7 +61,7 @@ final class InsigthDetailActionPlanReviewSheetViewController: BaseViewController
         titleLabel.do {
             $0.font = .fontGuide(.body1_reg)
             $0.textColor = .white000
-            $0.text = "리뷰 작성"
+            $0.text = "느낀점 작성"
         }
         
         exitButton.do {

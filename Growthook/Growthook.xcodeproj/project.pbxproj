@@ -122,6 +122,8 @@
 		092C816D2B334E13006B0F65 /* CreateSpecificPlanView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 092C816C2B334E13006B0F65 /* CreateSpecificPlanView .swift */; };
 		092C81702B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092C816F2B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift */; };
 		093C1DFA2B4C314B00EF84AB /* CreateCaveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093C1DF92B4C314B00EF84AB /* CreateCaveService.swift */; };
+		0984A3892BA12D4100B340A7 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0984A3882BA12D4100B340A7 /* WebViewViewController.swift */; };
+		0984A38B2BA12EBD00B340A7 /* WebViewBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0984A38A2BA12EBD00B340A7 /* WebViewBaseViewController.swift */; };
 		098DFC9E2B5550010099063D /* ActionplanTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098DFC9D2B5550010099063D /* ActionplanTextView.swift */; };
 		09A7D6FD2B00DE9C005F8821 /* CreateCaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7D6FC2B00DE9C005F8821 /* CreateCaveViewController.swift */; };
 		09A7D7002B00DED0005F8821 /* CreateCaveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7D6FF2B00DED0005F8821 /* CreateCaveViewModel.swift */; };
@@ -320,6 +322,8 @@
 		092C816C2B334E13006B0F65 /* CreateSpecificPlanView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateSpecificPlanView .swift"; sourceTree = "<group>"; };
 		092C816F2B3351DA006B0F65 /* SpecificPlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificPlanCollectionViewCell.swift; sourceTree = "<group>"; };
 		093C1DF92B4C314B00EF84AB /* CreateCaveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCaveService.swift; sourceTree = "<group>"; };
+		0984A3882BA12D4100B340A7 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		0984A38A2BA12EBD00B340A7 /* WebViewBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewBaseViewController.swift; sourceTree = "<group>"; };
 		098DFC9D2B5550010099063D /* ActionplanTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionplanTextView.swift; sourceTree = "<group>"; };
 		09A7D6FC2B00DE9C005F8821 /* CreateCaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCaveViewController.swift; sourceTree = "<group>"; };
 		09A7D6FF2B00DED0005F8821 /* CreateCaveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCaveViewModel.swift; sourceTree = "<group>"; };
@@ -1243,6 +1247,8 @@
 				588E2B9D2B5449D80014E6D5 /* InsightDetailCaveViewController.swift */,
 				588E2B9F2B544E240014E6D5 /* InsightDetailEditSeedViewController.swift */,
 				58A65D952B63077100FB92CC /* InsightsDetailModalViewController.swift */,
+				0984A3882BA12D4100B340A7 /* WebViewViewController.swift */,
+				0984A38A2BA12EBD00B340A7 /* WebViewBaseViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1537,6 +1543,7 @@
 				588E2B422B539EE50014E6D5 /* InsightsDetailService.swift in Sources */,
 				58E75F982B00B15A00512FE2 /* BaseViewController.swift in Sources */,
 				034011382B58E03F00D1F371 /* LoginRequestDto.swift in Sources */,
+				0984A3892BA12D4100B340A7 /* WebViewViewController.swift in Sources */,
 				5880F4672B3423B8004C1494 /* InsightSelectCaveTableViewCell.swift in Sources */,
 				09089A6A2B03B3E2006C07B8 /* AlertBuilder.swift in Sources */,
 				092AE2B52B53DA6300E9A20D /* Int+.swift in Sources */,
@@ -1607,6 +1614,7 @@
 				581D22942B32EC950068E58D /* CommonTextViewWithBorder.swift in Sources */,
 				0332A3952B5135A900720CD3 /* SsukResponseDto.swift in Sources */,
 				09A7D6FD2B00DE9C005F8821 /* CreateCaveViewController.swift in Sources */,
+				0984A38B2BA12EBD00B340A7 /* WebViewBaseViewController.swift in Sources */,
 				03B9AC642AF562D000A5751C /* UIView+.swift in Sources */,
 				032213322B14C4EF00FF5CF1 /* UnLockInsightAlertView.swift in Sources */,
 				092A51922B52F23900296B46 /* CreateActionService.swift in Sources */,

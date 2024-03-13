@@ -23,13 +23,13 @@ enum BottomCTAButtonType {
         case .select: 
             return "선택"
         case .createAction:
-            return "액션 만들기"
+            return "할 일 적기"
         case .plantSeed:
             return "씨앗 심기"
         case .createNewCave:
-            return "새 동굴 만들기"
+            return "새 동굴 짓기"
         case .addAction:
-            return "액션 더하기"
+            return "할 일 더하기"
         case .done:
             return "완료"
         case .save:
