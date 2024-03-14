@@ -121,3 +121,10 @@ final class InsightSelectCaveSheetViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension InsightSelectCaveSheetViewController {
+    
+    func bindCave(caveId: Int, caveTitle: String) {
+        self.selectedCaveCache = .init(caveId: caveId, caveTitle: caveTitle)
+    }
+}

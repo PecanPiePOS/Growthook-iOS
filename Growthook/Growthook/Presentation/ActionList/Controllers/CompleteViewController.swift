@@ -22,6 +22,7 @@ final class CompleteViewController: BaseViewController {
     
     private let scrapButton = UIButton	()
     private let tableView = UITableView(frame: .zero, style: .plain)
+    private let emptyView = EmptyView(frame: .zero, emptyType: .complete)
     
     // MARK: - Properties
     
@@ -55,7 +56,13 @@ final class CompleteViewController: BaseViewController {
         viewModel.outputs.finishedActionList
             .subscribe(onNext: { [weak self] data in
                 guard let self = self else { return }
-                self.tableView.reloadData()
+                if data.isEmpty {
+                    self.tableView.backgroundView?.isHidden = false
+                    self.tableView.reloadData()
+                } else {
+                    self.tableView.backgroundView?.isHidden = true
+                    self.tableView.reloadData()
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -76,6 +83,7 @@ final class CompleteViewController: BaseViewController {
             $0.delegate = self
             $0.dataSource = self
             $0.backgroundColor = .gray700
+            $0.backgroundView = emptyView
         }
         
     }
@@ -102,8 +110,8 @@ final class CompleteViewController: BaseViewController {
         return viewModel.outputs.finishedActionList.value.filter { $0.isScraped == true }
     }
     
-    private func pushToReviewViewController() {
-        delegate?.didTapReviewButtonInCompleteViewController()
+    private func pushToReviewViewController(with actionPlanId: Int, with actionPlanisScraped: Bool) {
+        delegate?.didTapReviewButtonInCompleteViewController(with: actionPlanId, with: actionPlanisScraped)
     }
     
     private func pushToInsightsDetailViewControllerInCompleteViewController(seedId: Int) {
@@ -164,7 +172,7 @@ extension CompleteViewController: UITableViewDelegate, UITableViewDataSource {
             .bind { [weak self]  in
                 guard let self else { return }
                 self.viewModel.inputs.didTapReviewButton(with: cell.actionPlanId)
-                self.pushToReviewViewController()
+                self.pushToReviewViewController(with: cell.actionPlanId, with: cell.isScraped)
             }
             .disposed(by: cell.disposeBag)
 

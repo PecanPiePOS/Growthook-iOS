@@ -134,7 +134,7 @@ final class InsightsDetailModalViewController: BaseViewController {
                 if shouldHide != false {
                     self.actionPlanButton = BottomCTAButton(type: .addAction)
                     self.uselessBoxView.backgroundColor = HasAnyActionPlan.yes.color
-                    self.actionPlanButton.setTitleIfNeeded(with: "액션 더하기")
+                    self.actionPlanButton.setTitleIfNeeded(with: "할 일 더하기")
                     self.mainBlockWithMemoView.isHidden = true
                     self.mainBlockWithActionPlanView.isHidden = false
                     self.customNavigationView.setBackgroundColor(HasAnyActionPlan.yes.color)
@@ -144,7 +144,7 @@ final class InsightsDetailModalViewController: BaseViewController {
                     self.actionPlanButton = BottomCTAButton(type: .createAction)
                     self.customNavigationView.showDoneButton()
                     self.uselessBoxView.backgroundColor = HasAnyActionPlan.no.color
-                    self.actionPlanButton.setTitleIfNeeded(with: "액션 만들기")
+                    self.actionPlanButton.setTitleIfNeeded(with: "할 일 적기")
                     self.mainBlockWithMemoView.isHidden = false
                     self.mainBlockWithActionPlanView.isHidden = true
                     self.customNavigationView.setBackgroundColor(HasAnyActionPlan.no.color)

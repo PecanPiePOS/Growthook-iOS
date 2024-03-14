@@ -12,8 +12,9 @@ import RxCocoa
 import RxSwift
 
 struct SeedEditModel {
-    let caveName, insight, source: String
-    let memo, url: String?
+    let caveName, insight: String
+    let source, memo, url: String?
+    let remainingDays: String
 }
 
 final class InsightDetailEditSeedViewController: BaseViewController {
@@ -264,6 +265,13 @@ final class InsightDetailEditSeedViewController: BaseViewController {
                 guard let self else { return }
                 guard let period else { return }
                 self.creatingContentView.goalPeriodSelectView.setSelectedBlockText(with: period.periodTitle)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.outputs.isUrlValid
+            .bind { [weak self] value in
+                guard let self else { return }
+                self.creatingContentView.setUrlValidLabel(valid: value)
             }
             .disposed(by: disposeBag)
     }

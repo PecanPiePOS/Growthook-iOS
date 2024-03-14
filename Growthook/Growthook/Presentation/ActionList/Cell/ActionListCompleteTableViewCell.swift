@@ -74,7 +74,7 @@ extension ActionListCompleteTableViewCell {
         }
         
         reviewButton.do {
-            $0.setTitle("리뷰 보기", for: .normal)
+            $0.setTitle("느낀점 보기", for: .normal)
             $0.setTitleColor(.white000, for: .normal)
             $0.titleLabel?.font = .fontGuide(.detail1_bold)
             $0.backgroundColor = .gray500

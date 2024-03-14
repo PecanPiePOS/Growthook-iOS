@@ -188,6 +188,7 @@ final class OnboardingSelectViewController: BaseViewController {
         solveButton.do {
             $0.removeTarget(self, action: #selector(switchView), for: .touchUpInside)
             $0.addTarget(self, action: #selector(pushToOnboardingViewController), for: .touchUpInside)
+            $0.setTitle("다음", for: .normal)
         }
         
         

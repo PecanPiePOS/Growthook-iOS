@@ -22,6 +22,7 @@ final class CreatingNewInsightsViewController: BaseViewController {
     private let viewModel = InsightsViewModel()
     private var previousFocusCoordinates: CGPoint = .zero
     private var currentScrollCoordinates: CGPoint = .zero
+    private var urlValid: Bool = true
     
     // MARK: - UI Properties
     private let customNavigationView = CommonCustomNavigationBar()
@@ -234,6 +235,14 @@ final class CreatingNewInsightsViewController: BaseViewController {
                 self.creatingContentView.goalPeriodSelectView.setSelectedBlockText(with: period.periodTitle)
             }
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.isUrlValid
+            .bind { [weak self] value in
+                guard let self else { return }
+                self.creatingContentView.setUrlValidLabel(valid: value)
+                self.urlValid = value
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Styles
@@ -253,6 +262,8 @@ final class CreatingNewInsightsViewController: BaseViewController {
         loadingView.do {
             $0.isHidden = true
         }
+        
+        creatingContentView.setUrlValidLabel(valid: true)
     }
     
     // MARK: - Layout
@@ -374,5 +385,13 @@ extension CreatingNewInsightsViewController {
     
     func showLoadingView(_ isHidden: Bool) {
         loadingView.isHidden = !isHidden
+    }
+}
+
+extension CreatingNewInsightsViewController {
+    
+    func setCave(caveId: Int, caveTitle: String) {
+        self.viewModel.inputs.selectCaveToAdd(of: InsightCaveModel(caveId: caveId, caveTitle: caveTitle))
+        self.creatingContentView.selectCaveView.setSelectedBlockText(with: caveTitle)
     }
 }

@@ -158,7 +158,7 @@ extension CreateCaveViewController {
     
     private func setAlert() {
         AlertBuilder(viewController: self)
-            .setTitle("내 동굴에 친구를 초대해\n인사이트를 공유해보세요")
+            .setTitle("내 동굴에 친구를 초대해\n씨앗을 공유해요!")
             .setMessage("해당 기능은 추후 업데이트 예정이에요:)")
             .addActionConfirm("확인") {
                 print("확인!!")

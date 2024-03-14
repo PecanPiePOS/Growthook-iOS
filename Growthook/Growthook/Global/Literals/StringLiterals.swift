@@ -32,11 +32,11 @@ enum I18N {
             static let removeCave = "삭제한 동굴은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
             static let keep = "유지하기"
             static let remove = "삭제하기"
-            static let removeActionPlan = "삭제한 액션플랜은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
+            static let removeActionPlan = "삭제한 할 일은 다시 복구할 수 없으니\n신중하게 결정해 주세요!"
         }
         
         enum UnLockCave {
-            static let title = "내 동굴에 친구를 초대해\n인사이트를 공유해요!"
+            static let title = "내 동굴에 친구를 초대해\n씨앗을 공유해요!"
             static let description = "해당 기능은 추후 업데이트 예정이에요:)"
             static let check = "확인"
         }
@@ -46,6 +46,7 @@ enum I18N {
             static let removeInsight = "씨앗이 삭제되었어요"
             static let removeCave = "동굴이 삭제되었어요"
             static let scrap = "스크랩 완료!"
+            static let unScrap = "스크랩 취소"
             static let unLockFail = "잠금 해제를 위해서는 쑥이 필요해요 :("
             static let unLockSuccess = "잠금이 영구적으로 해제되었어요!"
         }
@@ -94,16 +95,16 @@ enum I18N {
     }
     
     enum ActionList {
-        static let reviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
-        static let insightDetailPlaceholder = "구체적인 계획을 설정해보세요"
-        static let insightDetailReviewPlaceholder = "액션 플랜을 달성하며 어떤 것을 느꼈는지 작성해보세요"
+        static let reviewPlaceholder = "할 일을 달성하며 어떤 것을 느꼈는지 작성해보세요"
+        static let insightDetailPlaceholder = "할 일을 구체적으로 계획해보세요"
+        static let insightDetailReviewPlaceholder = "할 일을 달성하며 어떤 것을 느꼈는지 작성해보세요"
     }
     
     enum CreateInsight {
         static let insightTextViewPlaceholder = "찾아낸 새로운 가치를 한 줄로 표현해주세요"
         static let memoTextViewPlaceholder = "찾아낸 가치에 대한 생각을 적어보세요 (선택)"
         static let caveTitle = "어떤 동굴에 저장할까요?"
-        static let referencePlaceholder = "출처의 정보를 입력해주세요"
+        static let referencePlaceholder = "출처의 정보를 입력해주세요 (선택)"
         static let referenceUrlPlaceholder = "참고한 url을 적어주세요 (선택)"
     }
     
@@ -121,7 +122,7 @@ enum I18N {
     
     enum Mypage {
         static let deleteTitle = "정말 탈퇴 하시겠어요?"
-        static let deleteDescription = "탈퇴 시, 수집한 인사이트와\n달성한 액션플랜에 대한 정보가\n모두 없어져요."
+        static let deleteDescription = "탈퇴 시, 수집한 새싹과\n달성한 할 일에 대한 정보가\n모두 없어져요."
         static let maintain = "남아있기"
         static let withdraw = "탈퇴하기"
         static let logoutTitle = "로그아웃 하시겠습니까?"

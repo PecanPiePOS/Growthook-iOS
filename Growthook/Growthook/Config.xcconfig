@@ -1,0 +1,12 @@
+//
+//  Config.xcconfig
+//  Growthook
+//
+//  Created by Minjoo Kim on 2/13/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+AMPLITUDE_KEY = bcfd0c0898436661b3bfa83506c2e038
+

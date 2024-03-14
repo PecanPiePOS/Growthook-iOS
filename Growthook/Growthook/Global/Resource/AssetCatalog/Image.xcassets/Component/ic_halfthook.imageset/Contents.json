@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "page4.png",
+      "filename" : "ic_halfthook.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "page4@2x.png",
+      "filename" : "ic_halfthook@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "page4@3x.png",
+      "filename" : "ic_halfthook@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

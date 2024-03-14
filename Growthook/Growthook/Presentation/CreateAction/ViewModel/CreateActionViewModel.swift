@@ -79,7 +79,7 @@ final class CreateActionViewModel: CreateActionViewModelInputs, CreateActionView
     
     var newActionPlan: CreateActionRequest = CreateActionRequest(contents: [])
     func setActionplanData(data: [ActionplanModel]) {
-        let placeholder = "구체적인 계획을 설정해보세요"
+        let placeholder = "할 일을 구체적으로 계획해보세요"
         print(data.count)
         for i in 0 ..< data.count {
             if data[i].content != placeholder {

@@ -17,9 +17,9 @@ enum ActionPlanSheetPurpose {
     var title: String {
         switch self {
         case .create:
-            return "액션 플랜 추가"
+            return "할 일 더하기"
         case .edit:
-            return "액션 플랜 수정"
+            return "할 일 수정"
         }
     }
 }

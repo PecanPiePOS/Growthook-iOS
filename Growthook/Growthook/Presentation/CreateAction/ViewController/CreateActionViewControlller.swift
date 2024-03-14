@@ -27,7 +27,7 @@ final class CreateActionViewControlller: BaseViewController {
     private let createActionView = CreateActionView()
     private var viewModel = CreateActionViewModel()
     private let disposeBag = DisposeBag()
-    private let placeholder = "구체적인 계획을 설정해보세요"
+    private let placeholder = "할 일을 구체적으로 계획해보세요"
     private var isFolded = true
     private var countPlan = 1
     private var textViewIndex = 0
@@ -159,7 +159,7 @@ extension CreateActionViewControlller: UICollectionViewDataSource {
             return SpecificPlanCollectionViewCell()
         }
         cell.delegate = self
-        let placeholder = "구체적인 계획을 설정해보세요"
+        let placeholder = "할 일을 구체적으로 계획해보세요"
         let textView = cell.planTextView
         let data = self.actionplan[countPlan - indexPath.item - 1]
         if data == "" || data == nil || data == placeholder {
