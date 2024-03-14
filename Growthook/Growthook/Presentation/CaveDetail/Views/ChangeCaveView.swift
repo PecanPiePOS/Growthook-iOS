@@ -18,7 +18,7 @@ final class ChangeCaveView: BaseView {
     let nameTextField = TextFieldBlockWithTitle(placeholder: "", maxLength: 7)
     let introduceTextView = TextViewBlockWithTitle(placeholder: "", maxLength: 20)
     private let isSharedLabel = UILabel()
-    private let isSharedButton = UIButton()
+    let isSharedButton = UIButton()
     
     // MARK: - UI Components Property
     
