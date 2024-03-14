@@ -119,7 +119,7 @@ final class ActionListBottomSheetViewController: BaseViewController {
         }
         
         bottomSheetTitleLabel.do {
-            $0.text = "느낀점 작성하기"
+            $0.text = "느낀점 작성"
             $0.font = .fontGuide(.body1_reg)
             $0.textColor = .white000
         }

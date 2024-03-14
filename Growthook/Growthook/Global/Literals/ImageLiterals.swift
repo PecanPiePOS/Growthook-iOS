@@ -36,6 +36,7 @@ enum ImageLiterals {
         static var ic_scrapToast: UIImage { .load(name: "ic_scrapToast") }
         static var btn_circle_plus: UIImage { .load(name: "btn_circle_plus") }
         static var ic_small_ssuk: UIImage { .load(name: "ic_small_ssuk") }
+        static var ic_halfthook: UIImage { .load(name: "ic_halfthook") }
     }
     
     enum Home {

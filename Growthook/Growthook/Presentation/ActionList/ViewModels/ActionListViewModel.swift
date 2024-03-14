@@ -20,6 +20,7 @@ protocol ActionListViewModelInput {
     func didTapCompleteScrapButton(with actionPlanId: Int, with isScraped: Bool)
     func didTapSeedButton()
     func didTapReviewButton(with actionPlanId: Int)
+    func didTapReviewScrapButton(with actionPlanId: Int,  with isScraped: Bool)
     func setReviewText(with value: String)
     func didTapCancelButtonInBottomSheet()
     func didTapSaveButtonInBottomSheet()
@@ -34,6 +35,7 @@ protocol ActionListViewModelOutput {
     var selectedIndex: BehaviorRelay<Int> { get }
     var doingActionList: BehaviorRelay<[ActionListDoingResponse]> { get }
     var finishedActionList: BehaviorRelay<[ActionListFinishedResponse]> { get }
+    var showToastToggle: BehaviorRelay<Int> { get }
     var isReviewEntered: Driver<Bool> { get }
     var reviewTextCount: Driver<String> { get }
     var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> { get }
@@ -50,6 +52,7 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
     var doingActionList: BehaviorRelay<[ActionListDoingResponse]> = BehaviorRelay<[ActionListDoingResponse]>(value: [])
     var finishedActionList: BehaviorRelay<[ActionListFinishedResponse]> = BehaviorRelay<[ActionListFinishedResponse]>(value: [])
     var reviewText = BehaviorRelay<String>(value: "")
+    var showToastToggle: BehaviorRelay<Int> = BehaviorRelay(value: 5)
     var titlePersent: BehaviorRelay<String> = BehaviorRelay(value: "")
     var reviewDetail: BehaviorRelay<ActionListReviewDetailResponse> = BehaviorRelay<ActionListReviewDetailResponse>(value: ActionListReviewDetailResponse.actionListReviewDetailDummy())
     private let disposeBag = DisposeBag()
@@ -110,6 +113,8 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         print("진행중 탭에서 스크랩 버튼이 탭 되었습니다")
         if !isScraped {
             selectedIndex.accept(2)
+        } else {
+            selectedIndex.accept(4)
         }
         patchACtionListScrap(actionPlanId: actionPlanId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -122,7 +127,24 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         print("완료 탭에서 스크랩 버튼이 탭 되었습니다")
         if !isScraped {
             selectedIndex.accept(2)
+        } else {
+            selectedIndex.accept(4)
         }
+        patchACtionListScrap(actionPlanId: actionPlanId)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.getFinishedActionList(mamberId: self.memberId)
+            self.getActionListPercent(mamberId: self.memberId)
+            self.getActionListReview(actionPlanId: actionPlanId)
+        }
+    }
+    
+    func didTapReviewScrapButton(with actionPlanId: Int, with isScraped: Bool) {
+        if !isScraped {
+            showToastToggle.accept(1)
+        } else {
+            showToastToggle.accept(0)
+        }
+        showToastToggle = BehaviorRelay(value: 5)
         patchACtionListScrap(actionPlanId: actionPlanId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.getFinishedActionList(mamberId: self.memberId)
@@ -200,7 +222,7 @@ extension ActionListViewModel {
             .disposed(by: disposeBag)
     }
     
-    private func getFinishedActionList(mamberId: Int) {
+    func getFinishedActionList(mamberId: Int) {
         print("getFinishedActionList가 호출됩니다")
         ActionListService.getFinishedActionList(with: mamberId)
             .subscribe(onNext: { [weak self] data in

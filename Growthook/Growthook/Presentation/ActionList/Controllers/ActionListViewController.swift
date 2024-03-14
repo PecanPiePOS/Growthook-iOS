@@ -14,14 +14,13 @@ import SnapKit
 import Then
 
 protocol PushToActionListReviewViewController: AnyObject {
-    func didTapReviewButtonInCompleteViewController()
+    func didTapReviewButtonInCompleteViewController(with actionPlanId:Int, with actionPlanisScraped: Bool)
     func didTapSeedButtonInCompleteViewController(seedId: Int)
 }
 
 protocol PushInsightsDetailViewController: AnyObject {
     func didTapSeedButtonInInprogressViewController(seedId: Int)
 }
-
 
 final class ActionListViewController: BaseViewController {
     
@@ -67,6 +66,7 @@ final class ActionListViewController: BaseViewController {
         if !isFirstLaunched {
             viewModel.getActionListPercent(mamberId: memberId)
             viewModel.getDoingActionList(mamberId: memberId)
+            viewModel.getFinishedActionList(mamberId: memberId)
         }
     }
     
@@ -93,7 +93,7 @@ final class ActionListViewController: BaseViewController {
         
         viewModel.outputs.titlePersent
             .subscribe(onNext: { [weak self] persent in
-                self?.titleBarView.setPersentText(persent)
+                self?.titleBarView.setPercentText(persent)
             })
             .disposed(by: disposeBag)
         
@@ -101,7 +101,10 @@ final class ActionListViewController: BaseViewController {
             .bind(onNext: { [weak self] index in
                 if index == 2 {
                     self?.showToast()
-                } else {
+                } else if index == 4 {
+                    self?.showCancelToast()
+                }
+                else {
                     self?.segmentedView.moveToPage(index: index)
                 }
             })
@@ -126,7 +129,7 @@ final class ActionListViewController: BaseViewController {
         
         titleBarView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(107)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.2266)
             $0.top.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -165,8 +168,12 @@ final class ActionListViewController: BaseViewController {
         view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
     }
     
-    func didTapReviewButtonInCompleteViewController() {
-        let vc = ActionListReviewViewController(viewModel: viewModel)
+    private func showCancelToast() {
+        view.showScrapToast(message: I18N.Component.ToastMessage.unScrap)
+    }
+    
+    func didTapReviewButtonInCompleteViewController(with actionPlanId: Int, with actionPlanisScraped: Bool) {
+        let vc = ActionListReviewViewController(viewModel: viewModel, actionPlanId: actionPlanId, actionPlanisScraped: actionPlanisScraped)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
