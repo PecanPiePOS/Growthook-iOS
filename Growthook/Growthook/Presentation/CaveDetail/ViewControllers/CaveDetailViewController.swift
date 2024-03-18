@@ -103,6 +103,8 @@ final class CaveDetailViewController: BaseViewController {
                     guard let self else { return }
                     if !cell.isScrapButtonTapped {
                         self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
+                    } else {
+                        self.view.showScrapToast(message: I18N.Component.ToastMessage.unScrap)
                     }
                     cell.isScrapButtonTapped.toggle()
                     self.viewModel.inputs.insightCaveScrap(seedId: model.seedId, caveId: self.caveId)

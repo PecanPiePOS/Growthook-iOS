@@ -116,6 +116,8 @@ final class HomeViewController: BaseViewController {
                     guard let self = self else { return }
                     if !cell.isScrapButtonTapped {
                         self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
+                    } else {
+                        self.view.showScrapToast(message: I18N.Component.ToastMessage.unScrap)
                     }
                     cell.isScrapButtonTapped.toggle()
                     self.viewModel.inputs.insightScrap(seedId: model.seedId)
