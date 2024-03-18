@@ -8,6 +8,7 @@
 import UIKit
 
 import RxSwift
+import KakaoSDKUser
 
 final class MyPageUserInformationViewController: BaseViewController {
 
@@ -157,6 +158,15 @@ extension MyPageUserInformationViewController {
         AuthAPI.shared.deleteMemberWithdraw(memberId: memberId) {
             [weak self] response in
             guard self != nil else { return }
+            
+            UserApi.shared.unlink {(error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("unlink() success.")
+                }
+            }
             
             // UserDefault 삭제
             _ = UserDefaults.standard.dictionaryRepresentation().map {
