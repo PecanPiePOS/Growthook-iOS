@@ -196,6 +196,8 @@ final class InsightsDetailViewController: BaseViewController {
                         break
                     case .scrapToast(let success):
                         self.view.showScrapToast(message: status.toastMessage, success: success)
+                    case .unScrapToast(let success):
+                        self.view.showScrapToast(message: status.toastMessage, success: success)
                     case .moveSeedToast(let success):
                         self.view.showToast(message: status.toastMessage, success: success)
                     case .editSeedToast(let success):

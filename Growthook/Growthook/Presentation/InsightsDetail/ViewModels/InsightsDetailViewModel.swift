@@ -14,6 +14,7 @@ enum InsightsDetailToastType {
     case none
     
     case scrapToast(success: Bool)
+    case unScrapToast(success: Bool)
     case moveSeedToast(success: Bool)
     case deleteSeedToast(success: Bool)
     case editSeedToast(success: Bool)
@@ -28,6 +29,8 @@ enum InsightsDetailToastType {
             return ""
         case .scrapToast(let success):
             if success != false { return "스크랩 완료" } else { return "실패했어요" }
+        case .unScrapToast(let success):
+            if success != false { return "스크랩 취소" } else { return "실패했어요" }
         case .moveSeedToast(let success):
             if success != false { return "씨앗을 옮겨 심었어요" } else { return "실패했어요" }
         case .deleteSeedToast(let success):
@@ -307,7 +310,14 @@ final class InsightsDetailViewModel: InsightsDetailViewModelInput, InsightsDetai
             case true:
                 let isScraped = self.scrapedStatus.value
                 self.scrapedStatus.accept(!isScraped)
-                self.toastStatus.accept(.scrapToast(success: true))
+                if !isScraped {
+                    self.toastStatus.accept(.scrapToast(success: true))
+                } else {
+                    self.toastStatus.accept(.unScrapToast(success: true))
+                }
+                // isScraped 가 false면 되면 스크랩 성공
+                // isScraped 가 true면 스크랩 취소
+//                self.toastStatus.accept(.scrapToast(success: true))
                 handler(true)
                 self.resetToastStatus()
             case false:
