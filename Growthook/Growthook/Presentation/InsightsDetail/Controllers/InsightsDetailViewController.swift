@@ -149,7 +149,7 @@ final class InsightsDetailViewController: BaseViewController {
                 cell.scrapButton.rx.tap
                     .throttle(.seconds(1), latest: false, scheduler: MainScheduler.asyncInstance)
                     .bind { _ in
-                        self.viewModel.inputs.actionPlanScrap(actionPlanId: data.actionPlanId) { success in
+                        self.viewModel.inputs.actionPlanScrap(actionPlanId: data.actionPlanId, actionPlanStatus: data.isScraped) { success in
                             if success {
                                 cell.toggleScrap()
                             }
