@@ -111,7 +111,7 @@ enum I18N {
     enum Auth {
         static let kakao = "KAKAO"
         static let apple = "APPLE"
-        static let nickname = "nickname"
+        static let nickname = "쑥쑥이"
         static let memberId = "memberId"
         static let jwtToken = "jwtToken"
         static let hasBeenLaunched = "hasBeenLaunchedBefore"
