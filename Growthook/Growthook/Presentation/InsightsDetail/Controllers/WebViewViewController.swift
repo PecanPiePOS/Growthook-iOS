@@ -109,7 +109,7 @@ class WebViewController: WebViewBaseViewController {
 
     private func setStyle() {
         
-        navigationBar.snp.makeConstraints {
+        navigationBar.snp.remakeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(24)
