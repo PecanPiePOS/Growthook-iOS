@@ -1,8 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "insightPeroidWarning.svg",
-      "idiom" : "universal"
+      "filename" : "insightPeroidWarning.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "insightPeroidWarning@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "insightPeroidWarning@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
