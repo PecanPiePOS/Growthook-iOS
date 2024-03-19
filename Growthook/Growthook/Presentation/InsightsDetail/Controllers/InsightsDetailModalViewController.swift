@@ -116,7 +116,7 @@ final class InsightsDetailModalViewController: BaseViewController {
                 cell.scrapButton.rx.tap
                     .throttle(.seconds(1), latest: false, scheduler: MainScheduler.asyncInstance)
                     .bind { _ in
-                        self.viewModel.inputs.actionPlanScrap(actionPlanId: data.actionPlanId) { success in
+                        self.viewModel.inputs.actionPlanScrap(actionPlanId: data.actionPlanId, actionPlanStatus: data.isScraped) { success in
                             if success {
                                 cell.toggleScrap()
                             }
@@ -165,6 +165,8 @@ final class InsightsDetailModalViewController: BaseViewController {
                     case .none:
                         break
                     case .scrapToast(let success):
+                        self.view.showScrapToast(message: status.toastMessage, success: success)
+                    case .unScrapToast(let success):
                         self.view.showScrapToast(message: status.toastMessage, success: success)
                     case .moveSeedToast(let success):
                         self.view.showToast(message: status.toastMessage, success: success)

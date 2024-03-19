@@ -76,7 +76,7 @@ final class CreatingNewInsightsView: BaseView {
         backgroundColor = .clear
         
         insightTextView.do {
-            $0.setMainTitleLabel(with: "인사이트")
+            $0.setMainTitleLabel(with: "씨앗")
         }
         
         memoTextView.do {
