@@ -114,13 +114,13 @@ final class HomeViewController: BaseViewController {
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
                     guard let self = self else { return }
+                    self.viewModel.inputs.insightScrap(seedId: model.seedId)
                     if !cell.isScrapButtonTapped {
                         self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
                     } else {
                         self.view.showScrapToast(message: I18N.Component.ToastMessage.unScrap)
                     }
                     cell.isScrapButtonTapped.toggle()
-                    self.viewModel.inputs.insightScrap(seedId: model.seedId)
                 }
             }
             .disposed(by: disposeBag)
