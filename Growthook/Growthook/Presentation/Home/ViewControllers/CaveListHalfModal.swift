@@ -93,8 +93,7 @@ class CaveListHalfModal: BaseViewController {
         
         caveEmptyView.newCaveButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.clearInsight()
-                self?.dismissToHomeVC()
+                self?.pushToCreateCaveVC()
             })
             .disposed(by: disposeBag)
     }
@@ -163,6 +162,15 @@ class CaveListHalfModal: BaseViewController {
     
     private func dismissToHomeVC() {
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    private func pushToCreateCaveVC() {
+        guard let vc = self.presentingViewController else { return }
+        let createCaveVC = CreateCaveViewController()
+        createCaveVC.modalPresentationStyle = .fullScreen
+        self.dismiss(animated: true) {
+            vc.present(createCaveVC, animated: true, completion: nil)
+        }
     }
     
     private func clearInsightMove() {

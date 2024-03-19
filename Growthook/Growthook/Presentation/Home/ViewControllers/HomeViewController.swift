@@ -41,6 +41,7 @@ final class HomeViewController: BaseViewController {
     private var lockSeedId: Int?
     private var lockActionPlan: Bool?
     private var isFirstLaunched: Bool = true
+    private var isCaveEmpty: Bool = true
     
     // MARK: - View Life Cycle
     
@@ -73,12 +74,14 @@ final class HomeViewController: BaseViewController {
                 guard cave.isEmpty else { return }
                 self?.homeCaveView.caveEmptyView.isHidden = false
                 self?.homeCaveView.caveCollectionView.isHidden = true
+                self?.isCaveEmpty = true
             })
             .bind(to: homeCaveView.caveCollectionView.rx
                 .items(cellIdentifier: CaveCollectionViewCell.className,
                        cellType: CaveCollectionViewCell.self)) { (index, model, cell) in
                 self.homeCaveView.caveEmptyView.isHidden = true
                 self.homeCaveView.caveCollectionView.isHidden = false
+                self.isCaveEmpty = false
                 cell.configureCell(model)
             }
                        .disposed(by: disposeBag)
@@ -111,11 +114,13 @@ final class HomeViewController: BaseViewController {
                 cell.setCellStyle()
                 cell.scrapButtonTapHandler = { [weak self] in
                     guard let self = self else { return }
+                    self.viewModel.inputs.insightScrap(seedId: model.seedId)
                     if !cell.isScrapButtonTapped {
                         self.view.showScrapToast(message: I18N.Component.ToastMessage.scrap)
+                    } else {
+                        self.view.showScrapToast(message: I18N.Component.ToastMessage.unScrap)
                     }
                     cell.isScrapButtonTapped.toggle()
-                    self.viewModel.inputs.insightScrap(seedId: model.seedId)
                 }
             }
             .disposed(by: disposeBag)
@@ -228,9 +233,13 @@ final class HomeViewController: BaseViewController {
         
         seedPlusButton.rx.tap
             .subscribe(onNext: { _ in
-                let vc = CreatingNewInsightsViewController()
-                vc.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(vc, animated: true)
+                if self.isCaveEmpty {
+                    self.presentToEmptyCaveListVC()
+                } else {
+                    let vc = CreatingNewInsightsViewController()
+                    vc.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -421,6 +430,25 @@ extension HomeViewController {
         let caveDetailVC = CaveDetailViewController(viewModel: viewModel, caveId: caveId)
         caveDetailVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(caveDetailVC, animated: true)
+    }
+    
+    private func presentToEmptyCaveListVC() {
+        let caveListVC = CaveListHalfModal(viewModel: viewModel)
+        caveListVC.modalPresentationStyle = .pageSheet
+        let customDetentIdentifier = UISheetPresentationController.Detent.Identifier(I18N.Component.Identifier.customDetent)
+        let customDetent = UISheetPresentationController.Detent.custom(identifier: customDetentIdentifier) { (_) in
+            return SizeLiterals.Screen.screenHeight * 420 / 812
+        }
+        
+        if let sheet = caveListVC.sheetPresentationController {
+            sheet.detents = [customDetent]
+            sheet.preferredCornerRadius = 15
+            sheet.prefersGrabberVisible = true
+            sheet.delegate = caveListVC as? any UISheetPresentationControllerDelegate
+        }
+        
+//        caveListVC.indexPath = self.indexPath
+        present(caveListVC, animated: true)
     }
     
     private func setNotiStyle(_ count: Int) {

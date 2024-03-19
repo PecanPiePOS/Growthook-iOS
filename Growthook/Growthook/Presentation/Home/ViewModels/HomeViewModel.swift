@@ -198,9 +198,9 @@ final class HomeViewModel: HomeViewModelInputs, HomeViewModelOutputs, HomeViewMo
         let caveId = caveId
         SeedListAPI.shared.patchSeedScrap(seedId: seedId) { [weak self] response in
             guard self != nil else { return }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.getCaveSeedList(caveId: caveId)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self?.getCaveSeedList(caveId: caveId)
+            }
         }
     }
     

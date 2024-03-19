@@ -728,7 +728,7 @@ extension InsightsDetailViewController {
     
     func prepareStackView() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
-        memoView.refernceStackView.addGestureRecognizer(tap)
+        memoView.referenceStackView.addGestureRecognizer(tap)
     }
     
     @objc func stackViewTapped() {

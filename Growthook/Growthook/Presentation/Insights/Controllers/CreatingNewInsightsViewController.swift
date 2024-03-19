@@ -31,6 +31,11 @@ final class CreatingNewInsightsViewController: BaseViewController {
     private let creatingContentView = CreatingNewInsightsView()
     private let loadingView = FullCoverLoadingView()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        hideKeyboardWhenTappedAround()
+    }
+    
     override func bindViewModel() {
         // MARK: - Bind UI to State
         viewModel.outputs.networkState
