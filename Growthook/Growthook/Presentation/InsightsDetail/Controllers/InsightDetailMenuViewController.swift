@@ -81,21 +81,23 @@ final class InsightDetailMenuViewController: BaseViewController {
         buttonStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(40)
             $0.horizontalEdges.equalToSuperview().inset(17)
-            $0.height.equalTo(101)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 101 / 812)
         }
         
         deleteButton.snp.makeConstraints {
             $0.top.equalTo(buttonStackView.snp.bottom).offset(12)
             $0.horizontalEdges.equalToSuperview().inset(17)
-            $0.height.equalTo(50)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 50 / 812)
         }
         
         relocateButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 50 / 812)
         }
         
         editButton.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 50 / 812)
         }
     }
 

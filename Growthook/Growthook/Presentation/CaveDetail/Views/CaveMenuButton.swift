@@ -45,7 +45,7 @@ final class CaveMenuButton: UIButton {
         config.imagePadding = 12
         config.baseBackgroundColor = .clear
         config.imagePlacement = NSDirectionalRectEdge.leading
-        config.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: SizeLiterals.Screen.screenWidth * 240 / 375)
+        config.contentInsets = NSDirectionalEdgeInsets.init(top: 0, leading: 16, bottom: 0, trailing: SizeLiterals.Screen.screenWidth * 235 / 375)
         configuration = config
     }
 }
