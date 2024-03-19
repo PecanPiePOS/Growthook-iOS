@@ -54,20 +54,20 @@ final class LoginView: BaseView {
         
         mainTitleLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(32)
-            $0.height.equalTo(48)
+            $0.leading.equalToSuperview().offset(SizeLiterals.Screen.screenWidth * 0.0853)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.0591)
             $0.width.equalTo(257)
         }
         
         mainSubTitleLabel.snp.makeConstraints {
             $0.top.equalTo(mainTitleLabel.snp.bottom).offset(24)
-            $0.leading.equalToSuperview().offset(32)
-            $0.height.equalTo(54)
+            $0.leading.equalToSuperview().offset(SizeLiterals.Screen.screenWidth * 0.0853)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.0665)
             $0.width.equalTo(293)
         }
         
         growthookImage.snp.makeConstraints {
-            $0.top.equalTo(mainSubTitleLabel.snp.bottom).offset(92)
+            $0.top.equalTo(mainSubTitleLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.1133)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(170)
             $0.width.equalTo(169)
