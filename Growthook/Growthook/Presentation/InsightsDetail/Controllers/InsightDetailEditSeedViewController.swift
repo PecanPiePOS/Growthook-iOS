@@ -46,6 +46,7 @@ final class InsightDetailEditSeedViewController: BaseViewController {
         super.viewDidLoad()
         setContent()
         setNotificationForKeyboardHeight()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillAppear(_ animated: Bool) {
