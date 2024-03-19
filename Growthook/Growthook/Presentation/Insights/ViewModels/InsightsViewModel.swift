@@ -277,9 +277,9 @@ extension InsightsViewModel {
             .bind(to: isPeriodValid)
             .disposed(by: disposeBag)
         
-        Observable.combineLatest(isNewInsightValid, isCaveSelectedValid, isNewReferenceValid, isUrlValid, isPeriodValid)
-            .map { isInsightValid, isCaveValid, isReferenceValid,isUrlValid, isPeriodValid in
-                print("000", isInsightValid, isCaveValid, isReferenceValid, isPeriodValid)
+        Observable.combineLatest(isNewInsightValid, isCaveSelectedValid, isUrlValid, isPeriodValid)
+            .map { isInsightValid, isCaveValid, isUrlValid, isPeriodValid in
+                print("000", isInsightValid, isCaveValid, isPeriodValid)
                 return isInsightValid && isCaveValid && isUrlValid && isPeriodValid
             }
             .bind(to: isPostingValid)
