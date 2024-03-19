@@ -103,7 +103,7 @@ extension TextFieldBlockWithTitle {
     }
     
     func setNoTitleAndNoCount() {
-        textFieldBlock.changeMaximumLimitIfNeeded(with: 200)
+        textFieldBlock.changeMaximumLimitIfNeeded(with: 10000)
         titleLabel.removeFromSuperview()
         textCountLabel.removeFromSuperview()
         textFieldBlock.snp.remakeConstraints {
