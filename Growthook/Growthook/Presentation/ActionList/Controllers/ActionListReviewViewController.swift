@@ -88,7 +88,7 @@ final class ActionListReviewViewController: BaseViewController {
         navigationBar.do {
             $0.backgroundColor = .gray600
             $0.isTitleViewIncluded = true
-            $0.isTitleLabelIncluded = "느낀점 조회"
+            $0.isTitleLabelIncluded = "느낀점"
             $0.isBackButtonIncluded = true
             $0.setupBackButtonTarget()
             $0.backButtonAction = { [weak self] in
