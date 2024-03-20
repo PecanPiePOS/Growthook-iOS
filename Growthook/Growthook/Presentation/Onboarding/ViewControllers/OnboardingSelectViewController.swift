@@ -103,48 +103,48 @@ final class OnboardingSelectViewController: BaseViewController {
                          thinkButton, undoButton, feelingButton, solveButton)
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(128)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(SizeLiterals.Screen.screenHeight * 0.1576)
             $0.centerX.equalToSuperview()
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0099)
             $0.centerX.equalToSuperview()
         }
         
         forgetButton.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().offset(30)
-            $0.width.equalTo(154)
-            $0.height.equalTo(160)
+            $0.top.equalTo(subTitleLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0493)
+            $0.leading.equalToSuperview().offset(SizeLiterals.Screen.screenWidth * 0.08)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.4107)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.1970)
         }
         
         thinkButton.snp.makeConstraints {
             $0.top.equalTo(forgetButton.snp.top)
-            $0.trailing.equalToSuperview().inset(29)
-            $0.width.equalTo(154)
-            $0.height.equalTo(160)
+            $0.trailing.equalToSuperview().inset(SizeLiterals.Screen.screenWidth * 0.0773)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.4107)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.1970)
         }
         
         undoButton.snp.makeConstraints {
-            $0.top.equalTo(forgetButton.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(30)
-            $0.width.equalTo(154)
-            $0.height.equalTo(160)
+            $0.top.equalTo(forgetButton.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0099)
+            $0.leading.equalToSuperview().offset(SizeLiterals.Screen.screenWidth * 0.08)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.4107)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.1970)
         }
         
         feelingButton.snp.makeConstraints {
             $0.top.equalTo(undoButton.snp.top)
-            $0.trailing.equalToSuperview().inset(29)
-            $0.width.equalTo(154)
-            $0.height.equalTo(160)
+            $0.trailing.equalToSuperview().inset(SizeLiterals.Screen.screenWidth * 0.0773)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.4107)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.1970)
         }
         
         solveButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(SizeLiterals.Screen.screenHeight * 0.0246)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(339)
-            $0.height.equalTo(50)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.9040)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.0616)
         }
     }
     
@@ -195,32 +195,32 @@ final class OnboardingSelectViewController: BaseViewController {
         view.addSubviews(titleLabel, thookImageView, plantLabel, seedLabel, solveButton)
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(128)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(SizeLiterals.Screen.screenHeight * 0.1576)
             $0.centerX.equalToSuperview()
         }
         
         thookImageView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(136)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.1675)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(146)
-            $0.height.equalTo(116)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.3893)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.1429)
         }
         
         plantLabel.snp.makeConstraints {
-            $0.top.equalTo(thookImageView.snp.bottom).offset(31)
+            $0.top.equalTo(thookImageView.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.0382)
             $0.centerX.equalToSuperview()
         }
         
         seedLabel.snp.makeConstraints {
-            $0.top.equalTo(plantLabel.snp.bottom).offset(138)
+            $0.top.equalTo(plantLabel.snp.bottom).offset(SizeLiterals.Screen.screenHeight * 0.1703)
             $0.centerX.equalToSuperview()
         }
         
         solveButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(SizeLiterals.Screen.screenHeight * 0.0246)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(339)
-            $0.height.equalTo(50)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.9040)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.0616)
         }
     }
     
