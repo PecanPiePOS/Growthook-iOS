@@ -29,9 +29,11 @@ final class ChangeCaveViewController: BaseViewController {
     
     // MARK: - Initializer
     
-    init(caveId: Int, homeViewModel: HomeViewModel) {
+    init(caveId: Int, caveName: String, caveDescription: String, homeViewModel: HomeViewModel) {
         self.homeViewModel = homeViewModel
         self.caveId = caveId
+        self.changeCaveView.nameTextField.textFieldBlock.text = caveName
+        self.changeCaveView.introduceTextView.textViewBlock.text = caveDescription
         super.init(nibName: nil, bundle: nil)
     }
     

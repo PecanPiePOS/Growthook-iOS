@@ -45,6 +45,8 @@ final class CaveDetailViewController: BaseViewController {
     private var caveId: Int
     private var lockActionPlan: Bool?
     private var isFirstLaunched: Bool = true
+    private var caveName: String?
+    private var caveDescription: String?
     
     // MARK: - Initializer
 
@@ -72,6 +74,8 @@ final class CaveDetailViewController: BaseViewController {
                 guard let self = self else { return }
                 self.caveTitle = model.caveName
                 caveDetailView.caveDescriptionView.configureView(model)
+                self.caveName = model.caveName
+                self.caveDescription = model.introduction
             })
             .disposed(by: disposeBag)
         
@@ -230,7 +234,10 @@ final class CaveDetailViewController: BaseViewController {
             .subscribe(onNext: { [weak self] in
                 guard let caveId = self?.caveId else { return }
                 guard let viewModel = self?.viewModel else { return }
-                let vc = ChangeCaveViewController(caveId: caveId, homeViewModel: viewModel)
+                guard let caveName = self?.caveName else { return }
+                guard let caveDescription = self?.caveDescription else { return }
+                let vc = ChangeCaveViewController(caveId: caveId, caveName: caveName,
+                                                  caveDescription: caveDescription, homeViewModel: viewModel)
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
