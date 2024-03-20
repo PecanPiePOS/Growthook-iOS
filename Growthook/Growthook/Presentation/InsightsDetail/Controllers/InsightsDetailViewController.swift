@@ -333,6 +333,7 @@ final class InsightsDetailViewController: BaseViewController {
                 self.viewModel.deleteSeedDidTap { success in
                     if success != false {
                         self.navigationController?.popViewController(animated: true)
+                        NotificationCenter.default.post(name: Notification.Name("DismissNotification"), object: nil)
                     }
                 }
             }
