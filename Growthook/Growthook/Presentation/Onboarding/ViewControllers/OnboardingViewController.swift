@@ -96,7 +96,7 @@ final class OnboardingViewController: UIPageViewController {
                                                subTitle: "나만의 인사이트를 보관할 동굴을 만들어요.", pageType: .oneLines)
         let page2 = PageContentsViewController(imageName: ImageLiterals.Onboarding.onboardingPage2,
                                                title: "씨앗 심기",
-                                               subTitle: "내가 얻은 일상 속 영감, 인사이트를\n한줄로 표현해요.", pageType: .twoLines)
+                                               subTitle: "내가 얻은 일상 속 영감, 인사이트를\n한 줄로 표현해요.", pageType: .twoLines)
         let page3 = PageContentsViewController(imageName: ImageLiterals.Onboarding.onboardingPage3,
                                                title: "할 일 계획하기",
                                                subTitle: "인사이트를 바탕으로 앞으로의 할 일을 기록해요.", pageType: .oneLines)

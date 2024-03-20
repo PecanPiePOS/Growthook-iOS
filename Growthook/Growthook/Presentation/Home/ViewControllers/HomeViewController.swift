@@ -58,6 +58,7 @@ final class HomeViewController: BaseViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.addObserver(self, selector: #selector(showRemoveInsight), name: Notification.Name("DismissNotification"), object: nil)
     }
     
     override func viewDidLoad() {
@@ -497,6 +498,10 @@ extension HomeViewController {
     
     @objc func hideNotificationView(_ sender: UITapGestureRecognizer) {
         notificationView.isHidden = true
+    }
+    
+    @objc func showRemoveInsight() {
+        view.showToast(message: I18N.Component.ToastMessage.removeInsight)
     }
 }
 

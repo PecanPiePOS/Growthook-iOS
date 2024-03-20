@@ -23,7 +23,7 @@ final class ActionListReviewViewController: BaseViewController {
     private let navigationBar = CustomNavigationBar()
     private let titleLabel = UILabel()
     private let scrapButton = UIButton()
-    private let reviewTextView = UITextViewWithTintedWhenEdited(placeholder: "할 일을 달성하며 어떤 것을 느꼈는지 작성해보세요", maxLength: 300)
+    private let reviewTextView = UITextView()
     private let writtenDateLabel = UILabel()
     
     // MARK: - Properties
@@ -45,7 +45,6 @@ final class ActionListReviewViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,9 +71,11 @@ final class ActionListReviewViewController: BaseViewController {
                 if index == 1 {
                     self?.showToast()
                     self?.toggleScrapImage(binary: 1)
+                    self?.actionPlanisScraped.toggle()
                 } else if index == 0 {
                     self?.showCancelToast()
                     self?.toggleScrapImage(binary: 0)
+                    self?.actionPlanisScraped.toggle()
                 }
             })
             .disposed(by: disposeBag)
@@ -83,12 +84,12 @@ final class ActionListReviewViewController: BaseViewController {
     // MARK: - UI Components Property
     
     override func setStyles() {
-        view.backgroundColor = .gray600
+        view.backgroundColor = .gray700
         
         navigationBar.do {
-            $0.backgroundColor = .gray600
+            $0.backgroundColor = .gray700
             $0.isTitleViewIncluded = true
-            $0.isTitleLabelIncluded = "느낀점 조회"
+            $0.isTitleLabelIncluded = "느낀점"
             $0.isBackButtonIncluded = true
             $0.setupBackButtonTarget()
             $0.backButtonAction = { [weak self] in
@@ -104,6 +105,16 @@ final class ActionListReviewViewController: BaseViewController {
         reviewTextView.do {
             $0.isEditable = false
             $0.textColor = .white000
+            $0.layer.borderWidth = 0
+            $0.layer.cornerRadius = 7
+            $0.backgroundColor = .gray900
+            $0.textColor = .white000
+            $0.font = .fontGuide(.body3_reg)
+            $0.textContainerInset = UIEdgeInsets(top: 13, left: 14, bottom: 20, right: 16)
+            $0.contentInset = UIEdgeInsets(top: 5, left: 2, bottom: 5, right: 0)
+            $0.autocorrectionType = .no
+            $0.spellCheckingType = .no
+            $0.dataDetectorTypes = .all
         }
         
         scrapButton.do {
@@ -142,8 +153,8 @@ final class ActionListReviewViewController: BaseViewController {
         reviewTextView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(30)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(339)
-            $0.height.equalTo(170)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.904)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.2094)
         }
         
         writtenDateLabel.snp.makeConstraints {
