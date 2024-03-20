@@ -140,7 +140,11 @@ class WebViewController: WebViewBaseViewController {
     }
     
     @objc func closeButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
+        if let navigationController = self.navigationController {
+            navigationController.popViewController(animated: false)
+        } else {
+            self.dismiss(animated: false)
+        }
     }
 }
 

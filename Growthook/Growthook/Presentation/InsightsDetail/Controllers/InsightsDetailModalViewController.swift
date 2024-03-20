@@ -45,7 +45,7 @@ final class InsightsDetailModalViewController: BaseViewController {
     private var isFirstOpened = true
     private var isScraped = false
     
-    private var source = ""
+    private var source: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -739,7 +739,7 @@ extension InsightsDetailModalViewController {
     @objc func stackViewTapped() {
         UIPasteboard.general.string = memoView.referenceUrlTitle.text
         guard let url = URL(string: memoView.referenceUrlTitle.text ?? "") else { return }
-        let vc = WebViewController(url: url, title: "\(source)")
+        let vc = WebViewController(url: url, title: "\(source ?? "")")
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }

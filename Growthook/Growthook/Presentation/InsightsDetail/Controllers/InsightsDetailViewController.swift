@@ -78,7 +78,7 @@ final class InsightsDetailViewController: BaseViewController {
     private var seedId = 0
     private var isFirstOpened = true
     private var isScraped = false
-    private var source = ""
+    private var source: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -734,7 +734,7 @@ extension InsightsDetailViewController {
     @objc func stackViewTapped() {
         UIPasteboard.general.string = memoView.referenceUrlTitle.text
         guard let url = URL(string: memoView.referenceUrlTitle.text ?? "") else { return }
-        let vc = WebViewController(url: url, title: "\(source)")
+        let vc = WebViewController(url: url, title: "\(source ?? "")")
         navigationController?.pushViewController(vc, animated: true)
     }
 }

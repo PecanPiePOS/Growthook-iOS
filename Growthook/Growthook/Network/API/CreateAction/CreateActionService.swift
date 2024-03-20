@@ -92,7 +92,7 @@ struct ActionPlanResponse: Codable {
     let caveName: String
     let insight: String
     let memo: String?
-    let source: String
+    let source: String?
     let url: String?
     let isScraped: Bool
     let lockDate: String
