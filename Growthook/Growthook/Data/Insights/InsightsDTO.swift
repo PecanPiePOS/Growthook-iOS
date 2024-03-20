@@ -9,14 +9,14 @@ import Foundation
 
 // MARK: - Requests
 struct InsightPostRequest: Codable {
-    let insight, source: String
-    let memo, url: String?
+    let insight: String
+    let memo, source, url: String?
     let goalMonth: Int
 }
 
 struct InsightEditRequest: Codable {
-    let insight, source: String
-    let memo, url: String?
+    let insight: String
+    let memo, source, url: String?
 }
 
 struct InsightActionPlanPatchRequest: Codable {
@@ -42,8 +42,9 @@ struct InsightActionPlanResponse: Codable {
 }
 
 struct SeedDetailResponsse: Codable {
-    let caveName, insight, source: String
+    let caveName, insight: String
     let memo: String?
+    let source: String?
     let url: String?
     let isScraped: Bool
     let lockDate: String
