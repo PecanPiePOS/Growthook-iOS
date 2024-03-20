@@ -61,7 +61,7 @@ extension InsightsDetailActionPlanCollectionViewCell {
         }
         
         completeButton.do {
-            $0.setTitle("완료하기", for: .normal)
+            $0.setTitle("수확하기", for: .normal)
             $0.titleLabel?.font = .fontGuide(.detail2_bold)
             $0.setTitleColor(.white000, for: .normal)
             $0.setBackgroundColor(.green400, for: .normal)
@@ -108,6 +108,7 @@ extension InsightsDetailActionPlanCollectionViewCell {
     func setIsCompleted(_ completed: Bool) {
         completeButton.isEnabled = !completed
         completeButton.setBackgroundColor(completed ? .gray400: .green400, for: .normal)
+        completeButton.setTitle(completed ? "수확완료" : "수확하기" , for: .normal)
     }
     
     func setScrap(isScraped: Bool) {

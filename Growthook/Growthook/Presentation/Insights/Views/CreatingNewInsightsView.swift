@@ -62,8 +62,7 @@ final class CreatingNewInsightsView: BaseView {
     )
         // MARK: 무제한의 값이 들어오면 안되므로, 정상적인 url 의 크기를 커버할 수 있는 값 200 을 넣음
     let referencURLTextField = TextFieldBlockWithTitle(
-        placeholder: I18N.CreateInsight.referenceUrlPlaceholder,
-        maxLength: 200
+        placeholder: I18N.CreateInsight.referenceUrlPlaceholder, maxLength: 10000
     )
     let urlValidLabel = UILabel()
     

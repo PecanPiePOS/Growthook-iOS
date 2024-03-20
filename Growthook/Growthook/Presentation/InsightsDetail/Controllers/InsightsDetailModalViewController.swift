@@ -45,6 +45,13 @@ final class InsightsDetailModalViewController: BaseViewController {
     private var isFirstOpened = true
     private var isScraped = false
     
+    private var source: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        prepareStackView()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isFolded = true
@@ -93,6 +100,7 @@ final class InsightsDetailModalViewController: BaseViewController {
                 memoView.setMemoContent(with: model.memo)
                 memoView.setReferenceContent(reference: data.source, url: data.url)
                 self.isScraped = data.isScraped
+                self.source = data.source
             }
             .disposed(by: disposeBag)
         
@@ -718,5 +726,21 @@ extension InsightsDetailModalViewController: InsightDetailReloadDelegate {
             self.actionPlanButton = .init(type: .addAction)
             self.viewModel.toastStatus.accept(.createActionPlan(success: true))
         }
+    }
+}
+
+extension InsightsDetailModalViewController {
+    
+    func prepareStackView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
+        memoView.referenceStackView.addGestureRecognizer(tap)
+    }
+    
+    @objc func stackViewTapped() {
+        UIPasteboard.general.string = memoView.referenceUrlTitle.text
+        guard let url = URL(string: memoView.referenceUrlTitle.text ?? "") else { return }
+        let vc = WebViewController(url: url, title: "\(source ?? "")")
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
     }
 }

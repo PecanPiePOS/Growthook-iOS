@@ -125,6 +125,7 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
     // MARK: - Inputs
     func postNewInsight(completion: @escaping (_ seedId: Int?) -> Void) {
         /// Network 가 끊어졌을 때
+        print(selectedCave.value?.caveId, newInsightContent.value, newReferenceContent.value, selectedPeriod.value?.periodMonthAsInteger, "/////////////////////")
         if NetworkManager.isNetworkConnected() == false {
             networkState.accept(.networkLost)
             return
@@ -132,11 +133,11 @@ final class InsightsViewModel: InsightsViewModelOutput, InsightsViewModelInput, 
         
         if let selectedCaveId = selectedCave.value?.caveId,
            let insight = newInsightContent.value,
-           let source = newReferenceContent.value,
+//           let source = newReferenceContent.value,
            let period = selectedPeriod.value?.periodMonthAsInteger
         {
             networkState.accept(.loading)
-            let newInsight = InsightPostRequest(insight: insight, source: source, memo: newMemoContent.value, url: newReferenceUrlContent.value, goalMonth: period)
+            let newInsight = InsightPostRequest(insight: insight, memo: newMemoContent.value, source: newReferenceContent.value, url: newReferenceUrlContent.value, goalMonth: period)
             InsightsService.postNewInsight(caveId: selectedCaveId, of: newInsight) { [weak self] seedId in
                 guard let self else { return }
                 if let seedId {
@@ -266,12 +267,12 @@ extension InsightsViewModel {
             .map { $0 != nil }
             .bind(to: isCaveSelectedValid)
             .disposed(by: disposeBag)
-        
-        newReferenceContent
-            .map { $0 != nil }
-            .bind(to: isNewReferenceValid)
-            .disposed(by: disposeBag)
-        
+//
+//        newReferenceContent
+//            .map { $0 != nil }
+//            .bind(to: isNewReferenceValid)
+//            .disposed(by: disposeBag)
+//        
         selectedPeriod
             .map { $0?.periodMonthAsInteger != nil }
             .bind(to: isPeriodValid)
@@ -288,10 +289,10 @@ extension InsightsViewModel {
     
     func fetchModifiedInsight() -> InsightEditRequest? {
         if let selectedCaveId = selectedCave.value?.caveId,
-           let insight = newInsightContent.value,
-           let source = newReferenceContent.value
+           let insight = newInsightContent.value
+//           let source = newReferenceContent.value
         {
-            let newInsight = InsightEditRequest(insight: insight, source: source, memo: newMemoContent.value, url: newReferenceUrlContent.value)
+            let newInsight = InsightEditRequest(insight: insight, memo: newMemoContent.value, source: newReferenceContent.value, url: newReferenceUrlContent.value)
             return newInsight
         } else {
             print("❗️ This shouldn't be nil!!")

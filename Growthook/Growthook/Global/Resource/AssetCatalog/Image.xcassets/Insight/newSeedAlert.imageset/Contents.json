@@ -1,8 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "newSeedAlert.svg",
-      "idiom" : "universal"
+      "filename" : "newSeedAlert.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "newSeedAlert@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "newSeedAlert@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
