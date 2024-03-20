@@ -174,6 +174,7 @@ final class ActionListViewController: BaseViewController {
     
     func didTapReviewButtonInCompleteViewController(with actionPlanId: Int, with actionPlanisScraped: Bool) {
         let vc = ActionListReviewViewController(viewModel: viewModel, actionPlanId: actionPlanId, actionPlanisScraped: actionPlanisScraped)
+        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

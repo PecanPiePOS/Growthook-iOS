@@ -144,7 +144,6 @@ final class ActionListViewModel: ActionListViewModelInput, ActionListViewModelOu
         } else {
             showToastToggle.accept(0)
         }
-        showToastToggle = BehaviorRelay(value: 5)
         patchACtionListScrap(actionPlanId: actionPlanId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.getFinishedActionList(mamberId: self.memberId)
