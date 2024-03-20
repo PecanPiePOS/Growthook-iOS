@@ -145,7 +145,7 @@ final class ActionListBottomSheetViewController: BaseViewController {
         cancelButton.do {
             $0.setTitle("안 쓸래요", for: .normal)
             $0.setTitleColor(.gray100, for: .normal)
-            $0.titleLabel?.font = .fontGuide(.body1_bold)
+            $0.titleLabel?.font = .fontGuide(.body1_reg)
             $0.backgroundColor = .gray600
             $0.layer.cornerRadius = 10
         }

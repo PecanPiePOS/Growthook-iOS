@@ -82,8 +82,8 @@ final class OnboardingButtonView: BaseView {
         }
         
         contentView.snp.makeConstraints {
-            $0.width.equalTo(154)
-            $0.height.equalTo(160)
+            $0.width.equalTo(SizeLiterals.Screen.screenWidth * 0.4107)
+            $0.height.equalTo(SizeLiterals.Screen.screenHeight * 0.1970)
         }
     }
     
@@ -92,10 +92,12 @@ final class OnboardingButtonView: BaseView {
     private func updateUI() {
         if isSelected {
             titleLabel.textColor = .green200
+            titleLabel.font = .fontGuide(.body2_bold)
             contentView.layer.borderColor = UIColor.green200.cgColor
             contentView.backgroundColor = .gray500
         } else {
             titleLabel.textColor = .white000
+            titleLabel.font = .fontGuide(.body2_reg)
             contentView.layer.borderColor = UIColor.gray400.cgColor
             contentView.backgroundColor = .gray400
         }
