@@ -107,8 +107,9 @@ extension InsightsDetailActionPlanCollectionViewCell {
     
     func setIsCompleted(_ completed: Bool) {
         completeButton.isEnabled = !completed
-        completeButton.setBackgroundColor(completed ? .gray400: .green400, for: .normal)
+        completeButton.setBackgroundColor(completed ? .gray600: .green400, for: .normal)
         completeButton.setTitle(completed ? "수확완료" : "수확하기" , for: .normal)
+        completeButton.setTitleColor(completed ? .gray400 : .white000, for: .normal)
     }
     
     func setScrap(isScraped: Bool) {
