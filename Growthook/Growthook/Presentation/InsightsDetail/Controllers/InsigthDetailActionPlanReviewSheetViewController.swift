@@ -216,6 +216,13 @@ extension InsigthDetailActionPlanReviewSheetViewController {
                     })
             }
             .disposed(by: disposeBag)
+        
+        exitButton.rx.tap
+            .bind { [weak self] in
+                guard let self else { return }
+                self.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
