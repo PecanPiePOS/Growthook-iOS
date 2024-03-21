@@ -84,6 +84,7 @@ final class InsigthDetailActionPlanSheetViewController: BaseViewController {
         
         doneButton.do {
             $0.setTitle("완료", for: .normal)
+            $0.titleLabel?.font = .fontGuide(.body1_bold)
             $0.makeCornerRound(radius: 10)
         }
         
