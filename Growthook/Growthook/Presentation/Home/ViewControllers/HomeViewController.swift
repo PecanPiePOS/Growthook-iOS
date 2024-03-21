@@ -57,7 +57,6 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
         NotificationCenter.default.addObserver(self, selector: #selector(showRemoveInsight), name: Notification.Name("DismissNotification"), object: nil)
     }
     

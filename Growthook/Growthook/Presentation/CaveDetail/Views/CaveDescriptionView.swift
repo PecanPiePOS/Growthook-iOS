@@ -15,8 +15,8 @@ final class CaveDescriptionView: BaseView {
 
     // MARK: - UI Components
     
-    private let caveTitle = UILabel()
-    private let caveDescriptionLabel = UILabel()
+    let caveTitle = UILabel()
+    let caveDescriptionLabel = UILabel()
     private let userImageView = UIImageView()
     private let nicknameLabel = UILabel()
     let lockButton = UIButton()

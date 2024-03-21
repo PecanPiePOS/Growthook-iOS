@@ -83,8 +83,8 @@ final class HomeCaveView: BaseView {
         
         flowLayout.do {
             $0.scrollDirection = .horizontal
-            $0.itemSize = CGSize(width: (SizeLiterals.Screen.screenWidth * 86) / 375,
-                                 height: (SizeLiterals.Screen.screenHeight * 96) / 812)
+            $0.itemSize = CGSize(width: (SizeLiterals.Screen.screenWidth * 73) / 375,
+                                 height: (SizeLiterals.Screen.screenHeight * 90) / 812)
             $0.minimumLineSpacing = 0
             $0.minimumInteritemSpacing = 0
         }

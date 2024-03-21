@@ -149,8 +149,8 @@ extension CommonTextViewWithBorder {
     private func setFont() {
         if let text {
             if text.isEmpty {
-                textColor = .gray300
-                font = .fontGuide(.body3_reg)
+                textColor = .white000
+                font = .fontGuide(.body3_bold)
             } else if text == customPlaceholder {
                 textColor = .gray300
                 font = .fontGuide(.body3_reg)

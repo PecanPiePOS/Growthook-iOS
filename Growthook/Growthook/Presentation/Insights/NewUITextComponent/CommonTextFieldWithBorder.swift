@@ -82,10 +82,6 @@ final class CommonTextFieldWithBorder: UITextField, CommonTextComponentType {
         bindEditingAction()
         bindText()
         setStyles()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
         setBorderLine()
     }
     
