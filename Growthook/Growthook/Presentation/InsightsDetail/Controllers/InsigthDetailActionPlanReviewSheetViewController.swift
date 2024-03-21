@@ -72,11 +72,14 @@ final class InsigthDetailActionPlanReviewSheetViewController: BaseViewController
         
         saveButton.do {
             $0.setTitle("저장하기", for: .normal)
+            $0.titleLabel?.font = .fontGuide(.body1_bold)
             $0.makeCornerRound(radius: 10)
         }
         
         skipButton.do {
             $0.setTitle("안 쓸래요", for: .normal)
+            $0.setTitleColor(.gray100, for: .normal)
+            $0.titleLabel?.font = .fontGuide(.body1_reg)
             $0.backgroundColor = .gray600
         }
         
